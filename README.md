@@ -1,10 +1,31 @@
-# Frontend
+# Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.4.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.12.
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Generate Code
+
+```bash
+npm run generate:module -- --path src/modules --name Test
+npm run generate:component -- --path src/modules/test/containers --name Test
+npm run generate:component -- --path src/modules/test/components --name Test
+npm run generate:directive -- --path src/modules/test/directives --name Test
+npm run generate:service -- --path src/modules/test/services --name Test
+```
+
+_Note: Creating a Component and a Container use the same command,
+the difference is just the paths and how they are used._
+
+### MVCC
+
+Containers and Components are both Angular Components, but used in different ways.
+
+Containers should arrange Components.
+
+Obviously this can become subjective, but MVCC is the paradigm that we subscribe to.
 
 ## Code scaffolding
 
@@ -12,7 +33,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 ## Running unit tests
 
@@ -20,7 +41,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Further help
 
