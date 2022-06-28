@@ -1,3 +1,21 @@
 <app-auth-layout>
-  <a [routerLink]="['/auth/register']">Ir a registro</a>
+  <section class="login">
+    <div class="login-form">
+      <h1>Iniciar Sesión</h1>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Usuario</mat-label>
+        <input matInput />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" />
+      </mat-form-field>
+      <mat-checkbox class="recordar-usuario-contrasena" color="primary">
+        Recordar usuario y contraseña</mat-checkbox
+      >
+      <a href="" class="recuperar-contrasena">Recuperar usuario y contraseña</a>
+      <button mat-raised-button class="btn-ingresar">Ingresar</button>
+      <!-- <a [routerLink]="['/auth/register']">Ir a registro</a> -->
+    </div>
+  </section>
 </app-auth-layout>

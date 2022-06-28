@@ -1,1 +1,32 @@
 // @import 'styles/variables.scss';
+.login {
+  width: 100%;
+  height: calc(100vh - 14.457em);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.form-field {
+  width: 18.12em;
+}
+.recordar-usuario-contrasena {
+  margin-top: 1.95em;
+}
+.recuperar-contrasena {
+  margin-top: 1.2em;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.494118);
+}
+.btn-ingresar {
+  background: #19618b;
+  border-radius: 60px;
+  color: #d9d9d9;
+  align-self: flex-end;
+  margin: 2.187em 0;
+}

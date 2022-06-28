@@ -21,18 +21,28 @@ import * as authGuards from './guards';
 import * as authServices from './services';
 import { LayoutsModule } from '../../core/layouts/layouts.module';
 
+// Angular Material
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule,
-        ReactiveFormsModule,
-        FormsModule,
-        LayoutsModule,
-        // AppCommonModule,
-        // NavigationModule,
-    ],
-    providers: [...authServices.services, ...authGuards.guards],
-    declarations: [...authContainers.containers, ...authComponents.components],
-    exports: [...authContainers.containers, ...authComponents.components],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    LayoutsModule,
+    // AppCommonModule,
+    // NavigationModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+  ],
+  providers: [...authServices.services, ...authGuards.guards],
+  declarations: [...authContainers.containers, ...authComponents.components],
+  exports: [...authContainers.containers, ...authComponents.components],
 })
 export class AuthModule {}
