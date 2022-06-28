@@ -1,1 +1,22 @@
 // @import 'styles/variables.scss';
+.address {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.44em 0;
+  .address__p {
+    margin: auto 0;
+    padding: 0 10px;
+    font-family: "Futura Md BT";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .address__icon {
+    font-weight: 700;
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
