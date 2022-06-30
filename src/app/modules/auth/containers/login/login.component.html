@@ -1,7 +1,7 @@
 <app-auth-layout>
   <section class="login">
     <form action="" class="login__form">
-      <h1 class="login__h1">Iniciar Sesión</h1>
+      <h2 class="login__h1">Iniciar Sesión</h2>
       <label class="login__label" for="user">Usuario</label>
       <input class="login__input" type="text" id="user" />
       <label class="login__label" for="password">Contraseña</label>
@@ -12,7 +12,9 @@
       <a href="" class="login__recuperar-contrasena"
         >Recuperar usuario y contraseña</a
       >
-      <button mat-raised-button class="login__btn-ingresar">Ingresar</button>
+      <button mat-raised-button class="login__btn-ingresar" color="primary">
+        Ingresar
+      </button>
       <!-- <a [routerLink]="['/auth/register']">Ir a registro</a> -->
     </form>
   </section>

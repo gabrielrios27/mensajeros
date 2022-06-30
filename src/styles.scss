@@ -1,1 +1,112 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/theming";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define a custom typography config that overrides the font-family as well as the
+// `headlines` and `body-1` levels.
+$custom-typography: mat-typography-config(
+  $font-family: '"Futura Md BT", Roboto, monospace',
+  $headline: mat-typography-level(48px, 57px, 400),
+  $title: mat-typography-level(36px, 44px, 400),
+  $subheading-2: mat-typography-level(32px, 39px, 400),
+  $body-1: mat-typography-level(16px, 24px, 400),
+);
+
+$mdp-pallet-primary: (
+  50: #e0eff8,
+  100: #b3d7ec,
+  200: #80bde0,
+  300: #4da2d4,
+  400: #268eca,
+  500: #007ac1,
+  600: #0072bb,
+  700: #0067b3,
+  800: #005dab,
+  900: #004a9e,
+  A100: #c9deff,
+  A200: #96bfff,
+  A400: #63a1ff,
+  A700: #4991ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+/* For use in src/lib/core/theming/_palette.scss */
+$mdp-pallet-accent: (
+  50: #fefce0,
+  100: #fdf7b3,
+  200: #fbf280,
+  300: #f9ed4d,
+  400: #f8e926,
+  500: #f7e500,
+  600: #f6e200,
+  700: #f5de00,
+  800: #f3da00,
+  900: #f1d300,
+  A100: #ffffff,
+  A200: #fffbe5,
+  A400: #fff4b2,
+  A700: #fff098,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$candy-app-primary: mat-palette($mdp-pallet-primary);
+$candy-app-accent: mat-palette($mdp-pallet-accent);
+
+// The warn palette is optional (defaults to red).
+$candy-app-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$candy-app-theme: mat-light-theme(
+  (
+    color: (
+      primary: $candy-app-primary,
+      accent: $candy-app-accent,
+      warn: $candy-app-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($candy-app-theme);
+// Override typography for all Angular Material, including mat-base-typography and all components.
+@include angular-material-typography($custom-typography);
