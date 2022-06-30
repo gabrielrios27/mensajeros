@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  min-height: calc(100vh - 3.75rem);
+  min-height: calc(100vh - 4.875rem); //4.875rem = 78px --> altura del footer
 }
 .conteiner-login__logo {
   width: 42rem;
@@ -79,5 +79,14 @@
   }
   .login__input {
     margin: 1.2rem 0 2.4rem 0;
+  }
+}
+@media (max-width: 768px) {
+  .login {
+    width: 18rem;
+  }
+  .conteiner-login__logo {
+    width: 18rem;
+    margin: 1rem 0;
   }
 }
