@@ -2,10 +2,12 @@
 .conteiner-login {
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
   min-height: calc(100vh - 3.75rem);
 }
 .conteiner-login__logo {
   width: 42rem;
+  margin: 3.125rem 1em;
 }
 .login {
   width: 42rem;

@@ -3,19 +3,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.44em 0;
+  flex-wrap: wrap;
+  padding: 0.44em 0;
   font-style: normal;
-  .address__p {
-    font-family: "Futura Md BT";
-    margin: auto 0;
-    padding: 0 1.25rem 0 0.3125rem;
-    font-size: 1.25rem;
-    line-height: 0.875rem;
-  }
-  .address__icon {
-    font-weight: 700;
-    font-size: 1.5rem;
-    width: 1.5rem;
-    height: 1.5rem;
+  .address__conteiner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .address__p {
+      font-family: "Futura Md BT";
+      margin: auto 0;
+      padding: 0.5rem 1.25rem 0.5rem 0.3125rem;
+      font-size: 1.25rem;
+      line-height: 0.875rem;
+    }
+    .address__icon {
+      font-weight: 700;
+      font-size: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
 }
