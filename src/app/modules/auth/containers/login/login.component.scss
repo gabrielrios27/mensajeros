@@ -1,15 +1,23 @@
 // @import 'styles/variables.scss';
+.conteiner-login {
+  display: flex;
+  justify-content: space-evenly;
+  min-height: calc(100vh - 60px);
+}
+.conteiner-login__logo {
+  width: 756px;
+}
 .login {
-  width: 100%;
-  min-height: calc(100vh - 229px - 54px);
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 2em;
 }
 .login__h1 {
   font-size: 36px;
   line-height: 43px;
-  margin-bottom: 40px;
+  margin-bottom: 54px;
+  margin-top: 20px;
 }
 .login__form {
   display: flex;
@@ -21,7 +29,6 @@
   font-weight: 400;
   font-size: 24px;
   line-height: 29px;
-  align-self: flex-start;
 }
 .login__input {
   width: 290px;
@@ -32,18 +39,17 @@
   border-radius: 60px;
   border: none;
   padding: 0 30px;
-  margin: 30px 0 15px 0;
+  margin: 25px 0 48px 0;
 }
 
 .login__recordar-usuario {
-  margin-top: 35px;
-  align-self: flex-start;
+  margin-top: 6px;
   font-weight: 400;
   font-size: 22px;
   line-height: 26px;
 }
 .login__recuperar-contrasena {
-  margin-top: 1.2em;
+  margin-top: 18px;
   text-decoration: none;
   color: rgba(0, 0, 0, 0.494118);
   font-weight: 400;
@@ -55,8 +61,7 @@
   height: 60px;
   border-radius: 60px;
   color: #d9d9d9;
-  align-self: flex-end;
-  margin: 2.687rem 0 1.437rem;
+  margin: 36px 0;
   font-weight: 400;
   font-size: 24px;
   line-height: 29px;

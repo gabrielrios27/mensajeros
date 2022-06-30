@@ -7,10 +7,22 @@
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
+@font-face {
+  font-family: "Futura Bk BT";
+  src: url("assets/fonts/FuturaBookBT.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+}
+.mat-checkbox-inner-container {
+  height: 24px !important;
+  width: 24px !important;
+  margin-right: 20px !important;
+}
+
 // Define a custom typography config that overrides the font-family as well as the
 // `headlines` and `body-1` levels.
 $custom-typography: mat-typography-config(
-  $font-family: '"Futura Md BT", Roboto, monospace',
+  $font-family: '"Futura Bk BT", Roboto, monospace',
   $headline: mat-typography-level(48px, 57px, 400),
   $title: mat-typography-level(36px, 44px, 400),
   $subheading-2: mat-typography-level(32px, 39px, 400),
