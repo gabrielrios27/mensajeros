@@ -1,11 +1,14 @@
-// @import 'styles/variables.scss';
+@import "../../../../../styles/variables.scss";
+
 .conteiner-login {
   display: flex;
   justify-content: space-evenly;
-  min-height: calc(100vh - 3.75rem);
+  flex-wrap: wrap;
+  min-height: calc(100vh - 4.875rem); //4.875rem = 78px --> altura del footer
 }
 .conteiner-login__logo {
   width: 42rem;
+  margin: 3.125rem 1em;
 }
 .login {
   width: 42rem;
@@ -13,6 +16,7 @@
   justify-content: center;
   align-items: center;
   padding: 2em;
+  margin-top: 5.8125rem;
 }
 .login__h1 {
   font-size: 2.25rem;
@@ -36,11 +40,15 @@
   height: 3.75rem;
   font-weight: 400;
   font-size: 1.25rem;
-  background: #d9d9d9;
+  background: $color-bg-grey;
   border-radius: 3.75rem;
   border: none;
   padding: 0 1.875rem;
   margin: 1.5625rem 0 3rem 0;
+  outline-color: $color-primary-border;
+}
+.login__input:focus {
+  background-color: $color-bg-light-grey;
 }
 
 .login__recordar-usuario {
@@ -52,7 +60,7 @@
 .login__recuperar-contrasena {
   margin-top: 1.125rem;
   text-decoration: none;
-  color: rgba(0, 0, 0, 0.494118);
+  color: $color-text-secondary;
   font-weight: 400;
   font-size: 1.125rem;
   line-height: 1.375rem;
@@ -61,7 +69,7 @@
   width: 9.0625rem;
   height: 3.75rem;
   border-radius: 3.75rem;
-  color: #d9d9d9;
+  color: $color-bg-grey;
   margin: 2.25rem 0;
   font-weight: 400;
   font-size: 1.5rem;
@@ -71,11 +79,23 @@
   .conteiner-login__logo {
     width: 31.25rem;
   }
+  .login {
+    margin-top: 0;
+  }
   .login__h1 {
     margin-bottom: 2.4rem;
     margin-top: 0.9rem;
   }
   .login__input {
     margin: 1.2rem 0 2.4rem 0;
+  }
+}
+@media (max-width: 768px) {
+  .login {
+    width: 18rem;
+  }
+  .conteiner-login__logo {
+    width: 18rem;
+    margin: 1rem 0;
   }
 }

@@ -20,11 +20,13 @@
   font-weight: 400;
 }
 .mat-checkbox-inner-container {
-  height: 24px !important;
-  width: 24px !important;
-  margin-right: 20px !important;
+  height: 1.5rem !important;
+  width: 1.5rem !important;
+  margin-right: 1.25rem !important;
 }
-
+.mat-checkbox-frame {
+  border-color: #007ac1 !important;
+}
 // Define a custom typography config that overrides the font-family as well as the
 // `headlines` and `body-1` levels.
 $custom-typography: mat-typography-config(
