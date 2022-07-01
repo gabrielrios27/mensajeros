@@ -1,4 +1,5 @@
 @import "../../../../../styles/variables.scss";
+
 .conteiner-login {
   display: flex;
   justify-content: space-evenly;
@@ -15,6 +16,7 @@
   justify-content: center;
   align-items: center;
   padding: 2em;
+  margin-top: 5.8125rem;
 }
 .login__h1 {
   font-size: 2.25rem;
@@ -76,6 +78,9 @@
 @media (max-width: 1400px) {
   .conteiner-login__logo {
     width: 31.25rem;
+  }
+  .login {
+    margin-top: 0;
   }
   .login__h1 {
     margin-bottom: 2.4rem;
