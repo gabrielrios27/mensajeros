@@ -46,6 +46,22 @@
   padding: 0 1.875rem;
   margin: 1.5625rem 0 3rem 0;
   outline-color: $color-primary-border;
+  text-align: center;
+  ::-webkit-input-placeholder {
+    color: $color-text-grey;
+  }
+  ::-moz-placeholder {
+    color: $color-text-grey;
+  }
+  :-ms-input-placeholder {
+    color: $color-text-grey;
+  }
+  ::-ms-input-placeholder {
+    color: $color-text-grey;
+  }
+  ::placeholder {
+    color: $color-text-grey;
+  }
 }
 .login__input:focus {
   background-color: $color-bg-light-grey;

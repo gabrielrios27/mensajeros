@@ -9,19 +9,26 @@
       <form action="" class="login__form">
         <h2 class="login__h1">INICIAR SESIÓN</h2>
         <label class="login__label" for="user">USUARIO</label>
-        <input class="login__input" type="email" id="user" />
+        <input
+          class="login__input"
+          type="email"
+          id="user"
+          placeholder="forexample@mdp.com"
+        />
         <label class="login__label" for="password">CONTRASEÑA</label>
-        <input class="login__input" type="password" id="password" />
+        <input
+          class="login__input"
+          type="password"
+          id="password"
+          placeholder="Más de 8 caracteres"
+        />
         <mat-checkbox class="login__recordar-usuario" color="primary">
           Recordar usuario y contraseña</mat-checkbox
         >
-        <a href="" class="login__recuperar-contrasena"
-          >Recuperar usuario y contraseña</a
-        >
+        <a href="" class="login__recuperar-contrasena">Olvidé mi contraseña</a>
         <button mat-raised-button class="login__btn-ingresar" color="primary">
           Ingresar
         </button>
-        <!-- <a [routerLink]="['/auth/register']">Ir a registro</a> -->
       </form>
     </section>
   </div>
