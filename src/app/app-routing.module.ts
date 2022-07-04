@@ -5,20 +5,30 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/auth/login'
+    redirectTo: '/auth/login',
   },
   {
     path: 'auth',
-    loadChildren: () => import('./modules/auth/auth-routing.module').then((m) => m.AuthRoutingModule)
-  }
+    loadChildren: () =>
+      import('./modules/auth/auth-routing.module').then(
+        (m) => m.AuthRoutingModule
+      ),
+  },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./modules/admin/admin-routing.module').then(
+        (m) => m.AdminRoutingModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [
-      RouterModule.forRoot(routes, {
-          scrollPositionRestoration: 'enabled',
-          relativeLinkResolution: 'legacy',
-      }),
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      relativeLinkResolution: 'legacy',
+    }),
   ],
   exports: [RouterModule],
 })
