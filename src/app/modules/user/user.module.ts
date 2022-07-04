@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-
 /* Components */
 import * as userComponents from './components';
 
@@ -18,14 +17,9 @@ import * as userGuards from './guards';
 import * as userServices from './services';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule,
-        ReactiveFormsModule,
-        FormsModule
-    ],
-    providers: [...userServices.services, ...userGuards.guards],
-    declarations: [...userContainers.containers, ...userComponents.components],
-    exports: [...userContainers.containers, ...userComponents.components],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule],
+  providers: [...userServices.services, ...userGuards.guards],
+  declarations: [...userContainers.containers, ...userComponents.components],
+  exports: [...userContainers.containers, ...userComponents.components],
 })
 export class UserModule {}
