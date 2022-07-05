@@ -8,23 +8,16 @@ import { AdminModule } from './admin.module';
 /* Containers */
 import * as adminContainers from './containers';
 
-/* Components */
-import * as adminComponents from './components';
 /* Guards */
 import * as adminGuards from './guards';
 
 /* Routes */
 export const ROUTES: Routes = [
-  // {
-  //   path: '',
-  //   canActivate: [],
-  //   component: adminContainers.DashboardComponent,
-  // },
-  // {
-  //   path: 'home',
-  //   canActivate: [],
-  //   component: adminComponents.HomeComponent,
-  // },
+  {
+    path: '',
+    canActivate: [],
+    component: adminContainers.DashboardComponent,
+  },
 ];
 
 @NgModule({

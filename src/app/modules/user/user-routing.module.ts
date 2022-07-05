@@ -10,15 +10,14 @@ import * as userContainers from './containers';
 
 /* Guards */
 import * as userGuards from './guards';
-import { DashboardOngComponent } from './admin/containers';
 
 /* Routes */
 export const ROUTES: Routes = [
-  {
-    path: '',
-    canActivate: [],
-    component: DashboardOngComponent,
-  },
+  // {
+  //   path: 'admin',
+  //   canActivate: [],
+  //   component: DashboardOngComponent,
+  // },
 ];
 
 @NgModule({
