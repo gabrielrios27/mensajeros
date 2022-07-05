@@ -19,18 +19,24 @@ import * as layoutsGuards from './guards';
 
 /* Services */
 import * as layoutsServices from './services';
+// Angular Material
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule,
-        ReactiveFormsModule,
-        FormsModule,
-        // AppCommonModule,
-        // NavigationModule,
-    ],
-    providers: [...layoutsServices.services, ...layoutsGuards.guards],
-    declarations: [...layoutsContainers.containers, ...layoutsComponents.components],
-    exports: [...layoutsContainers.containers, ...layoutsComponents.components],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    // AppCommonModule,
+    // NavigationModule,
+    MatIconModule,
+  ],
+  providers: [...layoutsServices.services, ...layoutsGuards.guards],
+  declarations: [
+    ...layoutsContainers.containers,
+    ...layoutsComponents.components,
+  ],
+  exports: [...layoutsContainers.containers, ...layoutsComponents.components],
 })
 export class LayoutsModule {}
