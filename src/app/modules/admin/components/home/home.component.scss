@@ -1,0 +1,23 @@
+@import "../../../../../styles/variables.scss";
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+
+  .home__title {
+    font-size: 96px;
+    line-height: 115px;
+    text-align: center;
+    width: 785px;
+    margin-bottom: 100px;
+  }
+  .home__img {
+    position: absolute;
+    width: 590px;
+    right: 9.1875rem;
+    bottom: 7.9375rem;
+    z-index: -1;
+  }
+}

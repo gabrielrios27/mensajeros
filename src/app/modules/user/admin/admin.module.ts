@@ -5,8 +5,8 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 /* Modules */
-import { AppCommonModule } from '@common/app-common.module';
-import { NavigationModule } from '@modules/navigation/navigation.module';
+// import { AppCommonModule } from '@common/app-common.module';
+// import { NavigationModule } from '@modules/navigation/navigation.module';
 
 /* Components */
 import * as adminComponents from './components';
@@ -19,18 +19,20 @@ import * as adminGuards from './guards';
 
 /* Services */
 import * as adminServices from './services';
+import { LayoutsModule } from '../../../core/layouts/layouts.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule,
-        ReactiveFormsModule,
-        FormsModule,
-        AppCommonModule,
-        NavigationModule,
-    ],
-    providers: [...adminServices.services, ...adminGuards.guards],
-    declarations: [...adminContainers.containers, ...adminComponents.components],
-    exports: [...adminContainers.containers, ...adminComponents.components],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    LayoutsModule,
+    // AppCommonModule,
+    // NavigationModule,
+  ],
+  providers: [...adminServices.services, ...adminGuards.guards],
+  declarations: [...adminContainers.containers, ...adminComponents.components],
+  exports: [...adminContainers.containers, ...adminComponents.components],
 })
 export class AdminModule {}

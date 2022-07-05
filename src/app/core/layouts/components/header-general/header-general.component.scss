@@ -1,4 +1,4 @@
-// @import 'styles/variables.scss';
+@import "../../../../../styles/variables.scss";
 .header {
   font-size: 16px;
   position: fixed;
@@ -8,9 +8,10 @@
   height: 8.5625em;
   display: flex;
   align-items: center;
+  background-color: $color-bg-white;
   box-shadow: 0 0.5em 0.625em rgba(0, 0, 0, 0.13),
     0em 0.1875em 0.875em rgba(0, 0, 0, 0.01);
-  z-index: 100;
+  z-index: 1000;
   .header__logo {
     height: 100%;
     padding: 0.5625em 0;
