@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-navbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './login.component.html',
-  styleUrls: ['login.component.scss'],
+  templateUrl: './navbar.component.html',
+  styleUrls: ['navbar.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class NavbarComponent implements OnInit {
   constructor() {}
   ngOnInit() {}
 }
