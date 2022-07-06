@@ -26,6 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { RecoverPasswordComponent } from './containers/recover-password/recover-password.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatCheckboxModule,
   ],
   providers: [...authServices.services, ...authGuards.guards],
-  declarations: [...authContainers.containers, ...authComponents.components],
+  declarations: [...authContainers.containers, ...authComponents.components, RecoverPasswordComponent],
   exports: [...authContainers.containers, ...authComponents.components],
 })
 export class AuthModule {}

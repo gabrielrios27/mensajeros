@@ -10,6 +10,7 @@ import * as authContainers from './containers';
 
 /* Guards */
 import * as authGuards from './guards';
+import { RecoverPasswordComponent } from './containers/recover-password/recover-password.component';
 
 /* Routes */
 export const ROUTES: Routes = [
@@ -28,6 +29,10 @@ export const ROUTES: Routes = [
         canActivate: [],
         component: authContainers.RegisterComponent,
     },
+    {
+        path: 'recover',
+        component: RecoverPasswordComponent
+    }
 ];
 
 @NgModule({
