@@ -7,6 +7,8 @@ import { AdminModule } from './admin.module';
 
 /* Containers */
 import * as adminContainers from './containers';
+// components
+import * as adminComponents from './components';
 
 /* Guards */
 import * as adminGuards from './guards';
@@ -16,7 +18,48 @@ export const ROUTES: Routes = [
   {
     path: '',
     canActivate: [],
-    component: adminContainers.DashboardComponent,
+    redirectTo: 'home',
+  },
+  {
+    path: 'home',
+    canActivate: [],
+    component: adminContainers.HomeComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'usuarios',
+    canActivate: [],
+    component: adminContainers.UsersComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'centros',
+    canActivate: [],
+    component: adminContainers.CentersComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'ejes',
+    canActivate: [],
+    component: adminContainers.AxesComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'reportes',
+    canActivate: [],
+    component: adminContainers.ReportsComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'ayuda',
+    canActivate: [],
+    component: adminContainers.HelpComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    canActivate: [],
+    redirectTo: 'home',
   },
 ];
 
