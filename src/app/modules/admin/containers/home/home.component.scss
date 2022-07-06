@@ -1,23 +1,19 @@
 @import "../../../../../styles/variables.scss";
 .home {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100%;
-  min-height: calc(100vh - 8.5625em);
   .home__title {
-    font-size: 96px;
-    line-height: 115px;
+    font-size: 64px;
+    line-height: 77px;
     text-align: center;
-    width: 785px;
-    margin-bottom: 100px;
+    width: 525px;
+    margin-top: 150px;
+    margin-bottom: 0;
   }
   .home__img {
-    position: absolute;
-    width: 590px;
-    right: 9.1875rem;
-    bottom: 7.9375rem;
-    z-index: -1;
+    width: 482px;
+    margin-top: 94px;
   }
 }
