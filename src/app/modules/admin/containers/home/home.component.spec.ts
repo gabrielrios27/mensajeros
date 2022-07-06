@@ -2,11 +2,11 @@ import { Component, DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { DashboardComponent } from './dashboard.component';
+import { HomeComponent } from './home.component';
 
 @Component({
     template: `
-        <app-dashboard [someInput]="someInput" (someFunction)="someFunction($event)"></app-dashboard>
+        <app-home [someInput]="someInput" (someFunction)="someFunction($event)"></app-home>
     `,
 })
 class TestHostComponent {
@@ -14,19 +14,19 @@ class TestHostComponent {
     // someFunction(event: Event) {}
 }
 
-describe('DashboardComponent', () => {
+describe('HomeComponent', () => {
     let fixture: ComponentFixture<TestHostComponent>;
     let hostComponent: TestHostComponent;
     let hostComponentDE: DebugElement;
     let hostComponentNE: Element;
 
-    let component: DashboardComponent;
+    let component: HomeComponent;
     let componentDE: DebugElement;
     let componentNE: Element;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [TestHostComponent, DashboardComponent],
+            declarations: [TestHostComponent, HomeComponent],
             imports: [NoopAnimationsModule],
             providers: [],
             schemas: [NO_ERRORS_SCHEMA],
@@ -45,6 +45,6 @@ describe('DashboardComponent', () => {
     });
 
     it('should display the component', () => {
-        expect(hostComponentNE.querySelector('app-dashboard')).toEqual(jasmine.anything());
+        expect(hostComponentNE.querySelector('app-home')).toEqual(jasmine.anything());
     });
 });

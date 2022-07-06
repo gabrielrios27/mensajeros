@@ -1,5 +1,5 @@
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
 
-export const containers = [DashboardComponent];
+export const containers = [HomeComponent];
 
-export * from './dashboard/dashboard.component';
+export * from './home/home.component';
