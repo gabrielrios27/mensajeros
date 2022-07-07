@@ -1,41 +1,59 @@
 @import "../../../../../styles/variables.scss";
-.header {
-  font-size: 1em;
+.header-container {
+  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 8.75em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: $color-bg-white;
   z-index: 1000;
-  border: 0.1875em solid $color-bg-light-grey;
-  // filter: drop-shadow(0em 0.25em 0.25em rgba(0, 0, 0, 0.25));
-  .header__logo {
-    width: 16.25em;
-    padding: 0.5625em 0;
-    margin-left: 2.25em;
-  }
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -0.9375em;
+  .header {
+    font-size: 1em;
     width: 100%;
-    height: 0.5625em;
-    background: #1967d2;
-    box-shadow: 0em 0.375em 0.5em rgba(0, 0, 0, 0.14),
-      0em 0.0625em 0.75em rgba(0, 0, 0, 0.12),
-      0em 0.1875em 0.1875em rgba(0, 0, 0, 0.2);
+    height: 8.75em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-white;
+    border-bottom: 0.1875em solid $color-bg-light-grey;
+    .header__logo {
+      width: 16.25em;
+      padding: 0.5625em 0;
+      margin-left: 2.25em;
+    }
+    .header__usuario-container {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      right: 4.0625em;
+      .header__usuario-ico {
+        width: 1.5625em;
+        margin-right: 1.5625em;
+      }
+      .header__usuario-name {
+        font-size: 1.5em;
+        line-height: 1.8125em;
+        color: $color-text-grey-dark;
+        margin: 0;
+      }
+    }
   }
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: -1.875em;
+  .lines-container {
     width: 100%;
-    height: 0.5625em;
-    background: #344d64;
-    box-shadow: 0em 0.25em 0.25em rgba(0, 0, 0, 0.25);
+    background-color: $color-white;
+    padding-top: 9px;
+    .lines-container__line1 {
+      width: 100%;
+      height: 0.5625em;
+      background: $color-bg-line-up-header;
+      box-shadow: 0em 0.375em 0.5em rgba(0, 0, 0, 0.14),
+        0em 0.0625em 0.75em rgba(0, 0, 0, 0.12),
+        0em 0.1875em 0.1875em rgba(0, 0, 0, 0.2);
+    }
+    .lines-container__line2 {
+      margin-top: 9px;
+      width: 100%;
+      height: 0.5625em;
+      background: $color-bg-line-down-header;
+      box-shadow: 0em 0.25em 0.25em rgba(0, 0, 0, 0.25);
+    }
   }
 }

@@ -5,6 +5,7 @@
   min-height: calc(100vh - 8.5625em);
   margin-top: 69px;
   position: fixed;
+  z-index: 1000;
   top: 11.75em;
   left: 0;
   .navbar__list {
