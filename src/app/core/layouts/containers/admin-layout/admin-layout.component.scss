@@ -1,8 +1,8 @@
 @import "../../../../../styles/variables.scss";
 .content {
   position: relative;
-  top: 8.5625em;
+  top: 8.25em; //altura del header/ 132px/
   float: right;
   min-height: calc(100vh - 8.5625em);
-  width: calc(100% - 28.75em);
+  width: 100%;
 }

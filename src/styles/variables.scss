@@ -4,25 +4,30 @@ $color-secondary: #82cff5;
 $color-secondary-dark: #4394c2;
 $color-secondary-border: #19618b9c;
 $color-secondary-btn: #19618b;
-
 $color-tertiary: #f5ec0a;
-$color-bg-primary: #92cdef;
+
+$color-bg-primary: #92cdef; //nav bg link
 $color-bg-grey: #d9d9d9;
 $color-bg-light-grey: #e2e2e2;
-$color-bg-hover-primary: #19618b;
 
-$color-text-primary: #000000;
+$color-bg-hover-primary: #19618b; //nav hover en link bg
+
+$color-text-primary: #000000; //nav text link
 $color-text-secondary: #0000007e;
 $color-text-grey: #a3a3a3;
-$color-text-hover-primary: #ffffff;
+
+$color-text-hover-primary: #ffffff; //nav hover en link text
 
 $color-white: #ffffff;
+
 $color-line-grey-dark: #79747e;
 $color-line-up-header: #1967d2;
 $color-line-down-header: #344d64;
 
 $tipografy: "Futura Bk BT", Roboto, "Helvetica Neue", sans-serif;
 
-$transition: 0.3s;
-//$height-header: 8.5625em;
-//$widht-navbar: 28.75em;
+$transition: 0.3s all linear;
+
+//para viewport
+//.....font-size: 16px/12px/10px
+//$height-header: 176px/132px/110px;
