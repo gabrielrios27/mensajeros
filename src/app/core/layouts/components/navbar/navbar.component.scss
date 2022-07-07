@@ -1,68 +1,49 @@
 @import "../../../../../styles/variables.scss";
 .navbar {
-  font-size: 16px;
-  width: 28.75em;
+  font-size: 1em;
+  width: 13.3125em;
   min-height: calc(100vh - 8.5625em);
+  margin-top: 69px;
   position: fixed;
-  top: 8.5625em;
+  top: 11.75em;
   left: 0;
-  .navbar__home {
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    width: 14.375em;
-    height: 2.1875em;
-    font-size: 2rem;
-    padding: 0.40625em 0.3125em 0.40625em 0;
-    margin-top: 1.1875em;
-    margin-bottom: 0.59375em;
-    text-decoration: none;
-    color: $color-text-primary;
-    .navbar__text-home {
-      margin: 0;
-    }
-    .navbar__ico-home {
-      width: 1.4375em;
-      position: relative;
-      margin-right: 0.84375em;
-      margin-left: 1.53125em;
-    }
-    &::after,
-    &::before {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 0.1875em;
-      background-color: $color-secondary-border;
-    }
-    &::after {
-      bottom: -0.09375em;
-    }
-    &::before {
-      bottom: 2.09375em;
-    }
-  }
   .navbar__list {
     .navbar__item {
-      margin: 1.375em 0;
+      margin: 0.625em 0;
+      &:hover {
+        .navbar__link {
+          color: $color-text-hover-primary;
+          background: $color-bg-hover-primary;
+          .navbar__ico-list {
+            path {
+              fill: $color-text-hover-primary;
+            }
+          }
+        }
+      }
       .navbar__link {
-        height: 5.5625em;
+        height: 2.8125em;
         display: flex;
         align-items: center;
         text-decoration: none;
         color: $color-text-primary;
-        background: #92cdef;
+        background: $color-bg-primary;
         box-shadow: 0em 0.5em 0.625em rgba(0, 0, 0, 0.14),
-          0em 0.1875em 0.875em rgba(0, 0, 0, 0.12),
+          0em 0.1875em 0.875em rgba(63, 46, 46, 0.12),
           0em 0.3125em 0.3125em rgba(0, 0, 0, 0.2);
+        border-radius: 3.125em;
         border-radius: 0em 3.125em 3.125em 0em;
+        transition: $transition;
         .navbar__ico-list {
-          width: 1.875em;
-          margin-left: 4.375em;
-          margin-right: 1.1875em;
+          width: 1.1875em;
+          margin-left: 2.0625em;
+          margin-right: 0.8125em;
+          path {
+            fill: $color-text-primary;
+          }
         }
         .navbar__text-list {
-          margin: 0;
+          font-size: 1em;
         }
       }
     }
