@@ -5,15 +5,25 @@
   flex-direction: column;
   width: 100%;
   .home__title {
-    font-size: 64px;
-    line-height: 77px;
+    font-size: 4em;
+    line-height: 1.2em;
     text-align: center;
-    width: 525px;
-    margin-top: 150px;
+    width: 8.203em;
+    margin-top: 2.3437em;
     margin-bottom: 0;
   }
   .home__img {
-    width: 482px;
-    margin-top: 94px;
+    width: 30.125em;
+    margin-top: 5.875em;
+  }
+}
+@media (max-width: 1400px) {
+  .home {
+    font-size: 12px;
+  }
+}
+@media (max-width: 768px) {
+  .home {
+    font-size: 10px;
   }
 }
