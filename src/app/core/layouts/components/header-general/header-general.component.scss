@@ -5,8 +5,8 @@
   top: 0;
   left: 0;
   z-index: 1000;
+  font-size: 16px;
   .header {
-    font-size: 1em;
     width: 100%;
     height: 8.75em;
     display: flex;
@@ -31,7 +31,7 @@
       .header__usuario-name {
         font-size: 1.5em;
         line-height: 1.8125em;
-        color: $color-text-grey-dark;
+        color: $color-line-grey-dark;
         margin: 0;
       }
     }
@@ -39,21 +39,38 @@
   .lines-container {
     width: 100%;
     background-color: $color-white;
-    padding-top: 9px;
+    padding-top: 0.5625em;
     .lines-container__line1 {
       width: 100%;
       height: 0.5625em;
-      background: $color-bg-line-up-header;
+      background: $color-line-up-header;
       box-shadow: 0em 0.375em 0.5em rgba(0, 0, 0, 0.14),
         0em 0.0625em 0.75em rgba(0, 0, 0, 0.12),
         0em 0.1875em 0.1875em rgba(0, 0, 0, 0.2);
     }
     .lines-container__line2 {
-      margin-top: 9px;
+      margin-top: 0.5625em;
       width: 100%;
       height: 0.5625em;
-      background: $color-bg-line-down-header;
+      background: $color-line-down-header;
       box-shadow: 0em 0.25em 0.25em rgba(0, 0, 0, 0.25);
+    }
+  }
+}
+@media (max-width: 1400px) {
+  .header-container {
+    font-size: 12px; //hacemos responsive todo el componente para este viewport
+  }
+}
+@media (max-width: 768px) {
+  .header-container {
+    font-size: 10px;
+    .header {
+      justify-content: space-between;
+      .header__usuario-container {
+        position: relative;
+        right: 1.4063em;
+      }
     }
   }
 }
