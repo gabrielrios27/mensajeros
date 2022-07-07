@@ -11,6 +11,7 @@ import * as authContainers from './containers';
 /* Guards */
 import * as authGuards from './guards';
 import { RecoverPasswordComponent } from './containers/recover-password/recover-password.component';
+import { ForgotPasswordComponent } from './containers/forgot-password/forgot-password.component';
 
 /* Routes */
 export const ROUTES: Routes = [
@@ -30,7 +31,11 @@ export const ROUTES: Routes = [
         component: authContainers.RegisterComponent,
     },
     {
-        path: 'recover',
+        path: 'forgot-password',
+        component: ForgotPasswordComponent
+    },
+    {
+        path:'recover-password',
         component: RecoverPasswordComponent
     }
 ];
