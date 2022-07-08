@@ -22,11 +22,6 @@
     "node": "16.16.0",
     "npm": "8.3.1"
   },
-  "browserslist": [
-    "defaults",
-    "not IE 11",
-    "maintained node versions"
-  ],
   "private": true,
   "dependencies": {
     "@angular/animations": "~11.2.13",
