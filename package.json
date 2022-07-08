@@ -20,7 +20,7 @@
     "build-storybook": "npm run docs:json && build-storybook"
   },
   "engines": {
-    "node": "16.6.0",
+    "node": "16.16.0",
     "npm": "8.13.2"
   },
   "private": true,
