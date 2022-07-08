@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npm start",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -14,15 +14,22 @@
     "generate:service": "ng generate @sbpro/ng:service",
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
     "storybook": "npm run docs:json && start-storybook -p 6006",
-    "build-storybook": "npm run docs:json && build-storybook"
+    "build-storybook": "npm run docs:json && build-storybook",
+    "heroku-postbuild": "ng build --prod",
+    "build:prod": "ng build --prod",
+    "postinstall": "ng build"
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-angular": "^0.1102.19",
     "@angular/animations": "~11.2.13",
     "@angular/cdk": "11.2.13",
+    "@angular/cli": "~11.2.12",
     "@angular/common": "~11.2.13",
     "@angular/compiler": "~11.2.13",
+    "@angular/compiler-cli": "~11.2.13",
     "@angular/core": "~11.2.13",
+    "@angular/elements": "^12.2.1",
     "@angular/forms": "~11.2.13",
     "@angular/material": "11.2.13",
     "@angular/platform-browser": "~11.2.13",
@@ -31,13 +38,10 @@
     "@sbpro/ng": "^1.4.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
+    "typescript": "~4.1.5",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1102.12",
-    "@angular/cli": "~11.2.12",
-    "@angular/compiler-cli": "~11.2.13",
-    "@angular/elements": "^12.2.1",
     "@babel/core": "^7.15.0",
     "@compodoc/compodoc": "^1.1.14",
     "@storybook/addon-actions": "^6.3.7",
@@ -58,7 +62,10 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
-    "tslint": "~6.1.0",
-    "typescript": "~4.1.5"
+    "tslint": "~6.1.0"
+  },
+  "engines": {
+    "node": "16.16",
+    "npm": "8.11"
   }
 }
