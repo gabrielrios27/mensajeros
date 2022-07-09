@@ -14,14 +14,10 @@
     "generate:service": "ng generate @sbpro/ng:service",
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
     "storybook": "npm run docs:json && start-storybook -p 6006",
-    "build-storybook": "npm run docs:json && build-storybook",
-    "heroku-postbuild": "ng build --prod"
+    "build-storybook": "npm run docs:json && build-storybook"
   },
   "private": true,
   "dependencies": {
-    "@angular/cli": "~11.2.12",
-    "@angular/elements": "^12.2.1",
-    "@angular/compiler-cli": "~11.2.13",
     "@angular/animations": "~11.2.13",
     "@angular/cdk": "11.2.13",
     "@angular/common": "~11.2.13",
@@ -36,11 +32,10 @@
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3",
-    "typescript": "~4.1.5"
-  },
-  "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.12",
-    
+    "@angular/cli": "~11.2.12",
+    "@angular/compiler-cli": "~11.2.13",
+    "@angular/elements": "^12.2.1",
     "@babel/core": "^7.15.0",
     "@compodoc/compodoc": "^1.1.14",
     "@storybook/addon-actions": "^6.3.7",
@@ -61,11 +56,39 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
-    "tslint": "~6.1.0"
-    
+    "tslint": "~6.1.0",
+    "typescript": "~4.1.5"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.1102.12",
+    "@angular/cli": "~11.2.12",
+    "@angular/compiler-cli": "~11.2.13",
+    "@angular/elements": "^12.2.1",
+    "@babel/core": "^7.15.0",
+    "@compodoc/compodoc": "^1.1.14",
+    "@storybook/addon-actions": "^6.3.7",
+    "@storybook/addon-essentials": "^6.3.7",
+    "@storybook/addon-links": "^6.3.7",
+    "@storybook/angular": "^6.3.7",
+    "@types/jasmine": "~3.6.0",
+    "@types/node": "^12.11.1",
+    "@webcomponents/custom-elements": "^1.5.0",
+    "babel-loader": "^8.2.2",
+    "codelyzer": "^6.0.0",
+    "jasmine-core": "~3.6.0",
+    "jasmine-spec-reporter": "~5.0.0",
+    "karma": "~6.1.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.0.3",
+    "karma-jasmine": "~4.0.0",
+    "karma-jasmine-html-reporter": "^1.5.0",
+    "protractor": "~7.0.0",
+    "ts-node": "~8.3.0",
+    "tslint": "~6.1.0",
+    "typescript": "~4.1.5"
   },
   "engines": {
-    "node": "16.x",
-    "npm": "8.x"
+    "node": "16.16",
+    "npm": "8.13.2"
   }
 }
