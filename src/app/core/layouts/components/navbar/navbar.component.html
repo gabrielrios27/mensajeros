@@ -1,7 +1,11 @@
 <section class="navbar">
   <ul class="navbar__list">
     <li class="navbar__item">
-      <a class="navbar__link" routerLink="dashboard/home">
+      <a
+        class="navbar__link"
+        routerLink="./dashboard/home"
+        [routerLinkActive]="['activeRoute']"
+      >
         <svg
           class="navbar__ico-list"
           width="19"
@@ -29,7 +33,11 @@
     </li>
 
     <li class="navbar__item">
-      <a routerLink="dashboard/usuarios" class="navbar__link">
+      <a
+        routerLink="dashboard/usuarios"
+        class="navbar__link"
+        routerLinkActive="activeRoute"
+      >
         <svg
           class="navbar__ico-list"
           alt="Icono de usuarios"
@@ -48,7 +56,11 @@
       </a>
     </li>
     <li class="navbar__item">
-      <a routerLink="dashboard/centros" class="navbar__link">
+      <a
+        routerLink="dashboard/centros"
+        class="navbar__link"
+        routerLinkActive="activeRoute"
+      >
         <svg
           class="navbar__ico-list"
           alt="Icono de centros"
@@ -76,7 +88,11 @@
       </a>
     </li>
     <li class="navbar__item">
-      <a routerLink="dashboard/ejes" class="navbar__link">
+      <a
+        routerLink="dashboard/ejes"
+        class="navbar__link"
+        routerLinkActive="activeRoute"
+      >
         <svg
           class="navbar__ico-list"
           alt="Icono de ejes"
@@ -99,7 +115,11 @@
       </a>
     </li>
     <li class="navbar__item">
-      <a routerLink="dashboard/reportes" class="navbar__link">
+      <a
+        routerLink="dashboard/reportes"
+        class="navbar__link"
+        routerLinkActive="activeRoute"
+      >
         <svg
           class="navbar__ico-list"
           alt="Icono de reportes"
@@ -124,7 +144,11 @@
       </a>
     </li>
     <li class="navbar__item">
-      <a routerLink="dashboard/ayuda" class="navbar__link">
+      <a
+        routerLink="dashboard/ayuda"
+        class="navbar__link"
+        routerLinkActive="activeRoute"
+      >
         <svg
           class="navbar__ico-list"
           alt="Icono de ayuda"
