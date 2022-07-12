@@ -58,11 +58,13 @@
 
 @media (max-width: 1400px) {
   .navbar {
-    top: 9.875em;
+    font-size: 14px;
+    top: 145px;
   }
 }
 @media (max-width: 768px) {
   .navbar {
-    top: 7.8125em;
+    font-size: 12px;
+    top: 115px;
   }
 }
