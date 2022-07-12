@@ -31,7 +31,7 @@ export class ForgotPasswordComponent implements OnInit {
     const img = document.getElementById("img")
     this.flag = true
     console.log(this.emailFormControl.value)
-    img?.style.setProperty('margin-top', '267px');
+    //img?.style.setProperty('margin-top', '267px');
   }
 
 }
