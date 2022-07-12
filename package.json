@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "lite": "lite-server",
-    "postinstall": "ng build --prod",
+    "postinstall": "ng build --configuration=production",
     "generate:component": "ng generate @sbpro/ng:component",
     "generate:directive": "ng generate @sbpro/ng:directive",
     "generate:module": "ng generate @sbpro/ng:module",
