@@ -1,1 +1,24 @@
-// @import 'styles/variables.scss';
+@import "../../../../../styles/variables.scss";
+
+.axes {
+  font-size: 16px;
+  max-height: 71.0625em;
+  .axes__title {
+    font-size: 30px;
+    line-height: 36px;
+    text-align: center;
+    color: $color-text-primary;
+  }
+  .axes__container-search {
+    .btn-add-axes {
+      .btn-add-axes__ico {
+      }
+    }
+    .lbl-search-axes {
+      .lbl-search-axes__input {
+      }
+      .lbl-search-axes__ico {
+      }
+    }
+  }
+}
