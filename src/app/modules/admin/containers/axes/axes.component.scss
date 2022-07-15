@@ -1,96 +1,105 @@
 @import "../../../../../styles/variables.scss";
 
-.axes {
-  font-size: 16px;
-  max-height: 71.0625em;
+.container-axes {
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  .axes__title {
-    font-size: 30px;
-    line-height: 36px;
-    text-align: center;
-    color: $color-text-primary;
-    margin-top: 78px;
-    margin-bottom: 46px;
-  }
-  .axes__container-search {
+
+  .axes {
+    font-size: 16px;
+    width: 100%;
+    max-width: 71.0625rem;
     display: flex;
+    justify-content: center;
     align-items: center;
-    .btn-add-axes {
+    flex-direction: column;
+    margin: 0 250px;
+    .axes__title {
+      font-size: 30px;
+      line-height: 36px;
+      text-align: center;
+      color: $color-text-primary;
+      margin-top: 78px;
+      margin-bottom: 46px;
+    }
+    .axes__container-search {
       display: flex;
       align-items: center;
-      width: 172px;
-      height: 48px;
-      background: $color-4;
-      box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14),
-        0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
-      border-radius: 50px;
-      .btn-add-axes__ico {
-        width: 19px;
-        margin-left: 12px;
-        margin-right: 8px;
+      align-self: flex-start;
+      .btn-add-axes {
+        display: flex;
+        align-items: center;
+        width: 172px;
+        height: 48px;
+        background: $color-4;
+        box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14),
+          0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
+        border-radius: 50px;
+        .btn-add-axes__ico {
+          width: 19px;
+          margin-left: 12px;
+          margin-right: 8px;
+        }
+        .btn-add-axes__text {
+          font-family: "Roboto Md 500";
+          font-size: 14px;
+          line-height: 16px;
+          letter-spacing: 1.25px;
+          color: $color-white;
+        }
       }
-      .btn-add-axes__text {
-        font-family: "Roboto Md 500";
-        font-size: 14px;
-        line-height: 16px;
-        letter-spacing: 1.25px;
-        color: $color-white;
+      .lbl-search-axes {
+        display: flex;
+        align-items: center;
+        .lbl-search-axes__input {
+          width: 513px;
+          height: 45px;
+          border: 1px solid #979797;
+          border-radius: 8px;
+          margin: 0 30px;
+          outline-color: $color-primary-border;
+          font-size: 16px;
+          padding: 0 20px;
+        }
+        .lbl-search-axes__ico {
+          width: 24px;
+        }
       }
     }
-    .lbl-search-axes {
-      display: flex;
-      align-items: center;
-      .lbl-search-axes__input {
-        width: 513px;
-        height: 45px;
-        border: 1px solid #979797;
-        border-radius: 8px;
-        margin: 0 30px;
-        outline-color: $color-primary-border;
-        font-size: 16px;
-        padding: 0 20px;
-      }
-      .lbl-search-axes__ico {
-        width: 24px;
-      }
-    }
-  }
-  .list-axes {
-    width: 80%;
-    max-width: 1137px;
-    .list-axes__table {
+    .list-axes {
       width: 100%;
-      .list-axes__header {
-        text-align: start;
-        font-family: "Inter-700";
-        font-size: 16px;
-        line-height: 19px;
-        color: #000000;
-      }
-      .list-axes__header:first-of-type {
-        padding-left: 24px;
-      }
-      .list-axes__row {
-        td {
-          font-family: "Inter" !important;
+      max-width: 1137px;
+      .list-axes__table {
+        width: 100%;
+        .list-axes__header {
+          text-align: start;
+          font-family: "Inter-700";
           font-size: 16px;
           line-height: 19px;
           color: #000000;
         }
-      }
-      .list-axes__axe-cell {
-        width: 290px;
-      }
+        .list-axes__header:first-of-type {
+          padding-left: 24px;
+        }
+        .list-axes__row {
+          td {
+            font-family: "Inter" !important;
+            font-size: 16px;
+            line-height: 19px;
+            color: #000000;
+          }
+        }
+        .list-axes__axe-cell {
+          width: 290px;
+        }
 
-      .list-axes__acction-cell {
-        width: 153px;
-        .list-axes__ico-action {
-          padding: 10px 10px 10px 0;
-          margin-right: 17px;
-          cursor: pointer;
+        .list-axes__acction-cell {
+          width: 153px;
+          .list-axes__ico-action {
+            padding: 10px 10px 10px 0;
+            margin-right: 17px;
+            cursor: pointer;
+          }
         }
       }
     }
