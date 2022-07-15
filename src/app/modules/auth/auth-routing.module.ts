@@ -41,7 +41,7 @@ export const ROUTES: Routes = [
 ];
 
 @NgModule({
-    imports: [AuthModule, RouterModule.forChild(ROUTES)],
-    exports: [RouterModule],
+  imports: [AuthModule, RouterModule.forChild(ROUTES)],
+  exports: [RouterModule],
 })
 export class AuthRoutingModule {}

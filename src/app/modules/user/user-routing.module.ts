@@ -13,15 +13,15 @@ import * as userGuards from './guards';
 
 /* Routes */
 export const ROUTES: Routes = [
-    // {
-    //     path: '',
-    //     canActivate: [],
-    //     component: userContainers.UserComponent,
-    // },
+  // {
+  //   path: 'admin',
+  //   canActivate: [],
+  //   component: DashboardOngComponent,
+  // },
 ];
 
 @NgModule({
-    imports: [UserModule, RouterModule.forChild(ROUTES)],
-    exports: [RouterModule],
+  imports: [UserModule, RouterModule.forChild(ROUTES)],
+  exports: [RouterModule],
 })
 export class UserRoutingModule {}

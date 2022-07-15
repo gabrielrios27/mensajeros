@@ -1,0 +1,18 @@
+@import "../../../../../styles/variables.scss";
+.content {
+  position: relative;
+  top: 11em; //altura del header/ 176px/
+  float: right;
+  min-height: calc(100vh - 8.5625em);
+  width: 100%;
+}
+@media (max-width: 1400px) {
+  .content {
+    top: 8.25em; //altura del header/ 132px/
+  }
+}
+@media (max-width: 768px) {
+  .content {
+    top: 6.875em; //altura del header/ 110px/
+  }
+}

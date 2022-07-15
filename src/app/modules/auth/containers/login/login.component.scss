@@ -8,6 +8,8 @@
 }
 .conteiner-login__logo {
   width: 42rem;
+  -o-object-fit: contain;
+  object-fit: contain;
   margin: 3.125rem 1em;
 }
 .login {
