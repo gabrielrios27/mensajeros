@@ -23,6 +23,7 @@ import { LayoutsModule } from '../../core/layouts/layouts.module';
 
 /* Angular Material Components*/
 import { MatTableModule } from '@angular/material/table';
+import { AddAxesComponent } from './containers/add-axes/add-axes.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,7 @@ import { MatTableModule } from '@angular/material/table';
     // NavigationModule,
   ],
   providers: [...adminServices.services, ...adminGuards.guards],
-  declarations: [...adminContainers.containers, ...adminComponents.components],
+  declarations: [...adminContainers.containers, ...adminComponents.components, AddAxesComponent],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })
 export class AdminModule {}
