@@ -1,0 +1,18 @@
+@import "../../../../../styles/variables.scss";
+
+.container-add-axe {
+  width: 100%;
+  padding: 0 250px;
+  display: flex;
+  justify-content: center;
+  .add-axe {
+    .add-axe__title {
+      font-style: italic;
+      font-size: 36px;
+      line-height: 43px;
+      color: $color-text-primary;
+      margin-top: 96px;
+      margin-bottom: 35px;
+    }
+  }
+}

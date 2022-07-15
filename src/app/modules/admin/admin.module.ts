@@ -13,6 +13,7 @@ import * as adminComponents from './components';
 
 /* Containers */
 import * as adminContainers from './containers';
+import { AddAxesComponent } from './containers/add-axes/add-axes.component';
 
 /* Guards */
 import * as adminGuards from './guards';
@@ -23,8 +24,9 @@ import { LayoutsModule } from '../../core/layouts/layouts.module';
 
 /* Angular Material Components*/
 import { MatTableModule } from '@angular/material/table';
-import { AddAxesComponent } from './containers/add-axes/add-axes.component';
-
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 @NgModule({
   imports: [
     CommonModule,
@@ -33,11 +35,18 @@ import { AddAxesComponent } from './containers/add-axes/add-axes.component';
     FormsModule,
     LayoutsModule,
     MatTableModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
     // AppCommonModule,
     // NavigationModule,
   ],
   providers: [...adminServices.services, ...adminGuards.guards],
-  declarations: [...adminContainers.containers, ...adminComponents.components, AddAxesComponent],
+  declarations: [
+    ...adminContainers.containers,
+    ...adminComponents.components,
+    AddAxesComponent,
+  ],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })
 export class AdminModule {}

@@ -1,1 +1,25 @@
-<p>add-axes works!</p>
+<section class="container-add-axe">
+  <div class="add-axe">
+    <h1 class="add-axe__title">Agregar Eje</h1>
+    <form class="add-axe__form" action="" method="post" [formGroup]="newAxe">
+      <label
+        class="add-axe__label"
+        for="POST-axe"
+        formControlName="axe"
+        type="text"
+        autocomplete="off"
+        >Nombre de Eje *</label
+      >
+      <input class="add-axe__input" id="POST-axe" type="text" name="axe" />
+      <label class="add-axe__label" for="POST-axe">Centros asociados</label>
+      <mat-label>Color</mat-label>
+      <mat-select formControlName="centers">
+        <mat-option value="primary">Primary</mat-option>
+        <mat-option value="accent">Accent</mat-option>
+        <mat-option value="warn">Warn</mat-option>
+      </mat-select>
+
+      <button class="add-axe__form" type="submit">Confirmar</button>
+    </form>
+  </div>
+</section>
