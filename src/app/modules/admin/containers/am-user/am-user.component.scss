@@ -1,0 +1,120 @@
+@import "/src/styles.scss";
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 59px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 12px;
+    left: 40.22%;
+    right: 22.45%;
+    top: 25.69%;
+    bottom: 37.51%;
+
+    background: #FFFFFF;
+}
+
+label {
+    width: 280px;
+    font-family: 'Futura Bk BT';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+    margin-top: 10px;
+
+}
+
+input {
+    width: 549px;
+    height: 56px;
+    bottom: 22.22%;
+    border-color: #92CDEF;
+    border-top-color: aqua;
+    border-left-color: aqua;
+    border-radius: 4px;
+    border-width: 1px;
+    background: #FFFFFF;
+    font-family: 'Futura Bk BT';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+select {
+    background: #92CDEF;
+    box-sizing: border-box;
+    border: 1px solid #79747E;
+    border-radius: 4px;
+    width: 299px;
+    height: 56px;
+
+    background-image: url("data:image/svg+xml;utf8,<svg fill='grey' height='25' viewBox='0 0 24 24' width='25' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: 15px;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+
+
+
+    font-family: 'Futura Bk BT';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    letter-spacing: 0.5px;
+
+    /* M3/sys/light/on-surface */
+
+    color: #1C1B1F;
+}
+
+select::-ms-expand {
+    display: none;
+    /*Evita que se muestre la flecha por defecto en versiones de IE*/
+}
+
+select::selection {
+    background-color: #FFFFFF;
+}
+
+option {
+    background-color: white;
+
+}
+
+.mat-button {
+    height: 70px;
+    width: 168px;
+    left: 594px;
+    top: 104px;
+    border-radius: 35px;
+    background: #92CDEF !important;
+    font-family: 'Futura Bk BT'!important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+}
