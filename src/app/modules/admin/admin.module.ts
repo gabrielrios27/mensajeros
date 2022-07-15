@@ -21,6 +21,9 @@ import * as adminGuards from './guards';
 import * as adminServices from './services';
 import { LayoutsModule } from '../../core/layouts/layouts.module';
 
+/* Angular Material Components*/
+import { MatTableModule } from '@angular/material/table';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -28,6 +31,7 @@ import { LayoutsModule } from '../../core/layouts/layouts.module';
     ReactiveFormsModule,
     FormsModule,
     LayoutsModule,
+    MatTableModule,
     // AppCommonModule,
     // NavigationModule,
   ],

@@ -12,6 +12,8 @@
     line-height: 36px;
     text-align: center;
     color: $color-text-primary;
+    margin-top: 78px;
+    margin-bottom: 46px;
   }
   .axes__container-search {
     display: flex;
@@ -47,9 +49,49 @@
         border: 1px solid #979797;
         border-radius: 8px;
         margin: 0 30px;
+        outline-color: $color-primary-border;
+        font-size: 16px;
+        padding: 0 20px;
       }
       .lbl-search-axes__ico {
         width: 24px;
+      }
+    }
+  }
+  .list-axes {
+    width: 80%;
+    max-width: 1137px;
+    .list-axes__table {
+      width: 100%;
+      .list-axes__header {
+        text-align: start;
+        font-family: "Inter-700";
+        font-size: 16px;
+        line-height: 19px;
+        color: #000000;
+      }
+      .list-axes__header:first-of-type {
+        padding-left: 24px;
+      }
+      .list-axes__row {
+        td {
+          font-family: "Inter" !important;
+          font-size: 16px;
+          line-height: 19px;
+          color: #000000;
+        }
+      }
+      .list-axes__axe-cell {
+        width: 290px;
+      }
+
+      .list-axes__acction-cell {
+        width: 153px;
+        .list-axes__ico-action {
+          padding: 10px 10px 10px 0;
+          margin-right: 17px;
+          cursor: pointer;
+        }
       }
     }
   }
