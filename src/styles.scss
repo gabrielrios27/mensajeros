@@ -19,6 +19,25 @@
   font-style: normal;
   font-weight: 400;
 }
+@font-face {
+  font-family: "Roboto Md 500";
+  src: url("assets/fonts/Roboto-Medium-500.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("assets/fonts/Inter-Regular-400.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Inter-700";
+  src: url("assets/fonts/Inter-Regular-400.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+}
+
 .mat-checkbox-inner-container {
   height: 1.5rem !important;
   width: 1.5rem !important;
