@@ -17,6 +17,15 @@ export class AddAxesComponent implements OnInit {
     axe: [, [Validators.minLength(3)]],
     centers: [, []],
   });
+
+  toppings = new FormControl('');
+  toppingList: string[] = [
+    'Hogar Colibríes',
+    'San Jose',
+    'Club de Día',
+    'Centro la Balsa',
+  ];
+
   constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {}

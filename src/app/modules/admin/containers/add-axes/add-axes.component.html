@@ -10,16 +10,34 @@
         autocomplete="off"
         >Nombre de Eje *</label
       >
-      <input class="add-axe__input" id="POST-axe" type="text" name="axe" />
+      <input
+        class="add-axe__input"
+        id="POST-axe"
+        type="text"
+        name="axe"
+        autocomplete="off"
+      />
       <label class="add-axe__label" for="POST-axe">Centros asociados</label>
-      <mat-label>Color</mat-label>
-      <mat-select formControlName="centers">
-        <mat-option value="primary">Primary</mat-option>
-        <mat-option value="accent">Accent</mat-option>
-        <mat-option value="warn">Warn</mat-option>
-      </mat-select>
 
-      <button class="add-axe__form" type="submit">Confirmar</button>
+      <mat-select
+        class="select-centers"
+        disableOptionCentering
+        panelClass="myPanelClass"
+        [formControl]="toppings"
+        multiple
+      >
+        <mat-option *ngFor="let topping of toppingList" [value]="topping">{{
+          topping
+        }}</mat-option>
+      </mat-select>
+      <button
+        mat-raised-button
+        class="add-axe__btn"
+        type="submit"
+        color="primary"
+      >
+        Confirmar
+      </button>
     </form>
   </div>
 </section>

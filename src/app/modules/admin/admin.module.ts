@@ -27,6 +27,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   imports: [
     CommonModule,
@@ -38,6 +39,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatButtonModule,
     // AppCommonModule,
     // NavigationModule,
   ],

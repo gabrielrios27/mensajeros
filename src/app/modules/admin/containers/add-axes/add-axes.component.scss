@@ -6,6 +6,10 @@
   display: flex;
   justify-content: center;
   .add-axe {
+    width: 760px;
+
+    display: flex;
+    flex-direction: column;
     .add-axe__title {
       font-style: italic;
       font-size: 36px;
@@ -13,6 +17,60 @@
       color: $color-text-primary;
       margin-top: 96px;
       margin-bottom: 35px;
+      align-self: center;
+    }
+    .add-axe__form {
+      position: relative;
+      max-height: 660px;
+      height: 59vh;
+      display: flex;
+      flex-direction: column;
+      .add-axe__label {
+        font-size: 16px;
+        line-height: 19px;
+        color: $color-text-primary;
+      }
+      .add-axe__input {
+        width: 549px;
+        height: 56px;
+        font-size: 16px;
+        line-height: 24px;
+        border: 1px solid $btn-confirm-bg;
+        border-radius: 4px;
+        outline-color: $outline-focus;
+        margin-top: 10px;
+        margin-bottom: 28px;
+        padding-left: 20px;
+      }
+
+      .select-centers {
+        width: 299px;
+        height: 56px;
+        background: $btn-confirm-bg;
+        border: 1px solid #79747e;
+        border-radius: 4px;
+        margin-top: 10px;
+        padding-left: 20px;
+        ::ng-deep .mat-select-trigger {
+          width: 100% !important;
+          height: 100% !important;
+        }
+      }
+      .add-axe__btn {
+        align-self: flex-end;
+        position: absolute;
+        bottom: 20px;
+        width: 161px;
+        height: 66px;
+        background: #92cdef;
+        border-radius: 35px;
+        cursor: pointer;
+        font-size: 20px;
+        color: $color-text-primary;
+      }
     }
   }
+}
+::ng-deep .cdk-overlay-container .cdk-overlay-pane {
+  margin: 54px 0; //para que el panel de selección aparezca abajo o arriba del input y no sobre él
 }
