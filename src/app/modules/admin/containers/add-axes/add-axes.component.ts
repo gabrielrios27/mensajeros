@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
@@ -14,19 +15,39 @@ import { Router } from '@angular/router';
 })
 export class AddAxesComponent implements OnInit {
   newAxe: FormGroup = this.fb.group({
-    axe: [, [Validators.minLength(3)]],
-    centers: [, []],
+    axe: [, [Validators.required]],
+    centers: [],
   });
 
-  toppings = new FormControl('');
-  toppingList: string[] = [
+  centerList: string[] = [
     'Hogar Colibríes',
     'San Jose',
     'Club de Día',
     'Centro la Balsa',
+    'Centro la Balsa',
+    'Centro la Balsa',
   ];
-
+  invalidForm: boolean = false;
   constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {}
+  onConfirm() {
+    if (this.newAxe.invalid) {
+      this.invalidForm = true;
+      return;
+    } else {
+      this.invalidForm = true;
+      console.log(this.newAxe);
+      this.setAxeLocStg(true);
+      this.router.navigate(['admin/dashboard/ejes']);
+    }
+  }
+  onChangeInput(e: string) {
+    if (e.length !== 0) {
+      this.invalidForm = false;
+    }
+  }
+  setAxeLocStg(data: boolean) {
+    localStorage.setItem('isNewAxe', JSON.stringify(data));
+  }
 }
