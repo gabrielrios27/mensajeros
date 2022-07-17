@@ -107,12 +107,68 @@
     }
   }
 }
+
+::ng-deep .cdk-overlay-container {
+  .mat-snack-bar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // width: 372px;
+    // height: 140px;
+    width: 663px;
+    max-width: 50vw; //tamaño grande
+    height: 376px;
+    background-color: $color-white;
+    .mat-simple-snackbar {
+      height: 328px;
+      width: 630px;
+      // height: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      .mat-simple-snack-bar-content {
+        font-size: 36px;
+        line-height: 40px;
+        // font-size: 25px;
+        // line-height: 28px;
+        font-family: "Roboto";
+        color: $color-text-primary;
+      }
+      .mat-simple-snackbar-action {
+        font-size: 14px;
+        align-self: flex-end;
+        .mat-button-wrapper {
+          font-family: "Roboto Md 500";
+        }
+      }
+    }
+  }
+}
 @media (max-width: 1400px) {
   .container-axes {
     justify-content: flex-start;
+    max-width: none;
     .axes {
       margin-right: 4.375em;
       margin-left: 15.625em;
+      .axes__title {
+        padding-right: 180px; //centra el titulo alineado con el logo del header
+      }
+    }
+  }
+  ::ng-deep .cdk-overlay-container {
+    .mat-snack-bar-container {
+      width: 372px;
+      height: 140px;
+      .mat-simple-snackbar {
+        height: 100px;
+        width: auto;
+        .mat-simple-snack-bar-content {
+          font-size: 25px;
+          line-height: 28px;
+        }
+      }
     }
   }
 }
@@ -121,6 +177,9 @@
     .axes {
       font-size: 0.875em;
       margin-left: 14em;
+      .axes__title {
+        padding-right: 135.75px;
+      }
     }
   }
 }

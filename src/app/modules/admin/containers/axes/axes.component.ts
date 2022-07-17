@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface PeriodicElement {
   centro: string;
@@ -21,7 +22,18 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class AxesComponent implements OnInit {
   displayedColumns: string[] = ['eje', 'centro', 'acciones'];
   dataSource = ELEMENT_DATA;
-
-  constructor() {}
-  ngOnInit() {}
+  isNewAxe: string | null = null;
+  constructor(private _snackBar: MatSnackBar) {}
+  ngOnInit() {
+    this.getAxeLocalStorage();
+  }
+  getAxeLocalStorage() {
+    this.isNewAxe = localStorage.getItem('isNewAxe');
+    if (this.isNewAxe) {
+      this._snackBar.open('¡El Eje fue creado con éxito!', 'CERRAR', {
+        duration: 3000,
+      });
+      localStorage.removeItem('isNewAxe');
+    }
+  }
 }
