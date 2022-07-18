@@ -3,9 +3,9 @@
         <section class="container-name">
             <label for="">Nombre y Apellido *</label>
             <input type="text" formControlName="nombre">
-            <div *ngIf="formUpEdit.controls['nombre'].invalid && formUpEdit.controls['nombre'].dirty">
+            <mat-error *ngIf="formUpEdit.controls['nombre'].invalid && formUpEdit.controls['nombre'].dirty">
                 <span *ngIf="formUpEdit.controls['nombre'].errors">Requerido</span>
-            </div>
+            </mat-error>
         </section>
         <section class="container-select">
             <label for="">Centro</label>
@@ -20,18 +20,19 @@
             <label for="">Usuario (direccion de email)*</label>
             <input type="text" formControlName="email">
 
-            <div *ngIf="formUpEdit.controls['email'].invalid && formUpEdit.controls['email'].dirty">
-                <span *ngIf="formUpEdit.controls['email'].errors">Requerido</span>
-                <span *ngIf="formUpEdit.controls['email'].errors">Email invalido</span>
-            </div>
+            <mat-error *ngIf="formUpEdit.controls['email'].invalid && formUpEdit.controls['email'].dirty">
+                <span *ngIf="formUpEdit.controls['email'].hasError('required')">Requerido</span>
+                <span *ngIf="formUpEdit.controls['email'].hasError('email')">Email invalido</span>
+            </mat-error>
         </section>
         <section class="container-password">
             <label for="">Contraseña (al menos 8 caracteres) *</label>
             <input type="password" formControlName="password">
-            <div *ngIf="formUpEdit.controls['password'].invalid && formUpEdit.controls['password'].dirty">
-                <span *ngIf="formUpEdit.controls['password'].errors">Requerido</span>
-            </div>
+            <mat-error *ngIf="formUpEdit.controls['password'].invalid && formUpEdit.controls['password'].dirty">
+                <span *ngIf="formUpEdit.controls['password'].hasError('required')">Requerido</span>
+                <span *ngIf="formUpEdit.controls['password'].hasError('minLength')">Minimo 8 caracteres</span>
+            </mat-error>
         </section>
-        <button mat-button (click)="confirm()">Confirmar</button>
+        <button [disabled]="formUpEdit.invalid" mat-button (click)="confirm()">Confirmar</button>
     </form>
 </div>

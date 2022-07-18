@@ -16,7 +16,7 @@ export class AmUserComponent implements OnInit {
     this.formUpEdit = fb.group({
       nombre: ['', Validators.required],
       email: ['', Validators.compose([Validators.required,Validators.email])],
-      password: ['', Validators.required]
+      password: ['', Validators.compose([Validators.required,Validators.minLength(8)])]
     })
   }
 
