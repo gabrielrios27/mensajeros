@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Routes, Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
+import { Users } from '../../models/users';
 
 
 
@@ -11,11 +12,11 @@ export interface PeriodicElement {
   centroAsignado: number;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, usuario: 'Hydrogen ramon', centroAsignado: 1.0079 },
-  {position: 2, usuario: 'Helium pepe', centroAsignado: 4.0026 },
-  {position: 3, usuario: 'Lithium tartamudo', centroAsignado: 6.941 },
-  {position: 4, usuario: 'Beryllium gege', centroAsignado: 9.0122 },
+const list: Users[] = [
+  { usuario: 'Hydrogen ramon', centroAsignado: 'adas' },
+  { usuario: 'Helium pepe', centroAsignado: 'asds' },
+  { usuario: 'Lithium tartamudo', centroAsignado: 'asdsad'},
+  { usuario: 'Beryllium gege', centroAsignado: 'adasdasd' },
 ];
 
 @Component({
@@ -26,26 +27,36 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class UsersComponent implements OnInit {
   displayedColumns: string[] = [ 'usuario', 'centroAsignado','acciones'];
-  dataSource = ELEMENT_DATA;
+  dataSource = list;
+  usuario: any
   
-  constructor(private router: Router, private _snackBar: MatSnackBar,private route: ActivatedRoute, public data: DataService) {}
+  constructor(private router: Router,private route: ActivatedRoute, public data: DataService) {}
 
-  openSnackBar() {
-    this._snackBar.open("Usuario creado", "cerrar");
-  }
 
   ngOnInit() {
-    this.mostrar()
+    this.dataSource = list
+  }
+
+  busca(e: string) {
+
+    if(e.toLocaleLowerCase() == ''){
+      this.ngOnInit()
+    }
+    else{
+      this.dataSource = list.filter(res => { 
+        return res.usuario.toLowerCase().match(this.usuario.toLowerCase())
+    })
+    console.log(this.dataSource)
+    }
+    
   }
 
   create(){
     this.router.navigate(['admin/dashboard/usuarios/create-user']);
   }
 
-  mostrar(){
-    let flag = true
-    if(flag){
-      this.openSnackBar;
-    }
+
+  close(){
+    this.data.flag = false
   }
 }

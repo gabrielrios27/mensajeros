@@ -4,8 +4,9 @@
     </div>
     <div class="container-search-botton">
         <div>
-            <button mat-button style="color: white;" (click)="create()"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19.09"
-                    fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+            <button mat-button class="button-createUser" style="color: white;" (click)="create()"> <svg
+                    xmlns="http://www.w3.org/2000/svg" width="18" height="19.09" fill="currentColor"
+                    class="bi bi-person-plus-fill" viewBox="0 0 16 16">
                     <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                     <path fill-rule="evenodd"
                         d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
@@ -14,7 +15,8 @@
             </button>
         </div>
         <div>
-            <input class="input-search" type="text">
+            <input class="input-search" type="text"  (ngModelChange)="busca($event)"
+            [(ngModel)]="usuario">
         </div>
         <a matTooltip="Buscar" style="margin-top: 10px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search"
@@ -35,11 +37,11 @@
                     </tr>
                 </thead>
             </mat-card>
-            <mat-card *ngFor="let i of dataSource" class="mat-card-user-data" >
+            <mat-card *ngFor="let i of dataSource" class="mat-card-user-data">
                 <td>{{i.usuario}}</td>
                 <td>{{i.centroAsignado}}</td>
                 <td style="text-align: end;">
-                    <a class="icon-edit" matTooltip="Editar" >
+                    <a class="icon-edit" matTooltip="Editar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor"
                             class="bi bi-pencil" viewBox="0 0 16 16">
                             <path
@@ -60,9 +62,13 @@
 
         </tbody>
     </table>
-    <div *ngIf="data.flag">
-        <div>
-            <label for="">usuario creado {{data.nombreUsuario}}</label>
+    <div *ngIf="data.flag" class="label-userCreate">
+        <div class="label">
+            <label>¡Usuarix {{data.nombreUsuario}} ha sido asignadx con éxito a Centro Colibries! </label>
         </div>
+        <div class="containerButtonClose">
+            <button mat-button class="buttonClose" (click)="close()">close</button>
+        </div>
+
     </div>
 </div>
