@@ -1,6 +1,5 @@
 export interface Users {
-    nombre: string
-    email: string
-    contrasena: string
+    usuario: string
+    centroAsignado: string
     
 }
