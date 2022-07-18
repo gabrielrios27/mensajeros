@@ -11,7 +11,15 @@
         <span class="btn-add-axes__text"> AGREGAR EJES </span>
       </a>
       <label for="searchAxes" class="lbl-search-axes">
-        <input class="lbl-search-axes__input" id="searchAxes" type="text" />
+        <input
+          class="lbl-search-axes__input"
+          id="searchAxes"
+          type="text"
+          [(ngModel)]="itemSearch"
+          (ngModelChange)="Search(itemSearch)"
+          autocomplete="off"
+          spellcheck="false"
+        />
         <img
           class="lbl-search-axes__ico"
           src="../../../../../assets/icons/Search.svg"
@@ -20,7 +28,11 @@
       </label>
     </div>
     <section class="list-axes">
-      <table mat-table [dataSource]="dataSource" class="list-axes__table">
+      <table
+        mat-table
+        [dataSource]="listOfAxes_toShow"
+        class="list-axes__table"
+      >
         <!-- Position Column -->
         <ng-container matColumnDef="eje">
           <th class="list-axes__header" mat-header-cell *matHeaderCellDef>
@@ -51,7 +63,7 @@
             mat-cell
             *matCellDef="let element"
           >
-            <a href="{{ element.acciones }}">
+            <a href="{{ element.acciones.edit }}">
               <img
                 class="list-axes__ico-action"
                 src="../../../../../assets/icons/Pencil.svg"
