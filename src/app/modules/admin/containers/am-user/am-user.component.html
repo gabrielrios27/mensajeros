@@ -1,19 +1,37 @@
 <div class="container">
-    <form > 
-        <label for="">Nombre y Apellido *</label>
-        <input type="text">
-        <label for="">Centro</label>
-        <select name="" id=""  >
-            <option value="">Selecciona un centro</option>
-            <option value="">1</option>
-            <option value="">2</option>
-            <option value="">3</option>
-        </select>
-        <label for="">Usuario (direccion de email)*</label>
-        <input type="text">
-        <label for="">Contraseña (al menos 8 caracteres) *</label>
-        <input type="text">
+    <form [formGroup]="formUpEdit">
+        <section class="container-name">
+            <label for="">Nombre y Apellido *</label>
+            <input type="text" formControlName="nombre">
+            <div *ngIf="formUpEdit.controls['nombre'].invalid && formUpEdit.controls['nombre'].dirty">
+                <span *ngIf="formUpEdit.controls['nombre'].errors">Requerido</span>
+            </div>
+        </section>
+        <section class="container-select">
+            <label for="">Centro</label>
+            <select name="" id="">
+                <option value="">Selecciona un centro</option>
+                <option value="">1</option>
+                <option value="">2</option>
+                <option value="">3</option>
+            </select>
+        </section>
+        <section class="container-user">
+            <label for="">Usuario (direccion de email)*</label>
+            <input type="text" formControlName="email">
+
+            <div *ngIf="formUpEdit.controls['email'].invalid && formUpEdit.controls['email'].dirty">
+                <span *ngIf="formUpEdit.controls['email'].errors">Requerido</span>
+                <span *ngIf="formUpEdit.controls['email'].errors">Email invalido</span>
+            </div>
+        </section>
+        <section class="container-password">
+            <label for="">Contraseña (al menos 8 caracteres) *</label>
+            <input type="password" formControlName="password">
+            <div *ngIf="formUpEdit.controls['password'].invalid && formUpEdit.controls['password'].dirty">
+                <span *ngIf="formUpEdit.controls['password'].errors">Requerido</span>
+            </div>
+        </section>
         <button mat-button (click)="confirm()">Confirmar</button>
     </form>
-    
 </div>

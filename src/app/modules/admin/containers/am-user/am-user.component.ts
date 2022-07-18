@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-am-user',
@@ -9,8 +10,15 @@ import { DataService } from '../../services/data.service';
 })
 export class AmUserComponent implements OnInit {
   
+  formUpEdit: FormGroup;
 
-  constructor(private router: Router, private data:DataService) { }
+  constructor(private router: Router, private data:DataService, private fb:FormBuilder) {
+    this.formUpEdit = fb.group({
+      nombre: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required,Validators.email])],
+      password: ['', Validators.required]
+    })
+  }
 
   
   ngOnInit(): void {
