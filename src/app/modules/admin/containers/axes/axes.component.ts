@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subject, takeUntil } from 'rxjs';
 import { axes } from '../../models';
 import { AdminService } from '../../services';
 
@@ -52,12 +51,11 @@ export class AxesComponent implements OnInit {
   toSearchPrevius: string = '';
   twoParts: Boolean = false;
 
-  // onDestroy$: Subject<boolean> = new Subject();
-
   constructor(
     private _snackBar: MatSnackBar,
     private _adminSvc: AdminService
   ) {}
+
   ngOnInit() {
     this.getAxesList();
     // this.getAxeLocalStorage();
