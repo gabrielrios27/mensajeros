@@ -35,8 +35,11 @@ export class AmUserComponent implements OnInit {
 
   confirm(){
     this.router.navigate(['admin/dashboard/usuarios']);
+    console.log(this.formUpEdit.value)
+    this.data.user = this.formUpEdit.value
+    this.data.nombreUsuario = this.formUpEdit.value.nombre
     this.data.flag = true
-    this.data.nombreUsuario = "pepe"
+    this.formUpEdit.reset()
   }
 
   edit(){
