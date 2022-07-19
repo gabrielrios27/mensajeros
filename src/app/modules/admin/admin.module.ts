@@ -28,6 +28,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LayoutsModule } from 'src/app/core/layouts/layouts.module';
+import { JwtInterceptorInterceptor } from './services/jwt-interceptor.interceptor';
 
 @NgModule({
   imports: [
