@@ -7,6 +7,6 @@ import { Users } from '../models/users';
 export class DataService {
   nombreUsuario: string =''
   flag: boolean = false
-  user: Users | undefined 
+  user?: Users
   constructor() { }
 }
