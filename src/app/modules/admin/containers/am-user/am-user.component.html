@@ -2,23 +2,25 @@
     <form [formGroup]="formUpEdit">
         <section class="container-name">
             <label for="">Nombre y Apellido *</label>
-            <input type="text" formControlName="nombre">
+            <input type="text" formControlName="nombre" [(ngModel)]="nombre">
             <mat-error *ngIf="formUpEdit.controls['nombre'].invalid && formUpEdit.controls['nombre'].dirty">
                 <span *ngIf="formUpEdit.controls['nombre'].errors">Requerido</span>
             </mat-error>
         </section>
         <section class="container-select">
             <label for="">Centro</label>
-            <select name="" id="">
+            <select name="" id="" [(ngModel)]="centroAsignado">
                 <option value="">Selecciona un centro</option>
                 <option value="">1</option>
                 <option value="">2</option>
                 <option value="">3</option>
+                <option value="">{{centroAsignado}}</option>
+                
             </select>
         </section>
         <section class="container-user">
             <label for="">Usuario (direccion de email)*</label>
-            <input type="text" formControlName="email">
+            <input type="text" formControlName="email" [(ngModel)]="email">
 
             <mat-error *ngIf="formUpEdit.controls['email'].invalid && formUpEdit.controls['email'].dirty">
                 <span *ngIf="formUpEdit.controls['email'].hasError('required')">Requerido</span>
@@ -27,7 +29,7 @@
         </section>
         <section class="container-password">
             <label for="">Contraseña (al menos 8 caracteres) *</label>
-            <input type="password" formControlName="password">
+            <input type="password" formControlName="password" [(ngModel)]="contrasena">
             <mat-error *ngIf="formUpEdit.controls['password'].invalid && formUpEdit.controls['password'].dirty">
                 <span *ngIf="formUpEdit.controls['password'].hasError('required')">Requerido</span>
                 <span *ngIf="formUpEdit.controls['password'].hasError('minLength')">Minimo 8 caracteres</span>
