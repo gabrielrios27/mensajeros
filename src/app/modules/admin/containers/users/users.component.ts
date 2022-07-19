@@ -70,6 +70,10 @@ export class UsersComponent implements OnInit {
 
 
   close(){
+    if(this.data.user !=null){
+      this.dataSource.push(this.data.user)
+    }
+    
     this.data.flag = false
   }
 }
