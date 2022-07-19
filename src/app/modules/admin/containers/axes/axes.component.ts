@@ -1,34 +1,37 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject, takeUntil } from 'rxjs';
+import { axes } from '../../models';
+import { AdminService } from '../../services';
 
-export interface PeriodicElement {
-  centro: string;
-  eje: string;
-  acciones: any;
-}
+// export interface PeriodicElement {
+//   centro: string;
+//   eje: string;
+//   acciones: any;
+// }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    eje: 'Salud',
-    centro: 'Hogar San José',
-    acciones: { edit: '/agregar-eje', delete: 'id' },
-  },
-  {
-    eje: 'Educación',
-    centro: 'Los Colibríes',
-    acciones: { edit: '/agregar-eje', delete: 'id' },
-  },
-  {
-    eje: 'Eje 3',
-    centro: 'La balsa',
-    acciones: { edit: '/agregar-eje', delete: 'id' },
-  },
-  {
-    eje: 'Eje 4',
-    centro: 'Hogar San José, La Balsa',
-    acciones: { edit: '/agregar-eje', delete: 'id' },
-  },
-];
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   {
+//     eje: 'Salud',
+//     centro: 'Hogar San José',
+//     acciones: { edit: '/agregar-eje', delete: 'id' },
+//   },
+//   {
+//     eje: 'Educación',
+//     centro: 'Los Colibríes',
+//     acciones: { edit: '/agregar-eje', delete: 'id' },
+//   },
+//   {
+//     eje: 'Eje 3',
+//     centro: 'La balsa',
+//     acciones: { edit: '/agregar-eje', delete: 'id' },
+//   },
+//   {
+//     eje: 'Eje 4',
+//     centro: 'Hogar San José, La Balsa',
+//     acciones: { edit: '/agregar-eje', delete: 'id' },
+//   },
+// ];
 
 @Component({
   selector: 'app-axes',
@@ -38,22 +41,44 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AxesComponent implements OnInit {
   displayedColumns: string[] = ['eje', 'centro', 'acciones'];
-  listOfAxes = ELEMENT_DATA;
+  // listOfAxes = ELEMENT_DATA;
   isNewAxe: string | null = null;
 
-  // listOfAxes: any[] = [];
-  listOfAxes_toSearch: any[] = [];
-  listOfAxes_toShow: any[] = [];
+  listOfAxes: axes[] = [];
+  listOfAxes_toSearch: axes[] = [];
+  listOfAxes_toShow: axes[] = [];
   itemSearch: string = '';
   toSearch: string = '';
   toSearchPrevius: string = '';
   twoParts: Boolean = false;
 
-  constructor(private _snackBar: MatSnackBar) {}
+  // onDestroy$: Subject<boolean> = new Subject();
+
+  constructor(
+    private _snackBar: MatSnackBar,
+    private _adminSvc: AdminService
+  ) {}
   ngOnInit() {
-    this.getAxeLocalStorage();
+    this.getAxesList();
+    // this.getAxeLocalStorage();
     this.listOfAxes_toShow = this.listOfAxes;
   }
+
+  getAxesList() {
+    this._adminSvc.getAxes().subscribe({
+      next: (data: axes[]) => {
+        this.listOfAxes = data;
+        console.log(this.listOfAxes);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('Request trending complete');
+      },
+    });
+  }
+
   getAxeLocalStorage() {
     this.isNewAxe = localStorage.getItem('isNewAxe');
     if (this.isNewAxe) {
@@ -73,7 +98,7 @@ export class AxesComponent implements OnInit {
     this.listOfAxes_toSearch = [];
 
     for (let item of this.listOfAxes) {
-      if (item.eje.toUpperCase().includes(this.toSearch)) {
+      if (item.nombre.toUpperCase().includes(this.toSearch)) {
         /*si la pelicula incluye la cadena de texto a buscar entonces se guarda en el nuevo arreglo */
         this.listOfAxes_toSearch.push(item);
         this.twoParts = false;
@@ -98,8 +123,8 @@ export class AxesComponent implements OnInit {
 
       for (let item of this.listOfAxes) {
         if (
-          item.eje.toUpperCase().includes(toSearchOne) &&
-          item.eje.toUpperCase().includes(toSearchTwo)
+          item.nombre.toUpperCase().includes(toSearchOne) &&
+          item.nombre.toUpperCase().includes(toSearchTwo)
         ) {
           /*si la pelicula incluye las cadenas de texto a buscar entonces se guarda en el arreglo */
           this.listOfAxes_toSearch.push(item);

@@ -39,7 +39,7 @@
             Ejes
           </th>
           <td class="list-axes__axe-cell" mat-cell *matCellDef="let element">
-            {{ element.eje }}
+            {{ element.nombre }}
           </td>
         </ng-container>
 
@@ -49,7 +49,7 @@
             Centros Asociados (Iniciales)
           </th>
           <td class="list-axes__center-cell" mat-cell *matCellDef="let element">
-            {{ element.centro }}
+            Los Colibríes
           </td>
         </ng-container>
 
@@ -63,7 +63,7 @@
             mat-cell
             *matCellDef="let element"
           >
-            <a href="{{ element.acciones.edit }}">
+            <a href="{{ element.id }}">
               <img
                 class="list-axes__ico-action"
                 src="../../../../../assets/icons/Pencil.svg"
