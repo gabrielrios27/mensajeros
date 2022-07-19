@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Routes, Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { Users } from '../../models/users';
+import { Form } from '@angular/forms';
 
 
 
@@ -13,10 +14,9 @@ export interface PeriodicElement {
 }
 
 const list: Users[] = [
-  { usuario: 'Hydrogen ramon', centroAsignado: 'adas' },
-  { usuario: 'Helium pepe', centroAsignado: 'asds' },
-  { usuario: 'Lithium tartamudo', centroAsignado: 'asdsad'},
-  { usuario: 'Beryllium gege', centroAsignado: 'adasdasd' },
+  {nombre: 'pepe',contrasena:"1234", email:"pepe@gmail.com",centroAsignado: "colibri" },
+  {nombre: 'pepes',contrasena:"1234", email:"pepe@gmail.com",centroAsignado: "colibri"  },
+  {nombre: 'pepei',contrasena:"1234", email:"pepe@gmail.com",centroAsignado: "colibri"  },
 ];
 
 @Component({
@@ -26,7 +26,7 @@ const list: Users[] = [
   styleUrls: ['users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = [ 'usuario', 'centroAsignado','acciones'];
+  displayedColumns: string[] = [ 'id', 'usuario', 'centroAsignado','acciones'];
   dataSource = list;
   usuario: any
   
@@ -44,7 +44,7 @@ export class UsersComponent implements OnInit {
     }
     else{
       this.dataSource = list.filter(res => { 
-        return res.usuario.toLowerCase().match(this.usuario.toLowerCase())
+        return res.nombre.toLowerCase().match(this.usuario.toLowerCase())
     })
     console.log(this.dataSource)
     }
@@ -53,6 +53,19 @@ export class UsersComponent implements OnInit {
 
   create(){
     this.router.navigate(['admin/dashboard/usuarios/create-user']);
+  }
+
+  edit(user: Users){
+    this.router.navigate(['admin/dashboard/usuarios/create-user'])
+    this.data.user = user
+  }
+
+  delete(user: Users){
+    for(let i of this.dataSource){
+      if(i.nombre === user.nombre){
+        this.dataSource.splice(this.dataSource.indexOf(i),1)
+      }
+    }
   }
 
 
