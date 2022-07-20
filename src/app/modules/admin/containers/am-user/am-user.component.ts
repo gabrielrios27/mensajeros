@@ -36,6 +36,7 @@ export class AmUserComponent implements OnInit {
     this.email = this.data.user?.email
     this.centroAsignado = this.data.user?.centroAsignado
     this.getCentros()
+    
   }
 
   confirm(){
@@ -53,18 +54,10 @@ export class AmUserComponent implements OnInit {
   }
 
   getCentros(){
-    this.admin.getCentro().subscribe({
-      next: (data: any) =>{
+    this.admin.get().subscribe( data=>{
         
         this.centros = data
         console.log(this.centros)
-      },
-      error: (err) =>{
-        console.log(err)
-      },
-      complete: ()=>{
-        console.log('termino')
-      }
     })
   }
 
