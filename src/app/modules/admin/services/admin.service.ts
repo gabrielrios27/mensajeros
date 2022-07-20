@@ -31,8 +31,8 @@ export class AdminService {
     return tokenLocStg;
   }
 
+  // this.headers.set('Authorization', 'Bearer ' + this.token);
   getAxes(): Observable<axes[]> {
-    // this.headers.set('Authorization', 'Bearer ' + this.token);
     return this._http.get<any>(this.baseUrl + this.EPAxes, {
       headers: this.headers,
     });
