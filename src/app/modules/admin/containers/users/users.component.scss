@@ -36,7 +36,7 @@ h1 {
 }
 
 .button-createUser {
-    font-family: 'Roboto' !important;
+    font-family: "Roboto Md 500";
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -44,13 +44,14 @@ h1 {
     align-items: center;
     letter-spacing: 1.25px;
     text-transform: uppercase;
-    padding: 12px;
-    gap: 10px;
     width: 201px;
     height: 48px;
     background: #1E1E1E;
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 50px;
+    cursor: pointer;
+    align-items: center;
+    display: flex;
 }
 
 
