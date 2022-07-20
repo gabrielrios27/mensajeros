@@ -1,6 +1,7 @@
 export interface Users {
+    id: number
     nombre: string
-    contrasena: string
     email: string
-    centroAsignado: string
+    contrasena?: string
+    rolNombre?: string
 }
