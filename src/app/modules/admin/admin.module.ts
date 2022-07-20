@@ -19,6 +19,8 @@ import * as adminGuards from './guards';
 
 /* Services */
 import * as adminServices from './services';
+import { LayoutsModule } from 'src/app/core/layouts/layouts.module';
+import { JwtInterceptorInterceptor } from './services/jwt-interceptor.interceptor';
 
 /* Angular Material Components*/
 import { MatTableModule } from '@angular/material/table';
@@ -27,9 +29,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { LayoutsModule } from 'src/app/core/layouts/layouts.module';
-import { JwtInterceptorInterceptor } from './services/jwt-interceptor.interceptor';
 import { MatTooltipModule } from '@angular/material/tooltip';
+
 @NgModule({
   imports: [
     CommonModule,
