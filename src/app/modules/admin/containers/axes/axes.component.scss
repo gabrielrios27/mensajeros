@@ -72,7 +72,15 @@
       width: 100%;
       max-width: 71.0625em;
       .list-axes__table {
+        margin-top: 22px;
         width: 100%;
+        border-collapse: separate;
+        border-spacing: 0px 8px;
+        ::ng-deep tr {
+          box-shadow: 0 2px 2px #00000040;
+          height: 48px;
+          margin-bottom: 8px;
+        }
         .list-axes__header {
           text-align: start;
           font-family: "Inter-700";
@@ -83,12 +91,16 @@
         .list-axes__header:first-of-type {
           padding-left: 1.5em;
         }
+
         .list-axes__row {
           td {
             font-family: "Inter" !important;
             font-size: 1em;
             line-height: 1.1875em;
             color: #000000;
+          }
+          td:first-of-type {
+            padding-left: 1.5em;
           }
         }
         .list-axes__axe-cell {

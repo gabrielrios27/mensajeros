@@ -29,7 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LayoutsModule } from 'src/app/core/layouts/layouts.module';
 import { JwtInterceptorInterceptor } from './services/jwt-interceptor.interceptor';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   imports: [
     CommonModule,
@@ -43,6 +43,7 @@ import { JwtInterceptorInterceptor } from './services/jwt-interceptor.intercepto
     MatSelectModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatTooltipModule,
     // AppCommonModule,
     // NavigationModule,
   ],

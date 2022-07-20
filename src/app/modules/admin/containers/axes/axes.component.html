@@ -35,45 +35,39 @@
       >
         <!-- Position Column -->
         <ng-container matColumnDef="eje">
-          <th class="list-axes__header" mat-header-cell *matHeaderCellDef>
-            Ejes
-          </th>
-          <td class="list-axes__axe-cell" mat-cell *matCellDef="let element">
-            {{ element.nombre }}
+          <th class="list-axes__header" *matHeaderCellDef>Ejes</th>
+          <td class="list-axes__axe-cell" *matCellDef="let element">
+            {{ element.eje }}
           </td>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="centro">
-          <th class="list-axes__header" mat-header-cell *matHeaderCellDef>
+          <th class="list-axes__header" *matHeaderCellDef>
             Centros Asociados (Iniciales)
           </th>
-          <td class="list-axes__center-cell" mat-cell *matCellDef="let element">
-            Los Colibríes
+          <td class="list-axes__center-cell" *matCellDef="let element">
+            {{ element.centro }}
           </td>
         </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="acciones">
-          <th class="list-axes__header" mat-header-cell *matHeaderCellDef>
-            Acciones
-          </th>
-          <td
-            class="list-axes__acction-cell"
-            mat-cell
-            *matCellDef="let element"
-          >
-            <a href="{{ element.id }}">
+          <th class="list-axes__header" *matHeaderCellDef>Acciones</th>
+          <td class="list-axes__acction-cell" *matCellDef="let element">
+            <a href="{{ element.acciones.edit }}">
               <img
                 class="list-axes__ico-action"
                 src="../../../../../assets/icons/Pencil.svg"
                 alt="Icono de editar"
+                matTooltip="Editar"
               />
             </a>
             <img
               class="list-axes__ico-action"
               src="../../../../../assets/icons/Trash.svg"
               alt="icono de Eliminar"
+              matTooltip="Borrar"
             />
           </td>
         </ng-container>
