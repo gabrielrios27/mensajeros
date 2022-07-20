@@ -3,34 +3,25 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { axes } from '../../models';
 import { AdminService } from '../../services';
 
-// export interface PeriodicElement {
-//   centro: string;
-//   eje: string;
-//   acciones: any;
-// }
+export interface PeriodicElement {
+  nombre: string;
+  id: number;
+}
 
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {
-//     eje: 'Salud',
-//     centro: 'Hogar San José',
-//     acciones: { edit: '/agregar-eje', delete: 'id' },
-//   },
-//   {
-//     eje: 'Educación',
-//     centro: 'Los Colibríes',
-//     acciones: { edit: '/agregar-eje', delete: 'id' },
-//   },
-//   {
-//     eje: 'Eje 3',
-//     centro: 'La balsa',
-//     acciones: { edit: '/agregar-eje', delete: 'id' },
-//   },
-//   {
-//     eje: 'Eje 4',
-//     centro: 'Hogar San José, La Balsa',
-//     acciones: { edit: '/agregar-eje', delete: 'id' },
-//   },
-// ];
+const ELEMENT_DATA: PeriodicElement[] = [
+  {
+    id: 123,
+    nombre: 'Educacion',
+  },
+  {
+    id: 34,
+    nombre: 'Salud',
+  },
+  {
+    id: 454,
+    nombre: 'Eje 3',
+  },
+];
 
 @Component({
   selector: 'app-axes',
@@ -40,10 +31,10 @@ import { AdminService } from '../../services';
 })
 export class AxesComponent implements OnInit {
   displayedColumns: string[] = ['eje', 'centro', 'acciones'];
-  // listOfAxes = ELEMENT_DATA;
+  listOfAxes = ELEMENT_DATA;
   isNewAxe: string | null = null;
 
-  listOfAxes: axes[] = [];
+  // listOfAxes: axes[] = [];
   listOfAxes_toSearch: axes[] = [];
   listOfAxes_toShow: axes[] = [];
   itemSearch: string = '';
@@ -57,11 +48,10 @@ export class AxesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getAxesList();
-    // this.getAxeLocalStorage();
+    // this.getAxesList();
+    this.getAxeLocalStorage();
     this.listOfAxes_toShow = this.listOfAxes;
   }
-
   getAxesList() {
     this._adminSvc.getAxes().subscribe({
       next: (data: axes[]) => {

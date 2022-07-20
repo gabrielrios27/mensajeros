@@ -21,6 +21,7 @@ export class AdminService {
 
   constructor(private _http: HttpClient) {
     // this.token = this.getTokenLocalStorage();
+    // this.setHeadersAutorization(this.token);
   }
   getTokenLocalStorage(): string {
     let tokenJSON = localStorage.getItem('token');
@@ -30,8 +31,9 @@ export class AdminService {
     }
     return tokenLocStg;
   }
-
-  // this.headers.set('Authorization', 'Bearer ' + this.token);
+  setHeadersAutorization(token: string) {
+    this.headers.set('Authorization', 'Bearer ' + token);
+  }
   getAxes(): Observable<axes[]> {
     return this._http.get<any>(this.baseUrl + this.EPAxes, {
       headers: this.headers,
