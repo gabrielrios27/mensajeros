@@ -29,6 +29,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   imports: [
     CommonModule,
@@ -42,6 +43,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSelectModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatTooltipModule,
     // AppCommonModule,
     // NavigationModule,
   ],
