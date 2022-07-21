@@ -30,14 +30,12 @@
                 <thead>
                     <tr>
                         <th>Centro</th>
-                        <th>Zona</th>
                         <th style="text-align: end;">Acciones</th>
                     </tr>
                 </thead>
             </mat-card>
             <mat-card *ngFor="let i of dataSource" class="mat-card-user-data">
                 <td>{{i.nombre}}</td>
-                <td></td>
                 <td style="text-align: end;">
                     <a class="icon-edit" matTooltip="Editar" (click)="edit(i)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor"

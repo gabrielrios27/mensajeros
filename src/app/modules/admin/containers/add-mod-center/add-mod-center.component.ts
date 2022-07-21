@@ -16,7 +16,6 @@ export class AddModCenterComponent implements OnInit {
   constructor(private router: Router, public data:DataService, private fb:FormBuilder) {
     this.formUpEdit = fb.group({
       nombre: ['', Validators.required],
-      zona: ['',Validators.required]
     })
   }
 
