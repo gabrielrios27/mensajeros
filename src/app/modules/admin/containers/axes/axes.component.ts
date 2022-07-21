@@ -25,7 +25,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 @Component({
   selector: 'app-axes',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './axes.component.html',
   styleUrls: ['axes.component.scss'],
 })
@@ -42,9 +41,10 @@ export class AxesComponent implements OnInit {
   toSearchPrevius: string = '';
   twoParts: Boolean = false;
 
-  constructor(private _snackBar: MatSnackBar, private _adminSvc: AdminService) {
-    // this.getAxesList();
-  }
+  constructor(
+    private _snackBar: MatSnackBar,
+    private _adminSvc: AdminService
+  ) {}
 
   ngOnInit() {
     this.getAxesList();

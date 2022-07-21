@@ -28,23 +28,23 @@
       </label>
     </div>
     <section class="list-axes">
-      <table class="list-axes__table">
+      <div class="list-axes__table">
         <!-- Position Column -->
-        <tr>
-          <th class="list-axes__header">Ejes</th>
-          <th class="list-axes__header">Centros Asociados (Iniciales)</th>
-          <th class="list-axes__header">Acciones</th>
-        </tr>
+        <div class="list-axes__row">
+          <div class="list-axes__header">Ejes</div>
+          <div class="list-axes__header list-axes__header--action">
+            Acciones
+          </div>
+        </div>
 
-        <tr *ngFor="let element of listOfAxes_toShow">
-          <td class="list-axes__axe-cell">
+        <div class="list-axes__row" *ngFor="let element of listOfAxes_toShow">
+          <div class="list-axes__cell list-axes__cell--axe">
             {{ element.nombre }}
-          </td>
-          <td class="list-axes__center-cell">Los Colibríes</td>
-          <td class="list-axes__acction-cell">
+          </div>
+          <div class="list-axes__cell list-axes__cell--acction">
             <a [routerLink]="['agregar-eje/', element.id]">
               <img
-                class="list-axes__ico-action"
+                class="list-axes__ico-action list-axes__ico-action--edit"
                 src="../../../../../assets/icons/Pencil.svg"
                 alt="Icono de editar"
                 matTooltip="Editar"
@@ -56,61 +56,9 @@
               alt="icono de Eliminar"
               matTooltip="Borrar"
             />
-          </td>
-        </tr>
-      </table>
-
-      <table
-        mat-table
-        [dataSource]="listOfAxes_toShow"
-        class="list-axes__table"
-      >
-        <!-- Position Column -->
-        <ng-container matColumnDef="eje">
-          <th class="list-axes__header" *matHeaderCellDef>Ejes</th>
-          <td class="list-axes__axe-cell" *matCellDef="let element">
-            {{ element.nombre }}
-          </td>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="centro">
-          <th class="list-axes__header" *matHeaderCellDef>
-            Centros Asociados (Iniciales)
-          </th>
-          <td class="list-axes__center-cell" *matCellDef="let element">
-            Los Colibríes
-          </td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="acciones">
-          <th class="list-axes__header" *matHeaderCellDef>Acciones</th>
-          <td class="list-axes__acction-cell" *matCellDef="let element">
-            <a [routerLink]="['agregar-eje/', element.id]">
-              <img
-                class="list-axes__ico-action"
-                src="../../../../../assets/icons/Pencil.svg"
-                alt="Icono de editar"
-                matTooltip="Editar"
-              />
-            </a>
-            <img
-              class="list-axes__ico-action"
-              src="../../../../../assets/icons/Trash.svg"
-              alt="icono de Eliminar"
-              matTooltip="Borrar"
-            />
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr
-          mat-row
-          class="list-axes__row"
-          *matRowDef="let row; columns: displayedColumns"
-        ></tr>
-      </table>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </section>
