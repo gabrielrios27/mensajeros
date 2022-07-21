@@ -5,73 +5,38 @@ import { DataService } from '../../services/data.service';
 import { Users } from '../../models/users';
 import { Form } from '@angular/forms';
 import { Centro } from '../../models/centro';
-
-
-
-export interface PeriodicElement {
-  usuario: string;
-  position: number;
-  centroAsignado: number;
-}
-
-const list: Users[] = [
-  { nombre: 'Facundo Gonzalez', contrasena: "1234", email: "pepe@gmail.com", id: 1 },
-  { nombre: 'pepes', contrasena: "1234", email: "pepe@gmail.com", id: 2 },
-  { nombre: 'pepei', contrasena: "1234", email: "pepe@gmail.com", id: 3 },
-];
-
-const centros: Centro[] = [
-  {
-  id: 1,
-  nombre: "Colibries",
-  usuario:  {
-    id: 1,
-    nombre: "Facundo Gonzalez",
-    email: "facugonzalez@gmail.com"
-  }
-},
-{
-  id: 2,
-    nombre: "La Balsa",
-  usuario: {
-    id: 1,
-      nombre: "pepes",
-      email: "facugonzalez@gmail.com"
-  }
-}
-]
+import { AdminService } from '../../services';
 
 @Component({
   selector: 'app-users',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './users.component.html',
   styleUrls: ['users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'usuario', 'centroAsignado', 'acciones'];
-  dataSource = list;
   usuario: any
-  //centro: Array<Centro> = new Array
-  centros = centros
+  user: Array<Users> = new Array
+  centro: Array<Centro> = new Array
 
-  constructor(private router: Router, private route: ActivatedRoute, public data: DataService) { }
+  constructor(private router: Router, private route: ActivatedRoute, public data: DataService, private admin: AdminService) { }
 
 
   ngOnInit() {
-    this.dataSource = list
+
+    this.getCentros()
+    this.getUsers()
   }
 
   busca(e: string) {
 
-    if (e.toLocaleLowerCase() == '') {
-      this.ngOnInit()
-    }
-    else {
-      this.dataSource = list.filter(res => {
-        return res.nombre.toLowerCase().match(this.usuario.toLowerCase())
-      })
-      console.log(this.dataSource)
-    }
+    // if (e.toLocaleLowerCase() == '') {
+    //   this.ngOnInit()
+    // }
+    // else {
+    //   this.dataSource = list.filter(res => {
+    //     return res.nombre.toLowerCase().match(this.usuario.toLowerCase())
+    //   })
+    //   console.log(this.dataSource)
+    // }
 
   }
 
@@ -85,28 +50,45 @@ export class UsersComponent implements OnInit {
   }
 
   delete(user: Users) {
-    for (let i of this.dataSource) {
-      if (i.nombre === user.nombre) {
-        this.dataSource.splice(this.dataSource.indexOf(i), 1)
-      }
-    }
+    // for (let i of this.dataSource) {
+    //   if (i.nombre === user.nombre) {
+    //     this.dataSource.splice(this.dataSource.indexOf(i), 1)
+    //   }
+    // }
   }
 
-  getCentro(user: Users): any {
-    for (let centro of centros) {
-      if (user.nombre == centro.usuario.nombre) {
-        return centro.nombre
+  centroAsignado(user: Users): any {
+    for (let c of this.centro) {
+      if (user.nombre == c.usuario.nombre) {
+        return c.nombre
       }
     }
 
+  }
+
+  getCentros() {
+    this.admin.getCentros().subscribe(data => {
+
+      this.centro = data
+      console.log(this.centro)
+    })
+  }
+
+  getUsers() {
+    this.admin.getUsers().subscribe(res => {
+      this.user = res.filter(resp => {
+            return resp.rolNombre?.match("ROLE_USER")
+        })
+      console.log(this.user)
+    })
   }
 
 
   close() {
-    if (this.data.user != null) {
-      this.dataSource.push(this.data.user)
-    }
+    // if (this.data.user != null) {
+    //   this.dataSource.push(this.data.user)
+    // }
 
-    this.data.flag = false
+    // this.data.flag = false
   }
 }
