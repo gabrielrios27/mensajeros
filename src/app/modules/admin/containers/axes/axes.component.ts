@@ -31,10 +31,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AxesComponent implements OnInit {
   displayedColumns: string[] = ['eje', 'centro', 'acciones'];
-  listOfAxes = ELEMENT_DATA;
+  // listOfAxes = ELEMENT_DATA;
   isNewAxe: string | null = null;
 
-  // listOfAxes: axes[] = [];
+  listOfAxes: axes[] = [];
   listOfAxes_toSearch: axes[] = [];
   listOfAxes_toShow: axes[] = [];
   itemSearch: string = '';
@@ -48,7 +48,7 @@ export class AxesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.getAxesList();
+    this.getAxesList();
     this.getAxeLocalStorage();
     this.listOfAxes_toShow = this.listOfAxes;
   }
