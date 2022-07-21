@@ -51,6 +51,11 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'ejes/agregar-eje/:id',
+    canActivate: [],
+    component: adminContainers.AddAxesComponent,
+  },
+  {
     path: 'reportes',
     canActivate: [],
     component: adminContainers.ReportsComponent,
