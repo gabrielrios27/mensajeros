@@ -32,6 +32,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { AddModCenterComponent } from './containers/add-mod-center/add-mod-center.component';
 
 
 
@@ -55,7 +56,7 @@ import { MatSelectModule } from '@angular/material/select';
     // NavigationModule,
   ],
   providers: [...adminServices.services, ...adminGuards.guards],
-  declarations: [...adminContainers.containers, ...adminComponents.components, AmUserComponent],
+  declarations: [...adminContainers.containers, ...adminComponents.components, AmUserComponent, AddModCenterComponent],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })
 export class AdminModule {}

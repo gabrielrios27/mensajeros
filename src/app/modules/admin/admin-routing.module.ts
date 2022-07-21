@@ -13,6 +13,7 @@ import * as adminComponents from './components';
 /* Guards */
 import * as adminGuards from './guards';
 import { AmUserComponent } from './containers/am-user/am-user.component';
+import { AddModCenterComponent } from './containers/add-mod-center/add-mod-center.component';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -60,6 +61,11 @@ export const ROUTES: Routes = [
   {
     path: 'usuarios/create-user',
     component: AmUserComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'centros/add-mod-center',
+    component: AddModCenterComponent,
     pathMatch: 'full'
   },
   {
