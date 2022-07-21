@@ -28,6 +28,38 @@
       </label>
     </div>
     <section class="list-axes">
+      <table class="list-axes__table">
+        <!-- Position Column -->
+        <tr>
+          <th class="list-axes__header">Ejes</th>
+          <th class="list-axes__header">Centros Asociados (Iniciales)</th>
+          <th class="list-axes__header">Acciones</th>
+        </tr>
+
+        <tr *ngFor="let element of listOfAxes_toShow">
+          <td class="list-axes__axe-cell">
+            {{ element.nombre }}
+          </td>
+          <td class="list-axes__center-cell">Los Colibríes</td>
+          <td class="list-axes__acction-cell">
+            <a [routerLink]="['agregar-eje/', element.id]">
+              <img
+                class="list-axes__ico-action"
+                src="../../../../../assets/icons/Pencil.svg"
+                alt="Icono de editar"
+                matTooltip="Editar"
+              />
+            </a>
+            <img
+              class="list-axes__ico-action"
+              src="../../../../../assets/icons/Trash.svg"
+              alt="icono de Eliminar"
+              matTooltip="Borrar"
+            />
+          </td>
+        </tr>
+      </table>
+
       <table
         mat-table
         [dataSource]="listOfAxes_toShow"

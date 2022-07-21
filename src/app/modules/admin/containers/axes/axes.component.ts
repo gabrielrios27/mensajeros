@@ -42,21 +42,20 @@ export class AxesComponent implements OnInit {
   toSearchPrevius: string = '';
   twoParts: Boolean = false;
 
-  constructor(
-    private _snackBar: MatSnackBar,
-    private _adminSvc: AdminService
-  ) {}
+  constructor(private _snackBar: MatSnackBar, private _adminSvc: AdminService) {
+    // this.getAxesList();
+  }
 
   ngOnInit() {
     this.getAxesList();
     this.getAxeLocalStorage();
-    this.listOfAxes_toShow = this.listOfAxes;
   }
   getAxesList() {
     this._adminSvc.getAxes().subscribe({
       next: (data: axes[]) => {
         this.listOfAxes = data;
         console.log(this.listOfAxes);
+        this.listOfAxes_toShow = this.listOfAxes;
       },
       error: (err) => {
         console.log(err);
