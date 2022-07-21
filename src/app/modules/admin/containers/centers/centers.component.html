@@ -1,1 +1,83 @@
-p centers
+<div class="container">
+    <div class="container-h1">
+        <h1>Centros</h1>
+    </div>
+    <div class="container-search-botton">
+        <button class="button-createUser" style="color: white; font-family: Roboto Md 500;" (click)="create()"> <svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building"
+                style="margin-left:10px ; margin-right: 10px;" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z" />
+                <path
+                    d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z" />
+            </svg>
+            Agregar usuario
+        </button>
+        <div>
+            <input class="input-search" type="text" (ngModelChange)="busca($event)" [(ngModel)]="Centro">
+        </div>
+        <a matTooltip="Buscar" style="margin-top: 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search"
+                viewBox="0 0 16 16">
+                <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+            </svg>
+        </a>
+    </div>
+    <table>
+        <tbody>
+            <mat-card>
+                <thead>
+                    <tr>
+                        <th>Centro</th>
+                        <th>Zona</th>
+                        <th style="text-align: end;">Acciones</th>
+                    </tr>
+                </thead>
+            </mat-card>
+            <mat-card *ngFor="let i of dataSource" class="mat-card-user-data">
+                <td>{{i.nombre}}</td>
+                <td></td>
+                <td style="text-align: end;">
+                    <a class="icon-edit" matTooltip="Editar" (click)="edit(i)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor"
+                            class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path
+                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                        </svg>
+                    </a>
+                    <a matTooltip="Borrar" (click)="delete(i)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor"
+                            class="bi bi-trash" viewBox="0 0 16 16">
+                            <path
+                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd"
+                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                        </svg>
+                    </a>
+                </td>
+            </mat-card>
+
+        </tbody>
+    </table>
+    <div *ngIf="data.flag" class="label-userCreate">
+        <div *ngIf="!data.editar">
+            <div class="label">
+                <label>¡El Centro {{data.nombreCentro}} fue creado con éxito! </label>
+            </div>
+            <div class="containerButtonClose">
+                <button mat-button class="buttonClose" (click)="close()">close</button>
+            </div>
+        </div>
+        <div *ngIf="data.editar">
+            <div class="label">
+                <label>¡El Centro {{data.nombreCentro}} fue modificado con éxito! </label>
+            </div>
+            <div class="containerButtonClose">
+                <button mat-button class="buttonClose" (click)="close()">close</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
