@@ -60,9 +60,10 @@ input {
     color: #000000;
     margin-top: 10px;
     padding: 10px;
+    outline-color: #007ac196;
 }
 
-select {
+.mat-select {
     background: #92CDEF;
     box-sizing: border-box;
     border: 1px solid #79747E;
@@ -70,7 +71,7 @@ select {
     width: 299px;
     height: 56px;
 
-    background-image: url("data:image/svg+xml;utf8,<svg fill='grey' height='25' viewBox='0 0 24 24' width='25' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    //background-image: url("data:image/svg+xml;utf8,<svg fill='grey' height='25' viewBox='0 0 24 24' width='25' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
     background-repeat: no-repeat;
     background-position-x: 95%;
     background-position-y: 15px;
@@ -99,18 +100,17 @@ select {
     color: #1C1B1F;
 }
 
-select::-ms-expand {
+.mat-select::-ms-expand {
     display: none;
     /*Evita que se muestre la flecha por defecto en versiones de IE*/
 }
 
-select::selection {
+.mat-select::selection {
     background-color: #FFFFFF;
 }
 
-option {
+.mat-option {
     background-color: white;
-
 }
 
 .mat-button {
