@@ -17,7 +17,6 @@
     .header__logo {
       width: 16.25em;
       padding: 0.5625em 0;
-      margin-left: 2.25em;
     }
     .header__usuario-container {
       display: flex;
@@ -67,6 +66,9 @@
     font-size: 10px;
     .header {
       justify-content: space-between;
+      .header__logo {
+        margin-left: 2.25rem;
+      }
       .header__usuario-container {
         position: relative;
         right: 1.4063em;

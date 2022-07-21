@@ -13,6 +13,7 @@ import * as adminComponents from './components';
 
 /* Containers */
 import * as adminContainers from './containers';
+import { AddAxesComponent } from './containers/add-axes/add-axes.component';
 
 /* Guards */
 import * as adminGuards from './guards';
@@ -21,6 +22,14 @@ import * as adminGuards from './guards';
 import * as adminServices from './services';
 import { LayoutsModule } from '../../core/layouts/layouts.module';
 
+/* Angular Material Components*/
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   imports: [
     CommonModule,
@@ -28,11 +37,22 @@ import { LayoutsModule } from '../../core/layouts/layouts.module';
     ReactiveFormsModule,
     FormsModule,
     LayoutsModule,
+    MatTableModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    MatTooltipModule,
     // AppCommonModule,
     // NavigationModule,
   ],
   providers: [...adminServices.services, ...adminGuards.guards],
-  declarations: [...adminContainers.containers, ...adminComponents.components],
+  declarations: [
+    ...adminContainers.containers,
+    ...adminComponents.components,
+    AddAxesComponent,
+  ],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })
 export class AdminModule {}

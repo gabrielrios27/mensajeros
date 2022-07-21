@@ -44,7 +44,12 @@ import { ForgotPasswordComponent } from './containers/forgot-password/forgot-pas
     MatCheckboxModule,
   ],
   providers: [...authServices.services, ...authGuards.guards],
-  declarations: [...authContainers.containers, ...authComponents.components, RecoverPasswordComponent, ForgotPasswordComponent],
+  declarations: [
+    ...authContainers.containers,
+    ...authComponents.components,
+    RecoverPasswordComponent,
+    ForgotPasswordComponent,
+  ],
   exports: [...authContainers.containers, ...authComponents.components],
 })
 export class AuthModule {}
