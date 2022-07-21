@@ -15,8 +15,9 @@ export class AdminService {
   // .set('Content-Type', 'application/json')
   headers = new HttpHeaders().set(
     'Authorization',
-    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4MjYzMTY4LCJleHAiOjE2NTgyNzc1Njh9.suxjupF4RQLDoZereV9y8HLWuz5VGM0OuJTB2NxkibQ'
+    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4NDA3ODQxLCJleHAiOjE2NTg0MjIyNDF9.VfLIPHYMFp40vAnteTWFtnkwLE5fsaZGX673J6QNrfc'
   );
+
   EPAxes: string = '/ejes';
 
   constructor(private _http: HttpClient) {
@@ -35,7 +36,12 @@ export class AdminService {
     this.headers.set('Authorization', 'Bearer ' + token);
   }
   getAxes(): Observable<axes[]> {
-    return this._http.get<any>(this.baseUrl + this.EPAxes, {
+    return this._http.get<axes[]>(this.baseUrl + this.EPAxes, {
+      headers: this.headers,
+    });
+  }
+  getAxeWithId(id: number): Observable<axes> {
+    return this._http.get<axes>(this.baseUrl + this.EPAxes + `/${{ id }}`, {
       headers: this.headers,
     });
   }

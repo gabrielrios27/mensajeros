@@ -37,7 +37,7 @@
         <ng-container matColumnDef="eje">
           <th class="list-axes__header" *matHeaderCellDef>Ejes</th>
           <td class="list-axes__axe-cell" *matCellDef="let element">
-            {{ element.eje }}
+            {{ element.nombre }}
           </td>
         </ng-container>
 
@@ -47,7 +47,7 @@
             Centros Asociados (Iniciales)
           </th>
           <td class="list-axes__center-cell" *matCellDef="let element">
-            {{ element.centro }}
+            Los Colibríes
           </td>
         </ng-container>
 
@@ -55,7 +55,7 @@
         <ng-container matColumnDef="acciones">
           <th class="list-axes__header" *matHeaderCellDef>Acciones</th>
           <td class="list-axes__acction-cell" *matCellDef="let element">
-            <a href="{{ element.id }}">
+            <a [routerLink]="['agregar-eje/', element.id]">
               <img
                 class="list-axes__ico-action"
                 src="../../../../../assets/icons/Pencil.svg"
