@@ -34,7 +34,6 @@ export class AmUserComponent implements OnInit {
     this.nombre = this.data.user?.nombre
     this.contrasena = this.data.user?.contrasena
     this.email = this.data.user?.email
-    this.centroAsignado = this.data.user?.centroAsignado
     this.getCentros()
     
   }
@@ -54,7 +53,7 @@ export class AmUserComponent implements OnInit {
   }
 
   getCentros(){
-    this.admin.get().subscribe( data=>{
+    this.admin.getCentros().subscribe( data=>{
         
         this.centros = data
         console.log(this.centros)
