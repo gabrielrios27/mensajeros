@@ -1,0 +1,67 @@
+<section class="container-add-axe">
+  <h1 class="container-add-axe__title">Agregar Eje</h1>
+  <div class="add-axe">
+    <form
+      class="add-axe__form"
+      action=""
+      method="post"
+      [formGroup]="newAxe"
+      (ngSubmit)="onConfirm()"
+    >
+      <label
+        class="add-axe__label"
+        for="POST-axe"
+        type="text"
+        autocomplete="off"
+        >Nombre de Eje *</label
+      >
+      <div class="add-axe__container-input">
+        <input
+          [ngClass]="invalidForm ? 'add-axe__input--alert' : ''"
+          class="add-axe__input"
+          formControlName="axe"
+          id="POST-axe"
+          type="text"
+          name="axe"
+          autocomplete="off"
+          (ngModelChange)="onChangeInput($event)"
+        />
+        <p
+          class="add-axe__alert"
+          *ngIf="newAxe.get('centers')?.hasError('required') && invalidForm"
+        >
+          Debe completar este campo.
+        </p>
+      </div>
+      <label class="add-axe__label" for="POST-axe">Centros asociados</label>
+      <div class="add-axe__container-select">
+        <mat-select
+          class="select-centers"
+          disableOptionCentering
+          panelClass="myPanelClass"
+          formControlName="centers"
+          multiple
+        >
+          <mat-option *ngFor="let center of centerList" [value]="center">{{
+            center
+          }}</mat-option>
+        </mat-select>
+        <!-- <p
+          class="add-axe__alert"
+          *ngIf="newAxe.get('centers')?.hasError('required') && invalidForm"
+        >
+          Debe elegir al menos un centro
+        </p> -->
+      </div>
+
+      <button
+        mat-raised-button
+        class="add-axe__btn"
+        type="submit"
+        color="primary"
+      >
+        Confirmar
+      </button>
+    </form>
+  </div>
+</section>

@@ -11,9 +11,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 /* Components */
 import * as adminComponents from './components';
 import { AmUserComponent } from './containers/am-user/am-user.component';
-
+import { AddAxesComponent } from './containers/add-axes/add-axes.component';
 /* Containers */
 import * as adminContainers from './containers';
+
 
 /* Guards */
 import * as adminGuards from './guards';
@@ -32,8 +33,6 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-
-
 
 @NgModule({
   imports: [
@@ -55,7 +54,11 @@ import { MatSelectModule } from '@angular/material/select';
     // NavigationModule,
   ],
   providers: [...adminServices.services, ...adminGuards.guards],
-  declarations: [...adminContainers.containers, ...adminComponents.components, AmUserComponent],
+  declarations: [
+    ...adminContainers.containers,
+    ...adminComponents.components,
+    AddAxesComponent,AmUserComponent
+  ],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })
 export class AdminModule {}

@@ -13,6 +13,7 @@ import * as adminComponents from './components';
 /* Guards */
 import * as adminGuards from './guards';
 import { AmUserComponent } from './containers/am-user/am-user.component';
+import { UsersComponent } from './containers/users/users.component';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -29,7 +30,7 @@ export const ROUTES: Routes = [
   {
     path: 'usuarios',
     canActivate: [],
-    component: adminContainers.UsersComponent,
+    component: UsersComponent,
     pathMatch: 'full',
   },
   
@@ -43,6 +44,12 @@ export const ROUTES: Routes = [
     path: 'ejes',
     canActivate: [],
     component: adminContainers.AxesComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'ejes/agregar-eje',
+    canActivate: [],
+    component: adminContainers.AddAxesComponent,
     pathMatch: 'full',
   },
   {
