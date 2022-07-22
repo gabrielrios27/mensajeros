@@ -5,8 +5,8 @@
       src="../../../../../assets/images/logo-MDP.svg"
       alt="Logo Mensajeros de la Paz"
     />
-    <section class="login">
-      <form action="" class="login__form">
+    <section class="login" >
+      <form [formGroup]="loginForm" action="" class="login__form" >
         <h2 class="login__h1">INICIAR SESIÓN</h2>
         <label class="login__label" for="user">USUARIO</label>
         <input
@@ -14,6 +14,7 @@
           type="email"
           id="user"
           placeholder="forexample@mdp.com"
+          formControlName ="email"
         />
         <label class="login__label" for="password">CONTRASEÑA</label>
         <input
@@ -21,12 +22,15 @@
           type="password"
           id="password"
           placeholder="Más de 8 caracteres"
+          formControlName ="contrasena"
         />
+        <mat-error *ngIf="flag">Email y/o contraseña incorrecto</mat-error>
+        
         <mat-checkbox class="login__recordar-usuario" color="primary">
           Recordar usuario y contraseña</mat-checkbox
         >
-        <a class="login__recuperar-contrasena" routerLink="/auth/forgot-password">Olvidé mi contraseña</a>
-        <button mat-raised-button class="login__btn-ingresar" color="primary">
+        <a routerLink="/auth/forgot-password" class="login__recuperar-contrasena">Olvidé mi contraseña</a>
+        <button mat-raised-button class="login__btn-ingresar" color="primary" type="submit" (click)="onLogin()" >
           Ingresar
         </button>
       </form>
