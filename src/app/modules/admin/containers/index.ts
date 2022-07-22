@@ -17,7 +17,7 @@ export const containers = [
 ];
 
 export * from './home/home.component';
-export * from './users/users.component';
+
 export * from './axes/axes.component';
 export * from './reports/reports.component';
 export * from './help/help.component';

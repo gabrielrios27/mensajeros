@@ -1,6 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 /* Module */
 import { AdminModule } from './admin.module';
@@ -12,7 +12,8 @@ import * as adminComponents from './components';
 
 /* Guards */
 import * as adminGuards from './guards';
-
+import { AmUserComponent } from './containers/am-user/am-user.component';
+import { UsersComponent } from './containers/users/users.component';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -29,9 +30,10 @@ export const ROUTES: Routes = [
   {
     path: 'usuarios',
     canActivate: [],
-    component: adminContainers.UsersComponent,
+    component: UsersComponent,
     pathMatch: 'full',
   },
+  
   {
     path: 'centros',
     canActivate: [],
@@ -61,6 +63,11 @@ export const ROUTES: Routes = [
     canActivate: [],
     component: adminContainers.HelpComponent,
     pathMatch: 'full',
+  },
+  {
+    path: 'usuarios/create-user',
+    component: AmUserComponent,
+    pathMatch: 'full'
   },
   {
     path: '**',

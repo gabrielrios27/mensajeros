@@ -10,10 +10,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 /* Components */
 import * as adminComponents from './components';
-
+import { AmUserComponent } from './containers/am-user/am-user.component';
+import { AddAxesComponent } from './containers/add-axes/add-axes.component';
 /* Containers */
 import * as adminContainers from './containers';
-import { AddAxesComponent } from './containers/add-axes/add-axes.component';
+
 
 /* Guards */
 import * as adminGuards from './guards';
@@ -22,14 +23,17 @@ import * as adminGuards from './guards';
 import * as adminServices from './services';
 import { LayoutsModule } from '../../core/layouts/layouts.module';
 
-/* Angular Material Components*/
-import { MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+/* Angular Material */
+import {MatTableModule} from '@angular/material/table';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatTooltipModule } from '@angular/material/tooltip';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -38,12 +42,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FormsModule,
     LayoutsModule,
     MatTableModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatSelectModule,
+    MatIconModule,
+    MatCardModule,
+    MatTooltipModule,
     MatButtonModule,
     MatSnackBarModule,
-    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
     // AppCommonModule,
     // NavigationModule,
   ],
@@ -51,7 +57,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   declarations: [
     ...adminContainers.containers,
     ...adminComponents.components,
-    AddAxesComponent,
+    AddAxesComponent,AmUserComponent
   ],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })
