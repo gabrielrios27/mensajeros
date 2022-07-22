@@ -37,7 +37,10 @@
           </div>
         </div>
 
-        <div class="list-axes__row" *ngFor="let element of listOfAxes_toShow">
+        <div
+          class="list-axes__row"
+          *ngFor="let element of listOfAxes_toShow | async"
+        >
           <div class="list-axes__cell list-axes__cell--axe">
             {{ element.nombre }}
           </div>
@@ -55,6 +58,7 @@
               src="../../../../../assets/icons/Trash.svg"
               alt="icono de Eliminar"
               matTooltip="Borrar"
+              (click)="deleteAxe(element.id)"
             />
           </div>
         </div>

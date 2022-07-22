@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BehaviorSubject } from 'rxjs';
 import { axes } from '../../models';
 import { AdminService } from '../../services';
 
@@ -35,7 +36,7 @@ export class AxesComponent implements OnInit {
 
   listOfAxes: axes[] = [];
   listOfAxes_toSearch: axes[] = [];
-  listOfAxes_toShow: axes[] = [];
+  listOfAxes_toShow = new BehaviorSubject<axes[]>([]);
   itemSearch: string = '';
   toSearch: string = '';
   toSearchPrevius: string = '';
@@ -55,7 +56,7 @@ export class AxesComponent implements OnInit {
       next: (data: axes[]) => {
         this.listOfAxes = data;
         console.log(this.listOfAxes);
-        this.listOfAxes_toShow = this.listOfAxes;
+        this.listOfAxes_toShow.next(this.listOfAxes);
       },
       error: (err) => {
         console.log(err);
@@ -65,7 +66,19 @@ export class AxesComponent implements OnInit {
       },
     });
   }
-
+  deleteAxe(id: number) {
+    this._adminSvc.deleteAxeWithId(id.toString()).subscribe({
+      next: (data: axes[]) => {
+        console.log(data);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('Request trending complete');
+      },
+    });
+  }
   getAxeLocalStorage() {
     this.isNewAxe = localStorage.getItem('isNewAxe');
     if (this.isNewAxe) {
@@ -96,7 +109,7 @@ export class AxesComponent implements OnInit {
       this.TwoPartsSearch();
     } else {
       /*si el input esta vacio se muestra el arreglo de todas las peliculas*/
-      this.listOfAxes_toShow = this.listOfAxes;
+      this.listOfAxes_toShow.next(this.listOfAxes);
     }
   }
 
@@ -117,10 +130,10 @@ export class AxesComponent implements OnInit {
           this.listOfAxes_toSearch.push(item);
         }
       }
-      this.listOfAxes_toShow = this.listOfAxes_toSearch;
+      this.listOfAxes_toShow.next(this.listOfAxes_toSearch);
     } else {
       this.twoParts = false;
-      this.listOfAxes_toShow = this.listOfAxes_toSearch;
+      this.listOfAxes_toShow.next(this.listOfAxes_toSearch);
       this.toSearchPrevius =
         this.toSearch; /*se guarda la ultima palabra buscada con la que hubo coincidencias */
     }

@@ -92,6 +92,17 @@ export class AddAxesComponent implements OnInit {
   putOrAddAxe() {
     if (this.idAxe === 0) {
       console.log('nuevo eje');
+      this._adminSvc.deleteAxeWithId(this.idAxe.toString()).subscribe({
+        next: (data: axes) => {
+          console.log(data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('Request trending complete');
+        },
+      });
     } else {
       let axeToEdit = { nombre: this.newAxe.get('axe')?.value };
 

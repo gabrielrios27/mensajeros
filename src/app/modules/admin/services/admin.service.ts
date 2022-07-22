@@ -16,7 +16,7 @@ export class AdminService {
   // .set('Content-Type', 'application/json')
   headers = new HttpHeaders().set(
     'Authorization',
-    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4NDkzMTg4LCJleHAiOjE2NTg1MDc1ODh9.G_6fyuFJpJPHmT9ybfKDlKqOEQRULYj0feEQbncNBN4'
+    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4NTEzNDU2LCJleHAiOjE2NTg1Mjc4NTZ9.TKfHLqnIEGPZ9Dl9COR8ps2gV8F4_jgSIZqoDJ0x7IM'
   );
 
   EPAxes: string = '/ejes';
@@ -48,6 +48,16 @@ export class AdminService {
   }
   editAxeWithId(id: string, body: any): Observable<axes> {
     return this._http.put<axes>(this.baseUrl + this.EPAxes + '/' + id, body, {
+      headers: this.headers,
+    });
+  }
+  createAxe(body: any): Observable<axes> {
+    return this._http.post<axes>(this.baseUrl + this.EPAxes, body, {
+      headers: this.headers,
+    });
+  }
+  deleteAxeWithId(id: string): Observable<any> {
+    return this._http.delete<axes>(this.baseUrl + this.EPAxes + '/' + id, {
       headers: this.headers,
     });
   }
