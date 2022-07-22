@@ -42,7 +42,7 @@
             {{ element.nombre }}
           </div>
           <div class="list-axes__cell list-axes__cell--acction">
-            <a [routerLink]="['agregar-eje/', element.id]">
+            <a [routerLink]="['agregar-eje/', element.id.toString()]">
               <img
                 class="list-axes__ico-action list-axes__ico-action--edit"
                 src="../../../../../assets/icons/Pencil.svg"

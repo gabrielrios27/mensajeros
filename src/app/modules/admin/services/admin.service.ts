@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { axes } from '../models';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class AdminService {
   // .set('Content-Type', 'application/json')
   headers = new HttpHeaders().set(
     'Authorization',
-    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4NDM4NzQwLCJleHAiOjE2NTg0NTMxNDB9.d5nuFA2HktirP6FDCPFtDmdFZXqTx7R682-WO8pHh3w'
+    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4NDkzMTg4LCJleHAiOjE2NTg1MDc1ODh9.G_6fyuFJpJPHmT9ybfKDlKqOEQRULYj0feEQbncNBN4'
   );
 
   EPAxes: string = '/ejes';
@@ -40,8 +41,13 @@ export class AdminService {
       headers: this.headers,
     });
   }
-  getAxeWithId(id: number): Observable<axes> {
-    return this._http.get<axes>(this.baseUrl + this.EPAxes + `/${{ id }}`, {
+  getAxeWithId(id: string): Observable<axes> {
+    return this._http.get<axes>(this.baseUrl + this.EPAxes + '/' + id, {
+      headers: this.headers,
+    });
+  }
+  editAxeWithId(id: string, body: any): Observable<axes> {
+    return this._http.put<axes>(this.baseUrl + this.EPAxes + '/' + id, body, {
       headers: this.headers,
     });
   }

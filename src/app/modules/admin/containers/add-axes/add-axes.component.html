@@ -24,6 +24,7 @@
           type="text"
           name="axe"
           autocomplete="off"
+          [(ngModel)]="axeInput"
           (ngModelChange)="onChangeInput($event)"
         />
         <p
@@ -33,7 +34,7 @@
           Debe completar este campo.
         </p>
       </div>
-      <label class="add-axe__label" for="POST-axe">Centros asociados</label>
+      <!-- <label class="add-axe__label" for="POST-axe">Centros asociados</label>
       <div class="add-axe__container-select">
         <mat-select
           class="select-centers"
@@ -46,13 +47,8 @@
             center
           }}</mat-option>
         </mat-select>
-        <!-- <p
-          class="add-axe__alert"
-          *ngIf="newAxe.get('centers')?.hasError('required') && invalidForm"
-        >
-          Debe elegir al menos un centro
-        </p> -->
-      </div>
+
+      </div> -->
 
       <button
         mat-raised-button
