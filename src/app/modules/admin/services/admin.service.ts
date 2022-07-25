@@ -16,7 +16,7 @@ export class AdminService {
 
     headers = new HttpHeaders().set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4NzUzMzA4LCJleHAiOjE2NTg3Njc3MDh9.9fxtqL9Uve7PbQZse15LU6H-SP6KC9VZ85PACh0gxds'
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4Nzc4ODAyLCJleHAiOjE2NTg3OTMyMDJ9.fdCX1E2HUjpUcebTlFZm1vXBRQxG5LDTnPqEa7PTbIQ'
     );
 
     getCentros(): Observable<Centro[]> {
@@ -30,5 +30,18 @@ export class AdminService {
             headers: this.headers
         })
     }
+
+    deleteUser(id: number): Observable<boolean>{
+        return this._http.delete<boolean>(this.baseUrl + 'usuarios/' + id,{
+            headers:this.headers
+        })
+    }
+
+    editUser(id:number): Observable<Response>{
+        return this._http.put<Response>(this.baseUrl + 'usuarios/'+ id,{
+            headers:this.headers
+        })
+    }
+    
 
 }

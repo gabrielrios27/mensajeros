@@ -50,11 +50,18 @@ export class UsersComponent implements OnInit {
   }
 
   delete(user: Users) {
-    // for (let i of this.dataSource) {
-    //   if (i.nombre === user.nombre) {
-    //     this.dataSource.splice(this.dataSource.indexOf(i), 1)
-    //   }
-    // }
+    console.log(user)
+    this.admin.deleteUser(user.id).subscribe({
+      next: (data:any)=>{
+      setTimeout(() => this.cdr.detectChanges())
+      console.log(data)
+      this.getUsers()
+    },
+    error: (err)=>{
+      console.log(err)
+    }
+    })
+    
   }
 
   centroAsignado(user: Users): any {
