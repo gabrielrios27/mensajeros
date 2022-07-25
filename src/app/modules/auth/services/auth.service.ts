@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, pipe, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Login } from '../models/login';
@@ -12,7 +13,7 @@ export class AuthService {
     private loggedIn = new BehaviorSubject<boolean>(false);
 
 
-    constructor(private _http: HttpClient) { }
+    constructor(private _http: HttpClient, private router: Router) { }
 
 
     getAuth$(): Observable<{}> {
@@ -22,6 +23,13 @@ export class AuthService {
     get isLogged(): Observable<boolean> {
         return this.loggedIn.asObservable();
     }
+    
+    logout() {
+        this.loggedIn.next(false)
+        localStorage.removeItem('Usuario')
+        this.router.navigate(['auth/login'])
+    }
+
 
     loginByEmail(form: Login): Observable<Response | void> {
         let direccion = this.url + "auth/login"
@@ -45,6 +53,7 @@ export class AuthService {
         return throwError(errorMsj);
     }
 
+    
 
 
 }
