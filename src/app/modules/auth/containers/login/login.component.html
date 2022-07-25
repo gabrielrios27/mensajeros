@@ -25,7 +25,7 @@
           formControlName ="contrasena"
         />
         <mat-error *ngIf="flag">Email y/o contraseña incorrecto</mat-error>
-        
+        <mat-error *ngIf="flag2">Error en el servidor</mat-error>
         <mat-checkbox class="login__recordar-usuario" color="primary">
           Recordar usuario y contraseña</mat-checkbox
         >
