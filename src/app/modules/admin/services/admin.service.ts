@@ -16,7 +16,7 @@ export class AdminService {
 
     headers = new HttpHeaders().set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4NDM1NDYxLCJleHAiOjE2NTg0NDk4NjF9.VjHJy6guhfBhucO_uWEnz66_7nGoNEIvy_JUho3ceqU'
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4NzUzMzA4LCJleHAiOjE2NTg3Njc3MDh9.9fxtqL9Uve7PbQZse15LU6H-SP6KC9VZ85PACh0gxds'
     );
 
     getCentros(): Observable<Centro[]> {

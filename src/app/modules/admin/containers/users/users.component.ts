@@ -1,9 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {  ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Routes, Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { Users } from '../../models/users';
-import { Form } from '@angular/forms';
 import { Centro } from '../../models/centro';
 import { AdminService } from '../../services';
 
@@ -13,30 +11,32 @@ import { AdminService } from '../../services';
   styleUrls: ['users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  usuario: any
+  usuario: string =''
   user: Array<Users> = new Array
-  centro: Array<Centro> = new Array
+  centros: Array<Centro> = new Array
+  usershow: Array<Users> = new Array
 
-  constructor(private router: Router, private route: ActivatedRoute, public data: DataService, private admin: AdminService) { }
+  constructor(private router: Router, private route: ActivatedRoute, public data: DataService, private admin: AdminService,private cdr: ChangeDetectorRef) { }
 
 
   ngOnInit() {
 
-    this.getCentros()
+    // this.getCentros()
     this.getUsers()
   }
 
   busca(e: string) {
 
-    // if (e.toLocaleLowerCase() == '') {
-    //   this.ngOnInit()
-    // }
-    // else {
-    //   this.dataSource = list.filter(res => {
-    //     return res.nombre.toLowerCase().match(this.usuario.toLowerCase())
-    //   })
-    //   console.log(this.dataSource)
-    // }
+    if (e.toLocaleLowerCase() == '') {
+      this.ngOnInit()
+    }
+    else {
+      this.user = this.user.filter(res => {
+        return res.nombre.toLocaleLowerCase().match(this.usuario.toLocaleLowerCase())
+      })
+      console.log(this.usuario)
+      console.log(this.user)
+    }
 
   }
 
@@ -58,7 +58,7 @@ export class UsersComponent implements OnInit {
   }
 
   centroAsignado(user: Users): any {
-    for (let c of this.centro) {
+    for (let c of this.centros) {
       if (user.nombre == c.usuario.nombre) {
         return c.nombre
       }
@@ -69,26 +69,30 @@ export class UsersComponent implements OnInit {
   getCentros() {
     this.admin.getCentros().subscribe(data => {
 
-      this.centro = data
-      console.log(this.centro)
+      this.centros = data
+      console.log(this.centros)
     })
   }
 
   getUsers() {
-    this.admin.getUsers().subscribe(res => {
-      this.user = res.filter(resp => {
-            return resp.rolNombre?.match("ROLE_USER")
+    this.admin.getUsers().subscribe({
+      next:(res: Users[])=>{
+        this.user = res.filter(resp=>{
+          return resp.rolNombre?.match("ROLE_USER")
         })
-      console.log(this.user)
+        setTimeout(() => this.cdr.detectChanges())
+        console.log(this.user)
+      },
+      error: (err) =>{
+        console.log(err)
+      }
     })
   }
 
 
-  close() {
-    // if (this.data.user != null) {
-    //   this.dataSource.push(this.data.user)
-    // }
+  
 
-    // this.data.flag = false
+  close() {
+    this.data.flag = false
   }
 }
