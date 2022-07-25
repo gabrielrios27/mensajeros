@@ -32,7 +32,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class AxesComponent implements OnInit {
   displayedColumns: string[] = ['eje', 'centro', 'acciones'];
   // listOfAxes = ELEMENT_DATA;
-  isNewAxe: string | null = null;
+  newOrEditedAxe: string | null = null;
 
   listOfAxes: axes[] = [];
   listOfAxes_toSearch: axes[] = [];
@@ -67,6 +67,14 @@ export class AxesComponent implements OnInit {
     });
   }
   deleteAxe(id: number) {
+    this.listOfAxes_toSearch = [];
+    for (let item of this.listOfAxes) {
+      if (item.id !== id) {
+        this.listOfAxes_toSearch.push(item);
+      }
+    }
+    this.listOfAxes = this.listOfAxes_toSearch;
+    this.listOfAxes_toShow.next(this.listOfAxes_toSearch);
     this._adminSvc.deleteAxeWithId(id.toString()).subscribe({
       next: (data: axes[]) => {
         console.log(data);
@@ -76,15 +84,28 @@ export class AxesComponent implements OnInit {
       },
       complete: () => {
         console.log('Request trending complete');
+        this.getAxesList();
       },
     });
   }
   getAxeLocalStorage() {
-    this.isNewAxe = localStorage.getItem('isNewAxe');
-    if (this.isNewAxe) {
-      this._snackBar.open('¡El Eje fue creado con éxito!', 'CERRAR', {
-        duration: 3000,
-      });
+    this.newOrEditedAxe = localStorage.getItem('newOrEditedAxe');
+    let isNewAxeStr = localStorage.getItem('isNewAxe');
+    let isNewAxe;
+    if (isNewAxeStr) {
+      isNewAxe = JSON.parse(isNewAxeStr);
+    }
+    if (this.newOrEditedAxe) {
+      if (isNewAxe) {
+        this._snackBar.open('¡El Eje fue creado con éxito!', 'CERRAR', {
+          duration: 3000,
+        });
+      } else {
+        this._snackBar.open('¡El Eje fue modificado con éxito!', 'CERRAR', {
+          duration: 3000,
+        });
+      }
+      localStorage.removeItem('newOrEditedAxe');
       localStorage.removeItem('isNewAxe');
     }
   }

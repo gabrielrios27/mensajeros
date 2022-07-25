@@ -16,7 +16,7 @@ export class AdminService {
   // .set('Content-Type', 'application/json')
   headers = new HttpHeaders().set(
     'Authorization',
-    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4NTEzNDU2LCJleHAiOjE2NTg1Mjc4NTZ9.TKfHLqnIEGPZ9Dl9COR8ps2gV8F4_jgSIZqoDJ0x7IM'
+    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4NzUzODYxLCJleHAiOjE2NTg3NjgyNjF9.pwO3AECXVUCck6ECRurfGwoBEMoTjVQqsjLOqF77EBk'
   );
 
   EPAxes: string = '/ejes';

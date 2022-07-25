@@ -83,7 +83,6 @@ export class AddAxesComponent implements OnInit {
         });
       } else {
         console.log(this.newAxe);
-        this.setAxeLocStg(true);
         this.putOrAddAxe();
         this.router.navigate(['admin/dashboard/ejes']);
       }
@@ -91,8 +90,9 @@ export class AddAxesComponent implements OnInit {
   }
   putOrAddAxe() {
     if (this.idAxe === 0) {
-      console.log('nuevo eje');
-      this._adminSvc.deleteAxeWithId(this.idAxe.toString()).subscribe({
+      let axeToCreate: axes = { nombre: this.newAxe.get('axe')?.value, id: 0 };
+      this.setAxeLocStg(axeToCreate, true);
+      this._adminSvc.createAxe(axeToCreate).subscribe({
         next: (data: axes) => {
           console.log(data);
         },
@@ -104,8 +104,11 @@ export class AddAxesComponent implements OnInit {
         },
       });
     } else {
-      let axeToEdit = { nombre: this.newAxe.get('axe')?.value };
-
+      let axeToEdit: axes = {
+        nombre: this.newAxe.get('axe')?.value,
+        id: this.idAxe,
+      };
+      this.setAxeLocStg(axeToEdit, false);
       this._adminSvc.editAxeWithId(this.idAxe.toString(), axeToEdit).subscribe({
         next: (data: axes) => {
           console.log(data);
@@ -124,8 +127,9 @@ export class AddAxesComponent implements OnInit {
       this.invalidForm = false;
     }
   }
-  setAxeLocStg(data: boolean) {
-    localStorage.setItem('isNewAxe', JSON.stringify(data));
+  setAxeLocStg(data: axes, isNewAxe: boolean) {
+    localStorage.setItem('newOrEditedAxe', JSON.stringify(data));
+    localStorage.setItem('isNewAxe', JSON.stringify(isNewAxe));
   }
   getIdFromRute(): number {
     let idToShow;
