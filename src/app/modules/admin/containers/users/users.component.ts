@@ -1,79 +1,105 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {  ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Routes, Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { Users } from '../../models/users';
-import { Form } from '@angular/forms';
-
-
-
-export interface PeriodicElement {
-  usuario: string;
-  position: number;
-  centroAsignado: number;
-}
-
-const list: Users[] = [
-  {nombre: 'pepe',contrasena:"1234", email:"pepe@gmail.com",centroAsignado: "colibri" },
-  {nombre: 'pepes',contrasena:"1234", email:"pepe@gmail.com",centroAsignado: "colibri"  },
-  {nombre: 'pepei',contrasena:"1234", email:"pepe@gmail.com",centroAsignado: "colibri"  },
-];
+import { Centro } from '../../models/centro';
+import { AdminService } from '../../services';
 
 @Component({
   selector: 'app-users',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './users.component.html',
   styleUrls: ['users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = [ 'id', 'usuario', 'centroAsignado','acciones'];
-  dataSource = list;
-  usuario: any
-  
-  constructor(private router: Router,private route: ActivatedRoute, public data: DataService) {}
+  usuario: string =''
+  user: Array<Users> = new Array
+  centros: Array<Centro> = new Array
+  usershow: Array<Users> = new Array
+
+  constructor(private router: Router, private route: ActivatedRoute, public data: DataService, private admin: AdminService,private cdr: ChangeDetectorRef) { }
 
 
   ngOnInit() {
-    this.dataSource = list
+
+    // this.getCentros()
+    this.getUsers()
   }
 
   busca(e: string) {
 
-    if(e.toLocaleLowerCase() == ''){
+    if (e.toLocaleLowerCase() == '') {
       this.ngOnInit()
     }
-    else{
-      this.dataSource = list.filter(res => { 
-        return res.nombre.toLowerCase().match(this.usuario.toLowerCase())
-    })
-    console.log(this.dataSource)
+    else {
+      this.user = this.user.filter(res => {
+        return res.nombre.toLocaleLowerCase().match(this.usuario.toLocaleLowerCase())
+      })
+      console.log(this.usuario)
+      console.log(this.user)
     }
-    
+
   }
 
-  create(){
+  create() {
     this.router.navigate(['admin/dashboard/usuarios/create-user']);
   }
 
-  edit(user: Users){
+  edit(user: Users) {
     this.router.navigate(['admin/dashboard/usuarios/create-user'])
     this.data.user = user
   }
 
-  delete(user: Users){
-    for(let i of this.dataSource){
-      if(i.nombre === user.nombre){
-        this.dataSource.splice(this.dataSource.indexOf(i),1)
+  delete(user: Users) {
+    console.log(user)
+    this.admin.deleteUser(user.id).subscribe({
+      next: (data:any)=>{
+      setTimeout(() => this.cdr.detectChanges())
+      console.log(data)
+      this.getUsers()
+    },
+    error: (err)=>{
+      console.log(err)
+    }
+    })
+    
+  }
+
+  centroAsignado(user: Users): any {
+    for (let c of this.centros) {
+      if (user.nombre == c.usuario.nombre) {
+        return c.nombre
       }
     }
+
+  }
+
+  getCentros() {
+    this.admin.getCentros().subscribe(data => {
+
+      this.centros = data
+      console.log(this.centros)
+    })
+  }
+
+  getUsers() {
+    this.admin.getUsers().subscribe({
+      next:(res: Users[])=>{
+        this.user = res.filter(resp=>{
+          return resp.rolNombre?.match("ROLE_USER")
+        })
+        setTimeout(() => this.cdr.detectChanges())
+        console.log(this.user)
+      },
+      error: (err) =>{
+        console.log(err)
+      }
+    })
   }
 
 
-  close(){
-    if(this.data.user !=null){
-      this.dataSource.push(this.data.user)
-    }
-    
+  
+
+  close() {
     this.data.flag = false
   }
 }
