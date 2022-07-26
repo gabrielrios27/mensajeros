@@ -58,7 +58,7 @@ import { AddModCenterComponent } from './containers/add-mod-center/add-mod-cente
   declarations: [
     ...adminContainers.containers,
     ...adminComponents.components,
-    AddAxesComponent,AmUserComponent
+    AddAxesComponent,AmUserComponent,AddModCenterComponent
   ],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })
