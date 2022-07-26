@@ -16,6 +16,9 @@ npm run generate:directive -- --path src/modules/test/directives --name Test
 npm run generate:service -- --path src/modules/test/services --name Test
 ```
 
+Para MDP:
+ng g c modules/admin/containers/add-axes
+
 _Note: Creating a Component and a Container use the same command,
 the difference is just the paths and how they are used._
 

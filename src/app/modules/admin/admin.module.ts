@@ -11,9 +11,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 /* Components */
 import * as adminComponents from './components';
 import { AmUserComponent } from './containers/am-user/am-user.component';
-
+import { AddAxesComponent } from './containers/add-axes/add-axes.component';
 /* Containers */
 import * as adminContainers from './containers';
+
 
 /* Guards */
 import * as adminGuards from './guards';
@@ -34,8 +35,6 @@ import {MatInputModule} from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { AddModCenterComponent } from './containers/add-mod-center/add-mod-center.component';
 
-
-
 @NgModule({
   imports: [
     CommonModule,
@@ -51,12 +50,20 @@ import { AddModCenterComponent } from './containers/add-mod-center/add-mod-cente
     MatSnackBarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
     // AppCommonModule,
     // NavigationModule,
   ],
   providers: [...adminServices.services, ...adminGuards.guards],
+<<<<<<< HEAD
   declarations: [...adminContainers.containers, ...adminComponents.components, AmUserComponent, AddModCenterComponent],
+=======
+  declarations: [
+    ...adminContainers.containers,
+    ...adminComponents.components,
+    AddAxesComponent,AmUserComponent
+  ],
+>>>>>>> origin/development
   exports: [...adminContainers.containers, ...adminComponents.components],
 })
 export class AdminModule {}

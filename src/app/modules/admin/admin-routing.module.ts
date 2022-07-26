@@ -13,7 +13,12 @@ import * as adminComponents from './components';
 /* Guards */
 import * as adminGuards from './guards';
 import { AmUserComponent } from './containers/am-user/am-user.component';
+<<<<<<< HEAD
 import { AddModCenterComponent } from './containers/add-mod-center/add-mod-center.component';
+=======
+import { UsersComponent } from './containers/users/users.component';
+import { AuthGuard } from '../auth/guards/auth.guard';
+>>>>>>> origin/development
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -30,7 +35,7 @@ export const ROUTES: Routes = [
   {
     path: 'usuarios',
     canActivate: [],
-    component: adminContainers.UsersComponent,
+    component: UsersComponent,
     pathMatch: 'full',
   },
   
@@ -44,6 +49,12 @@ export const ROUTES: Routes = [
     path: 'ejes',
     canActivate: [],
     component: adminContainers.AxesComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'ejes/agregar-eje',
+    canActivate: [],
+    component: adminContainers.AddAxesComponent,
     pathMatch: 'full',
   },
   {

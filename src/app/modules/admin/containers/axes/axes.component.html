@@ -1,1 +1,84 @@
-p axes
+<section class="container-axes">
+  <div class="axes">
+    <h1 class="axes__title">Ejes</h1>
+    <div class="axes__container-search">
+      <a class="btn-add-axes" routerLink="agregar-eje">
+        <img
+          class="btn-add-axes__ico"
+          src="../../../../../assets/icons/List ol.svg"
+          alt="Icono de lista ordenada"
+        />
+        <span class="btn-add-axes__text"> AGREGAR EJES </span>
+      </a>
+      <label for="searchAxes" class="lbl-search-axes">
+        <input
+          class="lbl-search-axes__input"
+          id="searchAxes"
+          type="text"
+          [(ngModel)]="itemSearch"
+          (ngModelChange)="Search(itemSearch)"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <img
+          class="lbl-search-axes__ico"
+          src="../../../../../assets/icons/Search.svg"
+          alt="Icono de lupa para busqueda"
+        />
+      </label>
+    </div>
+    <section class="list-axes">
+      <table
+        mat-table
+        [dataSource]="listOfAxes_toShow"
+        class="list-axes__table"
+      >
+        <!-- Position Column -->
+        <ng-container matColumnDef="eje">
+          <th class="list-axes__header" *matHeaderCellDef>Ejes</th>
+          <td class="list-axes__axe-cell" *matCellDef="let element">
+            {{ element.eje }}
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="centro">
+          <th class="list-axes__header" *matHeaderCellDef>
+            Centros Asociados (Iniciales)
+          </th>
+          <td class="list-axes__center-cell" *matCellDef="let element">
+            {{ element.centro }}
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="acciones">
+          <th class="list-axes__header" *matHeaderCellDef>Acciones</th>
+          <td class="list-axes__acction-cell" *matCellDef="let element">
+            <a href="{{ element.acciones.edit }}">
+              <img
+                class="list-axes__ico-action"
+                src="../../../../../assets/icons/Pencil.svg"
+                alt="Icono de editar"
+                matTooltip="Editar"
+              />
+            </a>
+            <img
+              class="list-axes__ico-action"
+              src="../../../../../assets/icons/Trash.svg"
+              alt="icono de Eliminar"
+              matTooltip="Borrar"
+            />
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          class="list-axes__row"
+          *matRowDef="let row; columns: displayedColumns"
+        ></tr>
+      </table>
+    </section>
+  </div>
+</section>
