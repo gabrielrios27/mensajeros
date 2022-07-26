@@ -16,29 +16,29 @@ import { AuthGuard } from './guards';
 
 /* Routes */
 export const ROUTES: Routes = [
-    {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'login',
-    },
-    {
-        path: 'login',
-        canActivate: [AuthGuard],
-        component: authContainers.LoginComponent,
-    },
-    {
-        path: 'register',
-        canActivate: [],
-        component: authContainers.RegisterComponent,
-    },
-    {
-        path: 'forgot-password',
-        component: ForgotPasswordComponent
-    },
-    {
-        path:'recover-password',
-        component: RecoverPasswordComponent
-    }
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'login',
+  },
+  {
+    path: 'login',
+    canActivate: [],
+    component: authContainers.LoginComponent,
+  },
+  {
+    path: 'register',
+    canActivate: [],
+    component: authContainers.RegisterComponent,
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: 'recover-password',
+    component: RecoverPasswordComponent,
+  },
 ];
 
 @NgModule({
