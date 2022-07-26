@@ -4,29 +4,17 @@ import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { Users } from '../../models/users';
 
-const listu: Users[] = [
-  { nombre: 'pepe', contrasena: "1234", email: "pepe@gmail.com" },
-  { nombre: 'pepes', contrasena: "1234", email: "pepe@gmail.com" },
-  { nombre: 'pepei', contrasena: "1234", email: "pepe@gmail.com" },
-];
 const list: Centro[] = [
   {
     id: 1,
     nombre: "Colibries",
-    usuario: {
-      nombre: "pepe",
-      email: "pepe@gmail.com",
-      contrasena: "1234"
-    }
+    zona: "capital"
+    
   },
   {
     id: 2,
     nombre: "La Balsa",
-    usuario: {
-      nombre: "pepe",
-      email: "pepe@gmail.com",
-      contrasena: "1234"
-    }
+    zona:"trinidad"
   },
 ];
 
