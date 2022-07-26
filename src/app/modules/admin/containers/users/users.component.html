@@ -62,12 +62,20 @@
         </tbody>
     </table>
     <div *ngIf="data.flag" class="label-userCreate">
-        <div class="label">
-            <label>¡Usuarix {{data.nombreUsuario}} ha sido asignadx con éxito a Centro Colibries! </label>
+        <div *ngIf="!data.editar">
+            <div class="label">
+                <label>¡El usuario {{data.nombreUsuario}} fue creado con éxito! </label>
+            </div>
+            <div class="containerButtonClose">
+                <button mat-button class="buttonClose" (click)="close()">close</button>
+            </div>
         </div>
-        <div class="containerButtonClose">
-            <button mat-button class="buttonClose" (click)="close()">close</button>
+        <div *ngIf="data.editar">
+            <div class="label">
+                <label>¡El usuario {{data.nombreUsuario}} fue modificado con éxito! </label>
+            </div>
+            <div class="containerButtonClose">
+                <button mat-button class="buttonClose" (click)="close()">close</button>
+            </div>
         </div>
-
-    </div>
 </div>

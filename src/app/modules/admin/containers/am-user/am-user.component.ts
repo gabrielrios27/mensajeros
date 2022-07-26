@@ -39,7 +39,7 @@ export class AmUserComponent implements OnInit {
     this.edit(user,this.data.user?.id)
     this.data.nombreUsuario = this.formUpEdit.value.nombre
     this.data.flag = true
-    this.data.edit = true
+    this.data.editar = true
     this.formUpEdit.reset()
   }
 
@@ -59,7 +59,6 @@ export class AmUserComponent implements OnInit {
 
   getCentros(){
     this.admin.getCentros().subscribe( data=>{
-        
         this.centros = data
         console.log(this.centros)
     })
