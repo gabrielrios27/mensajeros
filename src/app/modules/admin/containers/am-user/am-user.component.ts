@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -14,41 +14,46 @@ import { AdminService } from '../../services/admin.service';
 export class AmUserComponent implements OnInit {
   
   formUpEdit: FormGroup;
-  nombre: any
-  email: any
-  contrasena: any
+  nombre: any = this.data.user?.nombre
+  email: any = this.data.user?.email
+  contrasena: any = this.data.user?.contrasena
   centroAsignado: any
 
   centros: Array<Centro> = new Array<Centro>()
 
-  constructor(private router: Router, private data:DataService, private fb:FormBuilder, private admin: AdminService) {
+  constructor(private router: Router, private data:DataService, private fb:FormBuilder, private admin: AdminService,private cdr: ChangeDetectorRef) {
     this.formUpEdit = fb.group({
       nombre: ['', Validators.required],
       email: ['', Validators.compose([Validators.required,Validators.email])],
-      password: ['', Validators.compose([Validators.required,Validators.minLength(8)])]
+      contrasena: ['', Validators.compose([Validators.required,Validators.minLength(8)])]
     })
   }
 
   
   ngOnInit(): void {
-    this.nombre = this.data.user?.nombre
-    this.contrasena = this.data.user?.contrasena
-    this.email = this.data.user?.email
     this.getCentros()
-    
   }
 
-  confirm(){
-    this.router.navigate(['admin/dashboard/usuarios']);
-    console.log(this.formUpEdit.value)
-    this.data.user = this.formUpEdit.value
+  confirm(user:Users){
+    user.rolNombre = "ROLE_USER"
+    this.edit(user,this.data.user?.id)
     this.data.nombreUsuario = this.formUpEdit.value.nombre
     this.data.flag = true
+    this.data.edit = true
     this.formUpEdit.reset()
   }
 
-  edit(){
-    
+  edit(user: Users,id: any){
+    this.admin.editUser(user,id).subscribe({
+      next: data=>{
+        setTimeout(() => this.cdr.detectChanges())
+        console.log(data)
+        this.router.navigate(['admin/dashboard/usuarios']);
+      },
+      error: (err)=>{
+        console.log(err)
+      }
+    })
     
   }
 
