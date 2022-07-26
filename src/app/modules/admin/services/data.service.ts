@@ -8,5 +8,6 @@ export class DataService {
   nombreUsuario: string =''
   flag: boolean = false
   user?: Users
+  editar: boolean = false
   constructor() { }
 }
