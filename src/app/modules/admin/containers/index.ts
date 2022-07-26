@@ -5,6 +5,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { HelpComponent } from './help/help.component';
 import { CentersComponent } from './centers/centers.component';
 import { AddAxesComponent } from './add-axes/add-axes.component';
+import { AmUserComponent } from './am-user/am-user.component';
 
 export const containers = [
   HomeComponent,
@@ -14,10 +15,11 @@ export const containers = [
   HelpComponent,
   CentersComponent,
   AddAxesComponent,
+  AmUserComponent,
 ];
 
 export * from './home/home.component';
-export * from './users/users.component';
+
 export * from './axes/axes.component';
 export * from './reports/reports.component';
 export * from './help/help.component';

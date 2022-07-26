@@ -1,0 +1,38 @@
+<div class="container">
+    <form [formGroup]="formUpEdit">
+        <section class="container-name">
+            <label for="">Nombre y Apellido *</label>
+            <input type="text" formControlName="nombre" [(ngModel)]="nombre">
+            <mat-error *ngIf="formUpEdit.controls['nombre'].invalid && formUpEdit.controls['nombre'].dirty">
+                <span *ngIf="formUpEdit.controls['nombre'].errors">Requerido</span>
+            </mat-error>
+        </section>
+        <section class="container-select">
+            <label for="">Centro</label>
+            <mat-select name="" id="">
+                <mat-option value="">1</mat-option>
+                <mat-option value="">2</mat-option>
+                <mat-option value="">3</mat-option>
+                <mat-option value="">{{centroAsignado}}</mat-option>
+            </mat-select>
+        </section>
+        <section class="container-user">
+            <label for="">Usuario (direccion de email)*</label>
+            <input type="text" formControlName="email" [(ngModel)]="email">
+
+            <mat-error *ngIf="formUpEdit.controls['email'].invalid && formUpEdit.controls['email'].dirty">
+                <span *ngIf="formUpEdit.controls['email'].hasError('required')">Requerido</span>
+                <span *ngIf="formUpEdit.controls['email'].hasError('email')">Email invalido</span>
+            </mat-error>
+        </section>
+        <section class="container-password">
+            <label for="">Contraseña (al menos 8 caracteres) *</label>
+            <input type="password" formControlName="password" [(ngModel)]="contrasena">
+            <mat-error *ngIf="formUpEdit.controls['password'].invalid && formUpEdit.controls['password'].dirty">
+                <span *ngIf="formUpEdit.controls['password'].hasError('required')">Requerido</span>
+                <span *ngIf="formUpEdit.controls['password'].hasError('minLength')">Minimo 8 caracteres</span>
+            </mat-error>
+        </section>
+        <button [disabled]="formUpEdit.invalid" mat-button (click)="confirm()">Confirmar</button>
+    </form>
+</div>

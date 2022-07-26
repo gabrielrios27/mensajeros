@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LayoutsModule } from './core/layouts/layouts.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorInterceptor } from './modules/admin/services/jwt-interceptor.interceptor';
 
 @NgModule({
@@ -20,7 +20,12 @@ import { JwtInterceptorInterceptor } from './modules/admin/services/jwt-intercep
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    JwtInterceptorInterceptor,
+    HttpClientModule,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptorInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

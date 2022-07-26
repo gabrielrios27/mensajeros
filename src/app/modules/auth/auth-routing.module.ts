@@ -12,6 +12,7 @@ import * as authContainers from './containers';
 import * as authGuards from './guards';
 import { RecoverPasswordComponent } from './containers/recover-password/recover-password.component';
 import { ForgotPasswordComponent } from './containers/forgot-password/forgot-password.component';
+import { AuthGuard } from './guards';
 
 /* Routes */
 export const ROUTES: Routes = [
@@ -22,7 +23,7 @@ export const ROUTES: Routes = [
     },
     {
         path: 'login',
-        canActivate: [],
+        canActivate: [AuthGuard],
         component: authContainers.LoginComponent,
     },
     {

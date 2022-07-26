@@ -1,1 +1,188 @@
 // @import 'styles/variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import "../../../../../styles/variables.scss";
+
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 59px;
+}
+
+.container-search-botton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 30px;
+    width: 798px;
+    height: 48px;
+}
+
+.container-h1 {
+    margin-left: 230px;
+}
+
+h1 {
+    font-family: 'Futura Bk BT';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 36px;
+    text-align: center;
+    color: #000000;
+}
+
+.button-createUser {
+    font-family: "Roboto Md 500";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    align-items: center;
+    letter-spacing: 1.25px;
+    text-transform: uppercase;
+    width: 201px;
+    height: 48px;
+    background: #1E1E1E;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+}
+
+
+.input-search {
+    box-sizing: border-box;
+    width: 513px;
+    height: 45px;
+    background: #FFFFFF;
+    border: 1px solid #A3A3A3;
+    border-radius: 8px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+    padding: 10px;
+    outline-color: #007ac196;
+}
+
+table {
+    margin-top: 32px;
+    margin-left: 338px;
+    height: 440px !important;
+    width: 1137px !important;
+}
+
+
+
+th {
+    height: 19px;
+    width: 300px;
+    align-self: start;
+    text-align: inherit;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+}
+
+td {
+    height: 19px;
+    width: 300px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+}
+
+.mat-card {
+    height: 48px !important;
+    width: 1050px;
+    border-radius: 0px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.mat-card-user-data {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+a {
+    cursor: pointer;
+}
+
+.icon-edit {
+    margin-right: 10px;
+}
+
+.label-userCreate {
+    justify-content: center;
+    align-items: center;
+    padding: 16px 8px 8px 24px;
+    position: absolute;
+    background: #FFFFFF;
+    box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.14), 0px 6px 30px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 4px
+}
+
+.label {
+    width: 623px;
+    height: 300px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 40px;
+    text-align: center;
+    letter-spacing: 0.25px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.containerButtonClose {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.buttonClose {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 1.25px;
+    text-transform: uppercase;
+    color: #007AC1;
+    width: 76px;
+    height: 36px;
+    border-radius: 4px;
+}
+
+
+
+
+
+@media (max-width: 1400px) {
+    .home {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .home {
+        font-size: 10px;
+    }
+}
