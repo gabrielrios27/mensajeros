@@ -9,7 +9,7 @@
         </section>
         <section class="container-select">
             <label for="">Centro</label>
-            <mat-select name="centros" id="">
+            <mat-select [(value)]="centroAsignado" name="centros" (selectionChange)="capturar($event.value)">
                 <mat-option [value]="item.id" *ngFor="let item of centros">{{item.nombre}}</mat-option>
             </mat-select>
         </section>
