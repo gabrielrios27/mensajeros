@@ -9,11 +9,8 @@
         </section>
         <section class="container-select">
             <label for="">Centro</label>
-            <mat-select name="" id="">
-                <mat-option value="">1</mat-option>
-                <mat-option value="">2</mat-option>
-                <mat-option value="">3</mat-option>
-                <mat-option value="">{{centroAsignado}}</mat-option>
+            <mat-select name="centros" id="">
+                <mat-option [value]="item.id" *ngFor="let item of centros">{{item.nombre}}</mat-option>
             </mat-select>
         </section>
         <section class="container-user">
@@ -33,6 +30,7 @@
                 <span *ngIf="formUpEdit.controls['contrasena'].hasError('minLength')">Minimo 8 caracteres</span>
             </mat-error>
         </section>
-        <button [disabled]="formUpEdit.invalid" mat-button (click)="confirm(formUpEdit.value)">Confirmar</button>
+        <button *ngIf="!data.editar" [disabled]="formUpEdit.invalid" mat-button (click)="confirm(formUpEdit.value)">Confirmar</button>
+        <button *ngIf="data.editar" [disabled]="formUpEdit.invalid" mat-button (click)="editar(formUpEdit.value)">Confirmar</button>
     </form>
 </div>
