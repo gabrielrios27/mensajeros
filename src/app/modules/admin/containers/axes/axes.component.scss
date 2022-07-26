@@ -4,22 +4,23 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-left: 123px;
   .axes {
-    font-size: 1rem;
+    font-size: 16px;
     width: 100%;
     max-width: 71.0625em;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin: 0 15.625em;
+    margin: 0 7.9375em;
     .axes__title {
-      font-size: 1.875em;
+      font-size: 1.875rem;
       line-height: 1.2em;
       text-align: center;
       color: $color-text-primary;
-      margin-top: 2.6em;
-      margin-bottom: 1.533em;
+      margin-top: 2.5em;
+      margin-bottom: 1.166em;
     }
     .axes__container-search {
       display: flex;
@@ -169,10 +170,10 @@
     justify-content: flex-start;
     .axes {
       margin-right: 4.375em;
-      margin-left: 15.625em;
+      margin-left: 7.9375em;
       .axes__title {
         margin-top: 40px;
-        padding-right: 180px; //centra el titulo alineado con el logo del header
+        padding-right: 57px; //centra el titulo alineado con el logo del header
       }
     }
   }
@@ -195,7 +196,7 @@
   .container-axes {
     .axes {
       font-size: 0.875em;
-      margin-left: 14em;
+      margin-left: 7em;
       .axes__title {
         padding-right: 135.75px;
       }

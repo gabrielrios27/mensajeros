@@ -1,31 +1,11 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import {
-  FormControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { axes } from '../../models';
 import { AdminService } from '../../services';
 
-const ELEMENT_DATA: axes[] = [
-  {
-    id: 123,
-    nombre: 'Educacion',
-  },
-  {
-    id: 34,
-    nombre: 'Salud',
-  },
-  {
-    id: 454,
-    nombre: 'Eje 3',
-  },
-];
 @Component({
   selector: 'app-add-axes',
   templateUrl: './add-axes.component.html',
@@ -42,14 +22,7 @@ export class AddAxesComponent implements OnInit {
 
   listOfAxes: axes[] = [];
   isInList: boolean = false;
-  // centerList: string[] = [
-  //   'Hogar Colibríes',
-  //   'San Jose',
-  //   'Club de Día',
-  //   'Centro la Balsa',
-  //   'Centro la Balsa',
-  //   'Centro la Balsa',
-  // ];
+
   invalidForm: boolean = false;
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
@@ -98,9 +71,12 @@ export class AddAxesComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
         },
         complete: () => {
-          console.log('Request trending complete');
+          console.log('Request new axe complete');
         },
       });
     } else {
@@ -115,9 +91,12 @@ export class AddAxesComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
         },
         complete: () => {
-          console.log('Request trending complete');
+          console.log('Request edit axe complete');
         },
       });
     }
@@ -133,11 +112,9 @@ export class AddAxesComponent implements OnInit {
   }
   getIdFromRute(): number {
     let idToShow;
-    this.rutaActiva.paramMap
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((params: ParamMap) => {
-        idToShow = params.get('id');
-      });
+    this.rutaActiva.paramMap.subscribe((params: ParamMap) => {
+      idToShow = params.get('id');
+    });
     return Number(idToShow);
   }
   getAxeById(id: number) {
@@ -149,6 +126,9 @@ export class AddAxesComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
       },
       complete: () => {
         console.log('Request trending complete');
@@ -167,6 +147,9 @@ export class AddAxesComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
       },
       complete: () => {
         console.log('Request trending complete');
