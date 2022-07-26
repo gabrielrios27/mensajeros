@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Users } from '../../models/users';
 import { Centro } from '../../models/centro';
 import { AdminService } from '../../services/admin.service';
+import * as e from 'express';
 
 @Component({
   selector: 'app-am-user',
@@ -21,7 +22,7 @@ export class AmUserComponent implements OnInit {
 
   centros: Array<Centro> = new Array<Centro>()
 
-  constructor(private router: Router, private data:DataService, private fb:FormBuilder, private admin: AdminService,private cdr: ChangeDetectorRef) {
+  constructor(private router: Router, public data:DataService, private fb:FormBuilder, private admin: AdminService,private cdr: ChangeDetectorRef) {
     this.formUpEdit = fb.group({
       nombre: ['', Validators.required],
       email: ['', Validators.compose([Validators.required,Validators.email])],
@@ -33,14 +34,36 @@ export class AmUserComponent implements OnInit {
   ngOnInit(): void {
     this.getCentros()
   }
+  
+  confirm(user: Users){
+    console.log(this.centroAsignado)
+    this.addUser(user,this.centroAsignado)
+    this.data.nombreUsuario = this.formUpEdit.value.nombre
+    this.data.flag = true
+    this.data.editar = false
+    this.formUpEdit.reset()
+  }
 
-  confirm(user:Users){
+  editar(user:Users){
     user.rolNombre = "ROLE_USER"
     this.edit(user,this.data.user?.id)
     this.data.nombreUsuario = this.formUpEdit.value.nombre
     this.data.flag = true
     this.data.editar = true
     this.formUpEdit.reset()
+  }
+
+  addUser(user: Users, id:number){
+    this.admin.addUser(user,id).subscribe({
+      next: data=>{
+        setTimeout(() => this.cdr.detectChanges())
+        console.log(data)
+        this.router.navigate(['admin/dashboard/usuarios']);
+      },
+      error: (err)=>{
+        console.log(err)
+      }
+    })
   }
 
   edit(user: Users,id: any){
@@ -64,4 +87,7 @@ export class AmUserComponent implements OnInit {
     })
   }
 
+  capturar(e: any){
+    this.centroAsignado = e
+  }
 }
