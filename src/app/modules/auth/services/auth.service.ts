@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, pipe, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { role } from '../../admin/models';
 import { Login } from '../models/login';
 import { Response } from '../models/response';
 
 @Injectable()
 export class AuthService {
   url: string = 'https://mensajeros-back-martin.herokuapp.com/';
+  EPAuthority: string = 'usuarios/role';
   private loggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(private _http: HttpClient, private router: Router) {}
@@ -45,5 +47,9 @@ export class AuthService {
       console.log(err.status);
     }
     return throwError(errorMsj);
+  }
+
+  getRole(): Observable<role> {
+    return this._http.get<role>(this.url + this.EPAuthority);
   }
 }

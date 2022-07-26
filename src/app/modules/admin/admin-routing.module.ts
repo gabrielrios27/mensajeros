@@ -15,6 +15,7 @@ import * as adminGuards from './guards';
 import { AmUserComponent } from './containers/am-user/am-user.component';
 import { UsersComponent } from './containers/users/users.component';
 import { AuthGuard } from '../auth/guards/auth.guard';
+import { AdminGuard } from './guards';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -34,10 +35,10 @@ export const ROUTES: Routes = [
     component: UsersComponent,
     pathMatch: 'full',
   },
-  
+
   {
     path: 'centros',
-    canActivate: [],
+    canActivate: [AdminGuard],
     component: adminContainers.CentersComponent,
     pathMatch: 'full',
   },
@@ -73,7 +74,7 @@ export const ROUTES: Routes = [
   {
     path: 'usuarios/create-user',
     component: AmUserComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: '**',
