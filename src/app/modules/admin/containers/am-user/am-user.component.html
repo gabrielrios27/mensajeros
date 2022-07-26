@@ -27,12 +27,12 @@
         </section>
         <section class="container-password">
             <label for="">Contraseña (al menos 8 caracteres) *</label>
-            <input type="password" formControlName="password" [(ngModel)]="contrasena">
-            <mat-error *ngIf="formUpEdit.controls['password'].invalid && formUpEdit.controls['password'].dirty">
-                <span *ngIf="formUpEdit.controls['password'].hasError('required')">Requerido</span>
-                <span *ngIf="formUpEdit.controls['password'].hasError('minLength')">Minimo 8 caracteres</span>
+            <input type="password" formControlName="contrasena" [(ngModel)]="contrasena">
+            <mat-error *ngIf="formUpEdit.controls['contrasena'].invalid && formUpEdit.controls['contrasena'].dirty">
+                <span *ngIf="formUpEdit.controls['contrasena'].hasError('required')">Requerido</span>
+                <span *ngIf="formUpEdit.controls['contrasena'].hasError('minLength')">Minimo 8 caracteres</span>
             </mat-error>
         </section>
-        <button [disabled]="formUpEdit.invalid" mat-button (click)="confirm()">Confirmar</button>
+        <button [disabled]="formUpEdit.invalid" mat-button (click)="confirm(formUpEdit.value)">Confirmar</button>
     </form>
 </div>
