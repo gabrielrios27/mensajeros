@@ -8,6 +8,13 @@
                 <span *ngIf="formUpEdit.controls['nombre'].errors">Requerido</span>
             </mat-error>
         </section>
+        <section>
+            <label for="">Zona*</label>
+            <input type="text" formControlName="zona" [(ngModel)]="nombre" placeholder="Centro 4">
+            <mat-error *ngIf="formUpEdit.controls['zona'].invalid && formUpEdit.controls['zona'].dirty">
+                <span *ngIf="formUpEdit.controls['zona'].errors">Requerido</span>
+            </mat-error>
+        </section>
         <button [disabled]="formUpEdit.invalid" mat-button *ngIf="data.editar" (click)="editar()">Confirmar</button>
         <button [disabled]="formUpEdit.invalid" mat-button *ngIf="!data.editar" (click)="confirm()">Confirmar</button>
     </form>
