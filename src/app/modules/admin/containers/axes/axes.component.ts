@@ -15,7 +15,7 @@ export class AxesComponent implements OnInit, OnDestroy {
   // listOfAxes = ELEMENT_DATA;
   newOrEditedAxe: axes = {} as axes;
   flagEdited: boolean = false;
-  flagNew: boolean = true;
+  flagNew: boolean = false;
 
   listOfAxes: axes[] = [];
   listOfAxes_toSearch: axes[] = [];
