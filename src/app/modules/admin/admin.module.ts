@@ -49,7 +49,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSnackBarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
     // AppCommonModule,
     // NavigationModule,
   ],
