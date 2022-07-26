@@ -16,7 +16,7 @@ export class AdminService {
 
     headers = new HttpHeaders().set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4Nzc4ODAyLCJleHAiOjE2NTg3OTMyMDJ9.fdCX1E2HUjpUcebTlFZm1vXBRQxG5LDTnPqEa7PTbIQ'
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4Nzk0MDM4LCJleHAiOjE2NTg4MDg0Mzh9.MZftUQXFKXToNxMz67xKcKnqJjvvIyPDPpsKhxx0WVc'
     );
 
     getCentros(): Observable<Centro[]> {
@@ -37,8 +37,8 @@ export class AdminService {
         })
     }
 
-    editUser(id:number): Observable<Response>{
-        return this._http.put<Response>(this.baseUrl + 'usuarios/'+ id,{
+    editUser(user:Users,id: any): Observable<Response>{
+        return this._http.put<Response>(this.baseUrl + 'usuarios/'+ id, user, {
             headers:this.headers
         })
     }
