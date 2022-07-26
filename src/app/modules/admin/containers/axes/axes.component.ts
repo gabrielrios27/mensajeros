@@ -14,6 +14,8 @@ export class AxesComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['eje', 'centro', 'acciones'];
   // listOfAxes = ELEMENT_DATA;
   newOrEditedAxe: axes = {} as axes;
+  flagEdited: boolean = false;
+  flagNew: boolean = true;
 
   listOfAxes: axes[] = [];
   listOfAxes_toSearch: axes[] = [];
@@ -92,6 +94,7 @@ export class AxesComponent implements OnInit, OnDestroy {
     let newOrEditedAxeStr = localStorage.getItem('newOrEditedAxe');
     if (newOrEditedAxeStr) {
       this.newOrEditedAxe = JSON.parse(newOrEditedAxeStr);
+
       this.checkAxeInList(this.newOrEditedAxe);
     }
 
@@ -102,14 +105,16 @@ export class AxesComponent implements OnInit, OnDestroy {
     }
     if (newOrEditedAxeStr) {
       if (isNewAxe) {
-        this._snackBar.open('¡El Eje fue creado con éxito!', 'CERRAR', {
-          duration: 3000,
-        });
+        this.flagNew = true;
+        // this._snackBar.open(`¡El Eje “Eje 5” fue creado con éxito!`, 'X', {
+        //   duration: 3000000,
+        // });
         localStorage.removeItem('isNewAxe');
       } else {
-        this._snackBar.open('¡El Eje fue modificado con éxito!', 'CERRAR', {
-          duration: 3000,
-        });
+        this.flagEdited = true;
+        // this._snackBar.open('¡El Eje “Eje 5” fue editado con éxito!', 'X', {
+        //   duration: 3000000,
+        // });
       }
       localStorage.removeItem('newOrEditedAxe');
     }
@@ -180,6 +185,10 @@ export class AxesComponent implements OnInit, OnDestroy {
       this.toSearchPrevius =
         this.toSearch; /*se guarda la ultima palabra buscada con la que hubo coincidencias */
     }
+  }
+  close() {
+    this.flagNew = false;
+    this.flagEdited = false;
   }
   ngOnDestroy() {
     this.onDestroy$.next(true);

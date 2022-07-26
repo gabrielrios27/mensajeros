@@ -65,4 +65,22 @@
       </div>
     </section>
   </div>
+  <div *ngIf="flagNew" class="modal">
+    <img
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__container">
+      <img
+        class="modal__ico"
+        src="../../../../../assets/icons/Check.svg"
+        alt="icon check"
+      />
+      <p class="modal__text">
+        ¡El Eje {{ newOrEditedAxe.nombre }}"Eje 5" fue creado con éxito!
+      </p>
+    </div>
+  </div>
 </section>

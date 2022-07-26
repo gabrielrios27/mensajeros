@@ -127,33 +127,66 @@
     }
   }
 }
-
+.modal {
+  position: absolute;
+  top: 134px;
+  width: 525px;
+  height: 264px;
+  background-color: #def2d6;
+  border: 1px solid #def2d6;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 21px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .modal__btnClose {
+    width: 24px;
+    height: 31px;
+    align-self: flex-end;
+    cursor: pointer;
+  }
+  .modal__container {
+    width: 474px;
+    display: flex;
+    margin-top: 18px;
+    .modal__ico {
+      width: 94px;
+      height: 120px;
+    }
+    .modal__text {
+      font-size: 24px;
+      text-align: center;
+      letter-spacing: 0.25px;
+      color: #154520;
+      padding-top: 40px;
+      margin-bottom: 0;
+      margin-left: 15px;
+    }
+  }
+}
 ::ng-deep .cdk-overlay-container {
   .mat-snack-bar-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    // width: 372px;
-    // height: 140px;
-    width: 663px;
-    max-width: 50vw; //tamaño grande
-    height: 376px;
-    background-color: $color-white;
+
+    width: 525px;
+    max-width: 50vw;
+    height: 264px;
+    background-color: #def2d6;
     .mat-simple-snackbar {
-      height: 328px;
-      width: 630px;
+      height: 169px;
+      width: 485px;
       // height: 110px;
       display: flex;
-      flex-direction: column;
+      flex-direction: column-reverse;
       justify-content: space-between;
       align-items: center;
       .mat-simple-snack-bar-content {
-        font-size: 36px;
-        line-height: 40px;
-        // font-size: 25px;
-        // line-height: 28px;
-        font-family: "Roboto";
-        color: $color-text-primary;
+        font-size: 24px;
+        text-align: center;
+        letter-spacing: 0.25px;
+        color: #154520;
       }
       .mat-simple-snackbar-action {
         font-size: 14px;
