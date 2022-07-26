@@ -55,15 +55,11 @@ import { AddModCenterComponent } from './containers/add-mod-center/add-mod-cente
     // NavigationModule,
   ],
   providers: [...adminServices.services, ...adminGuards.guards],
-<<<<<<< HEAD
-  declarations: [...adminContainers.containers, ...adminComponents.components, AmUserComponent, AddModCenterComponent],
-=======
   declarations: [
     ...adminContainers.containers,
     ...adminComponents.components,
     AddAxesComponent,AmUserComponent
   ],
->>>>>>> origin/development
   exports: [...adminContainers.containers, ...adminComponents.components],
 })
 export class AdminModule {}

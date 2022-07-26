@@ -13,12 +13,9 @@ import * as adminComponents from './components';
 /* Guards */
 import * as adminGuards from './guards';
 import { AmUserComponent } from './containers/am-user/am-user.component';
-<<<<<<< HEAD
 import { AddModCenterComponent } from './containers/add-mod-center/add-mod-center.component';
-=======
 import { UsersComponent } from './containers/users/users.component';
 import { AuthGuard } from '../auth/guards/auth.guard';
->>>>>>> origin/development
 /* Routes */
 export const ROUTES: Routes = [
   {
