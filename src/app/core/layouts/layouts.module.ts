@@ -21,6 +21,8 @@ import * as layoutsGuards from './guards';
 import * as layoutsServices from './services';
 // Angular Material
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../modules/auth/services/auth.service';
+import { AuthGuard } from '../../modules/auth/guards/auth.guard';
 
 @NgModule({
   imports: [
@@ -32,7 +34,7 @@ import { MatIconModule } from '@angular/material/icon';
     // NavigationModule,
     MatIconModule,
   ],
-  providers: [...layoutsServices.services, ...layoutsGuards.guards],
+  providers: [...layoutsServices.services, ...layoutsGuards.guards,AuthService,AuthGuard],
   declarations: [
     ...layoutsContainers.containers,
     ...layoutsComponents.components,

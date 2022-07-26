@@ -14,6 +14,7 @@ import * as adminComponents from './components';
 import * as adminGuards from './guards';
 import { AmUserComponent } from './containers/am-user/am-user.component';
 import { UsersComponent } from './containers/users/users.component';
+import { AuthGuard } from '../auth/guards/auth.guard';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -51,6 +52,11 @@ export const ROUTES: Routes = [
     canActivate: [],
     component: adminContainers.AddAxesComponent,
     pathMatch: 'full',
+  },
+  {
+    path: 'ejes/agregar-eje/:id',
+    canActivate: [],
+    component: adminContainers.AddAxesComponent,
   },
   {
     path: 'reportes',
