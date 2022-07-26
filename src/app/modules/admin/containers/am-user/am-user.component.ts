@@ -36,20 +36,14 @@ export class AmUserComponent implements OnInit {
   }
   
   confirm(user: Users){
-    console.log(this.centroAsignado)
     this.addUser(user,this.centroAsignado)
     this.data.nombreUsuario = this.formUpEdit.value.nombre
-    this.data.flag = true
-    this.data.editar = false
     this.formUpEdit.reset()
   }
 
   editar(user:Users){
-    user.rolNombre = "ROLE_USER"
     this.edit(user,this.data.user?.id)
     this.data.nombreUsuario = this.formUpEdit.value.nombre
-    this.data.flag = true
-    this.data.editar = true
     this.formUpEdit.reset()
   }
 
@@ -57,7 +51,9 @@ export class AmUserComponent implements OnInit {
     this.admin.addUser(user,id).subscribe({
       next: data=>{
         setTimeout(() => this.cdr.detectChanges())
-        console.log(data)
+        console.log(data,"done")
+        this.data.flag = true
+        this.data.editar = false
         this.router.navigate(['admin/dashboard/usuarios']);
       },
       error: (err)=>{
@@ -71,6 +67,8 @@ export class AmUserComponent implements OnInit {
       next: data=>{
         setTimeout(() => this.cdr.detectChanges())
         console.log(data)
+        this.data.flag = true
+        this.data.editar = true
         this.router.navigate(['admin/dashboard/usuarios']);
       },
       error: (err)=>{
@@ -87,7 +85,7 @@ export class AmUserComponent implements OnInit {
     })
   }
 
-  capturar(e: any){
+  capturarCentro(e: any){
     this.centroAsignado = e
   }
 }
