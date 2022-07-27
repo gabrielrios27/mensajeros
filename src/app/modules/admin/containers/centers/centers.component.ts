@@ -1,22 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Centro } from '../../models/centro';
 import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
-import { Users } from '../../models/users';
+import { AdminService } from '../../services/admin.service';
 
-const list: Centro[] = [
-  {
-    id: 1,
-    nombre: "Colibries",
-    zona: "capital"
-    
-  },
-  {
-    id: 2,
-    nombre: "La Balsa",
-    zona:"trinidad"
-  },
-];
 
 @Component({
   selector: 'app-centers',
@@ -25,14 +12,12 @@ const list: Centro[] = [
   styleUrls: ['centers.component.scss'],
 })
 export class CentersComponent implements OnInit {
-
-  dataSource = list;
   Centro: any
   editar: boolean = false
-
-  constructor(private router: Router, public data: DataService) { }
-  ngOnInit() { 
-    this.dataSource = list
+  centros: Array<Centro> = new Array
+  constructor(private router: Router, public data: DataService, private admind: AdminService, private cdr: ChangeDetectorRef) { }
+  ngOnInit() {
+    this.getCenters()
   }
 
   busca(e: string) {
@@ -41,10 +26,10 @@ export class CentersComponent implements OnInit {
       this.ngOnInit()
     }
     else {
-      this.dataSource = list.filter(res => {
+      this.centros = this.centros.filter(res => {
         return res.nombre.toLowerCase().match(this.Centro.toLowerCase())
       })
-      console.log(this.dataSource)
+      console.log(this.centros)
     }
 
   }
@@ -60,19 +45,38 @@ export class CentersComponent implements OnInit {
     this.data.editar = true
   }
 
-  delete(center: Centro) {
-    for (let i of this.dataSource) {
-      if (i.nombre === center.nombre) {
-        this.dataSource.splice(this.dataSource.indexOf(i), 1)
+  getCenters() {
+    this.admind.getCentros().subscribe({
+      next: data => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.centros = data
+        console.log(data)
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(err)
       }
-    }
+    })
+  }
+
+  delete(center: Centro) {
+    this.admind.deleteCenter(center.id).subscribe({
+      next: data => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(data)
+      },
+      error: err => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(err)
+      }
+    })
   }
 
 
   close() {
-    if (this.data.center != null) {
-      this.dataSource.push(this.data.center)
-    }
+    // if (this.data.center != null) {
+    //   this.dataSource.push(this.data.center)
+    // }
 
     this.data.flag = false
   }
