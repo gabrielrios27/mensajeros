@@ -23,7 +23,7 @@ export class AxesComponent implements OnInit, OnDestroy {
   newOrEditedAxe: axes = {} as axes;
   flagEdited: boolean = false;
   flagNew: boolean = false;
-  flagDelete: boolean = true;
+  flagDelete: boolean = false;
   idToDelete: number = 0;
 
   listOfAxes: axes[] = [];
