@@ -1,14 +1,21 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { axes } from '../../models';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
+import { axes, flag } from '../../models';
 import { AdminService } from '../../services';
 
 @Component({
   selector: 'app-axes',
   templateUrl: './axes.component.html',
   styleUrls: ['axes.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class AxesComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['eje', 'centro', 'acciones'];
@@ -16,8 +23,7 @@ export class AxesComponent implements OnInit, OnDestroy {
   newOrEditedAxe: axes = {} as axes;
   flagEdited: boolean = false;
   flagNew: boolean = false;
-  flagDelete: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isFlagDelete: boolean = false;
+  flagDelete: boolean = false;
   idToDelete: number = 0;
 
   listOfAxes: axes[] = [];
@@ -37,14 +43,13 @@ export class AxesComponent implements OnInit, OnDestroy {
     private _adminSvc: AdminService,
     private _cdr: ChangeDetectorRef,
     private router: Router
-  ) {
-    this.flagDelete.subscribe((data) => (this.isFlagDelete = data));
-  }
+  ) {}
 
   ngOnInit() {
     this.getAxesList();
     this.getAxeLocalStorage();
   }
+
   getAxesList() {
     this._adminSvc
       .getAxes()
@@ -68,12 +73,11 @@ export class AxesComponent implements OnInit, OnDestroy {
       });
   }
   onClickDelete(id: number) {
-    this.flagDelete.next(true);
+    this.flagDelete = true;
     this.idToDelete = id;
-    console.log('flagDelete: ', this.isFlagDelete);
-    console.log('idToDelete: ', this.idToDelete);
   }
   deleteAxe(id: number) {
+    this.flagDelete = false;
     this.listOfAxes_toSearch = [];
     for (let item of this.listOfAxes) {
       if (item.id !== id) {
@@ -197,7 +201,7 @@ export class AxesComponent implements OnInit, OnDestroy {
   close() {
     this.flagNew = false;
     this.flagEdited = false;
-    this.flagDelete.next(false);
+    this.flagDelete = false;
   }
   ngOnDestroy() {
     this.onDestroy$.next(true);

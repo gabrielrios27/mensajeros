@@ -1,4 +1,4 @@
-<section class="container-axes" (click)="close()">
+<section class="container-axes">
   <div class="axes">
     <h1 class="axes__title">Ejes</h1>
     <div class="axes__container-search">
@@ -101,7 +101,7 @@
       </p>
     </div>
   </div>
-  <div *ngIf="isFlagDelete" class="modal">
+  <div *ngIf="flagDelete" class="modal">
     <img
       class="modal__btnClose"
       (click)="close()"
