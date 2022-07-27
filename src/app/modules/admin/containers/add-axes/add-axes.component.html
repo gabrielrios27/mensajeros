@@ -50,4 +50,14 @@
       </p>
     </div>
   </div>
+  <div *ngIf="flagExist" class="modal-error">
+    <div class="modal__container-error">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Info-circle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">El eje ya existe en el sistema</p>
+    </div>
+  </div>
 </section>

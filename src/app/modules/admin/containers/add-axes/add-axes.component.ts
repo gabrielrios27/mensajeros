@@ -23,8 +23,12 @@ export class AddAxesComponent implements OnInit {
   listOfAxes: axes[] = [];
   isInList: boolean = false;
   flagError: boolean = false;
+  flagExist: boolean = false;
+
   flagTimeOut: boolean = false;
+  flagTimeOutExist: boolean = false;
   timerId: any = 0;
+  timerIdExist: any = 0;
 
   invalidForm: boolean = false;
   // suscripciones
@@ -52,20 +56,19 @@ export class AddAxesComponent implements OnInit {
       this.invalidForm = true;
       this.flagTimeOut = true;
       this.timerId = setTimeout(() => {
-        if (this.flagTimeOut) {
-          this.close();
-        }
+        this.close();
       }, 4000);
       return;
     } else {
       this.invalidForm = false;
       this.isInList = this.checkInAxesList(this.newAxe.get('axe')?.value);
       if (this.isInList) {
-        this._snackBar.open('¡El Eje ya existe en el sistema!', 'CERRAR', {
-          duration: 3000,
-        });
+        this.flagExist = true;
+        this.flagTimeOutExist = true;
+        this.timerIdExist = setTimeout(() => {
+          this.close();
+        }, 4000);
       } else {
-        console.log(this.newAxe);
         this.putOrAddAxe();
         this.router.navigate(['admin/dashboard/ejes']);
       }
@@ -179,5 +182,9 @@ export class AddAxesComponent implements OnInit {
       clearTimeout(this.timerId);
     }
     this.flagError = false;
+    if (this.flagTimeOutExist) {
+      clearTimeout(this.timerIdExist);
+    }
+    this.flagExist = false;
   }
 }
