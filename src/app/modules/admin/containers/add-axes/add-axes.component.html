@@ -1,4 +1,4 @@
-<section class="container-add-axe">
+<section class="container-add-axe" (click)="close()">
   <h1 class="container-add-axe__title">Agregar Eje</h1>
   <div class="add-axe">
     <form
@@ -27,29 +27,7 @@
           [(ngModel)]="axeInput"
           (ngModelChange)="onChangeInput($event)"
         />
-        <p
-          class="add-axe__alert"
-          *ngIf="newAxe.get('centers')?.hasError('required') && invalidForm"
-        >
-          Debe completar este campo.
-        </p>
       </div>
-      <!-- <label class="add-axe__label" for="POST-axe">Centros asociados</label>
-      <div class="add-axe__container-select">
-        <mat-select
-          class="select-centers"
-          disableOptionCentering
-          panelClass="myPanelClass"
-          formControlName="centers"
-          multiple
-        >
-          <mat-option *ngFor="let center of centerList" [value]="center">{{
-            center
-          }}</mat-option>
-        </mat-select>
-
-      </div> -->
-
       <button
         mat-raised-button
         class="add-axe__btn"
@@ -59,5 +37,17 @@
         Confirmar
       </button>
     </form>
+  </div>
+  <div *ngIf="flagError" class="modal-error">
+    <div class="modal__container-error">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Info-circle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">
+        ¡Todos los campos obligatorios deben ser llenados!
+      </p>
+    </div>
   </div>
 </section>

@@ -22,6 +22,9 @@ export class AddAxesComponent implements OnInit {
 
   listOfAxes: axes[] = [];
   isInList: boolean = false;
+  flagError: boolean = false;
+  flagTimeOut: boolean = false;
+  timerId: any = 0;
 
   invalidForm: boolean = false;
   // suscripciones
@@ -45,7 +48,14 @@ export class AddAxesComponent implements OnInit {
   }
   onConfirm() {
     if (this.newAxe.invalid) {
+      this.flagError = true;
       this.invalidForm = true;
+      this.flagTimeOut = true;
+      this.timerId = setTimeout(() => {
+        if (this.flagTimeOut) {
+          this.close();
+        }
+      }, 4000);
       return;
     } else {
       this.invalidForm = false;
@@ -163,5 +173,11 @@ export class AddAxesComponent implements OnInit {
       }
     }
     return false;
+  }
+  close() {
+    if (this.flagTimeOut) {
+      clearTimeout(this.timerId);
+    }
+    this.flagError = false;
   }
 }
