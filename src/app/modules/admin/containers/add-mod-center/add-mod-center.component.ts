@@ -28,41 +28,44 @@ export class AddModCenterComponent implements OnInit {
   }
 
   confirm(){
-    this.router.navigate(['admin/dashboard/centros']);
     console.log(this.formUpEdit.value)
     this.addCenter(this.formUpEdit.value)
-    this.data.center = this.formUpEdit.value
     this.data.nombreCentro = this.formUpEdit.value.nombre
     this.formUpEdit.reset()
   }
 
   addCenter(center: Centro){
-    this.admin.addCenter(this.formUpEdit.value).subscribe({
+    this.admin.addCenter(center).subscribe({
       next: data =>{
         setTimeout(() => this.cdr.detectChanges());
         console.log(data)
+        this.data.flag = true
+        this.data.editar = false
+        this.router.navigate(['admin/dashboard/centros']);
       },
       error: err =>{
         setTimeout(() => this.cdr.detectChanges());
         console.log(err)
+        
       }
     })
   }
 
   editar(){
-    this.router.navigate(['admin/dashboard/centros']);
     let id = this.data.center?.id
     this.editCenter(id)
     this.formUpEdit.reset()
   }
 
   editCenter(id: any){
+    console.log(this.formUpEdit.value)
     this.admin.editCenter(this.formUpEdit.value,id).subscribe({
       next: data =>{
         setTimeout(() => this.cdr.detectChanges());
         console.log(data)
         this.data.flag = true
         this.data.editar = true
+        this.router.navigate(['admin/dashboard/centros']);
       },
       error: err =>{
         setTimeout(() => this.cdr.detectChanges());
