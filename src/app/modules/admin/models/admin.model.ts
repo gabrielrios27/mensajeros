@@ -5,3 +5,6 @@ export interface axes {
 export interface role {
   authority: string;
 }
+export interface flag {
+  flag: boolean;
+}
