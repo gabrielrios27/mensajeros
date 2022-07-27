@@ -16,6 +16,9 @@ export class AxesComponent implements OnInit, OnDestroy {
   newOrEditedAxe: axes = {} as axes;
   flagEdited: boolean = false;
   flagNew: boolean = false;
+  flagDelete: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isFlagDelete: boolean = false;
+  idToDelete: number = 0;
 
   listOfAxes: axes[] = [];
   listOfAxes_toSearch: axes[] = [];
@@ -34,7 +37,9 @@ export class AxesComponent implements OnInit, OnDestroy {
     private _adminSvc: AdminService,
     private _cdr: ChangeDetectorRef,
     private router: Router
-  ) {}
+  ) {
+    this.flagDelete.subscribe((data) => (this.isFlagDelete = data));
+  }
 
   ngOnInit() {
     this.getAxesList();
@@ -61,6 +66,12 @@ export class AxesComponent implements OnInit, OnDestroy {
           console.log('Request get axes complete');
         },
       });
+  }
+  onClickDelete(id: number) {
+    this.flagDelete.next(true);
+    this.idToDelete = id;
+    console.log('flagDelete: ', this.isFlagDelete);
+    console.log('idToDelete: ', this.idToDelete);
   }
   deleteAxe(id: number) {
     this.listOfAxes_toSearch = [];
@@ -94,8 +105,10 @@ export class AxesComponent implements OnInit, OnDestroy {
     let newOrEditedAxeStr = localStorage.getItem('newOrEditedAxe');
     if (newOrEditedAxeStr) {
       this.newOrEditedAxe = JSON.parse(newOrEditedAxeStr);
-
       this.checkAxeInList(this.newOrEditedAxe);
+      setTimeout(() => {
+        this.close();
+      }, 3000);
     }
 
     let isNewAxeStr = localStorage.getItem('isNewAxe');
@@ -106,15 +119,9 @@ export class AxesComponent implements OnInit, OnDestroy {
     if (newOrEditedAxeStr) {
       if (isNewAxe) {
         this.flagNew = true;
-        // this._snackBar.open(`¡El Eje “Eje 5” fue creado con éxito!`, 'X', {
-        //   duration: 3000000,
-        // });
         localStorage.removeItem('isNewAxe');
       } else {
         this.flagEdited = true;
-        // this._snackBar.open('¡El Eje “Eje 5” fue editado con éxito!', 'X', {
-        //   duration: 3000000,
-        // });
       }
       localStorage.removeItem('newOrEditedAxe');
     }
@@ -186,9 +193,11 @@ export class AxesComponent implements OnInit, OnDestroy {
         this.toSearch; /*se guarda la ultima palabra buscada con la que hubo coincidencias */
     }
   }
+
   close() {
     this.flagNew = false;
     this.flagEdited = false;
+    this.flagDelete.next(false);
   }
   ngOnDestroy() {
     this.onDestroy$.next(true);
