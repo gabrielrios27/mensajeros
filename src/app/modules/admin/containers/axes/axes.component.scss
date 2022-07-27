@@ -234,42 +234,10 @@
     }
   }
 }
-::ng-deep .cdk-overlay-container {
-  .mat-snack-bar-container {
-    display: flex;
-    justify-content: center;
-    width: 525px;
-    max-width: 50vw;
-    height: 264px;
-    background-color: #def2d6;
-    .mat-simple-snackbar {
-      height: 169px;
-      width: 485px;
-      // height: 110px;
-      display: flex;
-      flex-direction: column-reverse;
-      justify-content: space-between;
-      align-items: center;
-      .mat-simple-snack-bar-content {
-        font-size: 24px;
-        text-align: center;
-        letter-spacing: 0.25px;
-        color: #154520;
-      }
-      .mat-simple-snackbar-action {
-        font-size: 14px;
-        align-self: flex-end;
-        .mat-button-wrapper {
-          font-family: "Roboto Md 500";
-        }
-      }
-    }
-  }
-}
+
 @media (max-width: 1400px) {
   .container-axes {
     justify-content: none;
-    left: calc(50vw - 262px);
     .axes {
       margin-right: 4.375em;
       margin-left: 7.9375em;
@@ -282,19 +250,8 @@
   .modal-delete {
     top: 90px;
   }
-  ::ng-deep .cdk-overlay-container {
-    .mat-snack-bar-container {
-      width: 372px;
-      height: 140px;
-      .mat-simple-snackbar {
-        height: 100px;
-        width: auto;
-        .mat-simple-snack-bar-content {
-          font-size: 25px;
-          line-height: 28px;
-        }
-      }
-    }
+  .modal {
+    top: 90px;
   }
 }
 @media (max-width: 768px) {
