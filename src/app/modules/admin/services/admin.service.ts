@@ -29,15 +29,21 @@ export class AdminService {
     }
 
     editCenter(id:number,center:Centro):Observable<Centro>{
-        return this._http.put<Centro>(this.baseUrl + '/centros'+ id ,center)
+        return this._http.put<Centro>(this.baseUrl + '/centros/'+ id ,center, {
+            headers: this.headers
+        })
     }
 
     deleteCenter(id:number):Observable<boolean>{
-        return this._http.delete<boolean>(this.baseUrl + '/centros' + id)
+        return this._http.delete<boolean>(this.baseUrl + '/centros/' + id, {
+            headers: this.headers
+        })
     }
 
     addCenter(center:Centro):Observable<Centro>{
-        return this._http.post<Centro>(this.baseUrl + '/centros', center)
+        return this._http.post<Centro>(this.baseUrl + '/centros', center, {
+            headers: this.headers
+        })
     }
 
     getUsers(): Observable<Users[]> {
