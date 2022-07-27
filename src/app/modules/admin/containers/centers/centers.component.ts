@@ -35,6 +35,25 @@ export class CentersComponent implements OnInit {
     this.dataSource = list
   }
 
+  getAxeLocalStorage() {
+    if (this.data.editar) {
+      setTimeout(() => {
+        this.close();
+      }, 3000);
+    }
+    if (this.data.flag) {
+      setTimeout(() => {
+        this.close();
+      }, 3000);
+    }
+    if (this.data.flagDelete) {
+      setTimeout(() => {
+        this.close();
+      }, 2000);
+    }
+    
+  }
+
   busca(e: string) {
 
     if (e.toLocaleLowerCase() == '') {
@@ -70,10 +89,8 @@ export class CentersComponent implements OnInit {
 
 
   close() {
-    if (this.data.center != null) {
-      this.dataSource.push(this.data.center)
-    }
-
+    this.data.editar= false
+    this.data.flagDelete= false
     this.data.flag = false
   }
 }
