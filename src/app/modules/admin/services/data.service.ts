@@ -10,6 +10,7 @@ export class DataService {
   nombreCentro:string=''
   flag: boolean = false
   editar: boolean = false
+  flagDelete: boolean= false
   user?: Users
   center?: Centro
   constructor() { }
