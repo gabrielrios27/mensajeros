@@ -42,9 +42,10 @@ export class AmUserComponent implements OnInit {
   }
 
   editar(user:Users){
+    user.rolNombre = "ROLE_USER"
     this.edit(user,this.data.user?.id)
     this.data.nombreUsuario = this.formUpEdit.value.nombre
-    this.formUpEdit.reset()
+
   }
 
   addUser(user: Users, id:number){
@@ -54,6 +55,7 @@ export class AmUserComponent implements OnInit {
         console.log(data,"done")
         this.data.flag = true
         this.data.editar = false
+        this.formUpEdit.reset()
         this.router.navigate(['admin/dashboard/usuarios']);
       },
       error: (err)=>{

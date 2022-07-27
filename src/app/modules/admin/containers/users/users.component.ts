@@ -47,6 +47,7 @@ export class UsersComponent implements OnInit {
   edit(user: Users) {
     this.router.navigate(['admin/dashboard/usuarios/create-user'])
     this.data.user = user
+    this.data.editar = true
   }
 
   delete(user: Users) {
