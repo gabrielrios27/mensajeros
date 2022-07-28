@@ -18,10 +18,6 @@ export class AdminService {
 
     constructor(private _http: HttpClient) { }
 
-    // headers = new HttpHeaders().set(
-    //     'Authorization',
-    //     'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4OTI1NTQ1LCJleHAiOjE2NTg5Mzk5NDV9.BQ-2jt5xgIPR2ZUPYOUELqD6CX__LxovqmY0dnSjMys'
-    // );
 
     getCentros(): Observable<Centro[]> {
         return this._http.get<Centro[]>(this.baseUrl + '/centros', {
