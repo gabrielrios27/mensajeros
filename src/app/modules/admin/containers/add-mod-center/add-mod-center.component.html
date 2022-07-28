@@ -10,7 +10,7 @@
         </section>
         <section>
             <label for="">Zona*</label>
-            <input type="text" formControlName="zona" [(ngModel)]="nombre" placeholder="Centro 4">
+            <input type="text" formControlName="zona" [(ngModel)]="Zona" placeholder="Centro 4">
             <mat-error *ngIf="formUpEdit.controls['zona'].invalid && formUpEdit.controls['zona'].dirty">
                 <span *ngIf="formUpEdit.controls['zona'].errors">Requerido</span>
             </mat-error>
