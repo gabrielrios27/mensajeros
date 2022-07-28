@@ -1,4 +1,6 @@
 <div class="container">
+    <h1 *ngIf="!data.editar">Agregar Usuario</h1>
+    <h1 *ngIf="data.editar">Editar Usuario</h1>
     <form [formGroup]="formUpEdit">
         <section class="container-name">
             <label for="">Nombre y Apellido *</label>
