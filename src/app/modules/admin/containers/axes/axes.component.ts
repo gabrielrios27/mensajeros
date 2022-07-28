@@ -1,19 +1,30 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { axes } from '../../models';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
+import { axes, flag } from '../../models';
 import { AdminService } from '../../services';
 
 @Component({
   selector: 'app-axes',
   templateUrl: './axes.component.html',
   styleUrls: ['axes.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class AxesComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['eje', 'centro', 'acciones'];
   // listOfAxes = ELEMENT_DATA;
   newOrEditedAxe: axes = {} as axes;
+  flagEdited: boolean = false;
+  flagNew: boolean = false;
+  flagDelete: boolean = false;
+  idToDelete: number = 0;
 
   listOfAxes: axes[] = [];
   listOfAxes_toSearch: axes[] = [];
@@ -38,6 +49,7 @@ export class AxesComponent implements OnInit, OnDestroy {
     this.getAxesList();
     this.getAxeLocalStorage();
   }
+
   getAxesList() {
     this._adminSvc
       .getAxes()
@@ -60,7 +72,12 @@ export class AxesComponent implements OnInit, OnDestroy {
         },
       });
   }
+  onClickDelete(id: number) {
+    this.flagDelete = true;
+    this.idToDelete = id;
+  }
   deleteAxe(id: number) {
+    this.flagDelete = false;
     this.listOfAxes_toSearch = [];
     for (let item of this.listOfAxes) {
       if (item.id !== id) {
@@ -93,6 +110,9 @@ export class AxesComponent implements OnInit, OnDestroy {
     if (newOrEditedAxeStr) {
       this.newOrEditedAxe = JSON.parse(newOrEditedAxeStr);
       this.checkAxeInList(this.newOrEditedAxe);
+      setTimeout(() => {
+        this.close();
+      }, 3000);
     }
 
     let isNewAxeStr = localStorage.getItem('isNewAxe');
@@ -102,14 +122,10 @@ export class AxesComponent implements OnInit, OnDestroy {
     }
     if (newOrEditedAxeStr) {
       if (isNewAxe) {
-        this._snackBar.open('¡El Eje fue creado con éxito!', 'CERRAR', {
-          duration: 3000,
-        });
+        this.flagNew = true;
         localStorage.removeItem('isNewAxe');
       } else {
-        this._snackBar.open('¡El Eje fue modificado con éxito!', 'CERRAR', {
-          duration: 3000,
-        });
+        this.flagEdited = true;
       }
       localStorage.removeItem('newOrEditedAxe');
     }
@@ -180,6 +196,12 @@ export class AxesComponent implements OnInit, OnDestroy {
       this.toSearchPrevius =
         this.toSearch; /*se guarda la ultima palabra buscada con la que hubo coincidencias */
     }
+  }
+
+  close() {
+    this.flagNew = false;
+    this.flagEdited = false;
+    this.flagDelete = false;
   }
   ngOnDestroy() {
     this.onDestroy$.next(true);

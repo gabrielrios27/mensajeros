@@ -58,11 +58,69 @@
               src="../../../../../assets/icons/Trash.svg"
               alt="icono de Eliminar"
               matTooltip="Borrar"
-              (click)="deleteAxe(element.id)"
+              (click)="onClickDelete(element.id)"
             />
           </div>
         </div>
       </div>
     </section>
+  </div>
+
+  <div *ngIf="flagNew" class="modal">
+    <img
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__container">
+      <img
+        class="modal__ico"
+        src="../../../../../assets/icons/Check.svg"
+        alt="icon check"
+      />
+      <p class="modal__text">
+        ¡El Eje {{ newOrEditedAxe.nombre }} fue creado con éxito!
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="flagEdited" class="modal">
+    <img
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__container">
+      <img
+        class="modal__ico"
+        src="../../../../../assets/icons/Check.svg"
+        alt="icon check"
+      />
+      <p class="modal__text">
+        ¡El Eje {{ newOrEditedAxe.nombre }} fue editado con éxito!
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="flagDelete" class="modal-delete">
+    <div class="modal__container-delete">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Exclamation-triangle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">
+        ¡Estas a punto de eliminar este dato!<br />Esta acción no podrá ser
+        revertida
+      </p>
+    </div>
+    <div class="modal__options">
+      <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
+      <button class="btn-modal__accept" (click)="deleteAxe(idToDelete)">
+        Confirmar y eliminar
+      </button>
+    </div>
   </div>
 </section>

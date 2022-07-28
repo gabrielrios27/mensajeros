@@ -127,47 +127,124 @@
     }
   }
 }
-
-::ng-deep .cdk-overlay-container {
-  .mat-snack-bar-container {
+.modal {
+  position: absolute;
+  top: 134px;
+  z-index: 200;
+  width: 525px;
+  height: 264px;
+  background-color: #def2d6;
+  border: 1px solid #def2d6;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding-bottom: 21px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  .modal__btnClose {
+    padding: 21px 12px 18px 25px;
+    width: 61px;
+    height: 70px;
+    align-self: flex-end;
+    cursor: pointer;
+  }
+  .modal__container {
+    width: 474px;
     display: flex;
-    justify-content: center;
+    // margin-top: 18px;
+    .modal__ico {
+      width: 94px;
+      height: 120px;
+    }
+    .modal__text {
+      font-size: 24px;
+      text-align: center;
+      letter-spacing: 0.25px;
+      color: #154520;
+      padding-top: 40px;
+      margin-bottom: 0;
+      margin-left: 15px;
+    }
+  }
+}
+.modal-delete {
+  position: absolute;
+  top: 134px;
+  z-index: 200;
+  width: 525px;
+  height: 297px;
+  background: #f8f3d6;
+  border: 1px solid #f6f8a8;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding-bottom: 21px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  .modal__container-delete {
+    width: 474px;
+    display: flex;
+    margin-top: 58px;
     align-items: center;
-    // width: 372px;
-    // height: 140px;
-    width: 663px;
-    max-width: 50vw; //tamaño grande
-    height: 376px;
-    background-color: $color-white;
-    .mat-simple-snackbar {
-      height: 328px;
-      width: 630px;
-      // height: 110px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      .mat-simple-snack-bar-content {
-        font-size: 36px;
-        line-height: 40px;
-        // font-size: 25px;
-        // line-height: 28px;
-        font-family: "Roboto";
-        color: $color-text-primary;
+    .modal__ico-info {
+      width: 80px;
+      height: 82px;
+    }
+    .modal__text {
+      font-size: 24px;
+      text-align: center;
+      letter-spacing: 0.25px;
+      color: #936d30;
+      margin-bottom: 0;
+      margin-left: 15px;
+      line-height: 40px;
+    }
+  }
+  .modal__options {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 95px;
+    padding-right: 29px;
+    .btn-modal__cancel {
+      width: 168px;
+      height: 59px;
+      background: #e2d9a4;
+      color: #083d5e;
+      border: 1px solid #083d5e;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 35px;
+      font-size: 20px;
+      transition: $transition;
+      cursor: pointer;
+      &:hover {
+        background: #f1efe0;
       }
-      .mat-simple-snackbar-action {
-        font-size: 14px;
-        align-self: flex-end;
-        .mat-button-wrapper {
-          font-family: "Roboto Md 500";
-        }
+    }
+    .btn-modal__accept {
+      width: 168px;
+      height: 59px;
+      color: #e60d0d;
+      background: #e2d9a4;
+      border: 1px solid #c70f0f;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 35px;
+      font-size: 16px;
+      padding: 0 20px;
+      transition: $transition;
+      cursor: pointer;
+      &:hover {
+        background: #f1efe0;
       }
     }
   }
 }
+
 @media (max-width: 1400px) {
   .container-axes {
-    justify-content: flex-start;
+    justify-content: none;
     .axes {
       margin-right: 4.375em;
       margin-left: 7.9375em;
@@ -177,19 +254,11 @@
       }
     }
   }
-  ::ng-deep .cdk-overlay-container {
-    .mat-snack-bar-container {
-      width: 372px;
-      height: 140px;
-      .mat-simple-snackbar {
-        height: 100px;
-        width: auto;
-        .mat-simple-snack-bar-content {
-          font-size: 25px;
-          line-height: 28px;
-        }
-      }
-    }
+  .modal-delete {
+    top: 90px;
+  }
+  .modal {
+    top: 90px;
   }
 }
 @media (max-width: 768px) {
