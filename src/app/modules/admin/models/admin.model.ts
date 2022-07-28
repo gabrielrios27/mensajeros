@@ -8,3 +8,8 @@ export interface role {
 export interface flag {
   flag: boolean;
 }
+export interface user {
+  email: string;
+  id: number;
+  nombre: string;
+}

@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { AuthService } from '../../../../modules/auth/services/auth.service';
 import { Router } from '@angular/router';
+import { LayoutsService } from '../../services';
 
 @Component({
   selector: 'app-navbar',
@@ -14,10 +15,12 @@ import { Router } from '@angular/router';
   styleUrls: ['navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  user: string = 'Administrador';
   constructor(
     private _http: AuthService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private _layoutSvc: LayoutsService
   ) {}
   ngOnInit() {}
 
