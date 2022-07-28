@@ -8,52 +8,42 @@ import { Response } from '../models/response';
 
 @Injectable()
 export class AuthService {
+  url: string = 'https://mensajeros-back-martin.herokuapp.com/';
+  private loggedIn = new BehaviorSubject<boolean>(false);
 
-    url: string = "https://mensajeros-back-martin.herokuapp.com/"
-    private loggedIn = new BehaviorSubject<boolean>(false);
+  constructor(private _http: HttpClient, private router: Router) {}
 
+  getAuth$(): Observable<{}> {
+    return of({});
+  }
 
-    constructor(private _http: HttpClient, private router: Router) { }
+  get isLogged(): Observable<boolean> {
+    return this.loggedIn.asObservable();
+  }
 
+  logout() {
+    this.loggedIn.next(false);
+    localStorage.removeItem('Usuario');
+    this.router.navigate(['auth']);
+  }
 
-    getAuth$(): Observable<{}> {
-        return of({});
+  loginByEmail(form: Login): Observable<Response | void> {
+    let direccion = this.url + 'auth/login';
+    return this._http.post<Response>(direccion, form).pipe(
+      map((res: Response) => {
+        console.log('done');
+        this.loggedIn.next(true);
+        return res;
+      }),
+      catchError((err) => this.handlerError(err))
+    );
+  }
+
+  private handlerError(err: any): Observable<never> {
+    let errorMsj = ' error';
+    if (err) {
+      console.log(err.status);
     }
-
-    get isLogged(): Observable<boolean> {
-        return this.loggedIn.asObservable();
-    }
-    
-    logout() {
-        this.loggedIn.next(false)
-        localStorage.removeItem('Usuario')
-        this.router.navigate(['auth/login'])
-    }
-
-
-    loginByEmail(form: Login): Observable<Response | void> {
-        let direccion = this.url + "auth/login"
-        return this._http
-            .post<Response>(direccion, form)
-            .pipe(
-                map((res: Response) => {
-                    console.log("done");
-                    this.loggedIn.next(true)
-                    return res
-                }),
-                catchError((err) => this.handlerError(err))
-            )
-    }
-
-    private handlerError(err: any): Observable<never> {
-        let errorMsj = " error";
-        if (err) {
-            console.log(err.status)
-        }
-        return throwError(errorMsj);
-    }
-
-    
-
-
+    return throwError(errorMsj);
+  }
 }

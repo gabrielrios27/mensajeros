@@ -15,25 +15,24 @@ import { AddAxesComponent } from './containers/add-axes/add-axes.component';
 /* Containers */
 import * as adminContainers from './containers';
 
-
 /* Guards */
 import * as adminGuards from './guards';
 
 /* Services */
 import * as adminServices from './services';
-import { LayoutsModule } from '../../core/layouts/layouts.module';
+import { LayoutsModule } from 'src/app/core/layouts/layouts.module';
 
-/* Angular Material */
-import {MatTableModule} from '@angular/material/table';
-import {MatIconModule} from '@angular/material/icon';
-import {MatCardModule} from '@angular/material/card';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatButtonModule} from '@angular/material/button';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+/* Angular Material Components*/
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { AddModCenterComponent } from './containers/add-mod-center/add-mod-center.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -43,14 +42,14 @@ import { AddModCenterComponent } from './containers/add-mod-center/add-mod-cente
     FormsModule,
     LayoutsModule,
     MatTableModule,
-    MatIconModule,
-    MatCardModule,
-    MatTooltipModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
     MatButtonModule,
     MatSnackBarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
+    MatTooltipModule,
+    MatCardModule,
+    MatIconModule,
     // AppCommonModule,
     // NavigationModule,
   ],

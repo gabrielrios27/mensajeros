@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Centro } from '../models/centro';
 import { Users } from '../models/users';
-
+import { axes, flag } from '../models';
 
 @Injectable({
     providedIn: 'root',
@@ -69,4 +69,22 @@ export class AdminService {
             headers: this.headers
         })
     }
+
+
+
+  getAxes(): Observable<axes[]> {
+    return this._http.get<axes[]>(this.baseUrl + this.EPAxes);
+  }
+  getAxeWithId(id: string): Observable<axes> {
+    return this._http.get<axes>(this.baseUrl + this.EPAxes + '/' + id);
+  }
+  editAxeWithId(id: string, body: any): Observable<axes> {
+    return this._http.put<axes>(this.baseUrl + this.EPAxes + '/' + id, body);
+  }
+  createAxe(body: any): Observable<axes> {
+    return this._http.post<axes>(this.baseUrl + this.EPAxes, body);
+  }
+  deleteAxeWithId(id: string): Observable<any> {
+    return this._http.delete<axes>(this.baseUrl + this.EPAxes + '/' + id);
+  }
 }

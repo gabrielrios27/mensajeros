@@ -28,36 +28,26 @@
       </label>
     </div>
     <section class="list-axes">
-      <table
-        mat-table
-        [dataSource]="listOfAxes_toShow"
-        class="list-axes__table"
-      >
+      <div class="list-axes__table">
         <!-- Position Column -->
-        <ng-container matColumnDef="eje">
-          <th class="list-axes__header" *matHeaderCellDef>Ejes</th>
-          <td class="list-axes__axe-cell" *matCellDef="let element">
-            {{ element.eje }}
-          </td>
-        </ng-container>
+        <div class="list-axes__row">
+          <div class="list-axes__header">Ejes</div>
+          <div class="list-axes__header list-axes__header--action">
+            Acciones
+          </div>
+        </div>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="centro">
-          <th class="list-axes__header" *matHeaderCellDef>
-            Centros Asociados (Iniciales)
-          </th>
-          <td class="list-axes__center-cell" *matCellDef="let element">
-            {{ element.centro }}
-          </td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="acciones">
-          <th class="list-axes__header" *matHeaderCellDef>Acciones</th>
-          <td class="list-axes__acction-cell" *matCellDef="let element">
-            <a href="{{ element.acciones.edit }}">
+        <div
+          class="list-axes__row"
+          *ngFor="let element of listOfAxes_toShow | async"
+        >
+          <div class="list-axes__cell list-axes__cell--axe">
+            {{ element.nombre }}
+          </div>
+          <div class="list-axes__cell list-axes__cell--acction">
+            <a [routerLink]="['agregar-eje/', element.id.toString()]">
               <img
-                class="list-axes__ico-action"
+                class="list-axes__ico-action list-axes__ico-action--edit"
                 src="../../../../../assets/icons/Pencil.svg"
                 alt="Icono de editar"
                 matTooltip="Editar"
@@ -68,17 +58,69 @@
               src="../../../../../assets/icons/Trash.svg"
               alt="icono de Eliminar"
               matTooltip="Borrar"
+              (click)="onClickDelete(element.id)"
             />
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr
-          mat-row
-          class="list-axes__row"
-          *matRowDef="let row; columns: displayedColumns"
-        ></tr>
-      </table>
+          </div>
+        </div>
+      </div>
     </section>
+  </div>
+
+  <div *ngIf="flagNew" class="modal">
+    <img
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__container">
+      <img
+        class="modal__ico"
+        src="../../../../../assets/icons/Check.svg"
+        alt="icon check"
+      />
+      <p class="modal__text">
+        ¡El Eje {{ newOrEditedAxe.nombre }} fue creado con éxito!
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="flagEdited" class="modal">
+    <img
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__container">
+      <img
+        class="modal__ico"
+        src="../../../../../assets/icons/Check.svg"
+        alt="icon check"
+      />
+      <p class="modal__text">
+        ¡El Eje {{ newOrEditedAxe.nombre }} fue editado con éxito!
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="flagDelete" class="modal-delete">
+    <div class="modal__container-delete">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Exclamation-triangle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">
+        ¡Estas a punto de eliminar este dato!<br />Esta acción no podrá ser
+        revertida
+      </p>
+    </div>
+    <div class="modal__options">
+      <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
+      <button class="btn-modal__accept" (click)="deleteAxe(idToDelete)">
+        Confirmar y eliminar
+      </button>
+    </div>
   </div>
 </section>
