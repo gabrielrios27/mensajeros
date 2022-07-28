@@ -56,7 +56,7 @@ export class AmUserComponent implements OnInit {
         this.data.flag = false
         this.data.editar = false
         this.formUpEdit.reset()
-        this.setAxeLocStg(data, true)
+        this.setUserLocStg(data, true)
         this.router.navigate(['admin/dashboard/usuarios']);
       },
       error: (err)=>{
@@ -72,7 +72,7 @@ export class AmUserComponent implements OnInit {
         console.log(data)
         this.data.flag = false
         this.data.editar = false
-        this.setAxeLocStg(data, false)
+        this.setUserLocStg(data, false)
         this.router.navigate(['admin/dashboard/usuarios']);
       },
       error: (err)=>{
@@ -93,7 +93,7 @@ export class AmUserComponent implements OnInit {
     this.centroAsignado = e
   }
 
-  setAxeLocStg(data: Users, isNewUser: boolean) {
+  setUserLocStg(data: Users, isNewUser: boolean) {
     localStorage.setItem('newOrEditedUser', JSON.stringify(data));
     localStorage.setItem('isNewUser', JSON.stringify(isNewUser));
   }
