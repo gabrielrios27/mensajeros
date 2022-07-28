@@ -15,14 +15,18 @@ export class UsersComponent implements OnInit {
   user: Array<Users> = new Array
   centros: Array<Centro> = new Array
   usershow: Array<Users> = new Array
+  flagEdited: boolean = false;
+  flagNew: boolean = false;
+  flagDelete: boolean = false;
+  idToDelete: number = 0;
 
   constructor(private router: Router, private route: ActivatedRoute, public data: DataService, private admin: AdminService,private cdr: ChangeDetectorRef) { }
 
 
   ngOnInit() {
 
-    // this.getCentros()
     this.getUsers()
+    this.getUserLocalStorage() 
   }
 
   busca(e: string) {
@@ -50,20 +54,6 @@ export class UsersComponent implements OnInit {
     this.data.editar = true
   }
 
-  delete(user: Users) {
-    console.log(user)
-    this.admin.deleteUser(user.id).subscribe({
-      next: (data:any)=>{
-      setTimeout(() => this.cdr.detectChanges())
-      console.log(data)
-      this.getUsers()
-    },
-    error: (err)=>{
-      console.log(err)
-    }
-    })
-    
-  }
 
   centroAsignado(user: Users): any {
     for (let c of this.centros) {
@@ -97,10 +87,54 @@ export class UsersComponent implements OnInit {
     })
   }
 
+  
+  onClickDelete(id: number) {
+    this.flagDelete = true;
+    this.idToDelete = id;
+  }
 
+  deleteUser() {
+    this.flagDelete = false;
+    this.admin.deleteUser(this.idToDelete).subscribe({
+      next: (data:any)=>{
+      setTimeout(() => this.cdr.detectChanges())
+      console.log(data)
+      this.getUsers()
+    },
+    error: (err)=>{
+      console.log(err)
+    }
+    })
+  }
+  getUserLocalStorage() {
+    let newOrEditeduser = localStorage.getItem('newOrEditedUser');
+    if (newOrEditeduser) {
+      setTimeout(() => {
+        this.close();
+      }, 3000);
+    }
+
+    let isNewUserStr = localStorage.getItem('isNewUser');
+    let isNewUser;
+    if (isNewUserStr) {
+      isNewUser = JSON.parse(isNewUserStr);
+    }
+    if (newOrEditeduser) {
+      if (isNewUser) {
+        this.flagNew = true;
+        localStorage.removeItem('isNewUser');
+      } else {
+        this.flagEdited = true;
+      }
+      localStorage.removeItem('newOrEditedUser');
+    }
+  }
   
 
   close() {
-    this.data.flag = false
+    this.flagNew = false;
+    this.flagEdited = false;
+    this.flagDelete = false;
   }
 }
+
