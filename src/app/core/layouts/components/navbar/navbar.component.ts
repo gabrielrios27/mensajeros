@@ -15,7 +15,6 @@ import { LayoutsService } from '../../services';
   styleUrls: ['navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  user: string = 'Administrador';
   constructor(
     private _http: AuthService,
     private cdr: ChangeDetectorRef,
