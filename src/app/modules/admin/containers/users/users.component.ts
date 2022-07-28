@@ -27,6 +27,7 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
 
     this.getUsers()
+    this.getCentros()
     this.getUserLocalStorage() 
   }
 
@@ -34,6 +35,7 @@ export class UsersComponent implements OnInit {
 
     if (e.toLocaleLowerCase() == '') {
       this.ngOnInit()
+      this.getUsers()
     }
     else {
       this.user = this.user.filter(res => {
@@ -58,7 +60,7 @@ export class UsersComponent implements OnInit {
 
   centroAsignado(user: Users): any {
     for (let c of this.centros) {
-      if (user.nombre == c.usuario.nombre) {
+      if (user.nombre == c.usuario?.nombre) {
         return c.nombre
       }
     }
@@ -76,7 +78,9 @@ export class UsersComponent implements OnInit {
   getUsers() {
     this.admin.getUsers().subscribe({
       next:(res: Users[])=>{
-        this.user = res
+        this.user = res.filter(resp=>{
+          return resp.rolNombre?.match("ROLE_USER")
+        })
         setTimeout(() => this.cdr.detectChanges())
         console.log(this.user)
       },
