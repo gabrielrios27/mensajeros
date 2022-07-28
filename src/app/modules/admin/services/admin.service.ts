@@ -12,7 +12,7 @@ export class AdminService {
     api_key: string = '';
     baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com';
     baseUrlTami: string = 'https://mensajeros-back-tami.herokuapp.com';
-    headers = new HttpHeaders();
+    
     token: string = '';
     EPAxes: string = '/ejes';
 
@@ -32,15 +32,11 @@ export class AdminService {
     }
 
     deleteUser(id: number): Observable<boolean> {
-        return this._http.delete<boolean>(this.baseUrl + '/usuarios/' + id, {
-            headers: this.headers
-        })
+        return this._http.delete<boolean>(this.baseUrl + '/usuarios/' + id)
     }
 
     editUser(user: Users, id: any): Observable<Response> {
-        return this._http.put<Response>(this.baseUrl + '/usuarios/' + id, user, {
-            headers: this.headers
-        })
+        return this._http.put<Response>(this.baseUrl + '/usuarios/' + id, user)
     }
 
     addUser(user: Users, id: number): Observable<Users> {
@@ -48,9 +44,7 @@ export class AdminService {
     }
 
     getUser(id:number): Observable<Users> {
-        return this._http.get<Users>(this.baseUrl + '/usuarios/'+ id, {
-            headers: this.headers
-        })
+        return this._http.get<Users>(this.baseUrl + '/usuarios/'+ id)
     }
 
 
