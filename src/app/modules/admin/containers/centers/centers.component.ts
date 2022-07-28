@@ -13,9 +13,17 @@ import { AdminService } from '../../services/admin.service';
 })
 export class CentersComponent implements OnInit {
   Centro: any
+  centro: any
   editar: boolean = false
   centros: Array<Centro> = new Array
-  constructor(private router: Router, public data: DataService, private admind: AdminService, private cdr: ChangeDetectorRef) { }
+  flagEdited: boolean = false;
+  flagNew: boolean = false;
+  flagDelete: boolean = false;
+  idToDelete: number = 0;
+  newOrEditedCenter: Centro = {} as Centro;
+
+
+  constructor(private router: Router, public data: DataService, private admin: AdminService, private cdr: ChangeDetectorRef) { }
   ngOnInit() {
     this.getCenters()
   }
@@ -46,7 +54,7 @@ export class CentersComponent implements OnInit {
   }
 
   getCenters() {
-    this.admind.getCentros().subscribe({
+    this.admin.getCentros().subscribe({
       next: data => {
         setTimeout(() => this.cdr.detectChanges());
         this.centros = data
@@ -58,27 +66,75 @@ export class CentersComponent implements OnInit {
       }
     })
   }
-
-  delete(center: Centro) {
-    this.admind.deleteCenter(center.id).subscribe({
-      next: data => {
-        setTimeout(() => this.cdr.detectChanges());
-        console.log(data)
+  getCenter() {
+    this.admin.getUsers().subscribe({
+      next:(res: any)=>{
+        this.centro = res
+        setTimeout(() => this.cdr.detectChanges())
+        console.log(this.centro )
       },
-      error: err => {
-        setTimeout(() => this.cdr.detectChanges());
+      error: (err) =>{
         console.log(err)
       }
     })
   }
 
+  
+  onClickDelete(id: number) {
+    this.flagDelete = true;
+    this.idToDelete = id;
+  }
+
+  delete() {
+    this.admin.deleteCenter(this.idToDelete).subscribe({
+      next: (data:any)=>{
+      setTimeout(() => this.cdr.detectChanges())
+      console.log(data)
+      this.getCenter()
+      this.close()
+    },
+    error: (err)=>{
+      console.log(err)
+    }
+    })
+  }
+
+  elim(id: number){
+    this.idToDelete = id
+    this.flagDelete = true
+  }
+
+  getUserLocalStorage() {
+    let newOrEditedCenter = localStorage.getItem('newOrEditedCenter');
+    if (newOrEditedCenter) {
+      this.newOrEditedCenter = JSON.parse(newOrEditedCenter);
+      setTimeout(() => {
+        this.close();
+      }, 3000);
+    }
+
+    let isNewCenterStr = localStorage.getItem('isNewCenter');
+    let isNewCenter;
+    if (isNewCenterStr) {
+      isNewCenter = JSON.parse(isNewCenterStr);
+    }
+    if (newOrEditedCenter) {
+      if (isNewCenter) {
+        this.flagNew = true;
+        localStorage.removeItem('isNewCenter');
+      } else {
+        this.flagEdited = true;
+      }
+      localStorage.removeItem('newOrEditedCenter');
+    }
+  }
+  
 
   close() {
-    // if (this.data.center != null) {
-    //   this.dataSource.push(this.data.center)
-    // }
-
-    this.data.flag = false
+    this.flagNew = false;
+    this.flagEdited = false;
+    this.flagDelete = false;
   }
+
 }
 
