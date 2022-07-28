@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { LayoutsModule } from './core/layouts/layouts.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptorInterceptor } from './modules/admin/services/jwt-interceptor.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,9 +16,17 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     LayoutsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    HttpClientModule,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptorInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
