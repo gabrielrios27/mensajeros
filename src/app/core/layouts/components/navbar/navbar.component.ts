@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {}
 
   logout() {
+    localStorage.removeItem('isAdmin');
     this._http.logout();
     setTimeout(() => this.cdr.detectChanges());
   }
