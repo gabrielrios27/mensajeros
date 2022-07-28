@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Centro } from '../models/centro';
 import { Users } from '../models/users';
-import { axes, flag } from '../models';
+import { axes, flag, user } from '../models';
 
 @Injectable({
     providedIn: 'root',

@@ -1,6 +1,7 @@
 import { Users } from './users';
 export interface Centro {
-    id: number
+    id: number,
     nombre: string
-    usuario: Users
+    usuario?: Users
+    zona: string
 }

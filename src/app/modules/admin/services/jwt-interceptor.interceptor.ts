@@ -36,6 +36,7 @@ export class JwtInterceptorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
         if (err.status === 401) {
+          localStorage.removeItem('isAdmin');
           this.router.navigateByUrl('/auth');
         }
 

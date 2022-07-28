@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from './core/layouts/containers';
+import { AdminGuard } from './modules/admin/guards';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
+
     component: AdminLayoutComponent,
     children: [
       {
