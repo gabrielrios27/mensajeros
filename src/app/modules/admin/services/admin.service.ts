@@ -24,31 +24,31 @@ export class AdminService {
     // );
 
     getCentros(): Observable<Centro[]> {
-        return this._http.get<Centro[]>(this.baseUrlTami + '/centros')
+        return this._http.get<Centro[]>(this.baseUrl + '/centros')
     }
 
     getUsers(): Observable<Users[]> {
-        return this._http.get<Users[]>(this.baseUrlTami + '/usuarios')
+        return this._http.get<Users[]>(this.baseUrl + '/usuarios')
     }
 
     deleteUser(id: number): Observable<boolean> {
-        return this._http.delete<boolean>(this.baseUrlTami + '/usuarios/' + id, {
+        return this._http.delete<boolean>(this.baseUrl + '/usuarios/' + id, {
             headers: this.headers
         })
     }
 
     editUser(user: Users, id: any): Observable<Response> {
-        return this._http.put<Response>(this.baseUrlTami + '/usuarios/' + id, user, {
+        return this._http.put<Response>(this.baseUrl + '/usuarios/' + id, user, {
             headers: this.headers
         })
     }
 
     addUser(user: Users, id: number): Observable<Users> {
-        return this._http.post<Users>(this.baseUrlTami + '/usuarios/' + id, user)
+        return this._http.post<Users>(this.baseUrl + '/usuarios/' + id, user)
     }
 
     getUser(id:number): Observable<Users> {
-        return this._http.get<Users>(this.baseUrlTami + '/usuarios/'+ id, {
+        return this._http.get<Users>(this.baseUrl + '/usuarios/'+ id, {
             headers: this.headers
         })
     }
