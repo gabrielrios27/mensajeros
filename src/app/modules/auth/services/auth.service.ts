@@ -11,16 +11,12 @@ import { Response } from '../models/response';
 export class AuthService {
   url: string = 'https://mensajeros-back-martin.herokuapp.com/';
   EPAuthority: string = 'usuarios/role';
-  private loggedIn = new BehaviorSubject<boolean>(false);
+  loggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(private _http: HttpClient, private router: Router) {}
 
   getAuth$(): Observable<{}> {
     return of({});
-  }
-
-  get isLogged(): Observable<boolean> {
-    return this.loggedIn.asObservable();
   }
 
   logout() {
@@ -49,7 +45,20 @@ export class AuthService {
     return throwError(errorMsj);
   }
 
-  getRole(): Observable<role> {
-    return this._http.get<role>(this.url + this.EPAuthority);
+  getRole() {
+    return this._http.get<role>(this.url + this.EPAuthority).pipe(
+      map((data) => {
+        console.log(data);
+
+        return data;
+      }),
+      catchError((err) => {
+        console.log(err.status);
+        return this.handlerError(err);
+      })
+    );
+  }
+  get isLogged(): Observable<boolean> {
+    return this.loggedIn.asObservable();
   }
 }
