@@ -29,30 +29,31 @@ export class CentersComponent implements OnInit {
   dataSource = list;
   Centro: any
   editar: boolean = false
-
+  center: any
   constructor(private router: Router, public data: DataService) { }
   ngOnInit() { 
     this.dataSource = list
+    this.add()
   }
 
-  getAxeLocalStorage() {
-    if (this.data.editar) {
-      setTimeout(() => {
-        this.close();
-      }, 3000);
-    }
-    if (this.data.flag) {
-      setTimeout(() => {
-        this.close();
-      }, 3000);
-    }
-    if (this.data.flagDelete) {
-      setTimeout(() => {
-        this.close();
-      }, 2000);
-    }
+  // getAxeLocalStorage() {
+  //   if (this.data.editar) {
+  //     setTimeout(() => {
+  //       this.close();
+  //     }, 3000);
+  //   }
+  //   if (this.data.flag) {
+  //     setTimeout(() => {
+  //       this.close();
+  //     }, 3000);
+  //   }
+  //   if (this.data.flagDelete) {
+  //     setTimeout(() => {
+  //       this.close();
+  //     }, 2000);
+  //   }
     
-  }
+  // }
 
   busca(e: string) {
 
@@ -72,6 +73,14 @@ export class CentersComponent implements OnInit {
     this.router.navigate(['admin/dashboard/centros/add-mod-center']);
   }
 
+  add(){
+    if(!this.data.editar && this.data.center!= null){
+      this.dataSource.push(this.data.center)
+      this.data.center = undefined
+    }
+  }
+  
+
   edit(center: Centro) {
     this.editar = true
     this.router.navigate(['admin/dashboard/centros/add-mod-center'])
@@ -79,12 +88,18 @@ export class CentersComponent implements OnInit {
     this.data.editar = true
   }
 
-  delete(center: Centro) {
+  elim(center : Centro){
+    this.data.flagDelete = true
+    this.center = center
+  }
+
+  delete() {
     for (let i of this.dataSource) {
-      if (i.nombre === center.nombre) {
+      if (i.nombre === this.center.nombre) {
         this.dataSource.splice(this.dataSource.indexOf(i), 1)
       }
     }
+    this.close()
   }
 
 
