@@ -11,16 +11,17 @@ import { axes, flag } from '../models';
 export class AdminService {
     api_key: string = '';
     baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com';
-    // headers = new HttpHeaders();
+    baseUrlTami: string = 'https://mensajeros-back-tami.herokuapp.com'
+    headers = new HttpHeaders();
     token: string = '';
     EPAxes: string = '/ejes';
 
     constructor(private _http: HttpClient) { }
 
-    headers = new HttpHeaders().set(
-        'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4OTI1NTQ1LCJleHAiOjE2NTg5Mzk5NDV9.BQ-2jt5xgIPR2ZUPYOUELqD6CX__LxovqmY0dnSjMys'
-    );
+    // headers = new HttpHeaders().set(
+    //     'Authorization',
+    //     'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtZHAuY29tIiwiaWF0IjoxNjU4OTI1NTQ1LCJleHAiOjE2NTg5Mzk5NDV9.BQ-2jt5xgIPR2ZUPYOUELqD6CX__LxovqmY0dnSjMys'
+    // );
 
     getCentros(): Observable<Centro[]> {
         return this._http.get<Centro[]>(this.baseUrl + '/centros', {
