@@ -27,6 +27,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { AddModCenterComponent } from './containers/add-mod-center/add-mod-center.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -53,7 +54,11 @@ import { MatIconModule } from '@angular/material/icon';
     // NavigationModule,
   ],
   providers: [...adminServices.services, ...adminGuards.guards],
-  declarations: [...adminContainers.containers, ...adminComponents.components],
+  declarations: [
+    ...adminContainers.containers,
+    ...adminComponents.components,
+    AddAxesComponent,AmUserComponent,AddModCenterComponent
+  ],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })
 export class AdminModule {}
