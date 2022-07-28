@@ -75,9 +75,7 @@ export class UsersComponent implements OnInit {
   getUsers() {
     this.admin.getUsers().subscribe({
       next:(res: Users[])=>{
-        this.user = res.filter(resp=>{
-          return resp.rolNombre?.match("ROLE_USER")
-        })
+        this.user = res
         setTimeout(() => this.cdr.detectChanges())
         console.log(this.user)
       },
