@@ -2,7 +2,7 @@
     <div class="user">
         <h1 class="user__title">Usuarios</h1>
         <div class="user__container-search">
-            <a class="btn-add-user" (click)="create()">
+            <a class="btn-add-user" style="cursor: pointer ;" (click)="create()">
                 <img class="btn-add-user__ico" src="../../../../../assets/icons/List ol.svg"
                     alt="Icono de lista ordenada" />
                 <span class="btn-add-user__text"> AGREGAR USUARIO </span>
@@ -19,6 +19,7 @@
                 <!-- Position Column -->
                 <div class="list-user__row">
                     <div class="list-user__header">Usuario</div>
+                    <div class="list-user__header">CentroAsignado</div>
                     <div class="list-user__header list-user__header--action">
                         Acciones
                     </div>
@@ -27,6 +28,9 @@
                 <div class="list-user__row" *ngFor="let element of user ">
                     <div class="list-user__cell list-user__cell--user">
                         {{ element.nombre }}
+                    </div>
+                    <div class="list-user__cell list-user__cell--user">
+                        {{ centroAsignado(element)}}
                     </div>
                     <div class="list-user__cell list-user__cell--acction">
                         <a (click)="edit(element)">
