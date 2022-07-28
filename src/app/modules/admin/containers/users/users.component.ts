@@ -19,6 +19,7 @@ export class UsersComponent implements OnInit {
   flagNew: boolean = false;
   flagDelete: boolean = false;
   idToDelete: number = 0;
+  newOrEditedUser: Users = {} as Users;
 
   constructor(private router: Router, private route: ActivatedRoute, public data: DataService, private admin: AdminService,private cdr: ChangeDetectorRef) { }
 
@@ -107,6 +108,7 @@ export class UsersComponent implements OnInit {
   getUserLocalStorage() {
     let newOrEditeduser = localStorage.getItem('newOrEditedUser');
     if (newOrEditeduser) {
+      this.newOrEditedUser = JSON.parse(newOrEditeduser);
       setTimeout(() => {
         this.close();
       }, 3000);
