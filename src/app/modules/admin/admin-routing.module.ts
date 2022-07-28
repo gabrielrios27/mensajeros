@@ -16,65 +16,67 @@ import { AmUserComponent } from './containers/am-user/am-user.component';
 import { AddModCenterComponent } from './containers/add-mod-center/add-mod-center.component';
 import { UsersComponent } from './containers/users/users.component';
 import { AuthGuard } from '../auth/guards/auth.guard';
+import { AdminGuard } from './guards';
 /* Routes */
 export const ROUTES: Routes = [
   {
     path: '',
-    canActivate: [],
+    canActivate: [AdminGuard],
     redirectTo: 'home',
   },
   {
     path: 'home',
-    canActivate: [],
+    canActivate: [AdminGuard],
     component: adminContainers.HomeComponent,
     pathMatch: 'full',
   },
   {
     path: 'usuarios',
-    canActivate: [],
+    canActivate: [AdminGuard],
     component: UsersComponent,
     pathMatch: 'full',
   },
-  
+
   {
     path: 'centros',
-    canActivate: [],
+    canActivate: [AdminGuard],
     component: adminContainers.CentersComponent,
     pathMatch: 'full',
   },
   {
     path: 'ejes',
-    canActivate: [],
+    canActivate: [AdminGuard],
     component: adminContainers.AxesComponent,
     pathMatch: 'full',
   },
   {
     path: 'ejes/agregar-eje',
-    canActivate: [],
+    canActivate: [AdminGuard],
     component: adminContainers.AddAxesComponent,
     pathMatch: 'full',
   },
   {
     path: 'ejes/agregar-eje/:id',
-    canActivate: [],
+    canActivate: [AdminGuard],
     component: adminContainers.AddAxesComponent,
   },
   {
     path: 'reportes',
-    canActivate: [],
+    canActivate: [AdminGuard],
     component: adminContainers.ReportsComponent,
     pathMatch: 'full',
   },
   {
     path: 'ayuda',
-    canActivate: [],
+    canActivate: [AdminGuard],
     component: adminContainers.HelpComponent,
     pathMatch: 'full',
   },
   {
     path: 'usuarios/create-user',
+    canActivate: [AdminGuard],
     component: AmUserComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'centros/add-mod-center',
@@ -83,7 +85,7 @@ export const ROUTES: Routes = [
   },
   {
     path: '**',
-    canActivate: [],
+    canActivate: [AdminGuard],
     redirectTo: 'home',
   },
 ];
