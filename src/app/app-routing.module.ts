@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/auth/login',
+    redirectTo: 'auth',
   },
   {
     path: 'auth',
@@ -32,7 +32,7 @@ const routes: Routes = [
           ),
       },
     ],
-  }
+  },
 ];
 
 @NgModule({

@@ -9,6 +9,7 @@
   .navbar__list {
     .navbar__item {
       margin: 0.625em 0;
+      cursor: pointer;
       &:hover {
         .navbar__link {
           background: $color-bg-hover-primary;
