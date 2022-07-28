@@ -21,7 +21,7 @@ export class AddModCenterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.nombre = this.data.center?.nombre
+    this.edit()
 
   }
 
@@ -33,6 +33,12 @@ export class AddModCenterComponent implements OnInit {
     this.data.center = this.formUpEdit.value
     this.data.nombreCentro = this.formUpEdit.value.nombre
     this.formUpEdit.reset()
+  }
+
+  edit(){
+    if(this.data.editar){
+      this.nombre = this.data.center?.nombre
+    }
   }
 
   editar(){
