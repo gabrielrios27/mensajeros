@@ -28,6 +28,8 @@ export class AddModCenterComponent implements OnInit {
   confirm(){
     this.router.navigate(['admin/dashboard/centros']);
     console.log(this.formUpEdit.value)
+    this.data.flag = true
+    this.data.editar = false
     this.data.center = this.formUpEdit.value
     this.data.nombreCentro = this.formUpEdit.value.nombre
     this.formUpEdit.reset()
@@ -37,6 +39,8 @@ export class AddModCenterComponent implements OnInit {
     this.router.navigate(['admin/dashboard/centros']);
     this.data.flag = true
     this.data.editar = true
+    this.formUpEdit.reset()
+    this.data.nombreCentro = this.formUpEdit.value.nombre
   }
 
 }
