@@ -50,12 +50,13 @@ export class AmUserComponent implements OnInit {
 
   addUser(user: Users, id:number){
     this.admin.addUser(user,id).subscribe({
-      next: data=>{
+      next: (data:any)=>{
         setTimeout(() => this.cdr.detectChanges())
         console.log(data,"done")
-        this.data.flag = true
+        this.data.flag = false
         this.data.editar = false
         this.formUpEdit.reset()
+        this.setAxeLocStg(data, true)
         this.router.navigate(['admin/dashboard/usuarios']);
       },
       error: (err)=>{
@@ -66,11 +67,12 @@ export class AmUserComponent implements OnInit {
 
   edit(user: Users,id: any){
     this.admin.editUser(user,id).subscribe({
-      next: data=>{
+      next:( data: any)=>{
         setTimeout(() => this.cdr.detectChanges())
         console.log(data)
-        this.data.flag = true
-        this.data.editar = true
+        this.data.flag = false
+        this.data.editar = false
+        this.setAxeLocStg(data, false)
         this.router.navigate(['admin/dashboard/usuarios']);
       },
       error: (err)=>{
@@ -89,5 +91,10 @@ export class AmUserComponent implements OnInit {
 
   capturarCentro(e: any){
     this.centroAsignado = e
+  }
+
+  setAxeLocStg(data: Users, isNewUser: boolean) {
+    localStorage.setItem('newOrEditedUser', JSON.stringify(data));
+    localStorage.setItem('isNewUser', JSON.stringify(isNewUser));
   }
 }
