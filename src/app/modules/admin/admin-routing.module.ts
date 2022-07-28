@@ -13,6 +13,7 @@ import * as adminComponents from './components';
 /* Guards */
 import * as adminGuards from './guards';
 import { AmUserComponent } from './containers/am-user/am-user.component';
+import { AddModCenterComponent } from './containers/add-mod-center/add-mod-center.component';
 import { UsersComponent } from './containers/users/users.component';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { AdminGuard } from './guards';
@@ -76,6 +77,11 @@ export const ROUTES: Routes = [
     canActivate: [AdminGuard],
     component: AmUserComponent,
     pathMatch: 'full',
+  },
+  {
+    path: 'centros/add-mod-center',
+    component: AddModCenterComponent,
+    pathMatch: 'full'
   },
   {
     path: '**',
