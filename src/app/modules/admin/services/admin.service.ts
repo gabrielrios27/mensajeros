@@ -11,6 +11,7 @@ import { axes, flag } from '../models';
 export class AdminService {
     api_key: string = '';
     baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com';
+    baseUrlTami: string = 'https://mensajeros-back-tami.herokuapp.com';
     headers = new HttpHeaders();
     token: string = '';
     EPAxes: string = '/ejes';
@@ -23,31 +24,31 @@ export class AdminService {
     // );
 
     getCentros(): Observable<Centro[]> {
-        return this._http.get<Centro[]>(this.baseUrl + '/centros', {
-            headers: this.headers
-        })
+        return this._http.get<Centro[]>(this.baseUrlTami + '/centros')
     }
 
     getUsers(): Observable<Users[]> {
-        return this._http.get<Users[]>(this.baseUrl + '/usuarios', {
-            headers: this.headers
-        })
+        return this._http.get<Users[]>(this.baseUrlTami + '/usuarios')
     }
 
     deleteUser(id: number): Observable<boolean> {
-        return this._http.delete<boolean>(this.baseUrl + '/usuarios/' + id, {
+        return this._http.delete<boolean>(this.baseUrlTami + '/usuarios/' + id, {
             headers: this.headers
         })
     }
 
     editUser(user: Users, id: any): Observable<Response> {
-        return this._http.put<Response>(this.baseUrl + '/usuarios/' + id, user, {
+        return this._http.put<Response>(this.baseUrlTami + '/usuarios/' + id, user, {
             headers: this.headers
         })
     }
 
-    addUser(user: Users, id: number): Observable<Response> {
-        return this._http.post<Response>(this.baseUrl + '/usuarios/' + id, user, {
+    addUser(user: Users, id: number): Observable<Users> {
+        return this._http.post<Users>(this.baseUrlTami + '/usuarios/' + id, user)
+    }
+
+    getUser(id:number): Observable<Users> {
+        return this._http.get<Users>(this.baseUrlTami + '/usuarios/'+ id, {
             headers: this.headers
         })
     }
