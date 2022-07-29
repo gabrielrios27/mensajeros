@@ -25,8 +25,7 @@ export class AddModCenterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.nombre = this.data.center?.nombre
-
+    this.validarEdit()
   }
 
   confirm() {
@@ -54,6 +53,7 @@ export class AddModCenterComponent implements OnInit {
     })
   }
 
+
   buscaUser(id: any) {
     this.admin.getCenter(id).subscribe({
       next: data => {
@@ -69,7 +69,16 @@ export class AddModCenterComponent implements OnInit {
       this.idUser = this.centro.id
     }
   }
-
+  validarEdit(){
+    if(this.data.editar){
+      this.nombre = this.data.center?.nombre
+      this.Zona =  this.data.center?.zona
+      this.data.editar = false
+    }
+    else{
+      this.nombre = ''
+    }
+  }
   editar(centro: Centro) {
     console.log(this.data.center?.id)
     if (this.idUser) {
@@ -96,7 +105,8 @@ export class AddModCenterComponent implements OnInit {
         console.log(data)
         this.data.flag = false
         this.data.editar = false
-        this.data.nombreCentro = data.nombre
+        this.data.center = data
+        this.data.nombreCentro = ''
         this.setCentroLocStg(this.formUpEdit.value.nombre, false)
         this.formUpEdit.reset()
         this.router.navigate(['admin/dashboard/centros']);
