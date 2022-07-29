@@ -8,119 +8,118 @@ import { AdminService } from '../../services/admin.service';
 @Component({
   selector: 'app-add-mod-center',
   templateUrl: './add-mod-center.component.html',
-  styleUrls: ['./add-mod-center.component.scss']
+  styleUrls: ['./add-mod-center.component.scss'],
 })
 export class AddModCenterComponent implements OnInit {
   formUpEdit: FormGroup;
-  nombre: any
-  Zona: any
-  centro: Centro = {} as Centro
-  idUser: number = 0
+  nombre: any;
+  Zona: any;
+  centro: Centro = {} as Centro;
+  idUser: number = 0;
 
-  constructor(private router: Router, public data: DataService, private fb: FormBuilder, private admin: AdminService, private cdr: ChangeDetectorRef) {
+  constructor(
+    private router: Router,
+    public data: DataService,
+    private fb: FormBuilder,
+    private admin: AdminService,
+    private cdr: ChangeDetectorRef
+  ) {
     this.formUpEdit = fb.group({
       nombre: ['', Validators.required],
-      zona: ['', Validators.required]
-    })
+      zona: ['', Validators.required],
+    });
   }
 
   ngOnInit(): void {
-    this.validarEdit()
+    this.validarEdit();
   }
 
   confirm() {
-    this.addCenter(this.formUpEdit.value)
-
+    this.addCenter(this.formUpEdit.value);
   }
 
   addCenter(center: Centro) {
     this.admin.addCenter(center).subscribe({
-      next: data => {
+      next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(data)
-        this.data.flag = false
-        this.data.editar = false
-        this.data.nombreCentro = this.formUpEdit.value.nombre
-        this.setCentroLocStg(this.formUpEdit.value.nombre, true)
-        this.formUpEdit.reset()
+        console.log(data);
+        this.data.flag = false;
+        this.data.editar = false;
+        this.data.nombreCentro = this.formUpEdit.value.nombre;
+        this.setCentroLocStg(this.formUpEdit.value.nombre, true);
+        this.formUpEdit.reset();
         this.router.navigate(['admin/dashboard/centros']);
       },
-      error: err => {
+      error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(err)
-
-      }
-    })
+        console.log(err);
+      },
+    });
   }
-
 
   buscaUser(id: any) {
     this.admin.getCenter(id).subscribe({
-      next: data => {
-        console.log(data)
-        this.centro = data
+      next: (data) => {
+        console.log(data);
+        this.centro = data;
       },
-      error: err => {
-        console.log(err)
-      }
-    })
+      error: (err) => {
+        console.log(err);
+      },
+    });
 
     if (this.centro.usuario?.id) {
-      this.idUser = this.centro.id
+      this.idUser = this.centro.id;
     }
   }
-  validarEdit(){
-    if(this.data.editar){
-      this.nombre = this.data.center?.nombre
-      this.Zona =  this.data.center?.zona
-      this.data.editar = false
-    }
-    else{
-      this.nombre = ''
+  validarEdit() {
+    if (this.data.editar) {
+      this.nombre = this.data.center?.nombre;
+      this.Zona = this.data.center?.zona;
+    } else {
+      this.nombre = '';
     }
   }
   editar(centro: Centro) {
-    console.log(this.data.center?.id)
+    console.log(this.data.center?.id);
     if (this.idUser) {
-      centro.usuario = this.centro.usuario
-    }
-    else {
+      centro.usuario = this.centro.usuario;
+    } else {
       centro.usuario = {
         id: '',
         nombre: '',
         contrasena: '',
-        email: ''
-      }
+        email: '',
+      };
     }
 
-    this.buscaUser(this.data.center?.id)
-    this.editCenter(centro, this.data.center?.id)
+    this.buscaUser(this.data.center?.id);
+    this.editCenter(centro, this.data.center?.id);
   }
 
   editCenter(center: Centro, id: any) {
-    console.log(center)
+    console.log(center);
     this.admin.editCenter(center, id).subscribe({
-      next: data => {
+      next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(data)
-        this.data.flag = false
-        this.data.editar = false
-        this.data.center = data
-        this.data.nombreCentro = ''
-        this.setCentroLocStg(this.formUpEdit.value.nombre, false)
-        this.formUpEdit.reset()
+        console.log(data);
+        this.data.flag = false;
+        this.data.editar = false;
+        this.data.center = data;
+        this.data.nombreCentro = '';
+        this.setCentroLocStg(this.formUpEdit.value.nombre, false);
+        this.formUpEdit.reset();
         this.router.navigate(['admin/dashboard/centros']);
       },
-      error: err => {
+      error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(err)
-      }
-    })
+        console.log(err);
+      },
+    });
   }
 
   setCentroLocStg(data: string, isNewCentro: boolean) {
     localStorage.setItem('newOrEditedCenter', data);
     localStorage.setItem('isNewCenter', JSON.stringify(isNewCentro));
   }
-
 }
