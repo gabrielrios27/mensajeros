@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { AuthService } from '../../../../modules/auth/services/auth.service';
 import { Router } from '@angular/router';
+import { LayoutsService } from '../../services';
 
 @Component({
   selector: 'app-navbar',
@@ -17,11 +18,13 @@ export class NavbarComponent implements OnInit {
   constructor(
     private _http: AuthService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private _layoutSvc: LayoutsService
   ) {}
   ngOnInit() {}
 
   logout() {
+    localStorage.removeItem('isAdmin');
     this._http.logout();
     setTimeout(() => this.cdr.detectChanges());
   }

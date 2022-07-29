@@ -26,7 +26,27 @@ export class CentersComponent implements OnInit {
   constructor(private router: Router, public data: DataService, private admin: AdminService, private cdr: ChangeDetectorRef) { }
   ngOnInit() {
     this.getCenters()
+    this.getCenterLocalStorage()
   }
+
+  // getAxeLocalStorage() {
+  //   if (this.data.editar) {
+  //     setTimeout(() => {
+  //       this.close();
+  //     }, 3000);
+  //   }
+  //   if (this.data.flag) {
+  //     setTimeout(() => {
+  //       this.close();
+  //     }, 3000);
+  //   }
+  //   if (this.data.flagDelete) {
+  //     setTimeout(() => {
+  //       this.close();
+  //     }, 2000);
+  //   }
+    
+  // }
 
   busca(e: string) {
 
@@ -45,6 +65,7 @@ export class CentersComponent implements OnInit {
   create() {
     this.router.navigate(['admin/dashboard/centros/add-mod-center']);
   }
+
 
   edit(center: Centro) {
     this.editar = true
@@ -104,10 +125,9 @@ export class CentersComponent implements OnInit {
     this.flagDelete = true
   }
 
-  getUserLocalStorage() {
+  getCenterLocalStorage() {
     let newOrEditedCenter = localStorage.getItem('newOrEditedCenter');
     if (newOrEditedCenter) {
-      this.newOrEditedCenter = JSON.parse(newOrEditedCenter);
       setTimeout(() => {
         this.close();
       }, 3000);

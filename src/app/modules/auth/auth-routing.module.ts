@@ -33,10 +33,12 @@ export const ROUTES: Routes = [
   },
   {
     path: 'forgot-password',
+    canActivate: [],
     component: ForgotPasswordComponent,
   },
   {
     path: 'recover-password',
+    canActivate: [],
     component: RecoverPasswordComponent,
   },
 ];

@@ -28,9 +28,8 @@ export class AddModCenterComponent implements OnInit {
   }
 
   confirm(){
-    console.log(this.formUpEdit.value)
     this.addCenter(this.formUpEdit.value)
-    this.data.nombreCentro = this.formUpEdit.value.nombre
+    
   }
 
   addCenter(center: Centro){
@@ -38,9 +37,10 @@ export class AddModCenterComponent implements OnInit {
       next: data =>{
         setTimeout(() => this.cdr.detectChanges());
         console.log(data)
-        this.data.flag = true
+        this.data.flag = false
         this.data.editar = false
-        this.setCentroLocStg(this.formUpEdit.value, true)
+        this.data.nombreCentro = this.formUpEdit.value.nombre
+        this.setCentroLocStg(this.formUpEdit.value.nombre, true)
         this.formUpEdit.reset()
         this.router.navigate(['admin/dashboard/centros']);
       },
@@ -69,7 +69,7 @@ export class AddModCenterComponent implements OnInit {
         this.data.editar = false
         this.data.nombreCentro = data.nombre
         this.formUpEdit.reset()
-        this.setCentroLocStg(this.formUpEdit.value, false)
+        this.setCentroLocStg(this.formUpEdit.value.nombre, false)
         this.router.navigate(['admin/dashboard/centros']);
       },
       error: err =>{
@@ -79,9 +79,9 @@ export class AddModCenterComponent implements OnInit {
     })
   }
 
-  setCentroLocStg(data: Centro, isNewCentro: boolean) {
-    localStorage.setItem('newOrEditedCentro', JSON.stringify(data));
-    localStorage.setItem('isNewCentro', JSON.stringify(isNewCentro));
+  setCentroLocStg(data: string, isNewCentro: boolean) {
+    localStorage.setItem('newOrEditedCenter', data);
+    localStorage.setItem('isNewCenter', JSON.stringify(isNewCentro));
   }
 
 }
