@@ -111,13 +111,19 @@
     <div class="modal__container-delete">
       <img
         class="modal__ico-info"
-        src="../../../../../assets/icons/Info-circle.svg"
+        src="../../../../../assets/icons/Exclamation-triangle.svg"
         alt="Icono de información"
       />
       <p class="modal__text">
         ¡Estas a punto de eliminar este dato!<br />Esta acción no podrá ser
         revertida
       </p>
+    </div>
+    <div class="modal__options">
+      <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
+      <button class="btn-modal__accept" (click)="deleteUser()">
+        Confirmar y eliminar
+      </button>
     </div>
   </div>
 </section>

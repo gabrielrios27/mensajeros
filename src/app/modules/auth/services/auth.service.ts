@@ -10,6 +10,9 @@ import { Response } from '../models/response';
 @Injectable()
 export class AuthService {
   url: string = 'https://mensajeros-back-tami.herokuapp.com/';
+  baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com/';
+  baseUrlTami: string = 'https://mensajeros-back-tami.herokuapp.com';
+
   EPAuthority: string = 'usuarios/role';
   loggedIn = new BehaviorSubject<boolean>(false);
 
@@ -26,7 +29,7 @@ export class AuthService {
   }
 
   loginByEmail(form: Login): Observable<Response | void> {
-    let direccion = this.url + 'auth/login';
+    let direccion = this.baseUrl + 'auth/login';
     return this._http.post<Response>(direccion, form).pipe(
       map((res: Response) => {
         console.log('done');
@@ -46,7 +49,7 @@ export class AuthService {
   }
 
   getRole() {
-    return this._http.get<role>(this.url + this.EPAuthority).pipe(
+    return this._http.get<role>(this.baseUrl + this.EPAuthority).pipe(
       map((data) => {
         console.log(data);
 

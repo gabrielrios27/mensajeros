@@ -1,85 +1,126 @@
 <section class="container-center">
-    <div class="center">
-        <h1 class="center__title">Centros</h1>
-        <div class="center__container-search">
-            <a class="btn-add-center" (click)="create()" style="cursor: pointer;">
-                <img class="btn-add-center__ico" src="../../../../../assets/icons/List ol.svg"
-                    alt="Icono de lista ordenada" />
-                <span class="btn-add-center__text"> AGREGAR CENTROS </span>
+  <div class="center">
+    <h1 class="center__title">Centros</h1>
+    <div class="center__container-search">
+      <a class="btn-add-center" (click)="create()" style="cursor: pointer">
+        <img
+          class="btn-add-center__ico"
+          src="../../../../../assets/icons/List ol.svg"
+          alt="Icono de lista ordenada"
+        />
+        <span class="btn-add-center__text"> AGREGAR CENTROS </span>
+      </a>
+      <label for="searchAxes" class="lbl-search-center">
+        <input
+          class="lbl-search-center__input"
+          id="searchAxes"
+          type="text"
+          [(ngModel)]="Centro"
+          (ngModelChange)="busca($event)"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <img
+          class="lbl-search-center__ico"
+          src="../../../../../assets/icons/Search.svg"
+          alt="Icono de lupa para busqueda"
+        />
+      </label>
+    </div>
+    <section class="list-center">
+      <div class="list-center__table">
+        <!-- Position Column -->
+        <div class="list-center__row">
+          <div class="list-center__header">Nombre</div>
+          <div class="list-center__header">Zona</div>
+          <div class="list-center__header list-center__header--action">
+            Acciones
+          </div>
+        </div>
+
+        <div class="list-center__row" *ngFor="let element of centros">
+          <div class="list-center__cell list-center__cell--center">
+            {{ element.nombre }}
+          </div>
+          <div class="list-center__cell list-center__cell--center">
+            {{ element.zona }}
+          </div>
+          <div class="list-center__cell list-center__cell--acction">
+            <a (click)="edit(element)">
+              <img
+                class="list-center__ico-action list-center__ico-action--edit"
+                src="../../../../../assets/icons/Pencil.svg"
+                alt="Icono de editar"
+                matTooltip="Editar"
+              />
             </a>
-            <label for="searchAxes" class="lbl-search-center">
-                <input class="lbl-search-center__input" id="searchAxes" type="text" [(ngModel)]="Centro"
-                    (ngModelChange)="busca($event)" autocomplete="off" spellcheck="false" />
-                <img class="lbl-search-center__ico" src="../../../../../assets/icons/Search.svg"
-                    alt="Icono de lupa para busqueda" />
-            </label>
+            <img
+              class="list-center__ico-action"
+              src="../../../../../assets/icons/Trash.svg"
+              alt="icono de Eliminar"
+              matTooltip="Borrar"
+              (click)="elim(element)"
+            />
+          </div>
         </div>
-        <section class="list-center">
-            <div class="list-center__table">
-                <!-- Position Column -->
-                <div class="list-center__row">
-                    <div class="list-center__header">Nombre</div>
-                    <div class="list-center__header">Zona</div>
-                    <div class="list-center__header list-center__header--action">
-                        Acciones
-                    </div>
-                </div>
-
-                <div class="list-center__row" *ngFor="let element of centros">
-                    <div class="list-center__cell list-center__cell--center">
-                        {{ element.nombre }}
-                    </div>
-                    <div class="list-center__cell list-center__cell--center">
-                        {{ element.zona }}
-                    </div>
-                    <div class="list-center__cell list-center__cell--acction">
-                        <a (click)="edit(element)">
-                            <img class="list-center__ico-action list-center__ico-action--edit"
-                                src="../../../../../assets/icons/Pencil.svg" alt="Icono de editar"
-                                matTooltip="Editar" />
-                        </a>
-                        <img class="list-center__ico-action" src="../../../../../assets/icons/Trash.svg"
-                            alt="icono de Eliminar" matTooltip="Borrar" (click)="elim(element)" />
-                    </div>
-                </div>
-            </div>
-        </section>
+      </div>
+    </section>
+  </div>
+  <div *ngIf="flagNew" class="modal">
+    <img
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__container">
+      <img
+        class="modal__ico"
+        src="../../../../../assets/icons/Check.svg"
+        alt="icon check"
+      />
+      <p class="modal__text">
+        ¡El centro {{ data.center?.nombre }} fue creado con éxito!
+      </p>
     </div>
-    <div *ngIf="flagNew" class="modal">
-        <img class="modal__btnClose" (click)="close()" src="../../../../../assets/icons/X.svg" alt="icono de cerrar" />
-        <div class="modal__container">
-            <img class="modal__ico" src="../../../../../assets/icons/Check.svg" alt="icon check" />
-            <p class="modal__text">
-                ¡El Eje {{ data.center?.nombre }} fue creado con éxito!
-            </p>
-        </div>
-    </div>
+  </div>
 
-    <div *ngIf="flagEdited"class="modal">
-        <img class="modal__btnClose" (click)="close()" src="../../../../../assets/icons/X.svg" alt="icono de cerrar" />
-        <div class="modal__container">
-            <img class="modal__ico" src="../../../../../assets/icons/Check.svg" alt="icon check" />
-            <p class="modal__text">
-                ¡El Eje {{  data.center?.nombre }} fue editado con éxito!
-            </p>
-        </div>
+  <div *ngIf="flagEdited" class="modal">
+    <img
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__container">
+      <img
+        class="modal__ico"
+        src="../../../../../assets/icons/Check.svg"
+        alt="icon check"
+      />
+      <p class="modal__text">
+        ¡El centro {{ data.center?.nombre }} fue editado con éxito!
+      </p>
     </div>
+  </div>
 
-    <div *ngIf="flagDelete" class="modal-delete">
-        <div class="modal__container-delete">
-            <img class="modal__ico-info" src="../../../../../assets/icons/Exclamation-triangle.svg"
-                alt="Icono de información" />
-            <p class="modal__text">
-                ¡Estas a punto de eliminar este dato!<br />Esta acción no podrá ser
-                revertida
-            </p>
-        </div>
-        <div class="modal__options">
-            <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
-            <button class="btn-modal__accept" (click)="delete()">
-                Confirmar y eliminar
-            </button>
-        </div>
+  <div *ngIf="flagDelete" class="modal-delete">
+    <div class="modal__container-delete">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Exclamation-triangle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">
+        ¡Estas a punto de eliminar este dato!<br />Esta acción no podrá ser
+        revertida
+      </p>
     </div>
-
+    <div class="modal__options">
+      <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
+      <button class="btn-modal__accept" (click)="delete()">
+        Confirmar y eliminar
+      </button>
+    </div>
+  </div>
 </section>
