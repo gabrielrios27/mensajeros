@@ -18,7 +18,7 @@ export class AdminService {
 
     constructor(private _http: HttpClient) { }
 
-    editCenter(id:number,center:Centro):Observable<Centro>{
+    editCenter(center:Centro,id:any):Observable<Centro>{
         return this._http.put<Centro>(this.baseUrlTami + '/centros/'+ id ,center, {
             headers: this.headers
         })
@@ -34,6 +34,9 @@ export class AdminService {
         return this._http.post<Centro>(this.baseUrlTami + '/centros', center, {
             headers: this.headers
         })
+    }
+    getCenter(id: number): Observable<Centro> {
+        return this._http.get<Centro>(this.baseUrlTami + '/centros/'+ id)
     }
 
     getCentros(): Observable<Centro[]> {
