@@ -57,20 +57,20 @@ export class AddAxesComponent implements OnInit {
       this.flagTimeOut = true;
       this.timerId = setTimeout(() => {
         this.close();
-      }, 4000);
+      }, 3000);
       return;
     } else {
       this.invalidForm = false;
       this.isInList = this.checkInAxesList(this.newAxe.get('axe')?.value);
       if (this.isInList) {
+        //comprueba si esta en la lista, si esta se renderiza un mensaje de error(este eje ya se encuentra cargado)
         this.flagExist = true;
         this.flagTimeOutExist = true;
         this.timerIdExist = setTimeout(() => {
           this.close();
-        }, 4000);
+        }, 3000);
       } else {
         this.putOrAddAxe();
-        this.router.navigate(['admin/dashboard/ejes']);
       }
     }
   }
@@ -80,6 +80,7 @@ export class AddAxesComponent implements OnInit {
       this.setAxeLocStg(axeToCreate, true);
       this._adminSvc.createAxe(axeToCreate).subscribe({
         next: (data: axes) => {
+          this.router.navigate(['admin/dashboard/ejes']);
           console.log(data);
         },
         error: (err) => {
@@ -100,6 +101,7 @@ export class AddAxesComponent implements OnInit {
       this.setAxeLocStg(axeToEdit, false);
       this._adminSvc.editAxeWithId(this.idAxe.toString(), axeToEdit).subscribe({
         next: (data: axes) => {
+          this.router.navigate(['admin/dashboard/ejes']);
           console.log(data);
         },
         error: (err) => {
