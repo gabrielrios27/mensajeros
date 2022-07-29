@@ -128,8 +128,8 @@
   }
 }
 .modal {
-  position: absolute;
-  top: 134px;
+  position: fixed;
+  top: 310px;
   z-index: 200;
   width: 525px;
   height: 264px;
@@ -169,8 +169,8 @@
   }
 }
 .modal-delete {
-  position: absolute;
-  top: 134px;
+  position: fixed;
+  top: 310px;
   z-index: 200;
   width: 525px;
   height: 297px;
@@ -255,10 +255,10 @@
     }
   }
   .modal-delete {
-    top: 90px;
+    top: 222px;
   }
   .modal {
-    top: 90px;
+    top: 222px;
   }
 }
 @media (max-width: 768px) {
@@ -270,5 +270,11 @@
         padding-right: 135.75px;
       }
     }
+  }
+  .modal-delete {
+    top: 200px;
+  }
+  .modal {
+    top: 200px;
   }
 }

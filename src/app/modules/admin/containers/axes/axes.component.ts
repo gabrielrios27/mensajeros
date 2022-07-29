@@ -57,9 +57,9 @@ export class AxesComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data: axes[]) => {
           this.listOfAxes = data;
+          setTimeout(() => this._cdr.detectChanges());
           console.log(this.listOfAxes);
           this.listOfAxes_toShow.next(this.listOfAxes);
-          setTimeout(() => this._cdr.detectChanges());
         },
         error: (err) => {
           console.log(err);
@@ -132,24 +132,28 @@ export class AxesComponent implements OnInit, OnDestroy {
   }
   checkAxeInList(axe: axes) {
     this.isAxeInList = false;
-    if (axe.id === 0) {
-      for (let item of this.listOfAxes) {
-        if (item.nombre === axe.nombre) {
-          this.isAxeInList = true;
+    setTimeout(() => {
+      this.getAxesList();
+    }, 1000);
+    setTimeout(() => {
+      if (axe.id === 0) {
+        for (let item of this.listOfAxes) {
+          if (item.nombre === axe.nombre) {
+            this.isAxeInList = true;
+          }
+        }
+      } else {
+        for (let item of this.listOfAxes) {
+          if (item.id === axe.id) {
+            this.isAxeInList = true;
+          }
         }
       }
-    } else {
-      for (let item of this.listOfAxes) {
-        if (item.id === axe.id) {
-          this.isAxeInList = true;
-        }
+      if (!this.isAxeInList) {
+        this.listOfAxes.push(axe);
+        this.listOfAxes_toShow.next(this.listOfAxes);
       }
-    }
-    if (!this.isAxeInList) {
-      this.listOfAxes.push(axe);
-      this.listOfAxes_toShow.next(this.listOfAxes);
-    }
-    this.getAxesList();
+    }, 2000);
   }
   Search(e: string) {
     /*informacion a buscar*/
