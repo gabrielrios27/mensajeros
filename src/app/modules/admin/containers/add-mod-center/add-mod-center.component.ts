@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
+import { Centro } from '../../models/centro';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-add-mod-center',
@@ -12,41 +14,113 @@ export class AddModCenterComponent implements OnInit {
   formUpEdit: FormGroup;
   nombre: any
   Zona: any
+  centro: Centro = {} as Centro
+  idUser: number = 0
 
-  constructor(private router: Router, public data:DataService, private fb:FormBuilder) {
+  constructor(private router: Router, public data: DataService, private fb: FormBuilder, private admin: AdminService, private cdr: ChangeDetectorRef) {
     this.formUpEdit = fb.group({
       nombre: ['', Validators.required],
-      zona: ['',Validators.required]
+      zona: ['', Validators.required]
     })
   }
 
   ngOnInit(): void {
-    this.edit()
+    this.validarEdit()
+  }
+
+  confirm() {
+    this.addCenter(this.formUpEdit.value)
 
   }
 
-  confirm(){
-    this.router.navigate(['admin/dashboard/centros']);
-    console.log(this.formUpEdit.value)
-    this.data.flag = true
-    this.data.editar = false
-    this.data.center = this.formUpEdit.value
-    this.data.nombreCentro = this.formUpEdit.value.nombre
-    this.formUpEdit.reset()
+  addCenter(center: Centro) {
+    this.admin.addCenter(center).subscribe({
+      next: data => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(data)
+        this.data.flag = false
+        this.data.editar = false
+        this.data.nombreCentro = this.formUpEdit.value.nombre
+        this.setCentroLocStg(this.formUpEdit.value.nombre, true)
+        this.formUpEdit.reset()
+        this.router.navigate(['admin/dashboard/centros']);
+      },
+      error: err => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(err)
+
+      }
+    })
   }
 
-  edit(){
-    if(this.data.editar){
-      this.nombre = this.data.center?.nombre
+
+  buscaUser(id: any) {
+    this.admin.getCenter(id).subscribe({
+      next: data => {
+        console.log(data)
+        this.centro = data
+      },
+      error: err => {
+        console.log(err)
+      }
+    })
+
+    if (this.centro.usuario?.id) {
+      this.idUser = this.centro.id
     }
   }
+  validarEdit(){
+    if(this.data.editar){
+      this.nombre = this.data.center?.nombre
+      this.Zona =  this.data.center?.zona
+      this.data.editar = false
+    }
+    else{
+      this.nombre = ''
+    }
+  }
+  editar(centro: Centro) {
+    console.log(this.data.center?.id)
+    if (this.idUser) {
+      centro.usuario = this.centro.usuario
+    }
+    else {
+      centro.usuario = {
+        id: '',
+        nombre: '',
+        contrasena: '',
+        email: ''
+      }
+    }
 
-  editar(){
-    this.router.navigate(['admin/dashboard/centros']);
-    this.data.flag = true
-    this.data.editar = true
-    this.formUpEdit.reset()
-    this.data.nombreCentro = this.formUpEdit.value.nombre
+    this.buscaUser(this.data.center?.id)
+    this.editCenter(centro, this.data.center?.id)
+  }
+
+  editCenter(center: Centro, id: any) {
+    console.log(center)
+    this.admin.editCenter(center, id).subscribe({
+      next: data => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(data)
+        this.data.flag = false
+        this.data.editar = false
+        this.data.center = data
+        this.data.nombreCentro = ''
+        this.setCentroLocStg(this.formUpEdit.value.nombre, false)
+        this.formUpEdit.reset()
+        this.router.navigate(['admin/dashboard/centros']);
+      },
+      error: err => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(err)
+      }
+    })
+  }
+
+  setCentroLocStg(data: string, isNewCentro: boolean) {
+    localStorage.setItem('newOrEditedCenter', data);
+    localStorage.setItem('isNewCenter', JSON.stringify(isNewCentro));
   }
 
 }

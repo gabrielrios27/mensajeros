@@ -38,7 +38,6 @@ export class AmUserComponent implements OnInit {
   confirm(user: Users){
     this.addUser(user,this.centroAsignado)
     this.data.nombreUsuario = this.formUpEdit.value.nombre
-    this.formUpEdit.reset()
   }
 
   editar(user:Users){

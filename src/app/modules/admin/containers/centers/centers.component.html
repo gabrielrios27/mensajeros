@@ -25,11 +25,11 @@
                     </div>
                 </div>
 
-                <div class="list-center__row" *ngFor="let element of dataSource">
-                    <div class="list-center__cell list-center__cell--axe">
+                <div class="list-center__row" *ngFor="let element of centros">
+                    <div class="list-center__cell list-center__cell--center">
                         {{ element.nombre }}
                     </div>
-                    <div class="list-center__cell list-center__cell--axe">
+                    <div class="list-center__cell list-center__cell--center">
                         {{ element.zona }}
                     </div>
                     <div class="list-center__cell list-center__cell--acction">
@@ -45,27 +45,27 @@
             </div>
         </section>
     </div>
-    <div *ngIf="data.flag" class="modal">
+    <div *ngIf="flagNew" class="modal">
         <img class="modal__btnClose" (click)="close()" src="../../../../../assets/icons/X.svg" alt="icono de cerrar" />
         <div class="modal__container">
             <img class="modal__ico" src="../../../../../assets/icons/Check.svg" alt="icon check" />
             <p class="modal__text">
-                ¡El Eje {{ data.nombreCentro }} fue creado con éxito!
+                ¡El Eje {{ data.center?.nombre }} fue creado con éxito!
             </p>
         </div>
     </div>
 
-    <div *ngIf="data.editar"class="modal">
+    <div *ngIf="flagEdited"class="modal">
         <img class="modal__btnClose" (click)="close()" src="../../../../../assets/icons/X.svg" alt="icono de cerrar" />
         <div class="modal__container">
             <img class="modal__ico" src="../../../../../assets/icons/Check.svg" alt="icon check" />
             <p class="modal__text">
-                ¡El Eje {{ data.nombreCentro }} fue editado con éxito!
+                ¡El Eje {{  data.center?.nombre }} fue editado con éxito!
             </p>
         </div>
     </div>
 
-    <div *ngIf="data.flagDelete" class="modal-delete">
+    <div *ngIf="flagDelete" class="modal-delete">
         <div class="modal__container-delete">
             <img class="modal__ico-info" src="../../../../../assets/icons/Exclamation-triangle.svg"
                 alt="Icono de información" />
