@@ -16,7 +16,7 @@
             </mat-error>
         </section>
         <label class="labelDato">*Dato obligatorio</label>
-        <button [disabled]="formUpEdit.invalid" mat-button *ngIf="data.editar" (click)="editar()">Confirmar</button>
+        <button [disabled]="formUpEdit.invalid" mat-button *ngIf="data.editar" (click)="editar(formUpEdit.value)">Confirmar</button>
         <button [disabled]="formUpEdit.invalid" mat-button *ngIf="!data.editar" (click)="confirm()">Confirmar</button>
     </form>
 </div>

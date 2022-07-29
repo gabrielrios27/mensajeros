@@ -14,27 +14,29 @@ export class AddModCenterComponent implements OnInit {
   formUpEdit: FormGroup;
   nombre: any
   Zona: any
+  centro: Centro = {} as Centro
+  idUser: number = 0
 
-  constructor(private router: Router, public data:DataService, private fb:FormBuilder, private admin: AdminService, private cdr: ChangeDetectorRef) {
+  constructor(private router: Router, public data: DataService, private fb: FormBuilder, private admin: AdminService, private cdr: ChangeDetectorRef) {
     this.formUpEdit = fb.group({
       nombre: ['', Validators.required],
-      zona: ['',Validators.required]
+      zona: ['', Validators.required]
     })
   }
 
   ngOnInit(): void {
     this.nombre = this.data.center?.nombre
-    
+
   }
 
-  confirm(){
+  confirm() {
     this.addCenter(this.formUpEdit.value)
-    
+
   }
 
-  addCenter(center: Centro){
+  addCenter(center: Centro) {
     this.admin.addCenter(center).subscribe({
-      next: data =>{
+      next: data => {
         setTimeout(() => this.cdr.detectChanges());
         console.log(data)
         this.data.flag = false
@@ -44,35 +46,62 @@ export class AddModCenterComponent implements OnInit {
         this.formUpEdit.reset()
         this.router.navigate(['admin/dashboard/centros']);
       },
-      error: err =>{
+      error: err => {
         setTimeout(() => this.cdr.detectChanges());
         console.log(err)
-        
+
       }
     })
   }
 
-  editar(){
-    if(this.data.center?.id){
-      let id = this.data.center.id
-      this.editCenter(id)
+  buscaUser(id: any) {
+    this.admin.getCenter(id).subscribe({
+      next: data => {
+        console.log(data)
+        this.centro = data
+      },
+      error: err => {
+        console.log(err)
+      }
+    })
+
+    if (this.centro.usuario?.id) {
+      this.idUser = this.centro.id
     }
   }
 
-  editCenter(id: any){
-    console.log(this.formUpEdit.value)
-    this.admin.editCenter(this.formUpEdit.value,id).subscribe({
-      next: data =>{
+  editar(centro: Centro) {
+    console.log(this.data.center?.id)
+    if (this.idUser) {
+      centro.usuario = this.centro.usuario
+    }
+    else {
+      centro.usuario = {
+        id: '',
+        nombre: '',
+        contrasena: '',
+        email: ''
+      }
+    }
+
+    this.buscaUser(this.data.center?.id)
+    this.editCenter(centro, this.data.center?.id)
+  }
+
+  editCenter(center: Centro, id: any) {
+    console.log(center)
+    this.admin.editCenter(center, id).subscribe({
+      next: data => {
         setTimeout(() => this.cdr.detectChanges());
         console.log(data)
         this.data.flag = false
         this.data.editar = false
         this.data.nombreCentro = data.nombre
-        this.formUpEdit.reset()
         this.setCentroLocStg(this.formUpEdit.value.nombre, false)
+        this.formUpEdit.reset()
         this.router.navigate(['admin/dashboard/centros']);
       },
-      error: err =>{
+      error: err => {
         setTimeout(() => this.cdr.detectChanges());
         console.log(err)
       }
