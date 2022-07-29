@@ -111,7 +111,7 @@ export class CentersComponent implements OnInit {
       next: (data:any)=>{
       setTimeout(() => this.cdr.detectChanges())
       console.log(data)
-      this.getCenter()
+      this.getCenters()
       this.close()
     },
     error: (err)=>{
