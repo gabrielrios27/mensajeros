@@ -1,84 +1,129 @@
 <section class="container-user">
-    <div class="user">
-        <h1 class="user__title">Usuarios</h1>
-        <div class="user__container-search">
-            <a class="btn-add-user" style="cursor: pointer ;" (click)="create()">
-                <img class="btn-add-user__ico" src="../../../../../assets/icons/List ol.svg"
-                    alt="Icono de lista ordenada" />
-                <span class="btn-add-user__text"> AGREGAR USUARIO </span>
+  <div class="user">
+    <h1 class="user__title">Usuarios</h1>
+    <div class="user__container-search">
+      <a class="btn-add-user" style="cursor: pointer" (click)="create()">
+        <img
+          class="btn-add-user__ico"
+          src="../../../../../assets/icons/List ol.svg"
+          alt="Icono de lista ordenada"
+        />
+        <span class="btn-add-user__text"> AGREGAR USUARIO </span>
+      </a>
+      <label for="searchAxes" class="lbl-search-user">
+        <input
+          class="lbl-search-user__input"
+          id="searchAxes"
+          type="text"
+          [(ngModel)]="usuario"
+          (ngModelChange)="busca($event)"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <img
+          class="lbl-search-user__ico"
+          src="../../../../../assets/icons/Search.svg"
+          alt="Icono de lupa para busqueda"
+        />
+      </label>
+    </div>
+    <section class="list-user">
+      <div class="list-user__table">
+        <!-- Position Column -->
+        <div class="list-user__row">
+          <div class="list-user__header">Usuario</div>
+          <div class="list-user__header">CentroAsignado</div>
+          <div class="list-user__header list-user__header--action">
+            Acciones
+          </div>
+        </div>
+
+        <div class="list-user__row" *ngFor="let element of user">
+          <div class="list-user__cell list-user__cell--user">
+            {{ element.nombre }}
+          </div>
+          <div
+            class="list-user__cell list-user__cell--user list-user__cell--usermiddle"
+          >
+            {{ centroAsignado(element) }}
+          </div>
+          <div class="list-user__cell list-user__cell--acction">
+            <a (click)="edit(element)">
+              <img
+                class="list-user__ico-action list-user__ico-action--edit"
+                src="../../../../../assets/icons/Pencil.svg"
+                alt="Icono de editar"
+                matTooltip="Editar"
+              />
             </a>
-            <label for="searchAxes" class="lbl-search-user">
-                <input class="lbl-search-user__input" id="searchAxes" type="text" [(ngModel)]="usuario"
-                    (ngModelChange)="busca($event)" autocomplete="off" spellcheck="false" />
-                <img class="lbl-search-user__ico" src="../../../../../assets/icons/Search.svg"
-                    alt="Icono de lupa para busqueda" />
-            </label>
+            <img
+              class="list-user__ico-action"
+              src="../../../../../assets/icons/Trash.svg"
+              alt="icono de Eliminar"
+              matTooltip="Borrar"
+              (click)="onClickDelete(element.id)"
+            />
+          </div>
         </div>
-        <section class="list-user">
-            <div class="list-user__table">
-                <!-- Position Column -->
-                <div class="list-user__row">
-                    <div class="list-user__header">Usuario</div>
-                    <div class="list-user__header">CentroAsignado</div>
-                    <div class="list-user__header list-user__header--action">
-                        Acciones
-                    </div>
-                </div>
+      </div>
+    </section>
+  </div>
 
-                <div class="list-user__row" *ngFor="let element of user ">
-                    <div class="list-user__cell list-user__cell--user">
-                        {{ element.nombre }}
-                    </div>
-                    <div class="list-user__cell list-user__cell--user">
-                        {{ centroAsignado(element)}}
-                    </div>
-                    <div class="list-user__cell list-user__cell--acction">
-                        <a (click)="edit(element)">
-                            <img class="list-user__ico-action list-user__ico-action--edit"
-                                src="../../../../../assets/icons/Pencil.svg" alt="Icono de editar"
-                                matTooltip="Editar" />
-                        </a>
-                        <img class="list-user__ico-action" src="../../../../../assets/icons/Trash.svg"
-                            alt="icono de Eliminar" matTooltip="Borrar" (click)="onClickDelete(element.id)" />
-                    </div>
-                </div>
-            </div>
-        </section>
+  <div *ngIf="flagNew" class="modal">
+    <img
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__container">
+      <img
+        class="modal__ico"
+        src="../../../../../assets/icons/Check.svg"
+        alt="icon check"
+      />
+      <p class="modal__text">
+        ¡El Usuario {{ data.nombreUsuario }} fue creado con éxito!
+      </p>
     </div>
+  </div>
 
-    <div *ngIf="flagNew" class="modal">
-        <img class="modal__btnClose" (click)="close()" src="../../../../../assets/icons/X.svg" alt="icono de cerrar" />
-        <div class="modal__container">
-            <img class="modal__ico" src="../../../../../assets/icons/Check.svg" alt="icon check" />
-            <p class="modal__text">
-                ¡El Usuario {{ data.nombreUsuario }} fue creado con éxito!
-            </p>
-        </div>
+  <div *ngIf="flagEdited" class="modal">
+    <img
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__container">
+      <img
+        class="modal__ico"
+        src="../../../../../assets/icons/Check.svg"
+        alt="icon check"
+      />
+      <p class="modal__text">
+        ¡El Usuario {{ data.nombreUsuario }} fue editado con éxito!
+      </p>
     </div>
+  </div>
 
-    <div *ngIf="flagEdited" class="modal">
-        <img class="modal__btnClose" (click)="close()" src="../../../../../assets/icons/X.svg" alt="icono de cerrar" />
-        <div class="modal__container">
-            <img class="modal__ico" src="../../../../../assets/icons/Check.svg" alt="icon check" />
-            <p class="modal__text">
-                ¡El Usuario {{ data.nombreUsuario}} fue editado con éxito!
-            </p>
-        </div>
+  <div *ngIf="flagDelete" class="modal-delete">
+    <div class="modal__container-delete">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Info-circle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">
+        ¡Estas a punto de eliminar este dato!<br />Esta acción no podrá ser
+        revertida
+      </p>
     </div>
-
-    <div *ngIf="flagDelete" class="modal-delete">
-        <div class="modal__container-delete">
-            <img class="modal__ico-info" src="../../../../../assets/icons/Info-circle.svg" alt="Icono de información" />
-            <p class="modal__text">
-                ¡Estas a punto de eliminar este dato!<br />Esta acción no podrá ser
-                revertida
-            </p>
-        </div>
-        <div class="modal__options">
-            <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
-            <button class="btn-modal__accept" (click)="deleteUser()">
-                Confirmar y eliminar
-            </button>
-        </div>
+    <div class="modal__options">
+      <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
+      <button class="btn-modal__accept" (click)="deleteUser()">
+        Confirmar y eliminar
+      </button>
     </div>
+  </div>
 </section>
