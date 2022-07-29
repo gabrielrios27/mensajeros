@@ -112,7 +112,6 @@ export class UsersComponent implements OnInit {
   getUserLocalStorage() {
     let newOrEditeduser = localStorage.getItem('newOrEditedUser');
     if (newOrEditeduser) {
-      this.newOrEditedUser = JSON.parse(newOrEditeduser);
       setTimeout(() => {
         this.close();
       }, 3000);
@@ -121,7 +120,7 @@ export class UsersComponent implements OnInit {
     let isNewUserStr = localStorage.getItem('isNewUser');
     let isNewUser;
     if (isNewUserStr) {
-      isNewUser = JSON.parse(isNewUserStr);
+      
     }
     if (newOrEditeduser) {
       if (isNewUser) {

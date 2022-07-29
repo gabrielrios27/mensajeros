@@ -50,17 +50,21 @@ export class AmUserComponent implements OnInit {
 
   addUser(user: Users, id:number){
     this.admin.addUser(user,id).subscribe({
-      next: (data:any)=>{
+      next: (data)=>{
         setTimeout(() => this.cdr.detectChanges())
         console.log(data,"done")
         this.data.flag = false
         this.data.editar = false
         this.formUpEdit.reset()
-        this.setUserLocStg(data, true)
+        this.setUserLocStg(this.formUpEdit.value.nombre, true)
         this.router.navigate(['admin/dashboard/usuarios']);
       },
       error: (err)=>{
         console.log(err)
+        this.data.flag = false
+        this.data.editar = false
+        this.setUserLocStg(this.formUpEdit.value.nombre, true)
+        this.router.navigate(['admin/dashboard/usuarios']);
       }
     })
   }
@@ -76,6 +80,10 @@ export class AmUserComponent implements OnInit {
         this.router.navigate(['admin/dashboard/usuarios']);
       },
       error: (err)=>{
+        this.data.flag = false
+        this.data.editar = false
+        this.setUserLocStg(this.formUpEdit.value.nombre, true)
+        this.router.navigate(['admin/dashboard/usuarios']);
         console.log(err)
       }
     })
@@ -93,8 +101,8 @@ export class AmUserComponent implements OnInit {
     this.centroAsignado = e
   }
 
-  setUserLocStg(data: Users, isNewUser: boolean) {
-    localStorage.setItem('newOrEditedUser', JSON.stringify(data));
+  setUserLocStg(data: string, isNewUser: boolean) {
+    localStorage.setItem('newOrEditedUser', data);
     localStorage.setItem('isNewUser', JSON.stringify(isNewUser));
   }
 }
