@@ -99,8 +99,8 @@ export class CentersComponent implements OnInit {
     })
   }
 
-  elim(id: number){
-    this.idToDelete = id
+  elim(c: Centro){
+    this.idToDelete = c.id
     this.flagDelete = true
   }
 
