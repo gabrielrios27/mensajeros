@@ -26,10 +26,10 @@
                 </div>
 
                 <div class="list-center__row" *ngFor="let element of centros">
-                    <div class="list-center__cell list-center__cell--axe">
+                    <div class="list-center__cell list-center__cell--center">
                         {{ element.nombre }}
                     </div>
-                    <div class="list-center__cell list-center__cell--axe">
+                    <div class="list-center__cell list-center__cell--center">
                         {{ element.zona }}
                     </div>
                     <div class="list-center__cell list-center__cell--acction">
@@ -39,13 +39,13 @@
                                 matTooltip="Editar" />
                         </a>
                         <img class="list-center__ico-action" src="../../../../../assets/icons/Trash.svg"
-                            alt="icono de Eliminar" matTooltip="Borrar" (click)="elim(element.id)" />
+                            alt="icono de Eliminar" matTooltip="Borrar" (click)="elim(element)" />
                     </div>
                 </div>
             </div>
         </section>
     </div>
-    <div *ngIf="data.flag" class="modal">
+    <div *ngIf="flagNew" class="modal">
         <img class="modal__btnClose" (click)="close()" src="../../../../../assets/icons/X.svg" alt="icono de cerrar" />
         <div class="modal__container">
             <img class="modal__ico" src="../../../../../assets/icons/Check.svg" alt="icon check" />
@@ -55,7 +55,7 @@
         </div>
     </div>
 
-    <div *ngIf="data.editar"class="modal">
+    <div *ngIf="flagEdited"class="modal">
         <img class="modal__btnClose" (click)="close()" src="../../../../../assets/icons/X.svg" alt="icono de cerrar" />
         <div class="modal__container">
             <img class="modal__ico" src="../../../../../assets/icons/Check.svg" alt="icon check" />
@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <div *ngIf="data.flagDelete" class="modal-delete">
+    <div *ngIf="flagDelete" class="modal-delete">
         <div class="modal__container-delete">
             <img class="modal__ico-info" src="../../../../../assets/icons/Exclamation-triangle.svg"
                 alt="Icono de información" />
