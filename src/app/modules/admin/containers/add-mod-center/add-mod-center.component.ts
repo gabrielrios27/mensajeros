@@ -24,14 +24,13 @@ export class AddModCenterComponent implements OnInit {
 
   ngOnInit(): void {
     this.nombre = this.data.center?.nombre
-
+    
   }
 
   confirm(){
     console.log(this.formUpEdit.value)
     this.addCenter(this.formUpEdit.value)
     this.data.nombreCentro = this.formUpEdit.value.nombre
-    this.formUpEdit.reset()
   }
 
   addCenter(center: Centro){
@@ -41,6 +40,8 @@ export class AddModCenterComponent implements OnInit {
         console.log(data)
         this.data.flag = true
         this.data.editar = false
+        this.setCentroLocStg(center, true)
+        this.formUpEdit.reset()
         this.router.navigate(['admin/dashboard/centros']);
       },
       error: err =>{
@@ -52,9 +53,10 @@ export class AddModCenterComponent implements OnInit {
   }
 
   editar(){
-    let id = this.data.center?.id
-    this.editCenter(id)
-    this.formUpEdit.reset()
+    if(this.data.center?.id){
+      let id = this.data.center.id
+      this.editCenter(id)
+    }
   }
 
   editCenter(id: any){
@@ -65,6 +67,9 @@ export class AddModCenterComponent implements OnInit {
         console.log(data)
         this.data.flag = true
         this.data.editar = true
+        this.data.nombreCentro = data.nombre
+        this.formUpEdit.reset()
+        this.setCentroLocStg(this.formUpEdit.value, false)
         this.router.navigate(['admin/dashboard/centros']);
       },
       error: err =>{
@@ -72,6 +77,11 @@ export class AddModCenterComponent implements OnInit {
         console.log(err)
       }
     })
+  }
+
+  setCentroLocStg(data: Centro, isNewCentro: boolean) {
+    localStorage.setItem('newOrEditedCentro', JSON.stringify(data));
+    localStorage.setItem('isNewCentro', JSON.stringify(isNewCentro));
   }
 
 }
