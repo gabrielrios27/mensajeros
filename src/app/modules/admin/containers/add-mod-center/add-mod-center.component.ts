@@ -40,7 +40,7 @@ export class AddModCenterComponent implements OnInit {
         console.log(data)
         this.data.flag = true
         this.data.editar = false
-        this.setCentroLocStg(center, true)
+        this.setCentroLocStg(this.formUpEdit.value, true)
         this.formUpEdit.reset()
         this.router.navigate(['admin/dashboard/centros']);
       },
@@ -65,8 +65,8 @@ export class AddModCenterComponent implements OnInit {
       next: data =>{
         setTimeout(() => this.cdr.detectChanges());
         console.log(data)
-        this.data.flag = true
-        this.data.editar = true
+        this.data.flag = false
+        this.data.editar = false
         this.data.nombreCentro = data.nombre
         this.formUpEdit.reset()
         this.setCentroLocStg(this.formUpEdit.value, false)
