@@ -15,6 +15,9 @@ import { LayoutsService } from '../../services';
   styleUrls: ['navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  flagLogOut: boolean = false;
+  idToDelete: number = 0;
+
   constructor(
     private _http: AuthService,
     private cdr: ChangeDetectorRef,
@@ -27,5 +30,11 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem('isAdmin');
     this._http.logout();
     setTimeout(() => this.cdr.detectChanges());
+  }
+  onClickLogout() {
+    this.flagLogOut = true;
+  }
+  close() {
+    this.flagLogOut = false;
   }
 }

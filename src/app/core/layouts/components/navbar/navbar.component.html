@@ -180,7 +180,7 @@
       </a>
     </li>
     <li class="navbar__item">
-      <a class="navbar__link" (click)="logout()">
+      <a class="navbar__link" (click)="onClickLogout()">
         <svg
           class="navbar__ico-list"
           alt="Icono de cerrar sesión"
@@ -210,4 +210,23 @@
       </a>
     </li>
   </ul>
+  <div *ngIf="flagLogOut" class="modal-logout">
+    <div class="modal__container-logout">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Exclamation-triangle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">
+        ¡Estas a punto de eliminar este dato!<br />Esta acción no podrá ser
+        revertida
+      </p>
+    </div>
+    <div class="modal__options">
+      <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
+      <button class="btn-modal__accept" (click)="logout()">
+        Confirmar y eliminar
+      </button>
+    </div>
+  </div>
 </section>
