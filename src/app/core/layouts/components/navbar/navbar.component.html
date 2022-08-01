@@ -218,15 +218,13 @@
         alt="Icono de información"
       />
       <p class="modal__text">
-        ¡Estas a punto de eliminar este dato!<br />Esta acción no podrá ser
-        revertida
+        <span class="modal__spanFont">¿</span>Estas seguro que deseas cerrar
+        sesión<span class="modal__spanFont">?</span>
       </p>
     </div>
     <div class="modal__options">
       <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
-      <button class="btn-modal__accept" (click)="logout()">
-        Confirmar y eliminar
-      </button>
+      <button class="btn-modal__accept" (click)="logout()">Confirmar</button>
     </div>
   </div>
 </section>

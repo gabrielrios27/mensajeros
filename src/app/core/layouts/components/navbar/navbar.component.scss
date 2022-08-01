@@ -58,11 +58,11 @@
 }
 .modal-logout {
   position: fixed;
-  right: calc(100% - 263px);
+  left: calc(50% - 263px + 62px);
   top: 310px;
   z-index: 200;
   width: 525px;
-  height: 297px;
+  height: 247px;
   background: #fdff9a;
   border: 1px solid rgba(253, 255, 154, 0.98);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -75,7 +75,7 @@
   .modal__container-logout {
     width: 474px;
     display: flex;
-    margin-top: 58px;
+    margin-top: 38px;
     align-items: center;
     .modal__ico-info {
       width: 80px;
@@ -89,6 +89,9 @@
       margin-bottom: 0;
       margin-left: 15px;
       line-height: 40px;
+      .modal__spanFont {
+        font-family: "Roboto";
+      }
     }
   }
   .modal__options {
@@ -117,7 +120,7 @@
       border: 1px solid #c70f0f;
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       border-radius: 35px;
-      font-size: 16px;
+      font-size: 20px;
       padding: 0 20px;
       transition: $transition;
       cursor: pointer;
