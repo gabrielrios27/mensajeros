@@ -20,7 +20,17 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class ReportsComponent implements OnInit {
   numero: any
-  reports = ELEMENT_DATA;
+  reports: Array<PeriodicElement> = ELEMENT_DATA;
+
+  // pagination
+  userListComplete: Array<PeriodicElement> = new Array();
+  listLenght: number = 0;
+  itemsPerPage: number = 10;
+  quantityOfPages: number = 1;
+  currentPage: number = 1;
+  listCurrentPage: Array<PeriodicElement> = new Array();
+  initialItem: number = 1;
+  finalItem: number = 10;
 
   constructor() {}
 
@@ -51,5 +61,63 @@ export class ReportsComponent implements OnInit {
 
   onClickDelete(id:number){
 
+  }
+
+  //para paginación----
+  pageToShow(page: number, list: PeriodicElement[]) {
+    // this.setPageLocalStorage(page);
+    this.listLenght = list.length;
+    this.quantityOfPages = Math.ceil(this.listLenght / this.itemsPerPage);
+    this.listCurrentPage = [];
+    if (page <= 1) {
+      this.listCurrentPage = list.slice(0, 10);
+      this.reports = this.listCurrentPage;
+      this.initialItem = 1;
+      if (this.listLenght < this.itemsPerPage) {
+        this.finalItem = this.listLenght;
+      } else {
+        this.finalItem = 10;
+      }
+    } else if (page > 1 && page < this.quantityOfPages) {
+      this.listCurrentPage = list.slice(
+        page * this.itemsPerPage - this.itemsPerPage,
+        page * this.itemsPerPage
+      );
+      this.reports = this.listCurrentPage;
+      this.initialItem = page * this.itemsPerPage - this.itemsPerPage + 1;
+      this.finalItem =
+        page * this.itemsPerPage -
+        this.itemsPerPage +
+        this.listCurrentPage.length;
+    } else if (page >= this.quantityOfPages) {
+      this.listCurrentPage = list.slice(
+        this.quantityOfPages * this.itemsPerPage - this.itemsPerPage
+      );
+      this.reports = this.listCurrentPage;
+      this.initialItem =
+        this.quantityOfPages * this.itemsPerPage - this.itemsPerPage + 1;
+      this.finalItem =
+        this.quantityOfPages * this.itemsPerPage -
+        this.itemsPerPage +
+        this.listCurrentPage.length;
+    }
+  }
+  onClickBefore() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.pageToShow(this.currentPage, this.userListComplete);
+    } else {
+      this.currentPage = 1;
+      this.pageToShow(this.currentPage, this.userListComplete);
+    }
+  }
+  onClickAfter() {
+    if (this.currentPage < this.quantityOfPages) {
+      this.currentPage++;
+      this.pageToShow(this.currentPage, this.userListComplete);
+    } else {
+      this.currentPage = this.quantityOfPages;
+      this.pageToShow(this.currentPage, this.userListComplete);
+    }
   }
 }

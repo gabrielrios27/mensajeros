@@ -39,8 +39,9 @@
                     </div>
                     <div class="list-reports__cell list-reports__cell--acction">
                         <a>
-                            <img class="list-reports__ico-action" src="../../../../../assets/icons/arrows-angle-expand.svg"
-                                alt="Icono de vizualizar" matTooltip="Vizualizar" />
+                            <img class="list-reports__ico-action"
+                                src="../../../../../assets/icons/arrows-angle-expand.svg" alt="Icono de vizualizar"
+                                matTooltip="Vizualizar" />
                         </a>
                         <a (click)="edit(element)">
                             <img class="list-reports__ico-action list-reports__ico-action--edit"
@@ -55,6 +56,21 @@
                             alt="icono de Eliminar" matTooltip="Borrar" (click)="onClickDelete(element.id)" />
                     </div>
                 </div>
+            </div>
+            <div class="pagination">
+                <p class="pagination-text">
+                    {{ initialItem }} - {{ finalItem }} de {{ listLenght }}
+                </p>
+                <svg (click)="onClickBefore()" class="pagination-arrow" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14 7L9 12L14 17V7Z" fill="black"
+                        fill-opacity="0.87" />
+                </svg>
+                <svg (click)="onClickAfter()" class="pagination-arrow" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10 7L15 12L10 17V7Z" fill="black"
+                        fill-opacity="0.87" />
+                </svg>
             </div>
         </section>
     </div>
