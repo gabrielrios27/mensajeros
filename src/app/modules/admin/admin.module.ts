@@ -33,7 +33,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 @NgModule({
   imports: [
     CommonModule,
@@ -50,6 +51,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatTooltipModule,
     MatCardModule,
     MatIconModule,
+    MatCheckboxModule,
+    MatRadioModule
     // AppCommonModule,
     // NavigationModule,
   ],
