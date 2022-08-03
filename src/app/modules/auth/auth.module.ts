@@ -28,7 +28,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RecoverPasswordComponent } from './containers/recover-password/recover-password.component';
 import { ForgotPasswordComponent } from './containers/forgot-password/forgot-password.component';
-
+import {MAT_RADIO_DEFAULT_OPTIONS} from '@angular/material/radio';
 @NgModule({
   imports: [
     CommonModule,
@@ -43,7 +43,10 @@ import { ForgotPasswordComponent } from './containers/forgot-password/forgot-pas
     MatInputModule,
     MatCheckboxModule,
   ],
-  providers: [...authServices.services, ...authGuards.guards],
+  providers: [...authServices.services, ...authGuards.guards,{
+    provide: MAT_RADIO_DEFAULT_OPTIONS ,
+    useValue: { color: '#5600E8' },
+  }],
   declarations: [
     ...authContainers.containers,
     ...authComponents.components,

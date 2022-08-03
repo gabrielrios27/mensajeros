@@ -32,7 +32,7 @@ form {
     background: #FFFFFF;
 }
 
-section{
+section {
     width: 549px;
     height: 83px;
     margin-bottom: 12px;
@@ -69,6 +69,42 @@ input {
     margin-top: 10px;
     padding: 10px;
     outline-color: #007ac196;
+}
+
+.container-checkbox {
+    margin-left: 72px;
+    margin-top: 20px;
+    width: 387.16px;
+    height: 111px;
+    margin-bottom: 20px;
+}
+
+.mat-radio-button {
+    margin-top: 10px;
+    margin-left: 50px;
+    
+}
+.mat-radio-button-centro{
+    margin-left: 100px !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent {
+    &.mat-radio-checked .mat-radio-outer-circle {
+        border-color: #5600E8;
+    }
+
+    .mat-radio-inner-circle {
+        color: #5600E8;
+        background-color: #5600E8;
+    }
+
+    .mat-radio-ripple .mat-ripple-element {
+        background-color: #5600E8 !important;
+    }
+}
+
+.container-select {
+    margin-top: 20px;
 }
 
 .mat-select {
@@ -128,7 +164,7 @@ input {
     top: 104px;
     border-radius: 35px;
     background: #92CDEF !important;
-    font-family: 'Futura Bk BT'!important;
+    font-family: 'Futura Bk BT' !important;
     font-style: normal !important;
     font-weight: 600 !important;
     font-size: 16px !important;
