@@ -31,6 +31,10 @@ export class AddAxesComponent implements OnInit {
   timerIdExist: any = 0;
 
   invalidForm: boolean = false;
+  // para paginacion de axes
+  itemsPerPage: number = 10;
+  quantityOfPages: number = 1;
+
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(
@@ -57,29 +61,38 @@ export class AddAxesComponent implements OnInit {
       this.flagTimeOut = true;
       this.timerId = setTimeout(() => {
         this.close();
-      }, 4000);
+      }, 3000);
       return;
     } else {
       this.invalidForm = false;
       this.isInList = this.checkInAxesList(this.newAxe.get('axe')?.value);
       if (this.isInList) {
+        //comprueba si esta en la lista, si esta se renderiza un mensaje de error(este eje ya se encuentra cargado)
         this.flagExist = true;
         this.flagTimeOutExist = true;
         this.timerIdExist = setTimeout(() => {
           this.close();
-        }, 4000);
+        }, 3000);
       } else {
         this.putOrAddAxe();
-        this.router.navigate(['admin/dashboard/ejes']);
       }
     }
+  }
+  setPageLocalStorage() {
+    //para paginación
+    this.quantityOfPages = Math.ceil(
+      (this.listOfAxes.length + 1) / this.itemsPerPage
+    );
+    localStorage.setItem('axePage', JSON.stringify(this.quantityOfPages));
   }
   putOrAddAxe() {
     if (this.idAxe === 0) {
       let axeToCreate: axes = { nombre: this.newAxe.get('axe')?.value, id: 0 };
       this.setAxeLocStg(axeToCreate, true);
+      this.setPageLocalStorage(); //para paginación
       this._adminSvc.createAxe(axeToCreate).subscribe({
         next: (data: axes) => {
+          this.router.navigate(['admin/dashboard/ejes']);
           console.log(data);
         },
         error: (err) => {
@@ -100,6 +113,7 @@ export class AddAxesComponent implements OnInit {
       this.setAxeLocStg(axeToEdit, false);
       this._adminSvc.editAxeWithId(this.idAxe.toString(), axeToEdit).subscribe({
         next: (data: axes) => {
+          this.router.navigate(['admin/dashboard/ejes']);
           console.log(data);
         },
         error: (err) => {
