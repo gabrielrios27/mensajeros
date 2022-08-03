@@ -16,7 +16,10 @@ export class AddModCenterComponent implements OnInit {
   Zona: any;
   centro: Centro = {} as Centro;
   idUser: number = 0;
-
+  // para paginacion de axes
+  itemsPerPage: number = 10;
+  quantityOfPages: number = 1;
+  centrosListComplete: Array<Centro> = new Array();
   constructor(
     private router: Router,
     public data: DataService,
@@ -32,13 +35,34 @@ export class AddModCenterComponent implements OnInit {
 
   ngOnInit(): void {
     this.validarEdit();
+    this.getCenters(); //para paginación
   }
 
   confirm() {
     this.addCenter(this.formUpEdit.value);
   }
-
+  getCenters() {
+    //para paginación
+    this.admin.getCentros().subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.centrosListComplete = data;
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(err);
+      },
+    });
+  }
+  setPageLocalStorage() {
+    //para paginación
+    this.quantityOfPages = Math.ceil(
+      (this.centrosListComplete.length + 1) / this.itemsPerPage
+    );
+    localStorage.setItem('centerPage', JSON.stringify(this.quantityOfPages));
+  }
   addCenter(center: Centro) {
+    this.setPageLocalStorage(); //para paginación
     this.admin.addCenter(center).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
