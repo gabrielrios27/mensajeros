@@ -41,7 +41,13 @@
           <div class="list-center__cell list-center__cell--center">
             {{ element.nombre }}
           </div>
-          <div class="list-center__cell list-center__cell--center">
+          <div
+            class="
+              list-center__cell
+              list-center__cell--center
+              list-center__cell--middle
+            "
+          >
             {{ element.zona }}
           </div>
           <div class="list-center__cell list-center__cell--acction">
@@ -62,6 +68,45 @@
             />
           </div>
         </div>
+      </div>
+      <div class="pagination">
+        <p class="pagination-text">
+          {{ initialItem }} - {{ finalItem }} de {{ listLenght }}
+        </p>
+        <svg
+          (click)="onClickBefore()"
+          class="pagination-arrow"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M14 7L9 12L14 17V7Z"
+            fill="black"
+            fill-opacity="0.87"
+          />
+        </svg>
+        <svg
+          (click)="onClickAfter()"
+          class="pagination-arrow"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M10 7L15 12L10 17V7Z"
+            fill="black"
+            fill-opacity="0.87"
+          />
+        </svg>
       </div>
     </section>
   </div>

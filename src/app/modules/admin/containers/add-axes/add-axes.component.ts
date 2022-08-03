@@ -31,6 +31,10 @@ export class AddAxesComponent implements OnInit {
   timerIdExist: any = 0;
 
   invalidForm: boolean = false;
+  // para paginacion de axes
+  itemsPerPage: number = 10;
+  quantityOfPages: number = 1;
+
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(
@@ -74,10 +78,18 @@ export class AddAxesComponent implements OnInit {
       }
     }
   }
+  setPageLocalStorage() {
+    //para paginación
+    this.quantityOfPages = Math.ceil(
+      (this.listOfAxes.length + 1) / this.itemsPerPage
+    );
+    localStorage.setItem('axePage', JSON.stringify(this.quantityOfPages));
+  }
   putOrAddAxe() {
     if (this.idAxe === 0) {
       let axeToCreate: axes = { nombre: this.newAxe.get('axe')?.value, id: 0 };
       this.setAxeLocStg(axeToCreate, true);
+      this.setPageLocalStorage(); //para paginación
       this._adminSvc.createAxe(axeToCreate).subscribe({
         next: (data: axes) => {
           this.router.navigate(['admin/dashboard/ejes']);

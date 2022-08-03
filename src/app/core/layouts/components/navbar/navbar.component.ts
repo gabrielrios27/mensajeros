@@ -28,6 +28,9 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('isAdmin');
+    localStorage.removeItem('axePage');
+    localStorage.removeItem('userPage');
+    localStorage.removeItem('centerPage');
     this._http.logout();
     setTimeout(() => this.cdr.detectChanges());
   }
