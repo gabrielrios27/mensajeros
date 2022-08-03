@@ -8,9 +8,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorInterceptor } from './modules/admin/services/jwt-interceptor.interceptor';
+import { ReportsComponent } from './app/modules/admin/containers/reports/reports.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ReportsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
