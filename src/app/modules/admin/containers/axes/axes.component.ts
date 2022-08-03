@@ -40,6 +40,9 @@ export class AxesComponent implements OnInit, OnDestroy {
   itemsPerPage: number = 10;
   quantityOfPages: number = 1;
   currentPage: number = 1;
+  listCurrentPage: axes[] = {} as axes[];
+  initialItem: number = 1;
+  finalItem: number = 10;
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
 
@@ -56,136 +59,97 @@ export class AxesComponent implements OnInit, OnDestroy {
   }
 
   getAxesList() {
-    this.listOfAxes = [
-      {
-        nombre: 'eje1',
-        id: 5,
-      },
-      {
-        nombre: 'eje2',
-        id: 5,
-      },
-      {
-        nombre: 'eje3',
-        id: 5,
-      },
-      {
-        nombre: 'eje4',
-        id: 5,
-      },
-      {
-        nombre: 'eje5',
-        id: 5,
-      },
-      {
-        nombre: 'eje6',
-        id: 5,
-      },
-      {
-        nombre: 'eje7',
-        id: 5,
-      },
-      {
-        nombre: 'eje9',
-        id: 5,
-      },
-      {
-        nombre: 'eje10',
-        id: 5,
-      },
-      {
-        nombre: 'eje11',
-        id: 5,
-      },
-      {
-        nombre: 'eje12',
-        id: 5,
-      },
-      {
-        nombre: 'eje13',
-        id: 5,
-      },
-      {
-        nombre: 'eje14',
-        id: 5,
-      },
-      {
-        nombre: 'eje15',
-        id: 5,
-      },
-      {
-        nombre: 'eje16',
-        id: 5,
-      },
-      {
-        nombre: 'eje17',
-        id: 5,
-      },
-      {
-        nombre: 'eje18',
-        id: 5,
-      },
-      {
-        nombre: 'eje19',
-        id: 5,
-      },
-      {
-        nombre: 'eje20',
-        id: 5,
-      },
-      {
-        nombre: 'eje21',
-        id: 5,
-      },
-      {
-        nombre: 'eje22',
-        id: 5,
-      },
-    ];
-    this.pageToShow(1, this.listOfAxes);
-
-    // this._adminSvc
-    //   .getAxes()
-    //   .pipe(takeUntil(this.onDestroy$))
-    //   .subscribe({
-    //     next: (data: axes[]) => {
-    //       this.listOfAxes = data;
-    //       setTimeout(() => this._cdr.detectChanges());
-    //       console.log(this.listOfAxes);
-    //       this.listOfAxes_toShow.next(this.listOfAxes);
-    //     },
-    //     error: (err) => {
-    //       console.log(err);
-    //       if (err.status === 401) {
-    //         this.router.navigate(['/auth']);
-    //       }
-    //     },
-    //     complete: () => {
-    //       console.log('Request get axes complete');
-    //     },
-    //   });
+    this.currentPage = this.getPageLocalStorage();
+    this._adminSvc
+      .getAxes()
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: axes[]) => {
+          this.listOfAxes = data;
+          setTimeout(() => this._cdr.detectChanges());
+          console.log(this.listOfAxes);
+          this.pageToShow(this.currentPage, this.listOfAxes); //para paginación
+        },
+        error: (err) => {
+          console.log(err);
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+        complete: () => {
+          console.log('Request get axes complete');
+        },
+      });
   }
-
+  //para paginación----
   pageToShow(page: number, list: axes[]) {
-    this.quantityOfPages = Math.ceil(this.listLenght / this.itemsPerPage);
+    this.setPageLocalStorage(page);
     this.listLenght = list.length;
-    let listCurrentPage: axes[];
+    this.quantityOfPages = Math.ceil(this.listLenght / this.itemsPerPage);
+    this.listCurrentPage = [];
     if (page <= 1) {
-      listCurrentPage = list.slice(0, 10);
-      this.listOfAxes_toShow.next(listCurrentPage);
+      this.listCurrentPage = list.slice(0, 10);
+      this.listOfAxes_toShow.next(this.listCurrentPage);
+      this.initialItem = 1;
+      if (this.listLenght < this.itemsPerPage) {
+        this.finalItem = this.listLenght;
+      } else {
+        this.finalItem = 10;
+      }
     } else if (page > 1 && page < this.quantityOfPages) {
-      listCurrentPage = list.slice(
+      this.listCurrentPage = list.slice(
         page * this.itemsPerPage - this.itemsPerPage,
         page * this.itemsPerPage
       );
-      this.listOfAxes_toShow.next(listCurrentPage);
+      this.listOfAxes_toShow.next(this.listCurrentPage);
+      this.initialItem = page * this.itemsPerPage - this.itemsPerPage + 1;
+      this.finalItem =
+        page * this.itemsPerPage -
+        this.itemsPerPage +
+        this.listCurrentPage.length;
     } else if (page >= this.quantityOfPages) {
-      listCurrentPage = list.slice(
-        page * this.itemsPerPage - this.itemsPerPage
+      this.listCurrentPage = list.slice(
+        this.quantityOfPages * this.itemsPerPage - this.itemsPerPage
       );
-      this.listOfAxes_toShow.next(listCurrentPage);
+      this.listOfAxes_toShow.next(this.listCurrentPage);
+      this.initialItem =
+        this.quantityOfPages * this.itemsPerPage - this.itemsPerPage + 1;
+      this.finalItem =
+        this.quantityOfPages * this.itemsPerPage -
+        this.itemsPerPage +
+        this.listCurrentPage.length;
     }
   }
+  onClickBefore() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.pageToShow(this.currentPage, this.listOfAxes);
+    } else {
+      this.currentPage = 1;
+      this.pageToShow(this.currentPage, this.listOfAxes);
+    }
+  }
+  onClickAfter() {
+    if (this.currentPage < this.quantityOfPages) {
+      this.currentPage++;
+      this.pageToShow(this.currentPage, this.listOfAxes);
+    } else {
+      this.currentPage = this.quantityOfPages;
+      this.pageToShow(this.currentPage, this.listOfAxes);
+    }
+  }
+  setPageLocalStorage(page: number) {
+    localStorage.setItem('axePage', JSON.stringify(page));
+  }
+  getPageLocalStorage(): number {
+    let pageLocalStorage: number = 1;
+    let pageLocalStorageJSON = localStorage.getItem('axePage');
+    if (pageLocalStorageJSON) {
+      pageLocalStorage = JSON.parse(pageLocalStorageJSON);
+    }
+    return pageLocalStorage;
+  }
+  //--------------------------------------------
   onClickDelete(id: number) {
     this.flagDelete = true;
     this.idToDelete = id;
@@ -199,7 +163,9 @@ export class AxesComponent implements OnInit, OnDestroy {
       }
     }
     this.listOfAxes = this.listOfAxes_toSearch;
-    this.listOfAxes_toShow.next(this.listOfAxes_toSearch);
+
+    this.pageToShow(this.currentPage, this.listOfAxes); //para paginación
+
     this._adminSvc
       .deleteAxeWithId(id.toString())
       .pipe(takeUntil(this.onDestroy$))
@@ -223,7 +189,6 @@ export class AxesComponent implements OnInit, OnDestroy {
     let newOrEditedAxeStr = localStorage.getItem('newOrEditedAxe');
     if (newOrEditedAxeStr) {
       this.newOrEditedAxe = JSON.parse(newOrEditedAxeStr);
-      this.checkAxeInList(this.newOrEditedAxe);
       setTimeout(() => {
         this.close();
       }, 3000);
@@ -244,31 +209,6 @@ export class AxesComponent implements OnInit, OnDestroy {
       localStorage.removeItem('newOrEditedAxe');
     }
   }
-  checkAxeInList(axe: axes) {
-    this.isAxeInList = false;
-    setTimeout(() => {
-      this.getAxesList();
-    }, 1000);
-    setTimeout(() => {
-      if (axe.id === 0) {
-        for (let item of this.listOfAxes) {
-          if (item.nombre === axe.nombre) {
-            this.isAxeInList = true;
-          }
-        }
-      } else {
-        for (let item of this.listOfAxes) {
-          if (item.id === axe.id) {
-            this.isAxeInList = true;
-          }
-        }
-      }
-      if (!this.isAxeInList) {
-        this.listOfAxes.push(axe);
-        this.listOfAxes_toShow.next(this.listOfAxes);
-      }
-    }, 2000);
-  }
   Search(e: string) {
     /*informacion a buscar*/
     this.toSearch = e.toUpperCase();
@@ -286,7 +226,7 @@ export class AxesComponent implements OnInit, OnDestroy {
       this.TwoPartsSearch();
     } else {
       /*si el input esta vacio se muestra el arreglo de todos los ejes*/
-      this.listOfAxes_toShow.next(this.listOfAxes);
+      this.pageToShow(this.currentPage, this.listOfAxes); //para paginación
     }
   }
 

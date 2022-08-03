@@ -82,7 +82,9 @@
     .list-user {
       width: 100%;
       max-width: 71.0625em;
-
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 50px;
       .list-user__table {
         margin-top: 22px;
         max-width: 100%;
@@ -141,6 +143,26 @@
 
             &:first-of-type {
               padding-left: 1.5em;
+            }
+          }
+        }
+      }
+      .pagination {
+        display: flex;
+        align-items: center;
+        align-self: flex-end;
+        .pagination-text {
+          font-size: 17px;
+          margin: 0;
+        }
+        .pagination-arrow {
+          width: 34px;
+          height: 38px;
+          padding: 6px 4px;
+          cursor: pointer;
+          &:hover {
+            path {
+              fill: $color-bg-hover-primary;
             }
           }
         }
