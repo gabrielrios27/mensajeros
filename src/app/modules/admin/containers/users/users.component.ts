@@ -67,6 +67,17 @@ export class UsersComponent implements OnInit {
 
   }
 
+  tipoRol(rol: any): any{
+    if(rol){
+      if(rol === "ROLE_USER"){
+        return 'Director de Centro'
+      }
+      else {
+        return 'Director de ONG(Admin)'
+      }
+    }
+  }
+
   getCentros() {
     this.admin.getCentros().subscribe(data => {
 
@@ -78,9 +89,7 @@ export class UsersComponent implements OnInit {
   getUsers() {
     this.admin.getUsers().subscribe({
       next:(res: Users[])=>{
-        this.user = res.filter(resp=>{
-          return resp.rolNombre?.match("ROLE_USER")
-        })
+        this.user = res
         setTimeout(() => this.cdr.detectChanges())
         console.log(this.user)
       },
