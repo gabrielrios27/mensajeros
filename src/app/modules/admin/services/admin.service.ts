@@ -42,6 +42,9 @@ export class AdminService {
     addUser(user: Users, id: number): Observable<Users> {
         return this._http.post<Users>(this.baseUrlTami + '/usuarios/' + id, user)
     }
+    addUserAdmin(user: Users): Observable<Users> {
+        return this._http.post<Users>(this.baseUrlTami + '/usuarios' , user)
+    }
 
     getUser(id:number): Observable<Users> {
         return this._http.get<Users>(this.baseUrlTami + '/usuarios/'+ id)
