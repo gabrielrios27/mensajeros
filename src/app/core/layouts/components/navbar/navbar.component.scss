@@ -34,7 +34,8 @@
         border-radius: 0em 3.125em 3.125em 0em;
         transition: $transition;
         .navbar__ico-list {
-          width: 1.1875em;
+          width: 1.5em;
+          height: 1.5em;
           margin-left: 2.0625em;
           margin-right: 0.9375em;
           path {
@@ -52,6 +53,57 @@
             fill: $color-text-hover-primary;
           }
         }
+      }
+    }
+    .navbar__item--reports {
+      margin-bottom: 0;
+    }
+    .navbar__sub-list {
+      background: #d9d9d9;
+      border-radius: 0em 1.875em 1.875em 0em;
+      .navbar__sub-item {
+        margin: 0 0;
+        cursor: pointer;
+        &:hover {
+          .navbar__link {
+            .navbar__ico-list {
+              path {
+                fill: $color-text-hover-primary;
+              }
+            }
+          }
+        }
+        .navbar__sub-link {
+          height: 3.3125em;
+          display: flex;
+          align-items: center;
+          text-decoration: none;
+          color: #083d5e;
+          transition: $transition;
+          .navbar__sub-ico-list {
+            width: 1.5em;
+            height: 1.5em;
+            margin-left: 5px;
+            margin-right: 10px;
+            path {
+              fill: #083d5e;
+            }
+          }
+          .navbar__sub-text-list {
+            font-size: 1.25em;
+          }
+        }
+        .activeRoute {
+          background: $color-bg-hover-primary;
+          .navbar__ico-list {
+            path {
+              fill: $color-text-hover-primary;
+            }
+          }
+        }
+      }
+      .navbar__sub-item--create-reports {
+        border-bottom: solid 4px #92cdef;
       }
     }
   }
