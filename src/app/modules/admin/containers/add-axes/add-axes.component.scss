@@ -6,13 +6,13 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding-left: 123px;
   .container-add-axe__title {
-    font-style: italic;
-    font-size: 36px;
+    font-size: 30px;
     line-height: 43px;
     color: $color-text-primary;
-    margin-top: 96px;
-    margin-bottom: 35px;
+    margin-top: 71px;
+    margin-bottom: 71px;
     align-self: center;
   }
   .add-axe {
@@ -93,7 +93,7 @@
   }
 }
 .modal-error {
-  position: absolute;
+  position: fixed;
   bottom: 20vh;
   z-index: 200;
   width: 525px;

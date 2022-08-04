@@ -1,21 +1,56 @@
 <div class="container">
-    <h1>Agregar centro</h1>
-    <form [formGroup]="formUpEdit">
-        <section>
-            <label for="">Nombre de Centro *</label>
-            <input type="text" formControlName="nombre" [(ngModel)]="nombre" placeholder="Centro 4">
-            <mat-error *ngIf="formUpEdit.controls['nombre'].invalid && formUpEdit.controls['nombre'].dirty">
-                <span *ngIf="formUpEdit.controls['nombre'].errors">Requerido</span>
-            </mat-error>
-        </section>
-        <section>
-            <label for="">Zona*</label>
-            <input type="text" formControlName="zona" [(ngModel)]="Zona" placeholder="Centro 4">
-            <mat-error *ngIf="formUpEdit.controls['zona'].invalid && formUpEdit.controls['zona'].dirty">
-                <span *ngIf="formUpEdit.controls['zona'].errors">Requerido</span>
-            </mat-error>
-        </section>
-        <button [disabled]="formUpEdit.invalid" mat-button *ngIf="data.editar" (click)="editar()">Confirmar</button>
-        <button [disabled]="formUpEdit.invalid" mat-button *ngIf="!data.editar" (click)="confirm()">Confirmar</button>
-    </form>
+  <h1 class="container-title">Agregar centro</h1>
+  <form [formGroup]="formUpEdit">
+    <section>
+      <label for="">Nombre de Centro *</label>
+      <input
+        type="text"
+        formControlName="nombre"
+        [(ngModel)]="nombre"
+        placeholder="Centro 4"
+      />
+      <mat-error
+        *ngIf="
+          formUpEdit.controls['nombre'].invalid &&
+          formUpEdit.controls['nombre'].dirty
+        "
+      >
+        <span *ngIf="formUpEdit.controls['nombre'].errors">Requerido</span>
+      </mat-error>
+    </section>
+    <section>
+      <label for="">Zona*</label>
+      <input
+        type="text"
+        formControlName="zona"
+        [(ngModel)]="Zona"
+        placeholder="Localidad, Partido, etc"
+      />
+      <mat-error
+        *ngIf="
+          formUpEdit.controls['zona'].invalid &&
+          formUpEdit.controls['zona'].dirty
+        "
+      >
+        <span *ngIf="formUpEdit.controls['zona'].errors">Requerido</span>
+      </mat-error>
+    </section>
+    <label class="labelDato">*Dato obligatorio</label>
+    <button
+      [disabled]="formUpEdit.invalid"
+      mat-button
+      *ngIf="data.editar"
+      (click)="editar(formUpEdit.value)"
+    >
+      Confirmar
+    </button>
+    <button
+      [disabled]="formUpEdit.invalid"
+      mat-button
+      *ngIf="!data.editar"
+      (click)="confirm()"
+    >
+      Confirmar
+    </button>
+  </form>
 </div>

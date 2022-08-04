@@ -10,7 +10,7 @@ import * as e from 'express';
 @Component({
   selector: 'app-am-user',
   templateUrl: './am-user.component.html',
-  styleUrls: ['./am-user.component.scss']
+  styleUrls: ['./am-user.component.scss'],
 })
 export class AmUserComponent implements OnInit {
 
@@ -23,20 +23,52 @@ export class AmUserComponent implements OnInit {
   rol: any
 
   centros: Array<Centro> = new Array<Centro>()
-
-  constructor(private router: Router, public data: DataService, private fb: FormBuilder, private admin: AdminService, private cdr: ChangeDetectorRef) {
-    this.formUpEdit = fb.group({
-      nombre: ['', Validators.required],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
-      contrasena: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-      rol: new FormControl(),
-    })
-  }
+// para paginacion de axes
+itemsPerPage: number = 10;
+quantityOfPages: number = 1;
+userListComplete: Array<Users> = new Array();
+constructor(
+  private router: Router,
+  public data: DataService,
+  private fb: FormBuilder,
+  private admin: AdminService,
+  private cdr: ChangeDetectorRef
+) {
+  this.formUpEdit = fb.group({
+    nombre: ['', Validators.required],
+    email: ['', Validators.compose([Validators.required, Validators.email])],
+    contrasena: [
+      '',
+      Validators.compose([Validators.required, Validators.minLength(8)]),
+    ],
+  });
+}
 
 
   ngOnInit(): void {
     this.getCentros()
+    this.getUsers()
+  }
 
+  setPageLocalStorage() {
+    //para paginación
+    this.quantityOfPages = Math.ceil(
+      (this.userListComplete.length + 1) / this.itemsPerPage
+    );
+    localStorage.setItem('userPage', JSON.stringify(this.quantityOfPages));
+  }
+  getUsers() {
+    //para paginación
+    this.admin.getUsers().subscribe({
+      next: (res: Users[]) => {
+        this.userListComplete = res.filter((resp) => {
+          return resp.rolNombre?.match('ROLE_USER');
+        });
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   onDataChange(event: any) {
@@ -84,6 +116,7 @@ export class AmUserComponent implements OnInit {
   }
 
   addUserAdmin(user: Users) {
+    this.setPageLocalStorage(); //para paginación
     this.admin.addUserAdmin(user).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges())
@@ -105,6 +138,7 @@ export class AmUserComponent implements OnInit {
   }
 
   addUser(user: Users, id: number) {
+    this.setPageLocalStorage(); //para paginación
     this.admin.addUser(user, id).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges())
