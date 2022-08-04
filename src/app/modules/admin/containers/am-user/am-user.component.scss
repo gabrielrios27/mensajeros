@@ -71,6 +71,26 @@ input {
     outline-color: #007ac196;
 }
 
+.containerPassword{
+    margin-bottom: 10px;
+}
+
+.labelDatoObligatorio {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.4px;
+    color: rgba(0, 0, 0, 0.6);
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.sectionCheckbox{
+    margin-top: 20px;
+}
+
 .container-checkbox {
     margin-left: 72px;
     margin-top: 20px;
@@ -82,9 +102,10 @@ input {
 .mat-radio-button {
     margin-top: 10px;
     margin-left: 50px;
-    
+
 }
-.mat-radio-button-centro{
+
+.mat-radio-button-centro {
     margin-left: 100px !important;
 }
 
