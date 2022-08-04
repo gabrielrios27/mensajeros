@@ -29,22 +29,26 @@ export class AmUserComponent implements OnInit {
       nombre: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       contrasena: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-      rol: new FormControl('centro'),
+      rol: new FormControl(),
     })
   }
 
 
   ngOnInit(): void {
     this.getCentros()
+
+  }
+
+  onDataChange(event: any) {
+    this.rol = event.value
     this.checkRol()
   }
 
-  checkRol(){
-    console.log(this.rol)
-    if(this.rol === 'centro' ){
+  checkRol() {
+    if (this.rol === 'centro') {
       this.flagTipoRol = true
     }
-    else{
+    else {
       this.flagTipoRol = false
     }
   }
@@ -52,11 +56,19 @@ export class AmUserComponent implements OnInit {
   confirm(user: Users) {
     if (this.rol === "ong") {
       user.rolNombre = "ROLE_ADMIN"
-      this.addUser(user, this.centroAsignado)
+      this.addUserAdmin(user)
       this.data.nombreUsuario = this.formUpEdit.value.nombre
       this.formUpEdit.reset()
     }
-    else{
+    else {
+      if (this.centroAsignado.length >= 2) {
+        for (let i of this.centroAsignado) {
+          this.addUser(user, i)
+          this.data.nombreUsuario = this.formUpEdit.value.nombre
+          this.formUpEdit.reset()
+        }
+
+      }
       this.addUser(user, this.centroAsignado)
       this.data.nombreUsuario = this.formUpEdit.value.nombre
       this.formUpEdit.reset()
@@ -69,6 +81,27 @@ export class AmUserComponent implements OnInit {
     this.edit(user, this.data.user?.id)
     this.data.nombreUsuario = this.formUpEdit.value.nombre
 
+  }
+
+  addUserAdmin(user: Users) {
+    this.admin.addUserAdmin(user).subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges())
+        console.log(data, "done")
+        this.data.flag = false
+        this.data.editar = false
+        this.formUpEdit.reset()
+        this.setUserLocStg(this.formUpEdit.value.nombre, true)
+        this.router.navigate(['admin/dashboard/usuarios']);
+      },
+      error: (err) => {
+        console.log(err)
+        this.data.flag = false
+        this.data.editar = false
+        this.setUserLocStg(this.formUpEdit.value.nombre, true)
+        this.router.navigate(['admin/dashboard/usuarios']);
+      }
+    })
   }
 
   addUser(user: Users, id: number) {
@@ -122,6 +155,7 @@ export class AmUserComponent implements OnInit {
 
   capturarCentro(e: any) {
     this.centroAsignado = e
+    console.log(e)
   }
 
   setUserLocStg(data: string, isNewUser: boolean) {
