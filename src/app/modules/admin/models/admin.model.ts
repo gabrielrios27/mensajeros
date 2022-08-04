@@ -13,3 +13,7 @@ export interface user {
   id: number;
   nombre: string;
 }
+export interface variable {
+  id: number;
+  nombre: string;
+}
