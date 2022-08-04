@@ -34,6 +34,7 @@
         border-radius: 0em 3.125em 3.125em 0em;
         transition: $transition;
         .navbar__ico-list {
+          transition: $transition;
           width: 1.5em;
           height: 1.5em;
           margin-left: 2.0625em;
@@ -41,6 +42,9 @@
           path {
             fill: $color-white;
           }
+        }
+        .navbar__ico-list--active {
+          transform: rotateX(180deg);
         }
         .navbar__text-list {
           font-size: 1.375em;
@@ -65,10 +69,11 @@
         margin: 0 0;
         cursor: pointer;
         &:hover {
-          .navbar__link {
-            .navbar__ico-list {
+          .navbar__sub-link {
+            color: #1967d2;
+            .navbar__sub-ico-list {
               path {
-                fill: $color-text-hover-primary;
+                fill: #1967d2;
               }
             }
           }
@@ -101,10 +106,26 @@
             }
           }
         }
+        .sub-activeRoute {
+          color: #1967d2;
+          .navbar__sub-ico-list {
+            path {
+              fill: #1967d2;
+            }
+          }
+        }
       }
       .navbar__sub-item--create-reports {
         border-bottom: solid 4px #92cdef;
       }
+    }
+    .navbar__item--h100 {
+      display: block;
+      max-height: 100%;
+    }
+    .navbar__item--h0 {
+      max-height: 0;
+      display: none;
     }
   }
 }

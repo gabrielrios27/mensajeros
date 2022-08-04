@@ -138,6 +138,7 @@
         routerLink="dashboard/reportes"
         class="navbar__link"
         routerLinkActive="activeRoute"
+        (click)="toogleFlagReport()"
       >
         <svg
           class="navbar__ico-list"
@@ -161,6 +162,7 @@
         </svg>
         <span class="navbar__text-list">Reportes</span>
         <img
+          [ngClass]="flagReport ? 'navbar__ico-list--active' : ''"
           class="navbar__ico-list"
           alt="Icono de desplegable"
           src="../../../../../assets/icons/Chevron-down.svg"
@@ -168,14 +170,14 @@
       </a>
     </li>
     <!-- sub items de reportes -->
-    <li>
+    <li [ngClass]="flagReport ? 'navbar__item--h100' : 'navbar__item--h0'">
       <ul class="navbar__sub-list">
         <!-- Creación de Reportes -->
         <li class="navbar__sub-item navbar__sub-item--create-reports">
           <a
             routerLink="dashboard/reportes/creacion-de-reportes"
             class="navbar__sub-link"
-            routerLinkActive="activeRoute"
+            routerLinkActive="sub-activeRoute"
           >
             <svg
               class="navbar__sub-ico-list"
@@ -213,7 +215,7 @@
           <a
             routerLink="dashboard/reportes/centro-de-reportes"
             class="navbar__sub-link"
-            routerLinkActive="activeRoute"
+            routerLinkActive="sub-activeRoute"
           >
             <svg
               class="navbar__sub-ico-list"
