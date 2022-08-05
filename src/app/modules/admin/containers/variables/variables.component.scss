@@ -1,5 +1,7 @@
 @import "../../../../../styles/variables.scss";
-
+p {
+  margin: 0;
+}
 .container-variables {
   width: 100%;
   display: flex;
@@ -100,23 +102,16 @@
               padding-left: 1.5em;
             }
           }
-          .list-variables__header--action {
-            width: 153px;
+          .list-variables__header--quantity {
+            width: 200px;
           }
 
-          .list-variables__cell--acction {
-            width: 153px;
+          .list-variables__cell--quantity {
+            width: 200px;
             height: 50px;
             display: flex;
             align-items: center;
-            .list-variables__ico-action {
-              padding: 0.625em 0.625em 0.625em 0;
-              margin-right: 1.0625em;
-              cursor: pointer;
-            }
-            .list-variables__ico-action--edit {
-              margin-top: 4px;
-            }
+            padding-left: 81px;
           }
           .list-variables__cell {
             font-family: "Inter" !important;

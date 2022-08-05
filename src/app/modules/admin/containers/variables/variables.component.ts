@@ -50,27 +50,27 @@ export class VariablesComponent implements OnInit {
     this.listOfVariables = [
       {
         id: 1,
-        nombre: 'variable1',
+        nombre: 'Acompañamiento en la Salud 1',
       },
       {
         id: 1,
-        nombre: 'variable2',
+        nombre: 'Acompañamiento en la Salud 2',
       },
       {
         id: 1,
-        nombre: 'variable3',
+        nombre: 'Acompañamiento en la Salud 3',
       },
       {
         id: 1,
-        nombre: 'variable4',
+        nombre: 'Acompañamiento en la Salud 4',
       },
       {
         id: 1,
-        nombre: 'variable5',
+        nombre: 'Acompañamiento en la Salud 5',
       },
       {
         id: 1,
-        nombre: 'variable6',
+        nombre: 'Acompañamiento en la Salud 6',
       },
     ];
     this.pageToShow(this.currentPage, this.listOfVariables); //para paginación---eliminar cuando se descomente peticion

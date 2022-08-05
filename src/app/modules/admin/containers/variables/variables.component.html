@@ -31,38 +31,23 @@
       <div class="list-variables__table">
         <!-- Position Column -->
         <div class="list-variables__row">
-          <div class="list-variables__header">Ejes</div>
-          <div class="list-variables__header list-variables__header--action">
-            Acciones
-          </div>
+          <p class="list-variables__header">Ejes</p>
+
+          <p class="list-variables__header list-variables__header--quantity">
+            Cantidad de Variables
+          </p>
         </div>
 
         <div
           class="list-variables__row"
           *ngFor="let element of listOfVariables_toShow | async"
         >
-          <div class="list-variables__cell list-variables__cell--axe">
+          <p class="list-variables__cell list-variables__cell--axe">
             {{ element.nombre }}
-          </div>
-          <div class="list-variables__cell list-variables__cell--acction">
-            <a [routerLink]="['agregar-eje/', element.id.toString()]">
-              <img
-                class="
-                  list-variables__ico-action list-variables__ico-action--edit
-                "
-                src="../../../../../assets/icons/Pencil.svg"
-                alt="Icono de editar"
-                matTooltip="Editar"
-              />
-            </a>
-            <img
-              class="list-variables__ico-action"
-              src="../../../../../assets/icons/Trash.svg"
-              alt="icono de Eliminar"
-              matTooltip="Borrar"
-              (click)="onClickDelete(element.id)"
-            />
-          </div>
+          </p>
+          <p class="list-variables__cell list-variables__cell--quantity">
+            {{ element.id }}
+          </p>
         </div>
       </div>
       <div class="pagination">
