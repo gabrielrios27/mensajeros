@@ -16,4 +16,5 @@ export interface user {
 export interface variable {
   id: number;
   nombre: string;
+  tipo?: string;
 }

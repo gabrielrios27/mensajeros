@@ -1,0 +1,177 @@
+<section class="container-variables">
+  <div class="variables">
+    <h1 class="variables__title">Variables</h1>
+    <div class="variables__container-search">
+      <a class="btn-add-variables" routerLink="agregar-eje">
+        <img
+          class="btn-add-variables__ico"
+          src="../../../../../assets/icons/Grid.svg"
+          alt="Icono de lista ordenada"
+        />
+        <span class="btn-add-variables__text"> AGREGAR VARIABLE </span>
+      </a>
+      <label for="searchvariables" class="lbl-search-variables">
+        <input
+          class="lbl-search-variables__input"
+          id="searchvariables"
+          type="text"
+          [(ngModel)]="itemSearch"
+          (ngModelChange)="Search(itemSearch)"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <img
+          class="lbl-search-variables__ico"
+          src="../../../../../assets/icons/Search.svg"
+          alt="Icono de lupa para busqueda"
+        />
+      </label>
+    </div>
+    <h2 class="variables__subtitle">Eje Salud</h2>
+    <section class="list-variables">
+      <div class="list-variables__table">
+        <!-- Position Column -->
+        <div class="list-variables__row">
+          <p class="list-variables__header list-variables__header--variable">
+            Variable
+          </p>
+
+          <p class="list-variables__header list-variables__header--type">
+            Tipo de Respuesta
+          </p>
+          <p class="list-variables__header list-variables__header--action">
+            Acciones
+          </p>
+        </div>
+
+        <div
+          class="list-variables__row"
+          *ngFor="let element of listOfVariables_toShow | async"
+        >
+          <p class="list-variables__cell list-variables__cell--axe">
+            {{ element.nombre }}
+          </p>
+          <p class="list-variables__cell--type">
+            {{ element.tipo }}
+          </p>
+          <div class="list-variable__cell list-variables__cell--acction">
+            <a [routerLink]="['agregar-eje/', element.id.toString()]">
+              <img
+                class="
+                  list-variables__ico-action list-variables__ico-action--edit
+                "
+                src="../../../../../assets/icons/Pencil.svg"
+                alt="Icono de editar"
+                matTooltip="Editar"
+              />
+            </a>
+            <img
+              class="list-variables__ico-action"
+              src="../../../../../assets/icons/Trash.svg"
+              alt="icono de Eliminar"
+              matTooltip="Borrar"
+              (click)="onClickDelete(element.id)"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="pagination">
+        <p class="pagination-text">
+          {{ initialItem }} - {{ finalItem }} de {{ listLenght }}
+        </p>
+        <svg
+          (click)="onClickBefore()"
+          class="pagination-arrow"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M14 7L9 12L14 17V7Z"
+            fill="black"
+            fill-opacity="0.87"
+          />
+        </svg>
+        <svg
+          (click)="onClickAfter()"
+          class="pagination-arrow"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M10 7L15 12L10 17V7Z"
+            fill="black"
+            fill-opacity="0.87"
+          />
+        </svg>
+      </div>
+    </section>
+  </div>
+
+  <div *ngIf="flagNew" class="modal">
+    <img
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__container">
+      <img
+        class="modal__ico"
+        src="../../../../../assets/icons/Check.svg"
+        alt="icon check"
+      />
+      <p class="modal__text">
+        ¡El Eje {{ newOrEditedVariable.nombre }} fue creado con éxito!
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="flagEdited" class="modal">
+    <img
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__container">
+      <img
+        class="modal__ico"
+        src="../../../../../assets/icons/Check.svg"
+        alt="icon check"
+      />
+      <p class="modal__text">
+        ¡El Eje {{ newOrEditedVariable.nombre }} fue editado con éxito!
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="flagDelete" class="modal-delete">
+    <div class="modal__container-delete">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Exclamation-triangle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">
+        ¡Estas a punto de eliminar este dato!<br />Esta acción no podrá ser
+        revertida
+      </p>
+    </div>
+    <div class="modal__options">
+      <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
+      <button class="btn-modal__accept" (click)="deleteVariable(idToDelete)">
+        Confirmar y eliminar
+      </button>
+    </div>
+  </div>
+</section>

@@ -37,6 +37,7 @@ import { VariablesComponent } from './containers/variables/variables.component';
 import { AddVariablesComponent } from './containers/add-variables/add-variables.component';
 import { AddReportComponent } from './containers/add-report/add-report.component';
 import { CenterOfReportComponent } from './containers/center-of-report/center-of-report.component';
+import { VariablesGroupComponent } from './containers/variables-group/variables-group.component';
 
 @NgModule({
   imports: [
@@ -61,7 +62,7 @@ import { CenterOfReportComponent } from './containers/center-of-report/center-of
   declarations: [
     ...adminContainers.containers,
     ...adminComponents.components,
-    AddAxesComponent,AmUserComponent,AddModCenterComponent, VariablesComponent, AddVariablesComponent, AddReportComponent, CenterOfReportComponent
+    AddAxesComponent,AmUserComponent,AddModCenterComponent, VariablesComponent, AddVariablesComponent, AddReportComponent, CenterOfReportComponent, VariablesGroupComponent
   ],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })

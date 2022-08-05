@@ -10,6 +10,7 @@ import { VariablesComponent } from './variables/variables.component';
 import { AddVariablesComponent } from './add-variables/add-variables.component';
 import { AddReportComponent } from './add-report/add-report.component';
 import { CenterOfReportComponent } from './center-of-report/center-of-report.component';
+import { VariablesGroupComponent } from './variables-group/variables-group.component';
 
 export const containers = [
   HomeComponent,
@@ -24,6 +25,7 @@ export const containers = [
   AddVariablesComponent,
   AddReportComponent,
   CenterOfReportComponent,
+  VariablesGroupComponent,
 ];
 
 export * from './home/home.component';
@@ -35,5 +37,6 @@ export * from './centers/centers.component';
 export * from './add-axes/add-axes.component';
 export * from './variables/variables.component';
 export * from './add-variables/add-variables.component';
+export * from './variables-group/variables-group.component';
 export * from './add-report/add-report.component';
 export * from './center-of-report/center-of-report.component';
