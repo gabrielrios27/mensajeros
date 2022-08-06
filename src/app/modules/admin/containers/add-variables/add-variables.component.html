@@ -1,1 +1,103 @@
-<p>add-variables works!</p>
+<section class="container-add-variable" (click)="close()">
+  <h1 class="container-add-variable__title">Agregar Variable</h1>
+  <div class="add-variable">
+    <form
+      class="add-variable__form"
+      action=""
+      method="post"
+      [formGroup]="newVariable"
+      (ngSubmit)="onConfirm()"
+    >
+      <label
+        class="add-variable__label"
+        for="POST-variable"
+        type="text"
+        autocomplete="off"
+        >Nombre de Variable *</label
+      >
+      <div class="add-variable__container-input">
+        <input
+          [ngClass]="invalidForm ? 'add-variable__input--alert' : ''"
+          class="add-variable__input"
+          formControlName="variable"
+          id="POST-variable"
+          type="text"
+          name="variable"
+          autocomplete="off"
+          [(ngModel)]="variableInput"
+          (ngModelChange)="onChangeInput($event)"
+        />
+      </div>
+      <label
+        class="add-variable__label"
+        for="POST-variable"
+        type="text"
+        autocomplete="off"
+        >Descripción de Variable</label
+      >
+      <div class="add-variable__container-input">
+        <input
+          [ngClass]="invalidForm ? 'add-variable__input--alert' : ''"
+          class="add-variable__input"
+          formControlName="variable"
+          id="POST-variable"
+          type="text"
+          name="variable"
+          autocomplete="off"
+          [(ngModel)]="variableInput"
+          (ngModelChange)="onChangeInput($event)"
+        />
+      </div>
+      <label
+        class="add-variable__label"
+        for="POST-variable"
+        type="text"
+        autocomplete="off"
+        >Eje</label
+      >
+      <div class="add-variable__container-input">
+        <input
+          [ngClass]="invalidForm ? 'add-variable__input--alert' : ''"
+          class="add-variable__input"
+          formControlName="variable"
+          id="POST-variable"
+          type="text"
+          name="variable"
+          autocomplete="off"
+          [(ngModel)]="variableInput"
+          (ngModelChange)="onChangeInput($event)"
+        />
+      </div>
+      <button
+        mat-raised-button
+        class="add-variable__btn"
+        type="submit"
+        color="primary"
+      >
+        Confirmar
+      </button>
+    </form>
+  </div>
+  <div *ngIf="flagError" class="modal-error">
+    <div class="modal__container-error">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Info-circle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">
+        ¡Todos los campos obligatorios deben ser llenados!
+      </p>
+    </div>
+  </div>
+  <div *ngIf="flagExist" class="modal-error">
+    <div class="modal__container-error">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Info-circle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">El eje ya existe en el sistema</p>
+    </div>
+  </div>
+</section>
