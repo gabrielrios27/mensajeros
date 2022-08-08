@@ -8,6 +8,7 @@
       [formGroup]="newVariable"
       (ngSubmit)="onConfirm()"
     >
+      <!-- variable---------------- -->
       <label
         class="add-variable__label"
         for="POST-variable"
@@ -28,9 +29,10 @@
           (ngModelChange)="onChangeInput($event)"
         />
       </div>
+      <!-- descripcion de variable---------------- -->
       <label
         class="add-variable__label"
-        for="POST-variable"
+        for="description"
         type="text"
         autocomplete="off"
         >Descripción de Variable</label
@@ -40,43 +42,35 @@
           [ngClass]="invalidForm ? 'add-variable__input--alert' : ''"
           class="add-variable__input"
           formControlName="variable"
-          id="POST-variable"
+          id="description"
           type="text"
-          name="variable"
+          name="description"
           autocomplete="off"
-          [(ngModel)]="variableInput"
+          [(ngModel)]="descriptionInput"
           (ngModelChange)="onChangeInput($event)"
         />
       </div>
+      <!-- Selector de eje------------  -->
       <label
         class="add-variable__label"
-        for="POST-variable"
+        for="select-axe"
         type="text"
         autocomplete="off"
         >Eje</label
       >
-
-      <mat-form-field appearance="fill" class="add-variable__container-select">
-        <mat-select class="selectAxe" [formControl]="ejeControl" required>
-          <mat-option
-            class="selectAxe__options"
-            *ngFor="let eje of axesList"
-            [value]="eje"
-          >
-            {{ eje.nombre }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="ejeControl.hasError('required')"
-          >Elige un Eje</mat-error
-        >
-      </mat-form-field>
       <div class="add-variable__container-input">
-        <select class="select" name="select">
-          <option value="value1">Value 1</option>
-          <option value="value2" selected>Value 2</option>
-          <option value="value3">Value 3</option>
-        </select>
+        <mat-select
+          [(value)]="centroAsignado"
+          name="select-axe"
+          (selectionChange)="capturarCentro($event.value)"
+          id="select-axe"
+        >
+          <mat-option [value]="item.id" *ngFor="let item of axesList">{{
+            item.nombre
+          }}</mat-option>
+        </mat-select>
       </div>
+      <!-- boton de confirmar envio de formulario----------- -->
       <button
         mat-raised-button
         class="add-variable__btn"

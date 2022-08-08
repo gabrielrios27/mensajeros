@@ -28,6 +28,7 @@ export class AddVariablesComponent implements OnInit {
   variableById: variable;
   idVariable: number;
   variableInput: string = '';
+  descriptionInput: string = '';
 
   listOfVariable: variable[] = [];
   isInList: boolean = false;
@@ -43,6 +44,8 @@ export class AddVariablesComponent implements OnInit {
   // para paginacion de variable
   itemsPerPage: number = 10;
   quantityOfPages: number = 1;
+  //centro asignado
+  centroAsignado: any;
 
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
@@ -213,6 +216,9 @@ export class AddVariablesComponent implements OnInit {
       }
     }
     return false;
+  }
+  capturarCentro(e: any) {
+    this.centroAsignado = e;
   }
   close() {
     if (this.flagTimeOut) {

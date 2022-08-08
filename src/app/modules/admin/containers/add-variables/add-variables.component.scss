@@ -28,7 +28,7 @@
       display: flex;
       flex-direction: column;
       .add-variable__label {
-        font-size: 16px;
+        font-size: 18px;
         line-height: 19px;
         color: $color-text-primary;
       }
@@ -57,9 +57,55 @@
           color: $alert-text;
         }
       }
-      ::ng-deep .add-variable__container-select {
-        position: relative;
+      // nuevo selec de angular material----------------
+      .mat-select {
+        background: #fff;
+        box-sizing: border-box;
+        border: 1px solid $btn-confirm-bg;
+        outline-color: $outline-focus;
+        border-radius: 4px;
         width: 299px;
+        height: 56px;
+
+        background-repeat: no-repeat;
+        background-position-x: 270px;
+        background-position-y: 15px;
+
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;
+        appearance: none;
+
+        font-family: "Futura Bk BT";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        // line-height: 24px;
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
+        letter-spacing: 0.5px;
+        color: #1c1b1f;
+      }
+
+      .mat-select::-ms-expand {
+        display: none;
+        /*Evita que se muestre la flecha por defecto en versiones de IE*/
+      }
+
+      .mat-select::selection {
+        background-color: #ffffff;
+      }
+
+      .mat-option {
+        background-color: white;
+      }
+      ::ng-deep .add-variable__container-select {
+        width: 299px;
+        .mat-form-field-underline {
+          // visibility: hidden;
+        }
         .selectAxe {
           .selectAxe__options {
             width: 299px;
