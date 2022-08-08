@@ -27,56 +27,51 @@
         />
       </label>
     </div>
+    <h2 class="variables__subtitle">Eje Salud</h2>
     <section class="list-variables">
       <div class="list-variables__table">
         <!-- Position Column -->
         <div class="list-variables__row">
-          <p class="list-variables__header">Ejes</p>
-
-          <p class="list-variables__header list-variables__header--quantity">
-            Cantidad de Variables
+          <p class="list-variables__header list-variables__header--variable">
+            Variable
           </p>
-          <p></p>
+
+          <p class="list-variables__header list-variables__header--type">
+            Tipo de Respuesta
+          </p>
+          <p class="list-variables__header list-variables__header--action">
+            Acciones
+          </p>
         </div>
 
         <div
-          class="list-variables__row list-variables__row--click"
+          class="list-variables__row"
           *ngFor="let element of listOfVariables_toShow | async"
-          [routerLink]="['variables-agrupadas/', element.id.toString()]"
         >
           <p class="list-variables__cell list-variables__cell--axe">
             {{ element.nombre }}
           </p>
-          <p class="list-variables__cell--quantity">
-            {{ element.id }}
+          <p class="list-variables__cell--type">
+            {{ element.tipo }}
           </p>
-          <div class="list-variables__cell--action">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M2.25 15.0542C2.44891 15.0542 2.63968 15.1332 2.78033 15.2739C2.92098 15.4145 3 15.6053 3 15.8042V21.0542H8.25C8.44891 21.0542 8.63968 21.1332 8.78033 21.2739C8.92098 21.4145 9 21.6053 9 21.8042C9 22.0031 8.92098 22.1939 8.78033 22.3345C8.63968 22.4752 8.44891 22.5542 8.25 22.5542H2.25C2.05109 22.5542 1.86032 22.4752 1.71967 22.3345C1.57902 22.1939 1.5 22.0031 1.5 21.8042V15.8042C1.5 15.6053 1.57902 15.4145 1.71967 15.2739C1.86032 15.1332 2.05109 15.0542 2.25 15.0542Z"
-                fill="black"
+          <div class="list-variable__cell list-variables__cell--acction">
+            <a [routerLink]="['agregar-eje/', element.id.toString()]">
+              <img
+                class="
+                  list-variables__ico-action list-variables__ico-action--edit
+                "
+                src="../../../../../assets/icons/Pencil.svg"
+                alt="Icono de editar"
+                matTooltip="Editar"
               />
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M9.53097 14.4689C9.60082 14.5385 9.65623 14.6213 9.69404 14.7124C9.73185 14.8035 9.75131 14.9012 9.75131 14.9999C9.75131 15.0985 9.73185 15.1962 9.69404 15.2873C9.65623 15.3784 9.60082 15.4612 9.53097 15.5309L2.78097 22.2809C2.64014 22.4217 2.44913 22.5008 2.24997 22.5008C2.05081 22.5008 1.8598 22.4217 1.71897 22.2809C1.57814 22.14 1.49902 21.949 1.49902 21.7499C1.49902 21.5507 1.57814 21.3597 1.71897 21.2189L8.46897 14.4689C8.53864 14.399 8.6214 14.3436 8.71252 14.3058C8.80364 14.268 8.90132 14.2485 8.99997 14.2485C9.09862 14.2485 9.1963 14.268 9.28742 14.3058C9.37854 14.3436 9.4613 14.399 9.53097 14.4689ZM22.281 1.71888C22.3508 1.78854 22.4062 1.87131 22.444 1.96243C22.4818 2.05354 22.5013 2.15122 22.5013 2.24988C22.5013 2.34853 22.4818 2.44621 22.444 2.53733C22.4062 2.62844 22.3508 2.71121 22.281 2.78088L15.531 9.53088C15.3901 9.67171 15.1991 9.75082 15 9.75082C14.8008 9.75082 14.6098 9.67171 14.469 9.53088C14.3281 9.39005 14.249 9.19904 14.249 8.99988C14.249 8.80071 14.3281 8.60971 14.469 8.46888L21.219 1.71888C21.2886 1.64903 21.3714 1.59362 21.4625 1.55581C21.5536 1.518 21.6513 1.49854 21.75 1.49854C21.8486 1.49854 21.9463 1.518 22.0374 1.55581C22.1285 1.59362 22.2113 1.64903 22.281 1.71888Z"
-                fill="black"
-              />
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M15.0542 2.25C15.0542 2.05109 15.1332 1.86032 15.2739 1.71967C15.4145 1.57902 15.6053 1.5 15.8042 1.5H21.8042C22.0031 1.5 22.1939 1.57902 22.3345 1.71967C22.4752 1.86032 22.5542 2.05109 22.5542 2.25V8.25C22.5542 8.44891 22.4752 8.63968 22.3345 8.78033C22.1939 8.92098 22.0031 9 21.8042 9C21.6053 9 21.4145 8.92098 21.2739 8.78033C21.1332 8.63968 21.0542 8.44891 21.0542 8.25V3H15.8042C15.6053 3 15.4145 2.92098 15.2739 2.78033C15.1332 2.63968 15.0542 2.44891 15.0542 2.25Z"
-                fill="black"
-              />
-            </svg>
+            </a>
+            <img
+              class="list-variables__ico-action"
+              src="../../../../../assets/icons/Trash.svg"
+              alt="icono de Eliminar"
+              matTooltip="Borrar"
+              (click)="onClickDelete(element.id)"
+            />
           </div>
         </div>
       </div>
