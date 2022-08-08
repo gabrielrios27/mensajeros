@@ -12,6 +12,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import * as adminComponents from './components';
 import { AmUserComponent } from './containers/am-user/am-user.component';
 import { AddAxesComponent } from './containers/add-axes/add-axes.component';
+import { VariablesComponent } from './containers/variables/variables.component';
+import { AddVariablesComponent } from './containers/add-variables/add-variables.component';
+import { AddReportComponent } from './containers/add-report/add-report.component';
+import { CenterOfReportComponent } from './containers/center-of-report/center-of-report.component';
+import { VariablesGroupComponent } from './containers/variables-group/variables-group.component';
+import { AddModReportComponent } from './containers/add-mod-report/add-mod-report.component';
 /* Containers */
 import * as adminContainers from './containers';
 
@@ -33,11 +39,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { VariablesComponent } from './containers/variables/variables.component';
-import { AddVariablesComponent } from './containers/add-variables/add-variables.component';
-import { AddReportComponent } from './containers/add-report/add-report.component';
-import { CenterOfReportComponent } from './containers/center-of-report/center-of-report.component';
-import { VariablesGroupComponent } from './containers/variables-group/variables-group.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
 
 @NgModule({
   imports: [
@@ -55,6 +60,8 @@ import { VariablesGroupComponent } from './containers/variables-group/variables-
     MatTooltipModule,
     MatCardModule,
     MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule
     // AppCommonModule,
     // NavigationModule,
   ],
@@ -62,7 +69,9 @@ import { VariablesGroupComponent } from './containers/variables-group/variables-
   declarations: [
     ...adminContainers.containers,
     ...adminComponents.components,
-    AddAxesComponent,AmUserComponent,AddModCenterComponent, VariablesComponent, AddVariablesComponent, AddReportComponent, CenterOfReportComponent, VariablesGroupComponent
+    AddAxesComponent,AmUserComponent,AddModCenterComponent, 
+    VariablesComponent, AddVariablesComponent, AddReportComponent, 
+    CenterOfReportComponent, VariablesGroupComponent, AddModReportComponent
   ],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })
