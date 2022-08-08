@@ -6,6 +6,8 @@ import { Users } from '../../models/users';
 import { Centro } from '../../models/centro';
 import { AdminService } from '../../services/admin.service';
 import * as e from 'express';
+import { user } from '../../models/admin.model';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-am-user',
@@ -15,39 +17,57 @@ import * as e from 'express';
 export class AmUserComponent implements OnInit {
 
   formUpEdit: FormGroup;
-  nombre: any = this.data.user?.nombre
-  email: any = this.data.user?.email
-  contrasena: any = this.data.user?.contrasena
+  nombre: any
+  email: any
+  contrasena: any
   centroAsignado: any
+  flagEdit: boolean = false
   flagTipoRol: boolean = true
   rol: any
+  centrosAsignados: Array<number> = []
+  userAsignado?: Users
 
   centros: Array<Centro> = new Array<Centro>()
-// para paginacion de axes
-itemsPerPage: number = 10;
-quantityOfPages: number = 1;
-userListComplete: Array<Users> = new Array();
-constructor(
-  private router: Router,
-  public data: DataService,
-  private fb: FormBuilder,
-  private admin: AdminService,
-  private cdr: ChangeDetectorRef
-) {
-  this.formUpEdit = fb.group({
-    nombre: ['', Validators.required],
-    email: ['', Validators.compose([Validators.required, Validators.email])],
-    contrasena: [
-      '',
-      Validators.compose([Validators.required, Validators.minLength(8)]),
-    ],
-  });
-}
+  // para paginacion de centros
+  itemsPerPage: number = 10;
+  quantityOfPages: number = 1;
+  userListComplete: Array<Users> = new Array();
+  centrosAsignado: any;
+  constructor(
+    private router: Router,
+    public data: DataService,
+    private fb: FormBuilder,
+    private admin: AdminService,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.formUpEdit = fb.group({
+      nombre: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      contrasena: [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(8)]),
+      ],
+    });
+  }
 
 
   ngOnInit(): void {
     this.getCentros()
     this.getUsers()
+    this.validatorEdit()
+  }
+
+  validatorEdit() {
+    if (this.data.editar) {
+      this.flagEdit = true
+      this.nombre = this.data.user?.nombre
+      this.email = this.data.user?.email
+      this.contrasena = this.data.user?.contrasena
+    }
+    else {
+      this.flagEdit = false
+    }
+
   }
 
   setPageLocalStorage() {
@@ -90,20 +110,22 @@ constructor(
       user.rolNombre = "ROLE_ADMIN"
       this.addUserAdmin(user)
       this.data.nombreUsuario = this.formUpEdit.value.nombre
-      this.formUpEdit.reset()
     }
     else {
-      if (this.centroAsignado.length >= 2) {
-        for (let i of this.centroAsignado) {
-          this.addUser(user, i)
-          this.data.nombreUsuario = this.formUpEdit.value.nombre
-          this.formUpEdit.reset()
-        }
+      // para agregar un usuario a mas de un centro
+      if (this.centrosAsignados.length >= 2) {
+        console.log(this.centrosAsignados[0])
+        this.data.nombreUsuario = this.formUpEdit.value.nombre
+        this.addUser(user, this.centrosAsignados[0])
 
+        this.getUserDeCentro()
+        //
       }
-      this.addUser(user, this.centroAsignado)
-      this.data.nombreUsuario = this.formUpEdit.value.nombre
-      this.formUpEdit.reset()
+      else {
+        this.data.nombreUsuario = this.formUpEdit.value.nombre
+        this.addUser(user, this.centroAsignado)
+      }
+
     }
 
   }
@@ -120,18 +142,18 @@ constructor(
     this.admin.addUserAdmin(user).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges())
-        console.log(data, "done")
+        console.log(data, "done2")
         this.data.flag = false
         this.data.editar = false
         this.formUpEdit.reset()
-        this.setUserLocStg(this.formUpEdit.value.nombre, true)
+        this.setUserLocStg(this.data.nombreUsuario, true)
         this.router.navigate(['admin/dashboard/usuarios']);
       },
       error: (err) => {
         console.log(err)
         this.data.flag = false
         this.data.editar = false
-        this.setUserLocStg(this.formUpEdit.value.nombre, true)
+        this.setUserLocStg(this.data.nombreUsuario, true)
         this.router.navigate(['admin/dashboard/usuarios']);
       }
     })
@@ -142,18 +164,18 @@ constructor(
     this.admin.addUser(user, id).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges())
-        console.log(data, "done")
+        console.log(data, "done1")
         this.data.flag = false
         this.data.editar = false
+        this.setUserLocStg(this.data.nombreUsuario, true)
         this.formUpEdit.reset()
-        this.setUserLocStg(this.formUpEdit.value.nombre, true)
         this.router.navigate(['admin/dashboard/usuarios']);
       },
       error: (err) => {
         console.log(err)
         this.data.flag = false
         this.data.editar = false
-        this.setUserLocStg(this.formUpEdit.value.nombre, true)
+        this.setUserLocStg(this.data.nombreUsuario, true)
         this.router.navigate(['admin/dashboard/usuarios']);
       }
     })
@@ -182,18 +204,62 @@ constructor(
 
   getCentros() {
     this.admin.getCentros().subscribe(data => {
+      setTimeout(() => this.cdr.detectChanges())
       this.centros = data
       console.log(this.centros)
     })
   }
 
+  // para agregar un usuario a mas de un centro
+
+
+  editCentros(centro: Centro) {
+    if (this.userAsignado) {
+      if (centro.usuario != this.userAsignado) {
+        console.log("usuario 2", this.userAsignado)
+        centro.usuario = this.userAsignado
+        this.admin.editCenter(centro, centro.id).subscribe({
+          next: (data: any) => {
+            setTimeout(() => this.cdr.detectChanges())
+            console.log("done edit", data)
+          },
+          error: (err) => {
+            setTimeout(() => this.cdr.detectChanges())
+            console.log(err)
+          }
+        })
+      }
+    }
+    else {
+      console.log("usuario error", this.userAsignado)
+    }
+  }
+  getUserDeCentro() {
+    // for (let c of this.centros) {
+    //   if (c.id == this.centroAsignado[0]) {
+    //     this.userAsignado = c.usuario
+    //   }
+    // }
+    this.getCentros()
+    this.admin.getCenter(this.centroAsignado[0]).subscribe(data => {
+      setTimeout(() => this.cdr.detectChanges())
+      if (data.usuario) {
+        this.userAsignado = data.usuario
+        for (let i of this.centrosAsignados) {
+          this.editCentros(this.centros[i])
+        }
+        console.log("done")
+      }
+    })
+  }
+  // 
   capturarCentro(e: any) {
-    this.centroAsignado = e
+    this.centrosAsignados = e
     console.log(e)
   }
 
   setUserLocStg(data: string, isNewUser: boolean) {
-    localStorage.setItem('newOrEditedUser', data);
+    localStorage.setItem('newOrEditedUser', this.data.nombreUsuario);
     localStorage.setItem('isNewUser', JSON.stringify(isNewUser));
   }
 }
