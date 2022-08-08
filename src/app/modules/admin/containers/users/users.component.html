@@ -19,7 +19,7 @@
         <!-- Position Column -->
         <div class="list-user__row">
           <div class="list-user__header">Usuario</div>
-          <div class="list-user__header">CentroAsignado</div>
+          <div class="list-user__header">Centro Asignado</div>
           <div class="list-user__header">Tipo de Rol</div>
           <div class="list-user__header list-user__header--action">
             Acciones
@@ -30,8 +30,10 @@
           <div class="list-user__cell list-user__cell--user">
             {{ element.nombre }}
           </div>
-          <div class="list-user__cell list-user__cell--user">
-            {{ centroAsignado(element)}}
+          <div class="list-user__cell list-user__cell--user" >
+            <p *ngFor="let c of centroAsignado(element)">
+              {{ c }}
+            </p>
           </div>
           <div class="list-user__cell list-user__cell--user">
             {{tipoRol(element.rolNombre)}}

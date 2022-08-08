@@ -15,6 +15,7 @@ export class UsersComponent implements OnInit {
   user: Array<Users> = new Array();
   centros: Array<Centro> = new Array();
   usershow: Array<Users> = new Array();
+  centroAsig: Array<string> = []
   flagEdited: boolean = false;
   flagNew: boolean = false;
   flagDelete: boolean = false;
@@ -71,11 +72,15 @@ export class UsersComponent implements OnInit {
   }
 
   centroAsignado(user: Users): any {
+    let i = 0
+    this.centroAsig = []
     for (let c of this.centros) {
       if (user.nombre == c.usuario?.nombre) {
-        return c.nombre;
+        this.centroAsig[i] = c.nombre;
+        i+=1
       }
     }
+    return this.centroAsig
   }
 
   tipoRol(rol: any): any{
@@ -210,6 +215,7 @@ export class UsersComponent implements OnInit {
     let isNewUserStr = localStorage.getItem('isNewUser');
     let isNewUser;
     if (isNewUserStr) {
+      isNewUser = JSON.parse(isNewUserStr);
     }
     if (newOrEditeduser) {
       if (isNewUser) {
