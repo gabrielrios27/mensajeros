@@ -1,7 +1,8 @@
 export interface Users {
+    contrasena: string
+    email: string
     id: any
     nombre: string
-    email: string
-    contrasena: string
-    rolNombre?: string
+    rolNombre: string
 }
+
