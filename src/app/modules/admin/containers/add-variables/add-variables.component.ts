@@ -1,11 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { variable } from '../../models';
+import { axes, variable } from '../../models';
 import { AdminService } from '../../services';
 
+interface Animal {
+  name: string;
+  sound: string;
+}
 @Component({
   selector: 'app-add-variables',
   templateUrl: './add-variables.component.html',
@@ -41,13 +50,19 @@ export class AddVariablesComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private rutaActiva: ActivatedRoute,
-    private _adminSvc: AdminService,
-    private _snackBar: MatSnackBar
+    private _adminSvc: AdminService
   ) {
     this.idVariable = 0;
     this.variableById = {} as variable;
   }
-
+  ejeControl = new FormControl(null, Validators.required);
+  selectFormControl = new FormControl('', Validators.required);
+  axesList: axes[] = [
+    { nombre: 'Dog', id: 1 },
+    { nombre: 'Cat', id: 2 },
+    { nombre: 'Cow', id: 3 },
+    { nombre: 'Fox', id: 4 },
+  ];
   ngOnInit(): void {
     this.idVariable = this.getIdFromRute();
     console.log('id ruta:' + this.idVariable);

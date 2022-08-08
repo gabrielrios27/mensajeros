@@ -57,19 +57,22 @@
           color: $alert-text;
         }
       }
-      .add-variable__container-select {
+      ::ng-deep .add-variable__container-select {
         position: relative;
-        .select-centers {
-          width: 299px;
-          height: 56px;
-          background: $btn-confirm-bg;
-          border: 1px solid $color-line-grey-dark;
-          border-radius: 4px;
-          margin-top: 10px;
-          padding-left: 20px;
-          ::ng-deep .mat-select-trigger {
-            width: 100% !important;
-            height: 100% !important;
+        width: 299px;
+        .selectAxe {
+          .selectAxe__options {
+            width: 299px;
+            height: 56px;
+            background: $btn-confirm-bg;
+            border: 1px solid $color-line-grey-dark;
+            border-radius: 4px;
+            margin-top: 10px;
+            padding-left: 20px;
+            ::ng-deep .mat-select-trigger {
+              width: 100% !important;
+              height: 100% !important;
+            }
           }
         }
         .add-variable__alert {
@@ -124,9 +127,9 @@
     }
   }
 }
-::ng-deep .cdk-overlay-container .cdk-overlay-pane {
-  margin: 54px 0; //para que el panel de selección aparezca abajo o arriba del input y no sobre él
-}
+// ::ng-deep .cdk-overlay-container .cdk-overlay-pane {
+//   margin: 54px 0; //para que el panel de selección aparezca abajo o arriba del input y no sobre él
+// }
 
 @media (max-width: 1400px) {
   .container-add-variable {

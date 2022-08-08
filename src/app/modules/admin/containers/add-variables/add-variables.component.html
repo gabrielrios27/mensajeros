@@ -55,18 +55,27 @@
         autocomplete="off"
         >Eje</label
       >
+
+      <mat-form-field appearance="fill" class="add-variable__container-select">
+        <mat-select class="selectAxe" [formControl]="ejeControl" required>
+          <mat-option
+            class="selectAxe__options"
+            *ngFor="let eje of axesList"
+            [value]="eje"
+          >
+            {{ eje.nombre }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="ejeControl.hasError('required')"
+          >Elige un Eje</mat-error
+        >
+      </mat-form-field>
       <div class="add-variable__container-input">
-        <input
-          [ngClass]="invalidForm ? 'add-variable__input--alert' : ''"
-          class="add-variable__input"
-          formControlName="variable"
-          id="POST-variable"
-          type="text"
-          name="variable"
-          autocomplete="off"
-          [(ngModel)]="variableInput"
-          (ngModelChange)="onChangeInput($event)"
-        />
+        <select class="select" name="select">
+          <option value="value1">Value 1</option>
+          <option value="value2" selected>Value 2</option>
+          <option value="value3">Value 3</option>
+        </select>
       </div>
       <button
         mat-raised-button
