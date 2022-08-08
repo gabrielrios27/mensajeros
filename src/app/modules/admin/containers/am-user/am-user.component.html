@@ -1,6 +1,6 @@
 <div class="container">
-    <h1 *ngIf="!data.editar">Agregar Usuario</h1>
-    <h1 *ngIf="data.editar">Editar Usuario</h1>
+    <h1 class="container-title" *ngIf="!flagEdit">Agregar Usuario</h1>
+    <h1 class="container-title" *ngIf="flagEdit">Editar Usuario</h1>
     <form [formGroup]="formUpEdit">
         <section class="container-name">
             <label>Nombre y Apellido *</label>
@@ -27,19 +27,21 @@
             </mat-error>
             <label class="labelDatoObligatorio"> *Dato obligatorio</label>
         </section>
-        <section class="sectionCheckbox">
-            <label>Tipo de Rol</label>
-            <div class="container-checkbox">
-                <mat-radio-group (change)="onDataChange($event)">
-                    <label>Director de Centro </label>
-                    <mat-radio-button class="mat-radio-button mat-radio-button-centro" [checked]="true"
-                        [value]="'centro'"></mat-radio-button>
-                    <br>
-                    <label>Director de ONG (admin) </label>
-                    <mat-radio-button class="mat-radio-button" [value]="'ong'"></mat-radio-button>
-                </mat-radio-group>
-            </div>
-        </section>
+        <ng-container *ngIf="!flagEdit">
+            <section class="sectionCheckbox">
+                <label>Tipo de Rol</label>
+                <div class="container-checkbox">
+                    <mat-radio-group (change)="onDataChange($event)">
+                        <label>Director de Centro </label>
+                        <mat-radio-button class="mat-radio-button mat-radio-button-centro" [checked]="true"
+                            [value]="'centro'"></mat-radio-button>
+                        <br>
+                        <label>Director de ONG (admin) </label>
+                        <mat-radio-button class="mat-radio-button" [value]="'ong'"></mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </section>
+        </ng-container>
         <section *ngIf="flagTipoRol" class="container-select">
             <label>Centro</label>
             <mat-select [(value)]="centroAsignado" name="centros" multiple
