@@ -33,6 +33,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { VariablesComponent } from './containers/variables/variables.component';
+import { AddVariablesComponent } from './containers/add-variables/add-variables.component';
+import { AddReportComponent } from './containers/add-report/add-report.component';
+import { CenterOfReportComponent } from './containers/center-of-report/center-of-report.component';
 
 @NgModule({
   imports: [
@@ -57,7 +61,7 @@ import { MatIconModule } from '@angular/material/icon';
   declarations: [
     ...adminContainers.containers,
     ...adminComponents.components,
-    AddAxesComponent,AmUserComponent,AddModCenterComponent
+    AddAxesComponent,AmUserComponent,AddModCenterComponent, VariablesComponent, AddVariablesComponent, AddReportComponent, CenterOfReportComponent
   ],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })

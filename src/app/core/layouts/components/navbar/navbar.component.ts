@@ -17,7 +17,8 @@ import { LayoutsService } from '../../services';
 export class NavbarComponent implements OnInit {
   flagLogOut: boolean = false;
   idToDelete: number = 0;
-
+  //para sub-list
+  flagReport: boolean = false;
   constructor(
     private _http: AuthService,
     private cdr: ChangeDetectorRef,
@@ -25,6 +26,10 @@ export class NavbarComponent implements OnInit {
     private _layoutSvc: LayoutsService
   ) {}
   ngOnInit() {}
+
+  toogleFlagReport() {
+    this.flagReport = !this.flagReport;
+  }
 
   logout() {
     localStorage.removeItem('isAdmin');
