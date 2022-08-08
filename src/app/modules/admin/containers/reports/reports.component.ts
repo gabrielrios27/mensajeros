@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 export interface PeriodicElement {
   id: number
@@ -32,7 +33,7 @@ export class ReportsComponent implements OnInit {
   initialItem: number = 1;
   finalItem: number = 10;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.reports = ELEMENT_DATA;
@@ -51,8 +52,9 @@ export class ReportsComponent implements OnInit {
 
   }
 
-  create(){
-
+  create(){ 
+    this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes/add-mod-report'])
+    
   }
 
   edit(report: PeriodicElement){
