@@ -1,0 +1,74 @@
+<div class="container-create-report">
+    <div class="add-mod-report">
+        <h1 class="title">Crear Nuevo Reporte</h1>
+        <form class="form-create-report">
+            <div class="container-button-expand">
+                <a style="cursor: pointer;" class="button-expand">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 4px;" width="24" height="24"
+                        fill="currentColor" class="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z" />
+                    </svg>
+                </a>
+            </div>
+
+            <section>
+                <label>Nombre/Numero</label>
+                <br>
+                <input class="input-create-report" type="text" placeholder="XXXXXXXXXX">
+            </section>
+            <section>
+                <label>Centros alcanzados</label>
+                <mat-select placeholder="Selecciona al menos un Centro" multiple="">
+                    <mat-option value="la balsa">la balsa</mat-option>
+                    <mat-option value="Hogar san jose">Hogar san jose</mat-option>
+                    <mat-option value="Casa matriz">Casa matriz</mat-option>
+                </mat-select>
+            </section>
+            <section>
+                <label>Periodo a reportar</label>
+                <br>
+                <br>
+                <label style="margin-right: 102px;">Desde</label>
+                <label>Hasta</label>
+                <div class="container-input-date ">
+                    <br>
+                    <div class="input-wrapper">
+                        <input matInput [matDatepicker]="picker" placeholder="Fecha">
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker"></mat-datepicker-toggle>
+                    </div>
+                    <br>
+                    <div class="input-wrapper">
+                        <input matInput [matDatepicker]="picker2" placeholder="Fecha">
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    </div>
+                </div>
+            </section>
+            <section style="margin-top:49px;">
+                <label style="margin-right: 420px;">Eje</label>
+                <label>Variable</label>
+                <div class="container-ejes">
+                    <mat-select class="mat-select-ejes" placeholder="Selecciona un Eje de Variables">
+                        <mat-option value="ACOMPAÑAMIENTO EDUCATIVO">ACOMPAÑAMIENTO EDUCATIVO</mat-option>
+                        <mat-option value="ACOMPAÑAMIENTO EN SALUD">ACOMPAÑAMIENTO EN SALUD</mat-option>
+                        <mat-option value="TALLER 2">TALLER 2</mat-option>
+                    </mat-select>
+
+                    <mat-select class="mat-select-ejes" placeholder="Selecciona una o más." multiple="">
+                        <mat-option value="ACOMPAÑAMIENTO EDUCATIVO">ACOMPAÑAMIENTO EDUCATIVO</mat-option>
+                        <mat-option value="ACOMPAÑAMIENTO EN SALUD">ACOMPAÑAMIENTO EN SALUD</mat-option>
+                        <mat-option value="TALLER 2">TALLER 2</mat-option>
+                    </mat-select>
+                </div>
+                <button mat-button class="button-ejes">+ Eje</button>
+            </section>
+            <div class="div-button ">
+                <button mat-stroked-button class="button-create">Crear Reporte</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
