@@ -18,8 +18,6 @@ import { AdminService } from '../../services';
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class AxesComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['eje', 'centro', 'acciones'];
-  // listOfAxes = ELEMENT_DATA;
   newOrEditedAxe: axes = {} as axes;
   flagEdited: boolean = false;
   flagNew: boolean = false;

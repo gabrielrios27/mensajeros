@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Centro } from '../models/centro';
 import { Users } from '../models/users';
-import { axes, flag, user } from '../models';
+import { axes, flag, user, variable } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +15,7 @@ export class AdminService {
   headers = new HttpHeaders();
   token: string = '';
   EPAxes: string = '/ejes';
+  EPVariables: string = '/variables';
 
   constructor(private _http: HttpClient) {}
 
@@ -80,5 +81,28 @@ export class AdminService {
   }
   deleteAxeWithId(id: string): Observable<any> {
     return this._http.delete<axes>(this.baseUrlTami + this.EPAxes + '/' + id);
+  }
+  // Variables------------
+  getVariables(): Observable<variable[]> {
+    return this._http.get<variable[]>(this.baseUrlTami + this.EPVariables);
+  }
+  getVariableWithId(id: string): Observable<variable> {
+    return this._http.get<variable>(
+      this.baseUrlTami + this.EPVariables + '/' + id
+    );
+  }
+  editVariableWithId(id: string, body: any): Observable<variable> {
+    return this._http.put<variable>(
+      this.baseUrlTami + this.EPVariables + '/' + id,
+      body
+    );
+  }
+  createVariable(body: any): Observable<variable> {
+    return this._http.post<variable>(this.baseUrlTami + this.EPVariables, body);
+  }
+  deleteVariableWithId(id: string): Observable<any> {
+    return this._http.delete<variable>(
+      this.baseUrlTami + this.EPVariables + '/' + id
+    );
   }
 }
