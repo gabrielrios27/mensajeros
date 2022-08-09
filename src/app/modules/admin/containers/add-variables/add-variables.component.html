@@ -60,14 +60,18 @@
       >
       <div class="add-variable__container-input">
         <mat-select
+          class="select"
           [(value)]="centroAsignado"
           name="select-axe"
           (selectionChange)="capturarCentro($event.value)"
           id="select-axe"
         >
-          <mat-option [value]="item.id" *ngFor="let item of axesList">{{
-            item.nombre
-          }}</mat-option>
+          <mat-option
+            class="select__option"
+            [value]="item.id"
+            *ngFor="let item of axesList"
+            >{{ item.nombre }}</mat-option
+          >
         </mat-select>
       </div>
       <!-- boton de confirmar envio de formulario----------- -->
