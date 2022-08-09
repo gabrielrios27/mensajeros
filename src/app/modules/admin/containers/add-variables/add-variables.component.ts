@@ -61,10 +61,19 @@ export class AddVariablesComponent implements OnInit {
   ejeControl = new FormControl(null, Validators.required);
   selectFormControl = new FormControl('', Validators.required);
   axesList: axes[] = [
-    { nombre: 'Dog', id: 1 },
-    { nombre: 'Cat', id: 2 },
-    { nombre: 'Cow', id: 3 },
-    { nombre: 'Fox', id: 4 },
+    { nombre: 'ACOMPAÑAMIENTO EN SALUD', id: 1 },
+    {
+      nombre: 'SEGURIDAD NUTRICIONAL',
+      id: 2,
+    },
+    {
+      nombre: 'ACOMPAÑAMIENTO EDUCATIVO',
+      id: 3,
+    },
+    {
+      nombre: 'GENERAL',
+      id: 4,
+    },
   ];
   ngOnInit(): void {
     this.idVariable = this.getIdFromRute();

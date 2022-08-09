@@ -66,6 +66,8 @@
         border-radius: 4px;
         width: 299px;
         height: 56px;
+        margin-top: 10px;
+        margin-bottom: 28px;
 
         background-repeat: no-repeat;
         background-position-x: 270px;
@@ -80,18 +82,28 @@
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
-        // line-height: 24px;
         display: flex;
         align-items: center;
-        padding-left: 20px;
-        padding-right: 20px;
+        line-height: 56px;
         letter-spacing: 0.5px;
         color: #1c1b1f;
+
+        .mat-select-trigger {
+          display: flex;
+          width: 100%;
+
+          padding-left: 20px;
+          padding-right: 20px;
+        }
       }
 
-      .mat-select::-ms-expand {
-        display: none;
-        /*Evita que se muestre la flecha por defecto en versiones de IE*/
+      // .mat-select::-ms-expand {
+      //   display: none;
+      //   /*Evita que se muestre la flecha por defecto en versiones de IE*/
+      // }
+
+      .mat-select::-moz-selection {
+        background-color: #ffffff;
       }
 
       .mat-select::selection {
@@ -101,33 +113,7 @@
       .mat-option {
         background-color: white;
       }
-      ::ng-deep .add-variable__container-select {
-        width: 299px;
-        .mat-form-field-underline {
-          // visibility: hidden;
-        }
-        .selectAxe {
-          .selectAxe__options {
-            width: 299px;
-            height: 56px;
-            background: $btn-confirm-bg;
-            border: 1px solid $color-line-grey-dark;
-            border-radius: 4px;
-            margin-top: 10px;
-            padding-left: 20px;
-            ::ng-deep .mat-select-trigger {
-              width: 100% !important;
-              height: 100% !important;
-            }
-          }
-        }
-        .add-variable__alert {
-          position: absolute;
-          bottom: -38px;
-          color: $alert-text;
-        }
-      }
-
+      // ----------------------------
       .add-variable__btn {
         font-size: 20px;
         align-self: flex-end;
@@ -141,6 +127,15 @@
       }
     }
   }
+}
+::ng-deep .mat-select-arrow-wrapper {
+  display: flex !important;
+  height: 56px !important;
+  padding-right: 10px;
+}
+::ng-deep .mat-select-value-text {
+  padding-left: 20px;
+  font-weight: 400;
 }
 .modal-error {
   position: fixed;
