@@ -18,8 +18,9 @@
             </section>
             <section>
                 <label>Centros alcanzados</label>
-                <mat-select placeholder="Selecciona al menos un Centro" multiple="">
-                    <mat-option value="la balsa">la balsa</mat-option>
+                <mat-select placeholder="Selecciona al menos un Centro" checkboxPosition="after"
+                    panelClass="example-panel-red" multiple="">
+                    <mat-option class="mat-option" value="la balsa">la balsa</mat-option>
                     <mat-option value="Hogar san jose">Hogar san jose</mat-option>
                     <mat-option value="Casa matriz">Casa matriz</mat-option>
                 </mat-select>
@@ -33,13 +34,13 @@
                 <div class="container-input-date ">
                     <br>
                     <div class="input-wrapper">
-                        <input matInput [matDatepicker]="picker" placeholder="Fecha">
+                        <input class="input-fecha " matInput [matDatepicker]="picker" placeholder="Fecha">
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker"></mat-datepicker-toggle>
                     </div>
                     <br>
                     <div class="input-wrapper">
-                        <input matInput [matDatepicker]="picker2" placeholder="Fecha">
+                        <input class="input-fecha " matInput [matDatepicker]="picker2" placeholder="Fecha">
                         <mat-datepicker #picker2></mat-datepicker>
                         <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker2"></mat-datepicker-toggle>
                     </div>
@@ -54,14 +55,30 @@
                         <mat-option value="ACOMPAÑAMIENTO EN SALUD">ACOMPAÑAMIENTO EN SALUD</mat-option>
                         <mat-option value="TALLER 2">TALLER 2</mat-option>
                     </mat-select>
-                    <mat-select class="mat-select-ejes" placeholder="Selecciona una o más." multiple="">
-                        <mat-option value="ACOMPAÑAMIENTO EDUCATIVO">ACOMPAÑAMIENTO EDUCATIVO</mat-option>
-                        <mat-option value="ACOMPAÑAMIENTO EN SALUD">ACOMPAÑAMIENTO EN SALUD</mat-option>
-                        <mat-option value="TALLER 2">TALLER 2</mat-option>
+                    <mat-select class="mat-select-ejes" placeholder="Selecciona una o más." multiple=""
+                        [(value)]="variables" name="variables" (selectionChange)="capturarVariables($event.value)">
+                        <mat-option [value]="'ACOMPAÑAMIENTO EDUCATIVO'">ACOMPAÑAMIENTO EDUCATIVO</mat-option>
+                        <mat-option [value]="'ACOMPAÑAMIENTO EN SALUD'">ACOMPAÑAMIENTO EN SALUD</mat-option>
+                        <mat-option [value]="'TALLER 2'">TALLER 2</mat-option>
                     </mat-select>
                 </div>
                 <button mat-button class="button-ejes">+ Eje</button>
             </section>
+            <div class="container-label-variables">
+                <div>
+                    <label class="label-variables" *ngFor="let item of variables">{{item}}<a><mat-icon>cancel</mat-icon></a>
+                    </label>
+                </div>
+            </div>
+            <div class="container-alert">
+                <Label>Fecha de Entrega(Alerta)</Label>
+                <div class="input-wrapper">
+                    <input class="input-fecha-alerta" type="" autocomplete="off" matInput [matDatepicker]="picker3"
+                        placeholder="Dia, Mes, Año">
+                    <mat-datepicker #picker3></mat-datepicker>
+                    <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker3"></mat-datepicker-toggle>
+                </div>
+            </div>
             <div class="div-button ">
                 <button mat-stroked-button class="button-create">Crear Reporte</button>
             </div>

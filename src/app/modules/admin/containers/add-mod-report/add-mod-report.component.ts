@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddModReportComponent implements OnInit {
 
+  variables: any;
 
 
   constructor() { }
@@ -16,4 +17,7 @@ export class AddModReportComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  capturarVariables(e: any) {
+    this.variables = e;
+  }
 }

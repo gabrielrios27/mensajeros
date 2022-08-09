@@ -59,25 +59,9 @@
                 margin: 13px 0px 12px 0px;
             }
 
-            .mat-select {
-                box-sizing: border-box;
-                border: 1px solid #979797;
-                border-radius: 4px;
-                width: 277px;
-                height: 35px;
-                font-family: "Futura Bk BT";
-                font-style: normal;
-                font-weight: 600;
-                font-size: 16px;
-                line-height: 24px;
-                display: flex;
-                align-items: center;
-                padding: 10px;
-                letter-spacing: 0.5px;
-                color: #1c1b1f;
-                outline-color: $color-primary-border;
-                margin: 13px 0px 12px 0px;
-            }
+
+
+
 
             .container-input-date {
                 display: flex;
@@ -90,7 +74,7 @@
                     margin-right: 15px;
                     margin-top: 13px;
 
-                    input {
+                    .input-fecha {
                         width: 131px;
                         height: 40px;
                         box-sizing: border-box;
@@ -109,6 +93,27 @@
                         color: #1c1b1f;
                         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
                         background: rgba(217, 217, 217, 0.2);
+                    }
+
+                    .input-fecha-alerta {
+                        box-sizing: border-box;
+                        border: 1px solid #79747E;
+                        border-radius: 5px;
+                        font-family: "Futura Bk BT";
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 19px;
+                        display: flex;
+                        align-items: center;
+                        padding: 10px;
+                        outline-color: $color-primary-border;
+                        letter-spacing: 0.5px;
+                        color: #1c1b1f;
+                        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                        background: rgba(217, 217, 217, 0.2);
+                        width: 264.03px;
+                        height: 32.79px;
                     }
 
                     .input-icon {
@@ -144,6 +149,10 @@
                 letter-spacing: 0.5px;
                 color: #1c1b1f;
                 outline-color: $color-primary-border;
+            }
+
+            ::ng-deep .mat-select-ejes:focus {
+                border: 2px solid #1967D2;
             }
 
             .button-ejes {
@@ -184,6 +193,154 @@
                 color: #000000;
             }
         }
+
+        .container-label-variables {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+
+            .label-variables {
+                padding: 4px;
+                margin-top: 10px;
+                height: 30px;
+                margin-bottom: 10px;
+                background: rgba(33, 33, 33, 0.08);
+                border-radius: 16px;
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 20px;
+                letter-spacing: 0.25px;
+                align-items: center;
+                text-align: center;
+                display: inline-flex;
+                margin-right: 10px;
+                color: rgba(0, 0, 0, 0.87);
+            }
+
+            ::ng-deep .material-icons {
+                margin-left: 9px;
+                font-size: 20px;
+            }
+        }
+
+
+
+        .container-alert {
+            width: 264.03px;
+            height: 32.79px;
+            margin-top: 10px;
+            padding-top: 15px;
+
+            .input-wrapper {
+                position: relative;
+                width: 131px;
+                height: 40px;
+                margin-right: 15px;
+                margin-top: 13px;
+
+                .input-fecha-alerta {
+                    box-sizing: border-box;
+                    border: 1px solid #C75757;
+                    border-radius: 5px;
+                    font-family: "Futura Bk BT";
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 19px;
+                    display: flex;
+                    align-items: center;
+                    padding: 10px;
+                    outline-color: $color-primary-border;
+                    letter-spacing: 0.5px;
+                    color: #1c1b1f;
+                    background: rgba(217, 217, 217, 0.2);
+                    width: 264.03px;
+                    height: 32.79px;
+                }
+
+                .input-icon {
+                    position: absolute;
+                    left: 150px;
+                    top: 40%;
+                    transform: translateY(-50%);
+                }
+            }
+        }
     }
 
+
 }
+
+//css select
+
+.mat-select {
+    box-sizing: border-box;
+    border: 1px solid #979797;
+    border-radius: 4px;
+    width: 277px;
+    height: 35px;
+    font-family: "Futura Bk BT";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    letter-spacing: 0.5px;
+    color: #1c1b1f;
+    outline-color: $color-primary-border;
+    margin: 13px 0px 12px 0px;
+}
+
+::ng-deep .mat-select:focus {
+    border: 2px solid #1967D2;
+}
+
+
+
+mat-option {
+    border-bottom: 1px solid #1967D2;
+}
+
+::ng-deep .mat-option-text {
+    position: absolute;
+}
+
+::ng-deep .mat-select-panel {
+    background: #95B7EA;
+    margin-top: 40px;
+
+}
+
+::ng-deep {
+
+    .mat-option:hover {
+        background: #becce2 !important;
+        border-bottom: #1967D2;
+        ;
+    }
+}
+
+::ng-deep .mat-pseudo-checkbox {
+    background: white !important;
+    margin-left: 280px;
+}
+
+::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: unset;
+
+}
+
+::ng-deep .mat-option-pseudo-checkbox.mat-pseudo-checkbox-checked {
+    background: white;
+    color: white;
+}
+
+::ng-deep .mat-pseudo-checkbox-checked::after {
+    color: #000000;
+}
+
+// fin css select
