@@ -74,6 +74,30 @@
           >
         </mat-select>
       </div>
+      <!-- Tipo de respuesta solicitada------------  -->
+      <label
+        class="add-variable__label"
+        for="select-type-of-answer"
+        type="text"
+        autocomplete="off"
+      >
+        Tipo de respuesta solicitada
+      </label>
+      <div class="add-variable__container-input">
+        <mat-radio-group
+          id="select-type-of-answer"
+          class="radio-groupAM"
+          [(ngModel)]="typeAnswer"
+        >
+          <mat-radio-button
+            class="radio-buttonAM"
+            *ngFor="let type of typeOfAnswer"
+            [value]="type"
+          >
+            {{ type }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
       <!-- boton de confirmar envio de formulario----------- -->
       <button
         mat-raised-button

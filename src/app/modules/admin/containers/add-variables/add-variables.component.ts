@@ -46,7 +46,9 @@ export class AddVariablesComponent implements OnInit {
   quantityOfPages: number = 1;
   //centro asignado
   centroAsignado: any;
-
+  //radio button tipo de respuesta
+  typeAnswer: string = '';
+  typeOfAnswer: string[] = ['Numérico', 'Textual'];
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(

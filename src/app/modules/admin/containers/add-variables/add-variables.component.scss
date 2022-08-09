@@ -56,6 +56,33 @@
           bottom: -10px;
           color: $alert-text;
         }
+        .radio-groupAM {
+          display: flex;
+          flex-direction: column;
+          margin: 15px 0;
+          align-items: flex-start;
+          .radio-buttonAM {
+            margin: 5px;
+          }
+        }
+
+        ::ng-deep .radio-buttonAM.mat-radio-checked .mat-radio-outer-circle {
+          border-color: $color-bg-hover-primary;
+        }
+        ::ng-deep .radio-buttonAM .mat-radio-inner-circle {
+          background-color: $color-bg-hover-primary;
+        }
+        ::ng-deep .radio-buttonAM .mat-radio-label {
+          width: 178px;
+          flex-direction: row-reverse;
+          justify-content: space-between;
+        }
+        // para quitar el color de fondo persistente en radio btn de angular material
+        ::ng-deep
+          .radio-buttonAM:not(.mat-radio-disable).cdk-program-focused
+          .mat-radio-persistent-ripple {
+          opacity: 0;
+        }
       }
       // nuevo select de angular material----------------
       .mat-select {

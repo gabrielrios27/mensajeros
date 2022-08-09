@@ -38,6 +38,7 @@ import { AddVariablesComponent } from './containers/add-variables/add-variables.
 import { AddReportComponent } from './containers/add-report/add-report.component';
 import { CenterOfReportComponent } from './containers/center-of-report/center-of-report.component';
 import { VariablesGroupComponent } from './containers/variables-group/variables-group.component';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   imports: [
@@ -55,6 +56,7 @@ import { VariablesGroupComponent } from './containers/variables-group/variables-
     MatTooltipModule,
     MatCardModule,
     MatIconModule,
+    MatRadioModule,
     // AppCommonModule,
     // NavigationModule,
   ],
@@ -62,7 +64,14 @@ import { VariablesGroupComponent } from './containers/variables-group/variables-
   declarations: [
     ...adminContainers.containers,
     ...adminComponents.components,
-    AddAxesComponent,AmUserComponent,AddModCenterComponent, VariablesComponent, AddVariablesComponent, AddReportComponent, CenterOfReportComponent, VariablesGroupComponent
+    AddAxesComponent,
+    AmUserComponent,
+    AddModCenterComponent,
+    VariablesComponent,
+    AddVariablesComponent,
+    AddReportComponent,
+    CenterOfReportComponent,
+    VariablesGroupComponent,
   ],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })
