@@ -89,12 +89,11 @@
           class="radio-groupAM"
           [(ngModel)]="typeAnswer"
         >
-          <mat-radio-button
-            class="radio-buttonAM"
-            *ngFor="let type of typeOfAnswer"
-            [value]="type"
-          >
-            {{ type }}
+          <mat-radio-button class="radio-buttonAM" [value]="typeOfAnswerNumber">
+            Numérico
+          </mat-radio-button>
+          <mat-radio-button class="radio-buttonAM" [value]="typeOfAnswerText">
+            Textual
           </mat-radio-button>
         </mat-radio-group>
       </div>
@@ -107,6 +106,7 @@
       >
         Agregar a Variable:
       </label>
+      <!-- Distinción de genero -->
       <div class="add-variable__container-input">
         <mat-checkbox
           class="checkbox-add-to"
@@ -117,6 +117,19 @@
         <p class="add-variable__info-text">
           Al seleccionar se añadirán campos extra para Mujeres, Varones y No
           binarixs.
+        </p>
+      </div>
+      <!-- Escala de Valor  -->
+      <div class="add-variable__container-input">
+        <mat-checkbox
+          class="checkbox-add-to"
+          color="accent"
+          [(ngModel)]="addToVariable"
+          >Escala de Valor</mat-checkbox
+        >
+        <p class="add-variable__info-text">
+          Al seleccionara creará una escala de Valor que ira desde un mínimo a
+          un máximo establecido.
         </p>
       </div>
 

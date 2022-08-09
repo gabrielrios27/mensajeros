@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -49,10 +50,14 @@ export class AddVariablesComponent implements OnInit {
   //radio button tipo de respuesta
   typeAnswer: string = '';
   typeOfAnswer: string[] = ['Numérico', 'Textual'];
+  typeOfAnswerNumber: string = 'Numérico';
+  typeOfAnswerText: string = 'Textual';
   //checkbox agregar a variable
   addToVariable: string = '';
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
+  //para escala de valor
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
