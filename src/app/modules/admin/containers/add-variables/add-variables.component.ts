@@ -49,6 +49,8 @@ export class AddVariablesComponent implements OnInit {
   //radio button tipo de respuesta
   typeAnswer: string = '';
   typeOfAnswer: string[] = ['Numérico', 'Textual'];
+  //checkbox agregar a variable
+  addToVariable: string = '';
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(

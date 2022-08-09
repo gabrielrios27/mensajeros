@@ -98,6 +98,28 @@
           </mat-radio-button>
         </mat-radio-group>
       </div>
+      <!-- Agregar a Variable:------------  -->
+      <label
+        class="add-variable__label"
+        for="add-to-variable"
+        type="text"
+        autocomplete="off"
+      >
+        Agregar a Variable:
+      </label>
+      <div class="add-variable__container-input">
+        <mat-checkbox
+          class="checkbox-add-to"
+          color="accent"
+          [(ngModel)]="addToVariable"
+          >Distinción de género</mat-checkbox
+        >
+        <p class="add-variable__info-text">
+          Al seleccionar se añadirán campos extra para Mujeres, Varones y No
+          binarixs.
+        </p>
+      </div>
+
       <!-- boton de confirmar envio de formulario----------- -->
       <button
         mat-raised-button

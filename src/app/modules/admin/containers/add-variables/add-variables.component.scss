@@ -83,6 +83,26 @@
           .mat-radio-persistent-ripple {
           opacity: 0;
         }
+        // estilos del checkbox agregar a variable-------
+        ::ng-deep .checkbox-add-to {
+          margin: 15px 0 5px;
+          .mat-checkbox-layout {
+            margin: 5px;
+            display: flex;
+            width: 226px;
+            flex-direction: row-reverse;
+            padding-left: 8px;
+            justify-content: space-between;
+          }
+        }
+        .add-variable__info-text {
+          margin-left: 15px;
+          font-family: "Roboto";
+          font-size: 12px;
+          color: rgba(0, 0, 0, 0.6);
+        }
+
+        // --------------------------------------------------
       }
       // nuevo select de angular material----------------
       .mat-select {

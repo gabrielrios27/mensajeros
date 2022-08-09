@@ -39,6 +39,7 @@ import { AddReportComponent } from './containers/add-report/add-report.component
 import { CenterOfReportComponent } from './containers/center-of-report/center-of-report.component';
 import { VariablesGroupComponent } from './containers/variables-group/variables-group.component';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -57,6 +58,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatCardModule,
     MatIconModule,
     MatRadioModule,
+    MatCheckboxModule,
     // AppCommonModule,
     // NavigationModule,
   ],
