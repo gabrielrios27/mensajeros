@@ -132,7 +132,62 @@
           un máximo establecido.
         </p>
       </div>
-
+      <div class="value-scale">
+        <div class="value-scale__conteiner-scale">
+          De
+          <div class="value-scale__value">
+            <div class="value-scale__initials-values">
+              <p
+                class="value-scale__first-value"
+                *ngFor="let number of initialValuesList"
+              >
+                {{ number }}
+              </p>
+            </div>
+            <svg
+              class="value-scale__dropdown-ico"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M7 10L12 15L17 10L7 10Z" fill="#79747E" />
+            </svg>
+          </div>
+          a
+          <div class="value-scale__value">
+            <div class="value-scale__finals-values">
+              <p
+                class="value-scale__last-value"
+                *ngFor="let number of finalsValuesList"
+              >
+                {{ number }}
+              </p>
+            </div>
+            <svg
+              class="value-scale__dropdown-ico"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M7 10L12 15L17 10L7 10Z" fill="#79747E" />
+            </svg>
+          </div>
+        </div>
+        <div class="value-scale__conteiner-tags">
+          <div class="value-scale__tag">
+            <label class="value-scale__label" for=""></label>
+            <input class="value-scale__input" type="text" />
+          </div>
+          <div class="value-scale__tag">
+            <label class="value-scale__label" for=""></label>
+            <input class="value-scale__input" type="text" />
+          </div>
+        </div>
+      </div>
       <!-- boton de confirmar envio de formulario----------- -->
       <button
         mat-raised-button

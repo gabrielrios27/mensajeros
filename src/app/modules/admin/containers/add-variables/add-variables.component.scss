@@ -210,6 +210,42 @@
   }
 }
 //--------------------------------------------------------
+//ESTILOS DE ESCALA DE VALOR------------------------------
+.value-scale {
+  padding-left: 13px;
+  .value-scale__conteiner-scale {
+    font-size: 16px;
+    display: flex;
+    .value-scale__value {
+      display: flex;
+      .value-scale__initials-values {
+        display: flex;
+        flex-direction: column;
+        .value-scale__first-value {
+        }
+      }
+      .value-scale__finals-values {
+        display: flex;
+        flex-direction: column;
+        .value-scale__last-value {
+        }
+      }
+      .value-scale__dropdown-ico {
+        path {
+        }
+      }
+    }
+  }
+  .value-scale__conteiner-tags {
+    .value-scale__tag {
+      .value-scale__label {
+      }
+      .value-scale__input {
+      }
+    }
+  }
+}
+//--------------------------------------------------------
 .modal-error {
   position: fixed;
   bottom: 20vh;

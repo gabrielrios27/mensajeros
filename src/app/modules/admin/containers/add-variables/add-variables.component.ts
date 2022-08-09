@@ -57,7 +57,11 @@ export class AddVariablesComponent implements OnInit {
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   //para escala de valor
-
+  firstValue: number = 0;
+  lastValue: number = 5;
+  initialValuesList: number[] = [0, 1];
+  finalsValuesRange: number[] = [1, 10];
+  finalsValuesList: number[] = [];
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -89,6 +93,14 @@ export class AddVariablesComponent implements OnInit {
     console.log('id ruta:' + this.idVariable);
     this.completeInputWithVariable(this.idVariable);
     this.getVariableList();
+    this.createListValues(this.finalsValuesRange, this.finalsValuesList);
+  }
+  createListValues(range: number[], list: number[]) {
+    list = [];
+    for (let i = range[0]; i <= range[1]; i++) {
+      list.push(i);
+    }
+    console.log('list value: ', list);
   }
   onConfirm() {
     if (this.newVariable.invalid) {
