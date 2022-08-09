@@ -60,8 +60,12 @@ export class AddVariablesComponent implements OnInit {
   firstValue: number = 0;
   lastValue: number = 5;
   initialValuesList: number[] = [0, 1];
-  finalsValuesRange: number[] = [1, 10];
+  // finalsValuesRange: number[] = [1, 10];
+
+  finalsValuesListFromOne: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  finalsValuesListFromtwo: number[] = [2, 3, 4, 5, 6, 7, 8, 9, 10];
   finalsValuesList: number[] = [];
+  flagFirstValueOne: boolean = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -93,15 +97,16 @@ export class AddVariablesComponent implements OnInit {
     console.log('id ruta:' + this.idVariable);
     this.completeInputWithVariable(this.idVariable);
     this.getVariableList();
-    this.createListValues(this.finalsValuesRange, this.finalsValuesList);
+    this.finalsValuesList = this.finalsValuesListFromOne;
+    // this.createListValues(this.finalsValuesRange, this.finalsValuesList);
   }
-  createListValues(range: number[], list: number[]) {
-    list = [];
-    for (let i = range[0]; i <= range[1]; i++) {
-      list.push(i);
-    }
-    console.log('list value: ', list);
-  }
+  // createListValues(range: number[], list: number[]) {
+  //   list = [];
+  //   for (let i = range[0]; i <= range[1]; i++) {
+  //     list.push(i);
+  //   }
+  //   console.log('list value: ', list);
+  // }
   onConfirm() {
     if (this.newVariable.invalid) {
       this.flagError = true;
@@ -249,6 +254,16 @@ export class AddVariablesComponent implements OnInit {
   }
   capturarCentro(e: any) {
     this.centroAsignado = e;
+  }
+  captureFirstValue(e: number) {
+    this.firstValue = e;
+    if (e === 1) {
+      this.finalsValuesList = this.finalsValuesListFromtwo;
+    }
+    console.log('firstValue: ', this.firstValue);
+  }
+  captureLastValue(e: number) {
+    this.lastValue = e;
   }
   close() {
     if (this.flagTimeOut) {

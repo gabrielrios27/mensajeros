@@ -136,45 +136,37 @@
         <div class="value-scale__conteiner-scale">
           De
           <div class="value-scale__value">
-            <div class="value-scale__initials-values">
-              <p
-                class="value-scale__first-value"
-                *ngFor="let number of initialValuesList"
-              >
-                {{ number }}
-              </p>
-            </div>
-            <svg
-              class="value-scale__dropdown-ico"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+            <mat-select
+              class="selectRange"
+              [(value)]="firstValue"
+              name="select-first-value"
+              (selectionChange)="captureFirstValue($event.value)"
+              id="select-first-value"
             >
-              <path d="M7 10L12 15L17 10L7 10Z" fill="#79747E" />
-            </svg>
+              <mat-option
+                class="selectRange__option"
+                [value]="item"
+                *ngFor="let item of initialValuesList"
+                >{{ item }}</mat-option
+              >
+            </mat-select>
           </div>
           a
           <div class="value-scale__value">
-            <div class="value-scale__finals-values">
-              <p
-                class="value-scale__last-value"
-                *ngFor="let number of finalsValuesList"
-              >
-                {{ number }}
-              </p>
-            </div>
-            <svg
-              class="value-scale__dropdown-ico"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+            <mat-select
+              class="selectRange"
+              [(value)]="lastValue"
+              name="select-last-value"
+              (selectionChange)="captureLastValue($event.value)"
+              id="select-last-value"
             >
-              <path d="M7 10L12 15L17 10L7 10Z" fill="#79747E" />
-            </svg>
+              <mat-option
+                class="selectRange__option"
+                [value]="item"
+                *ngFor="let item of finalsValuesList"
+                >{{ item }}</mat-option
+              >
+            </mat-select>
           </div>
         </div>
         <div class="value-scale__conteiner-tags">

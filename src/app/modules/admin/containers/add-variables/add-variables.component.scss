@@ -98,7 +98,8 @@
         .add-variable__info-text {
           margin-left: 15px;
           margin-bottom: 0;
-          font-family: "Roboto";
+          font-family: "Roboto Md 500";
+          letter-spacing: 0.4px;
           font-size: 12px;
           color: rgba(0, 0, 0, 0.6);
         }
@@ -156,6 +157,7 @@
         background-color: white;
       }
       // ----------------------------
+
       .add-variable__btn {
         font-size: 20px;
         align-self: flex-end;
@@ -170,6 +172,7 @@
     }
   }
 }
+
 // ESTILOS PARA CUSTOMIZAR EL SELECT DE ANGULAR MATERIAL----------
 ::ng-deep .mat-select-arrow-wrapper {
   display: flex !important;
@@ -218,21 +221,44 @@
     display: flex;
     .value-scale__value {
       display: flex;
-      .value-scale__initials-values {
+      //select de rango de escala de valores
+      .selectRange {
+        background: #fff;
+        box-sizing: border-box;
+        border: 1px solid $btn-confirm-bg;
+        outline-color: $outline-focus;
+        border-radius: 4px;
+        width: 60px;
+        height: 30px;
+        margin: 0 10px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;
+        appearance: none;
+
+        font-family: "Futura Bk BT";
+        font-weight: 600;
+        font-size: 16px;
         display: flex;
-        flex-direction: column;
-        .value-scale__first-value {
+        align-items: center;
+        letter-spacing: 0.5px;
+        color: #1c1b1f;
+
+        .mat-select-trigger {
+          display: flex;
+          width: 100%;
         }
       }
-      .value-scale__finals-values {
-        display: flex;
-        flex-direction: column;
-        .value-scale__last-value {
-        }
+      .selectRange::-moz-selection {
+        background-color: #ffffff;
       }
-      .value-scale__dropdown-ico {
-        path {
-        }
+
+      .selectRange::selection {
+        background-color: #ffffff;
+      }
+
+      .mat-option {
+        background-color: white;
       }
     }
   }
@@ -242,6 +268,41 @@
       }
       .value-scale__input {
       }
+    }
+  }
+  ::ng-deep .mat-select-arrow-wrapper {
+    padding-right: 5px;
+  }
+  ::ng-deep .mat-select-value-text {
+    padding-left: 10px;
+  }
+}
+::ng-deep .cdk-overlay-container {
+  .selectRange__option {
+    transition: all 0.2s linear;
+    &:hover {
+      background-color: $color-bg-hover-primary;
+    }
+    .mat-option-text:hover {
+      color: white;
+    }
+  }
+  .selectRange__option.mat-selected:not(.mat-option-multiple) {
+    background: $color-bg-hover-primary;
+    .mat-option-text {
+      color: white;
+    }
+  }
+  .selectRange__option.mat-selected:not(.mat-option-multiple):not(.mat-option-disabled) {
+    background: $color-bg-hover-primary;
+    .mat-option-text {
+      color: white;
+    }
+  }
+  .selectRange__option.mat-active {
+    background: $color-bg-hover-primary;
+    .mat-option-text {
+      color: white;
     }
   }
 }
