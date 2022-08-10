@@ -24,7 +24,17 @@ interface Animal {
 export class AddVariablesComponent implements OnInit {
   newVariable: FormGroup = this.fb.group({
     variable: [, [Validators.required]],
+    descriptionForm: [],
+    selectAxeForm: [],
+    typeAnswerForm: [],
+    genreForm: [],
+    valueScaleForm: [],
+    firstNumberForm: [0],
+    lastNumberForm: [5],
+    firstValueForm: [, [Validators.required]],
+    lastValueForm: [, [Validators.required]],
   });
+  selectAxeControl = new FormControl(false);
 
   variableById: variable;
   idVariable: number;
@@ -65,7 +75,10 @@ export class AddVariablesComponent implements OnInit {
   finalsValuesListFromOne: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   finalsValuesListFromtwo: number[] = [2, 3, 4, 5, 6, 7, 8, 9, 10];
   finalsValuesList: number[] = [];
-  flagFirstValueOne: boolean = false;
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -98,15 +111,8 @@ export class AddVariablesComponent implements OnInit {
     this.completeInputWithVariable(this.idVariable);
     this.getVariableList();
     this.finalsValuesList = this.finalsValuesListFromOne;
-    // this.createListValues(this.finalsValuesRange, this.finalsValuesList);
   }
-  // createListValues(range: number[], list: number[]) {
-  //   list = [];
-  //   for (let i = range[0]; i <= range[1]; i++) {
-  //     list.push(i);
-  //   }
-  //   console.log('list value: ', list);
-  // }
+
   onConfirm() {
     if (this.newVariable.invalid) {
       this.flagError = true;
@@ -259,6 +265,8 @@ export class AddVariablesComponent implements OnInit {
     this.firstValue = e;
     if (e === 1) {
       this.finalsValuesList = this.finalsValuesListFromtwo;
+    } else {
+      this.finalsValuesList = this.finalsValuesListFromOne;
     }
     console.log('firstValue: ', this.firstValue);
   }

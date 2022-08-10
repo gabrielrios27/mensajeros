@@ -41,7 +41,7 @@
         <input
           [ngClass]="invalidForm ? 'add-variable__input--alert' : ''"
           class="add-variable__input"
-          formControlName="variable"
+          formControlName="descriptionForm"
           id="description"
           type="text"
           name="description"
@@ -51,11 +51,7 @@
         />
       </div>
       <!-- Selector de eje------------  -->
-      <label
-        class="add-variable__label"
-        for="select-axe"
-        type="text"
-        autocomplete="off"
+      <label class="add-variable__label" for="select-axe" autocomplete="off"
         >Eje</label
       >
       <div class="add-variable__container-input">
@@ -65,6 +61,7 @@
           name="select-axe"
           (selectionChange)="capturarCentro($event.value)"
           id="select-axe"
+          formControlName="selectAxeForm"
         >
           <mat-option
             class="select__option"
@@ -88,6 +85,7 @@
           id="select-type-of-answer"
           class="radio-groupAM"
           [(ngModel)]="typeAnswer"
+          formControlName="typeAnswerForm"
         >
           <mat-radio-button class="radio-buttonAM" [value]="typeOfAnswerNumber">
             Numérico
@@ -112,6 +110,7 @@
           class="checkbox-add-to"
           color="accent"
           [(ngModel)]="addToVariable"
+          formControlName="genreForm"
           >Distinción de género</mat-checkbox
         >
         <p class="add-variable__info-text">
@@ -125,6 +124,7 @@
           class="checkbox-add-to"
           color="accent"
           [(ngModel)]="addToVariable"
+          formControlName="valueScaleForm"
           >Escala de Valor</mat-checkbox
         >
         <p class="add-variable__info-text">
@@ -141,6 +141,7 @@
               [(value)]="firstValue"
               name="select-first-value"
               (selectionChange)="captureFirstValue($event.value)"
+              formControlName="firstNumberForm"
               id="select-first-value"
             >
               <mat-option
@@ -159,6 +160,7 @@
               name="select-last-value"
               (selectionChange)="captureLastValue($event.value)"
               id="select-last-value"
+              formControlName="lastNumberForm"
             >
               <mat-option
                 class="selectRange__option"
@@ -169,14 +171,45 @@
             </mat-select>
           </div>
         </div>
+        <!-- Etiquetas de escala de valor--------------------------- -->
         <div class="value-scale__conteiner-tags">
           <div class="value-scale__tag">
-            <label class="value-scale__label" for=""></label>
-            <input class="value-scale__input" type="text" />
+            <label class="value-scale__label" for="">{{ firstValue }}</label>
+            <mat-form-field class="value-scale__input" appearance="fill">
+              <input
+                color="accent"
+                autocomplete="off"
+                type="text"
+                matInput
+                formControlName="firstValueForm"
+                placeholder="Etiqueta"
+                required
+              />
+              <mat-error
+                *ngIf="newVariable.get('firstValueForm')?.hasError('required')"
+              >
+                Debe completar este campo
+              </mat-error>
+            </mat-form-field>
           </div>
           <div class="value-scale__tag">
-            <label class="value-scale__label" for=""></label>
-            <input class="value-scale__input" type="text" />
+            <label class="value-scale__label" for="">{{ lastValue }}</label>
+            <mat-form-field class="value-scale__input" appearance="fill">
+              <input
+                color="accent"
+                autocomplete="off"
+                type="text"
+                matInput
+                formControlName="lastValueForm"
+                placeholder="Etiqueta"
+                required
+              />
+              <mat-error
+                *ngIf="newVariable.get('lastValueForm')?.hasError('required')"
+              >
+                Debe completar este campo
+              </mat-error>
+            </mat-form-field>
           </div>
         </div>
       </div>
