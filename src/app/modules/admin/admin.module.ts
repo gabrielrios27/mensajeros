@@ -35,6 +35,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
+import { VariablesComponent } from './containers/variables/variables.component';
+import { AddVariablesComponent } from './containers/add-variables/add-variables.component';
+import { AddReportComponent } from './containers/add-report/add-report.component';
+import { CenterOfReportComponent } from './containers/center-of-report/center-of-report.component';
+import { VariablesGroupComponent } from './containers/variables-group/variables-group.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -60,7 +66,7 @@ import {MatRadioModule} from '@angular/material/radio';
   declarations: [
     ...adminContainers.containers,
     ...adminComponents.components,
-    AddAxesComponent,AmUserComponent,AddModCenterComponent
+    AddAxesComponent,AmUserComponent,AddModCenterComponent, VariablesComponent, AddVariablesComponent, AddReportComponent, CenterOfReportComponent, VariablesGroupComponent
   ],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })

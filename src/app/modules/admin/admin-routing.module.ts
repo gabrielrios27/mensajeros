@@ -61,9 +61,39 @@ export const ROUTES: Routes = [
     component: adminContainers.AddAxesComponent,
   },
   {
+    path: 'variables',
+    canActivate: [AdminGuard],
+    component: adminContainers.VariablesComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'variables/add-mod-variables',
+    canActivate: [AdminGuard],
+    component: adminContainers.AddVariablesComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'variables/variables-agrupadas/:id',
+    canActivate: [AdminGuard],
+    component: adminContainers.VariablesGroupComponent,
+    pathMatch: 'full',
+  },
+  {
     path: 'reportes',
     canActivate: [AdminGuard],
+    redirectTo: 'reportes/creacion-de-reportes',
+    pathMatch: 'full',
+  },
+  {
+    path: 'reportes/creacion-de-reportes',
+    canActivate: [AdminGuard],
     component: adminContainers.ReportsComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'reportes/centro-de-reportes',
+    canActivate: [AdminGuard],
+    component: adminContainers.CenterOfReportComponent,
     pathMatch: 'full',
   },
   {
@@ -81,7 +111,7 @@ export const ROUTES: Routes = [
   {
     path: 'centros/add-mod-center',
     component: AddModCenterComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: '**',
