@@ -269,6 +269,7 @@
       }
     }
   }
+
   .value-scale__conteiner-tags {
     .value-scale__tag {
       .value-scale__label {
@@ -291,6 +292,9 @@
   ::ng-deep .mat-select-value-text {
     padding-left: 10px;
   }
+}
+.color-disable {
+  color: #00000061;
 }
 ::ng-deep .cdk-overlay-container {
   .selectRange__option {
