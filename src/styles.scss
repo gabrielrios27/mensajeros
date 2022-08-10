@@ -46,6 +46,9 @@
 .mat-checkbox-frame {
   border-color: #007ac1 !important;
 }
+.mat-checkbox-disabled .mat-checkbox-frame {
+  border-color: rgb(189, 189, 189) !important;
+}
 // Define a custom typography config that overrides the font-family as well as the
 // `headlines` and `body-1` levels.
 $custom-typography: mat-typography-config(

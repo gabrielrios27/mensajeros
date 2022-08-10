@@ -103,7 +103,9 @@
           font-size: 12px;
           color: rgba(0, 0, 0, 0.6);
         }
-
+        ::ng-deep .mat-checkbox-disabled .mat-checkbox-frame {
+          border-color: rgb(189, 189, 189);
+        }
         // --------------------------------------------------
       }
       // nuevo select de angular material----------------

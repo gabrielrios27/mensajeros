@@ -8,7 +8,7 @@ import {
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 import { axes, variable } from '../../models';
 import { AdminService } from '../../services';
 
@@ -22,18 +22,6 @@ interface Animal {
   styleUrls: ['./add-variables.component.scss'],
 })
 export class AddVariablesComponent implements OnInit {
-  newVariable: FormGroup = this.fb.group({
-    variable: [, [Validators.required]],
-    descriptionForm: [],
-    selectAxeForm: [],
-    typeAnswerForm: [],
-    genreForm: [],
-    valueScaleForm: [],
-    firstNumberForm: [0],
-    lastNumberForm: [5],
-    firstValueForm: [, [Validators.required]],
-    lastValueForm: [, [Validators.required]],
-  });
   selectAxeControl = new FormControl(false);
 
   variableById: variable;
@@ -56,14 +44,15 @@ export class AddVariablesComponent implements OnInit {
   itemsPerPage: number = 10;
   quantityOfPages: number = 1;
   //centro asignado
-  centroAsignado: any;
+  ejeAsignado: any;
   //radio button tipo de respuesta
-  typeAnswer: string = '';
-  typeOfAnswer: string[] = ['Numérico', 'Textual'];
+  typeAnswer: string = 'Numérico';
+  flagGenre: boolean = true;
   typeOfAnswerNumber: string = 'Numérico';
   typeOfAnswerText: string = 'Textual';
-  //checkbox agregar a variable
-  addToVariable: string = '';
+  //checkboxs agregar a variable
+  addGenre: string = '';
+  addValueEscale: string = '';
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   //para escala de valor
@@ -79,6 +68,18 @@ export class AddVariablesComponent implements OnInit {
     Validators.required,
     Validators.email,
   ]);
+  newVariable: FormGroup = this.fb.group({
+    variable: [, [Validators.required]],
+    descriptionForm: [],
+    selectAxeForm: [],
+    typeAnswerForm: [],
+    genreForm: [false],
+    valueScaleForm: [false],
+    firstNumberForm: [0],
+    lastNumberForm: [5],
+    firstValueForm: [, [Validators.required]],
+    lastValueForm: [, [Validators.required]],
+  });
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -111,33 +112,37 @@ export class AddVariablesComponent implements OnInit {
     this.completeInputWithVariable(this.idVariable);
     this.getVariableList();
     this.finalsValuesList = this.finalsValuesListFromOne;
+    this.newVariable.get('typeAnswerForm')?.setValue('Numérico');
+    this.onSelectionChange();
   }
 
   onConfirm() {
-    if (this.newVariable.invalid) {
-      this.flagError = true;
-      this.invalidForm = true;
-      this.flagTimeOut = true;
-      this.timerId = setTimeout(() => {
-        this.close();
-      }, 3000);
-      return;
-    } else {
-      this.invalidForm = false;
-      this.isInList = this.checkInVariableList(
-        this.newVariable.get('variable')?.value
-      );
-      if (this.isInList) {
-        //comprueba si esta en la lista, si esta se renderiza un mensaje de error(este eje ya se encuentra cargado)
-        this.flagExist = true;
-        this.flagTimeOutExist = true;
-        this.timerIdExist = setTimeout(() => {
-          this.close();
-        }, 3000);
-      } else {
-        this.putOrAddVariable();
-      }
-    }
+    console.log('form: ', this.newVariable);
+
+    // if (this.newVariable.invalid) {
+    //   this.flagError = true;
+    //   this.invalidForm = true;
+    //   this.flagTimeOut = true;
+    //   this.timerId = setTimeout(() => {
+    //     this.close();
+    //   }, 3000);
+    //   return;
+    // } else {
+    //   this.invalidForm = false;
+    //   this.isInList = this.checkInVariableList(
+    //     this.newVariable.get('variable')?.value
+    //   );
+    //   if (this.isInList) {
+    //     //comprueba si esta en la lista, si esta se renderiza un mensaje de error(este eje ya se encuentra cargado)
+    //     this.flagExist = true;
+    //     this.flagTimeOutExist = true;
+    //     this.timerIdExist = setTimeout(() => {
+    //       this.close();
+    //     }, 3000);
+    //   } else {
+    //     this.putOrAddVariable();
+    //   }
+    // }
   }
   setPageLocalStorage() {
     //para paginación
@@ -258,8 +263,8 @@ export class AddVariablesComponent implements OnInit {
     }
     return false;
   }
-  capturarCentro(e: any) {
-    this.centroAsignado = e;
+  capturarEje(e: any) {
+    this.ejeAsignado = e;
   }
   captureFirstValue(e: number) {
     this.firstValue = e;
@@ -272,6 +277,17 @@ export class AddVariablesComponent implements OnInit {
   }
   captureLastValue(e: number) {
     this.lastValue = e;
+  }
+  onSelectionChange() {
+    if (this.typeAnswer === 'Numérico') {
+      this.flagGenre = true;
+      this.newVariable.get('firstValueForm')?.disable();
+      this.newVariable.get('lastValueForm')?.disable();
+    } else {
+      this.flagGenre = false;
+      this.newVariable.get('firstValueForm')?.enable();
+      this.newVariable.get('lastValueForm')?.enable();
+    }
   }
   close() {
     if (this.flagTimeOut) {

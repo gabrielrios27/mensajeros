@@ -57,15 +57,15 @@
       <div class="add-variable__container-input">
         <mat-select
           class="select"
-          [(value)]="centroAsignado"
+          [(value)]="ejeAsignado"
           name="select-axe"
-          (selectionChange)="capturarCentro($event.value)"
+          (selectionChange)="capturarEje($event.value)"
           id="select-axe"
           formControlName="selectAxeForm"
         >
           <mat-option
             class="select__option"
-            [value]="item.id"
+            [value]="item.nombre"
             *ngFor="let item of axesList"
             >{{ item.nombre }}</mat-option
           >
@@ -86,11 +86,13 @@
           class="radio-groupAM"
           [(ngModel)]="typeAnswer"
           formControlName="typeAnswerForm"
+          [ngModel]="typeAnswer"
+          (change)="onSelectionChange()"
         >
-          <mat-radio-button class="radio-buttonAM" [value]="typeOfAnswerNumber">
+          <mat-radio-button class="radio-buttonAM" value="Numérico">
             Numérico
           </mat-radio-button>
-          <mat-radio-button class="radio-buttonAM" [value]="typeOfAnswerText">
+          <mat-radio-button class="radio-buttonAM" value="Textual">
             Textual
           </mat-radio-button>
         </mat-radio-group>
@@ -109,8 +111,9 @@
         <mat-checkbox
           class="checkbox-add-to"
           color="accent"
-          [(ngModel)]="addToVariable"
+          [(ngModel)]="addGenre"
           formControlName="genreForm"
+          [disabled]="!flagGenre"
           >Distinción de género</mat-checkbox
         >
         <p class="add-variable__info-text">
@@ -123,8 +126,9 @@
         <mat-checkbox
           class="checkbox-add-to"
           color="accent"
-          [(ngModel)]="addToVariable"
+          [(ngModel)]="addValueEscale"
           formControlName="valueScaleForm"
+          [disabled]="flagGenre"
           >Escala de Valor</mat-checkbox
         >
         <p class="add-variable__info-text">
@@ -143,6 +147,7 @@
               (selectionChange)="captureFirstValue($event.value)"
               formControlName="firstNumberForm"
               id="select-first-value"
+              [disabled]="flagGenre"
             >
               <mat-option
                 class="selectRange__option"
@@ -161,6 +166,7 @@
               (selectionChange)="captureLastValue($event.value)"
               id="select-last-value"
               formControlName="lastNumberForm"
+              [disabled]="flagGenre"
             >
               <mat-option
                 class="selectRange__option"
@@ -184,6 +190,7 @@
                 formControlName="firstValueForm"
                 placeholder="Etiqueta"
                 required
+                [disabled]="flagGenre"
               />
               <mat-error
                 *ngIf="newVariable.get('firstValueForm')?.hasError('required')"
@@ -203,6 +210,7 @@
                 formControlName="lastValueForm"
                 placeholder="Etiqueta"
                 required
+                [disabled]="true"
               />
               <mat-error
                 *ngIf="newVariable.get('lastValueForm')?.hasError('required')"
