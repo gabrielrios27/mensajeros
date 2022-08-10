@@ -43,9 +43,7 @@ export class AmUserComponent implements OnInit {
     this.formUpEdit = fb.group({
       nombre: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      contrasena: [
-        '',
-        Validators.compose([Validators.required, Validators.minLength(8)]),
+      contrasena: ['',Validators.compose([Validators.required, Validators.minLength(8)]),
       ],
     });
   }
@@ -117,24 +115,20 @@ export class AmUserComponent implements OnInit {
         console.log(this.centrosAsignados[0])
         this.data.nombreUsuario = this.formUpEdit.value.nombre
         this.addUser(user, this.centrosAsignados[0])
-
-        this.getUserDeCentro()
+        this.SetCentrosLocalStg()
         //
       }
       else {
         this.data.nombreUsuario = this.formUpEdit.value.nombre
         this.addUser(user, this.centroAsignado)
       }
-
     }
-
   }
 
   editar(user: Users) {
     user.rolNombre = "ROLE_USER"
     this.edit(user, this.data.user?.id)
     this.data.nombreUsuario = this.formUpEdit.value.nombre
-
   }
 
   addUserAdmin(user: Users) {
@@ -142,7 +136,7 @@ export class AmUserComponent implements OnInit {
     this.admin.addUserAdmin(user).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges())
-        console.log(data, "done2")
+        console.log(data, "admin")
         this.data.flag = false
         this.data.editar = false
         this.formUpEdit.reset()
@@ -151,10 +145,6 @@ export class AmUserComponent implements OnInit {
       },
       error: (err) => {
         console.log(err)
-        this.data.flag = false
-        this.data.editar = false
-        this.setUserLocStg(this.data.nombreUsuario, true)
-        this.router.navigate(['admin/dashboard/usuarios']);
       }
     })
   }
@@ -173,10 +163,6 @@ export class AmUserComponent implements OnInit {
       },
       error: (err) => {
         console.log(err)
-        this.data.flag = false
-        this.data.editar = false
-        this.setUserLocStg(this.data.nombreUsuario, true)
-        this.router.navigate(['admin/dashboard/usuarios']);
       }
     })
   }
@@ -193,10 +179,6 @@ export class AmUserComponent implements OnInit {
       },
       error: (err) => {
         this.data.flag = false
-        this.data.editar = false
-        this.setUserLocStg(this.formUpEdit.value.nombre, true)
-        this.router.navigate(['admin/dashboard/usuarios']);
-        console.log(err)
       }
     })
 
@@ -206,56 +188,16 @@ export class AmUserComponent implements OnInit {
     this.admin.getCentros().subscribe(data => {
       setTimeout(() => this.cdr.detectChanges())
       this.centros = data
-      console.log(this.centros)
     })
   }
 
   // para agregar un usuario a mas de un centro
-
-
-  editCentros(centro: Centro) {
-    if (this.userAsignado) {
-      if (centro.usuario != this.userAsignado) {
-        console.log("usuario 2", this.userAsignado)
-        centro.usuario = this.userAsignado
-        this.admin.editCenter(centro, centro.id).subscribe({
-          next: (data: any) => {
-            setTimeout(() => this.cdr.detectChanges())
-            console.log("done edit", data)
-          },
-          error: (err) => {
-            setTimeout(() => this.cdr.detectChanges())
-            console.log(err)
-          }
-        })
-      }
-    }
-    else {
-      console.log("usuario error", this.userAsignado)
-    }
-  }
-  getUserDeCentro() {
-    // for (let c of this.centros) {
-    //   if (c.id == this.centroAsignado[0]) {
-    //     this.userAsignado = c.usuario
-    //   }
-    // }
-    this.getCentros()
-    this.admin.getCenter(this.centroAsignado[0]).subscribe(data => {
-      setTimeout(() => this.cdr.detectChanges())
-      if (data.usuario) {
-        this.userAsignado = data.usuario
-        for (let i of this.centrosAsignados) {
-          this.editCentros(this.centros[i])
-        }
-        console.log("done")
-      }
-    })
+  SetCentrosLocalStg() {
+    localStorage.setItem("centroA",JSON.stringify(this.centrosAsignados))
   }
   // 
   capturarCentro(e: any) {
     this.centrosAsignados = e
-    console.log(e)
   }
 
   setUserLocStg(data: string, isNewUser: boolean) {
