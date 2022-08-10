@@ -50,9 +50,9 @@
                 <mat-option [value]="item.id" *ngFor="let item of centros">{{item.nombre}}</mat-option>
             </mat-select>
         </section>
-        <button *ngIf="!data.editar" [disabled]="formUpEdit.invalid" mat-button
+        <button type="button" *ngIf="!data.editar" [disabled]="formUpEdit.invalid" mat-button
             (click)="confirm(formUpEdit.value)">Confirmar</button>
-        <button *ngIf="data.editar" [disabled]="formUpEdit.invalid" mat-button
+        <button type="button" *ngIf="data.editar" [disabled]="formUpEdit.invalid" mat-button
             (click)="editar(formUpEdit.value)">Confirmar</button>
     </form>
 </div>
