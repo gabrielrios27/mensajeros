@@ -106,7 +106,7 @@
       >
         Agregar a Variable:
       </label>
-      <!-- Distinción de genero -->
+      <!------------- Distinción de genero -->
       <div class="add-variable__container-input">
         <mat-checkbox
           class="checkbox-add-to"
@@ -121,7 +121,7 @@
           binarixs.
         </p>
       </div>
-      <!-- Escala de Valor  -->
+      <!-- -----------Escala de Valor  -->
       <div class="add-variable__container-input">
         <mat-checkbox
           class="checkbox-add-to"
@@ -129,6 +129,7 @@
           [(ngModel)]="addValueEscale"
           formControlName="valueScaleForm"
           [disabled]="flagGenre"
+          (change)="onSelectValueScale()"
           >Escala de Valor</mat-checkbox
         >
         <p class="add-variable__info-text">
@@ -136,6 +137,7 @@
           un máximo establecido.
         </p>
       </div>
+      <!-- ----------------------------- -->
       <div class="value-scale">
         <div class="value-scale__conteiner-scale">
           De
@@ -147,7 +149,7 @@
               (selectionChange)="captureFirstValue($event.value)"
               formControlName="firstNumberForm"
               id="select-first-value"
-              [disabled]="flagGenre"
+              [disabled]="!flagValueScale"
             >
               <mat-option
                 class="selectRange__option"
@@ -166,7 +168,7 @@
               (selectionChange)="captureLastValue($event.value)"
               id="select-last-value"
               formControlName="lastNumberForm"
-              [disabled]="flagGenre"
+              [disabled]="!flagValueScale"
             >
               <mat-option
                 class="selectRange__option"
@@ -190,7 +192,6 @@
                 formControlName="firstValueForm"
                 placeholder="Etiqueta"
                 required
-                [disabled]="flagGenre"
               />
               <mat-error
                 *ngIf="newVariable.get('firstValueForm')?.hasError('required')"
@@ -210,7 +211,6 @@
                 formControlName="lastValueForm"
                 placeholder="Etiqueta"
                 required
-                [disabled]="true"
               />
               <mat-error
                 *ngIf="newVariable.get('lastValueForm')?.hasError('required')"

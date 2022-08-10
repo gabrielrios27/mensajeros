@@ -51,11 +51,12 @@ export class AddVariablesComponent implements OnInit {
   typeOfAnswerNumber: string = 'Numérico';
   typeOfAnswerText: string = 'Textual';
   //checkboxs agregar a variable
-  addGenre: string = '';
-  addValueEscale: string = '';
+  addGenre: boolean = false;
+  addValueEscale: boolean = false;
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   //para escala de valor
+  flagValueScale: boolean = true;
   firstValue: number = 0;
   lastValue: number = 5;
   initialValuesList: number[] = [0, 1];
@@ -114,6 +115,7 @@ export class AddVariablesComponent implements OnInit {
     this.finalsValuesList = this.finalsValuesListFromOne;
     this.newVariable.get('typeAnswerForm')?.setValue('Numérico');
     this.onSelectionChange();
+    this.onSelectValueScale();
   }
 
   onConfirm() {
@@ -281,10 +283,20 @@ export class AddVariablesComponent implements OnInit {
   onSelectionChange() {
     if (this.typeAnswer === 'Numérico') {
       this.flagGenre = true;
+      this.addValueEscale = false;
+      this.onSelectValueScale();
+    } else {
+      this.flagGenre = false;
+      this.addGenre = false;
+    }
+  }
+  onSelectValueScale() {
+    if (!this.addValueEscale) {
+      this.flagValueScale = false;
       this.newVariable.get('firstValueForm')?.disable();
       this.newVariable.get('lastValueForm')?.disable();
     } else {
-      this.flagGenre = false;
+      this.flagValueScale = true;
       this.newVariable.get('firstValueForm')?.enable();
       this.newVariable.get('lastValueForm')?.enable();
     }

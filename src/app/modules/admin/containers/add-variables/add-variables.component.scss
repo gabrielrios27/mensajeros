@@ -225,6 +225,9 @@
     margin-bottom: 5px;
     .value-scale__value {
       display: flex;
+      ::ng-deep .mat-select-disabled {
+        border: 1px solid rgb(189, 189, 189) !important;
+      }
       //select de rango de escala de valores
       .selectRange {
         background: #fff;
