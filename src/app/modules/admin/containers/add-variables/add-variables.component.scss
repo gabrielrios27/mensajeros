@@ -27,6 +27,35 @@
       position: relative;
       display: flex;
       flex-direction: column;
+      .add-variable__expanse-conteiner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 94px;
+        height: 66px;
+        background: #92cdef;
+        border-radius: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 20;
+        .add-variable__expanse-ico {
+          width: 24px;
+          height: 24px;
+          path {
+            transition: all 0.2s linear;
+            fill: black;
+          }
+        }
+        &:hover {
+          .add-variable__expanse-ico {
+            path {
+              fill: rgb(75, 75, 75);
+            }
+          }
+        }
+      }
       .add-variable__label {
         font-size: 18px;
         line-height: 19px;
