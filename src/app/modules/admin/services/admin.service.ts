@@ -88,7 +88,7 @@ export class AdminService {
   deleteAxeWithId(id: string): Observable<any> {
     return this._http.delete<axes>(this.baseUrlTami + this.EPAxes + '/' + id);
   }
-  // Variables------------
+  // Variables-----------------
   getVariablesQuantityPerAxe(): Observable<variable[]> {
     return this._http.get<variable[]>(
       this.baseUrlTami + this.EPVariablesQuantityPerAxe
