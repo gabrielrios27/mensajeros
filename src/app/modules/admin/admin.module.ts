@@ -33,13 +33,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 import { VariablesComponent } from './containers/variables/variables.component';
 import { AddVariablesComponent } from './containers/add-variables/add-variables.component';
 import { AddReportComponent } from './containers/add-report/add-report.component';
 import { CenterOfReportComponent } from './containers/center-of-report/center-of-report.component';
 import { VariablesGroupComponent } from './containers/variables-group/variables-group.component';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -57,8 +57,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatTooltipModule,
     MatCardModule,
     MatIconModule,
-    MatRadioModule,
     MatCheckboxModule,
+    MatRadioModule,
     // AppCommonModule,
     // NavigationModule,
   ],

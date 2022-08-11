@@ -19,22 +19,29 @@
       </label>
     </div>
     <section class="list-user">
+
       <div class="list-user__table">
         <!-- Position Column -->
         <div class="list-user__row">
           <div class="list-user__header">Usuario</div>
-          <div class="list-user__header">CentroAsignado</div>
+          <div class="list-user__header">Centro Asignado</div>
+          <div class="list-user__header">Tipo de Rol</div>
           <div class="list-user__header list-user__header--action">
             Acciones
           </div>
         </div>
 
-        <div class="list-user__row" *ngFor="let element of user">
+        <div class="list-user__row" *ngFor="let element of user ">
           <div class="list-user__cell list-user__cell--user">
             {{ element.nombre }}
           </div>
-          <div class="list-user__cell list-user__cell--user list-user__cell--usermiddle">
-            {{ centroAsignado(element) }}
+          <div class="list-user__cell list-user__cell--user" >
+            <p *ngFor="let c of centroAsignado(element)">
+              {{ c }}
+            </p>
+          </div>
+          <div class="list-user__cell list-user__cell--user">
+            {{tipoRol(element.rolNombre)}}
           </div>
           <div class="list-user__cell list-user__cell--acction">
             <a (click)="edit(element)">
@@ -46,43 +53,18 @@
           </div>
         </div>
       </div>
+
       <div class="pagination">
         <p class="pagination-text">
           {{ initialItem }} - {{ finalItem }} de {{ listLenght }}
         </p>
-        <svg
-          (click)="onClickBefore()"
-          class="pagination-arrow"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M14 7L9 12L14 17V7Z"
-            fill="black"
-            fill-opacity="0.87"
-          />
+        <svg (click)="onClickBefore()" class="pagination-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M14 7L9 12L14 17V7Z" fill="black" fill-opacity="0.87" />
         </svg>
-        <svg
-          (click)="onClickAfter()"
-          class="pagination-arrow"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M10 7L15 12L10 17V7Z"
-            fill="black"
-            fill-opacity="0.87"
-          />
+        <svg (click)="onClickAfter()" class="pagination-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M10 7L15 12L10 17V7Z" fill="black" fill-opacity="0.87" />
         </svg>
       </div>
     </section>

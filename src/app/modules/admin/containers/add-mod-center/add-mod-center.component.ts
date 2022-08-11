@@ -114,6 +114,7 @@ export class AddModCenterComponent implements OnInit {
         nombre: '',
         contrasena: '',
         email: '',
+        rolNombre: ''
       };
     }
 

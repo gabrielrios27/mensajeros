@@ -50,6 +50,14 @@ export class AdminService {
     return this._http.get<Users[]>(this.baseUrlTami + '/usuarios');
   }
 
+  addUser(user: Users, id: number): Observable<any> {
+    return this._http.post(this.baseUrlTami + '/usuarios/' + id, user, {
+      responseType: 'text',
+    });
+  }
+  addUserAdmin(user: Users): Observable<Users> {
+    return this._http.post<Users>(this.baseUrlTami + '/auth/agregar', user);
+  }
   deleteUser(id: number): Observable<boolean> {
     return this._http.delete<boolean>(this.baseUrlTami + '/usuarios/' + id);
   }
@@ -58,14 +66,10 @@ export class AdminService {
     return this._http.put<Response>(this.baseUrlTami + '/usuarios/' + id, user);
   }
 
-  addUser(user: Users, id: number): Observable<Users> {
-    return this._http.post<Users>(this.baseUrlTami + '/usuarios/' + id, user);
-  }
-
   getUser(id: number): Observable<Users> {
     return this._http.get<Users>(this.baseUrlTami + '/usuarios/' + id);
   }
-  // ejes---------------------------
+
   getAxes(): Observable<axes[]> {
     return this._http.get<axes[]>(this.baseUrlTami + this.EPAxes);
   }
