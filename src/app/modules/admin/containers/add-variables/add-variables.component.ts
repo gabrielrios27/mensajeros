@@ -23,6 +23,7 @@ interface Animal {
 })
 export class AddVariablesComponent implements OnInit {
   selectAxeControl = new FormControl(false);
+  flagAddEdit: boolean = false;
 
   variableById: variable;
   idVariable: number;
@@ -60,7 +61,6 @@ export class AddVariablesComponent implements OnInit {
   firstValue: number = 0;
   lastValue: number = 5;
   initialValuesList: number[] = [0, 1];
-  // finalsValuesRange: number[] = [1, 10];
 
   finalsValuesListFromOne: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   finalsValuesListFromtwo: number[] = [2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -108,6 +108,7 @@ export class AddVariablesComponent implements OnInit {
     },
   ];
   ngOnInit(): void {
+    this.setFlagAddEdit(true); //Para modal de advertencia de cambio de pantalla
     this.idVariable = this.getIdFromRute();
     console.log('id ruta:' + this.idVariable);
     this.completeInputWithVariable(this.idVariable);
@@ -117,8 +118,14 @@ export class AddVariablesComponent implements OnInit {
     this.onSelectionChange();
     this.onSelectValueScale();
   }
-
+  //Para modal de advertencia de cambio de pantalla------------------
+  setFlagAddEdit(value: boolean) {
+    this.flagAddEdit = value;
+    localStorage.setItem('flagAddEdit', JSON.stringify(this.flagAddEdit));
+  }
+  //click al botón de confirmar------------------
   onConfirm() {
+    this.setFlagAddEdit(false);
     console.log('form: ', this.newVariable);
 
     // if (this.newVariable.invalid) {
