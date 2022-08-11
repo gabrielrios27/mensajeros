@@ -51,26 +51,62 @@ export class VariablesComponent implements OnInit {
       {
         id: 1,
         nombre: 'Acompañamiento en la Salud 1',
+        tipo: 'Numerico',
+        descripcion: 'Aqui la descripción',
+        eje: {
+          id: 2,
+          nombre: 'salud',
+        },
       },
       {
         id: 1,
         nombre: 'Acompañamiento en la Salud 2',
+        tipo: 'Numerico',
+        descripcion: 'Aqui la descripción',
+        eje: {
+          id: 2,
+          nombre: 'salud',
+        },
       },
       {
         id: 1,
         nombre: 'Acompañamiento en la Salud 3',
+        tipo: 'Numerico',
+        descripcion: 'Aqui la descripción',
+        eje: {
+          id: 2,
+          nombre: 'salud',
+        },
       },
       {
         id: 1,
         nombre: 'Acompañamiento en la Salud 4',
+        tipo: 'Numerico',
+        descripcion: 'Aqui la descripción',
+        eje: {
+          id: 2,
+          nombre: 'salud',
+        },
       },
       {
         id: 1,
         nombre: 'Acompañamiento en la Salud 5',
+        tipo: 'Numerico',
+        descripcion: 'Aqui la descripción',
+        eje: {
+          id: 2,
+          nombre: 'salud',
+        },
       },
       {
         id: 1,
         nombre: 'Acompañamiento en la Salud 6',
+        tipo: 'Numerico',
+        descripcion: 'Aqui la descripción',
+        eje: {
+          id: 2,
+          nombre: 'salud',
+        },
       },
     ];
     this.pageToShow(this.currentPage, this.listOfVariables); //para paginación---eliminar cuando se descomente peticion

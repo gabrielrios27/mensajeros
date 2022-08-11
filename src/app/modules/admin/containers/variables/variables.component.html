@@ -42,8 +42,9 @@
         <div
           class="list-variables__row list-variables__row--click"
           *ngFor="let element of listOfVariables_toShow | async"
-          [routerLink]="['variables-agrupadas/', element.id.toString()]"
+          [routerLink]="['variables-agrupadas/', '2']"
         >
+          <!-- [routerLink]="['variables-agrupadas/', element.id.toString()]" -->
           <p class="list-variables__cell list-variables__cell--axe">
             {{ element.nombre }}
           </p>

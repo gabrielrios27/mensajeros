@@ -158,6 +158,12 @@ export class AddVariablesComponent implements OnInit {
       let variableToCreate: variable = {
         nombre: this.newVariable.get('variable')?.value,
         id: 0,
+        tipo: 'Numerico',
+        descripcion: 'Aqui la descripción',
+        eje: {
+          id: 2,
+          nombre: 'salud',
+        },
       };
       this.setVariableLocStg(variableToCreate, true);
       this.setPageLocalStorage(); //para paginación
@@ -180,6 +186,12 @@ export class AddVariablesComponent implements OnInit {
       let variableToEdit: variable = {
         nombre: this.newVariable.get('variable')?.value,
         id: this.idVariable,
+        tipo: 'Numerico',
+        descripcion: 'Aqui la descripción',
+        eje: {
+          id: 2,
+          nombre: 'salud',
+        },
       };
       this.setVariableLocStg(variableToEdit, false);
       this._adminSvc
@@ -242,7 +254,7 @@ export class AddVariablesComponent implements OnInit {
     }
   }
   getVariableList() {
-    this._adminSvc.getVariables().subscribe({
+    this._adminSvc.getVariablesQuantityPerAxe().subscribe({
       next: (data: variable[]) => {
         this.listOfVariable = data;
       },

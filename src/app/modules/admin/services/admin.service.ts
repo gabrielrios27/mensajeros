@@ -16,6 +16,8 @@ export class AdminService {
   token: string = '';
   EPAxes: string = '/ejes';
   EPVariables: string = '/variables';
+  EPVariablesQuantityPerAxe: string = '/variables/eje';
+  // https://mensajeros-back-tami.herokuapp.com/variables/eje/2
 
   constructor(private _http: HttpClient) {}
 
@@ -63,7 +65,7 @@ export class AdminService {
   getUser(id: number): Observable<Users> {
     return this._http.get<Users>(this.baseUrlTami + '/usuarios/' + id);
   }
-
+  // ejes---------------------------
   getAxes(): Observable<axes[]> {
     return this._http.get<axes[]>(this.baseUrlTami + this.EPAxes);
   }
@@ -83,8 +85,15 @@ export class AdminService {
     return this._http.delete<axes>(this.baseUrlTami + this.EPAxes + '/' + id);
   }
   // Variables------------
-  getVariables(): Observable<variable[]> {
-    return this._http.get<variable[]>(this.baseUrlTami + this.EPVariables);
+  getVariablesQuantityPerAxe(): Observable<variable[]> {
+    return this._http.get<variable[]>(
+      this.baseUrlTami + this.EPVariablesQuantityPerAxe
+    );
+  }
+  getVariablesGroup(id: string): Observable<variable[]> {
+    return this._http.get<variable[]>(
+      this.baseUrlTami + this.EPVariablesQuantityPerAxe + '/' + id
+    );
   }
   getVariableWithId(id: string): Observable<variable> {
     return this._http.get<variable>(
