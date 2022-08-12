@@ -15,7 +15,7 @@ import { LayoutsService } from '../../services';
   styleUrls: ['navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  public flagLogOut: boolean = false;
+  flagLogOut: boolean = false;
   idToDelete: number = 0;
   //para sub-list
   flagReport: boolean = false;

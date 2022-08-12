@@ -230,21 +230,23 @@
       </a>
     </li>
   </ul>
-  <div *ngIf="flagLogOut" class="modal-logout">
-    <div class="modal__container-logout">
-      <img
-        class="modal__ico-info"
-        src="../../../../../assets/icons/Exclamation-triangle.svg"
-        alt="Icono de información"
-      />
-      <p class="modal__text">
-        <span class="modal__spanFont">¿</span>Estas seguro que deseas cerrar
-        sesión<span class="modal__spanFont">?</span>
-      </p>
-    </div>
-    <div class="modal__options">
-      <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
-      <button class="btn-modal__accept" (click)="logout()">Confirmar</button>
+  <div *ngIf="flagLogOut" class="modal-conteiner">
+    <div class="modal-logout">
+      <div class="modal__container-logout">
+        <img
+          class="modal__ico-info"
+          src="../../../../../assets/icons/Exclamation-triangle.svg"
+          alt="Icono de información"
+        />
+        <p class="modal__text">
+          <span class="modal__spanFont">¿</span>Estas seguro que deseas cerrar
+          sesión<span class="modal__spanFont">?</span>
+        </p>
+      </div>
+      <div class="modal__options">
+        <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
+        <button class="btn-modal__accept" (click)="logout()">Confirmar</button>
+      </div>
     </div>
   </div>
 </section>
