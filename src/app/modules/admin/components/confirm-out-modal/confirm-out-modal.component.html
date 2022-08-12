@@ -1,29 +1,23 @@
-<!-- <div class="confirm-out" *ngIf="display" (onHide)="dialogHidden($event)">
-  <p>Are you Sure?</p>
-  <p>To navigate away</p>
-  <p>
-    <button (click)="selected('ok')">OK</button>
-    <button (click)="selected('Cancel')">Cancel</button>
-  </p>
-</div> -->
-<div *ngIf="display" class="modal-confirm-out">
-  <div class="modal__container-confirm-out">
-    <img
-      class="modal__ico-info"
-      src="../../../../../assets/icons/Exclamation-triangle.svg"
-      alt="Icono de información"
-    />
-    <p class="modal__text">
-      ¡Estas a punto de salir! <br />
-      Perderás todos los datos cargados
-    </p>
-  </div>
-  <div class="modal__options">
-    <button class="btn-modal__cancel" (click)="selected('Cancel')">
-      Cancelar
-    </button>
-    <button class="btn-modal__accept" (click)="selected('ok')">
-      Confirmar
-    </button>
+<div *ngIf="display" class="modal-conteiner">
+  <div class="modal-confirm-out">
+    <div class="modal__container-confirm-out">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Exclamation-triangle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">
+        ¡Estas a punto de salir! <br />
+        Perderás todos los datos cargados
+      </p>
+    </div>
+    <div class="modal__options">
+      <button class="btn-modal__cancel" (click)="selected('Cancel')">
+        Cancelar
+      </button>
+      <button class="btn-modal__accept" (click)="selected('ok')">
+        Confirmar
+      </button>
+    </div>
   </div>
 </div>

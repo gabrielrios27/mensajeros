@@ -111,7 +111,7 @@ export class AddVariablesComponent implements OnInit {
     },
   ];
   ngOnInit(): void {
-    this.setFlagAddEdit(true); //Para colocar modal de advertencia de cambio de pantalla si se da click a item en navbar
+    this.setFlagAddEdit(false); //Para colocar modal de advertencia de cambio de pantalla si se da click a item en navbar
     this.idVariable = this.getIdFromRute();
     console.log('id ruta:' + this.idVariable);
     this.completeInputWithVariable(this.idVariable);
@@ -131,6 +131,7 @@ export class AddVariablesComponent implements OnInit {
     this.showDialog = false;
     if ($event === 'ok') {
       this.subject.next(true);
+      this.setFlagAddEdit(false);
     } else {
       this.subject.next(false);
     }
@@ -141,9 +142,9 @@ export class AddVariablesComponent implements OnInit {
   }
   //click al botón de confirmar------------------
   onConfirm() {
-    this.setFlagAddEdit(false); //Para quitar modal de advertencia de cambio de pantalla de navbar
+    this.setFlagAddEdit(true); //Para quitar modal de advertencia de cambio de pantalla de navbar del btn confirm
     console.log('form: ', this.newVariable);
-
+    this.router.navigate(['admin/dashboard/variables']); //eliminar linea cuando se active onFonfirm
     // if (this.newVariable.invalid) {
     //   this.flagError = true;
     //   this.invalidForm = true;

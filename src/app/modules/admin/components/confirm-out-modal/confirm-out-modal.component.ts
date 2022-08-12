@@ -11,17 +11,9 @@ export class ConfirmOutModalComponent implements OnInit {
   constructor() {}
   @Input('show') display: boolean = false;
   @Output('selection') selection = new EventEmitter();
-  ngOnInit(): void {
-    console.log('display en modal adv: ', this.display);
-  }
+  ngOnInit(): void {}
   selected(value: string) {
     this.selection.emit(value);
-    if (value === 'Cancel') {
-    }
     this.display = false;
-  }
-  dialogHidden($event: any) {
-    console.log($event);
-    this.selection.emit('close');
   }
 }
