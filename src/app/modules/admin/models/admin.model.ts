@@ -29,3 +29,8 @@ export interface variable {
   etiqueta_final?: string;
   etiqueta_inicial?: string;
 }
+export interface AxeWithquantity {
+  nombre: string;
+  id: number;
+  cantidad: string;
+}
