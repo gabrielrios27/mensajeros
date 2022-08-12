@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { variable } from '../../models';
+import { AxeWithquantity, variable } from '../../models';
 import { AdminService } from '../../services';
 
 @Component({
@@ -10,15 +10,15 @@ import { AdminService } from '../../services';
   styleUrls: ['./variables.component.scss'],
 })
 export class VariablesComponent implements OnInit {
-  newOrEditedVariable: variable = {} as variable;
+  newOrEditedVariable: AxeWithquantity = {} as AxeWithquantity;
   flagEdited: boolean = false;
   flagNew: boolean = false;
   flagDelete: boolean = false;
   idToDelete: number = 0;
 
-  listOfVariables: variable[] = [];
-  listOfVariables_toSearch: variable[] = [];
-  listOfVariables_toShow = new BehaviorSubject<variable[]>([]);
+  listOfVariables: AxeWithquantity[] = [];
+  listOfVariables_toSearch: AxeWithquantity[] = [];
+  listOfVariables_toShow = new BehaviorSubject<AxeWithquantity[]>([]);
   itemSearch: string = '';
   toSearch: string = '';
   toSearchPrevius: string = '';
@@ -29,7 +29,7 @@ export class VariablesComponent implements OnInit {
   itemsPerPage: number = 10;
   quantityOfPages: number = 1;
   currentPage: number = 1;
-  listCurrentPage: variable[] = {} as variable[];
+  listCurrentPage: AxeWithquantity[] = {} as AxeWithquantity[];
   initialItem: number = 1;
   finalItem: number = 10;
   // suscripciones
@@ -43,96 +43,33 @@ export class VariablesComponent implements OnInit {
 
   ngOnInit() {
     this.getVariablesList();
-    this.getVariableLocalStorage();
+    this.getVariableLocalStorage(); //para modales de se creó o editó una variable
   }
   getVariablesList() {
     this.currentPage = this.getPageLocalStorage();
-    this.listOfVariables = [
-      {
-        id: 1,
-        nombre: 'Acompañamiento en la Salud 1',
-        tipo: 'Numerico',
-        descripcion: 'Aqui la descripción',
-        eje: {
-          id: 2,
-          nombre: 'salud',
+    this._adminSvc
+      .getVariablesQuantityPerAxe()
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: AxeWithquantity[]) => {
+          this.listOfVariables = data;
+          setTimeout(() => this._cdr.detectChanges());
+          console.log(this.listOfVariables);
+          this.pageToShow(this.currentPage, this.listOfVariables); //para paginación
         },
-      },
-      {
-        id: 1,
-        nombre: 'Acompañamiento en la Salud 2',
-        tipo: 'Numerico',
-        descripcion: 'Aqui la descripción',
-        eje: {
-          id: 2,
-          nombre: 'salud',
+        error: (err) => {
+          console.log(err);
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
         },
-      },
-      {
-        id: 1,
-        nombre: 'Acompañamiento en la Salud 3',
-        tipo: 'Numerico',
-        descripcion: 'Aqui la descripción',
-        eje: {
-          id: 2,
-          nombre: 'salud',
+        complete: () => {
+          console.log('Request get Variables complete');
         },
-      },
-      {
-        id: 1,
-        nombre: 'Acompañamiento en la Salud 4',
-        tipo: 'Numerico',
-        descripcion: 'Aqui la descripción',
-        eje: {
-          id: 2,
-          nombre: 'salud',
-        },
-      },
-      {
-        id: 1,
-        nombre: 'Acompañamiento en la Salud 5',
-        tipo: 'Numerico',
-        descripcion: 'Aqui la descripción',
-        eje: {
-          id: 2,
-          nombre: 'salud',
-        },
-      },
-      {
-        id: 1,
-        nombre: 'Acompañamiento en la Salud 6',
-        tipo: 'Numerico',
-        descripcion: 'Aqui la descripción',
-        eje: {
-          id: 2,
-          nombre: 'salud',
-        },
-      },
-    ];
-    this.pageToShow(this.currentPage, this.listOfVariables); //para paginación---eliminar cuando se descomente peticion
-    //   this._adminSvc
-    //     .getVariables()
-    //     .pipe(takeUntil(this.onDestroy$))
-    //     .subscribe({
-    //       next: (data: variable[]) => {
-    //         this.listOfVariables = data;
-    //         setTimeout(() => this._cdr.detectChanges());
-    //         console.log(this.listOfVariables);
-    //         this.pageToShow(this.currentPage, this.listOfVariables); //para paginación
-    //       },
-    //       error: (err) => {
-    //         console.log(err);
-    //         if (err.status === 401) {
-    //           this.router.navigate(['/auth']);
-    //         }
-    //       },
-    //       complete: () => {
-    //         console.log('Request get Variables complete');
-    //       },
-    //     });
+      });
   }
   //para paginación----
-  pageToShow(page: number, list: variable[]) {
+  pageToShow(page: number, list: AxeWithquantity[]) {
     this.setPageLocalStorage(page);
     this.listLenght = list.length;
     this.quantityOfPages = Math.ceil(this.listLenght / this.itemsPerPage);
@@ -189,53 +126,18 @@ export class VariablesComponent implements OnInit {
     }
   }
   setPageLocalStorage(page: number) {
-    localStorage.setItem('variablesPage', JSON.stringify(page));
+    localStorage.setItem('axeWithVariablesPage', JSON.stringify(page));
   }
   getPageLocalStorage(): number {
     let pageLocalStorage: number = 1;
-    let pageLocalStorageJSON = localStorage.getItem('variablesPage');
+    let pageLocalStorageJSON = localStorage.getItem('axeWithVariablesPage');
     if (pageLocalStorageJSON) {
       pageLocalStorage = JSON.parse(pageLocalStorageJSON);
     }
     return pageLocalStorage;
   }
   //--------------------------------------------
-  onClickDelete(id: number) {
-    this.flagDelete = true;
-    this.idToDelete = id;
-  }
-  deleteVariable(id: number) {
-    this.flagDelete = false;
-    this.listOfVariables_toSearch = [];
-    for (let item of this.listOfVariables) {
-      if (item.id !== id) {
-        this.listOfVariables_toSearch.push(item);
-      }
-    }
-
-    this.listOfVariables = this.listOfVariables_toSearch;
-
-    this.pageToShow(this.currentPage, this.listOfVariables); //para paginación
-
-    this._adminSvc
-      .deleteVariableWithId(id.toString())
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe({
-        next: (data: variable[]) => {
-          console.log(data);
-        },
-        error: (err) => {
-          console.log(err);
-          if (err.status === 401) {
-            this.router.navigate(['/auth']);
-          }
-        },
-        complete: () => {
-          console.log('Request delete complete');
-          this.getVariablesList();
-        },
-      });
-  }
+  //Para mostrar modal de se agrego o modifico una variable------------
   getVariableLocalStorage() {
     let newOrEditedVariableStr = localStorage.getItem('newOrEditedVariable');
     if (newOrEditedVariableStr) {
@@ -260,6 +162,7 @@ export class VariablesComponent implements OnInit {
       localStorage.removeItem('newOrEditedVariable');
     }
   }
+  //buscador----------------------------
   Search(e: string) {
     /*informacion a buscar*/
     this.toSearch = e.toUpperCase();
@@ -306,12 +209,13 @@ export class VariablesComponent implements OnInit {
         this.toSearch; /*se guarda la ultima palabra buscada con la que hubo coincidencias */
     }
   }
-
+  //para cerrar modales------------------
   close() {
     this.flagNew = false;
     this.flagEdited = false;
     this.flagDelete = false;
   }
+
   ngOnDestroy() {
     this.onDestroy$.next(true);
   }
