@@ -25,6 +25,8 @@ export class AddVariablesComponent implements OnInit {
   selectAxeControl = new FormControl(false);
   //Para modal de advertencia de cambio de pantalla------------------
   flagAddEdit: boolean = false;
+  showDialog = false;
+  subject = new Subject<boolean>();
 
   variableById: variable;
   idVariable: number;
@@ -123,6 +125,19 @@ export class AddVariablesComponent implements OnInit {
   setFlagAddEdit(value: boolean) {
     this.flagAddEdit = value;
     localStorage.setItem('flagAddEdit', JSON.stringify(this.flagAddEdit));
+  }
+  onSelection($event: any) {
+    console.log($event);
+    this.showDialog = false;
+    if ($event === 'ok') {
+      this.subject.next(true);
+    } else {
+      this.subject.next(false);
+    }
+  }
+  openDialog() {
+    console.log('opn dialog');
+    this.showDialog = true;
   }
   //click al botón de confirmar------------------
   onConfirm() {
