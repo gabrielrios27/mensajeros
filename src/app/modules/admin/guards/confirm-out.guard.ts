@@ -12,6 +12,8 @@ import { AddReportComponent, AddVariablesComponent } from '../containers';
   providedIn: 'root',
 })
 export class ConfirmOutGuard implements CanDeactivate<AddVariablesComponent> {
+  //Para modal de advertencia de cambio de pantalla------------------
+  flagAddEdit: boolean = false;
   canDeactivate(
     component: AddVariablesComponent,
     currentRoute: ActivatedRouteSnapshot,
@@ -23,9 +25,19 @@ export class ConfirmOutGuard implements CanDeactivate<AddVariablesComponent> {
     | boolean
     | UrlTree {
     console.log('deactivate');
+    this.getVariableLocalStorage();
+    if (this.flagAddEdit === true) {
+      return true;
+    }
     let subject = new Subject<boolean>();
     component.openDialog();
     subject = component.subject;
     return subject.asObservable();
+  }
+  getVariableLocalStorage() {
+    let flagAddEditStr = localStorage.getItem('flagAddEdit');
+    if (flagAddEditStr) {
+      this.flagAddEdit = JSON.parse(flagAddEditStr);
+    }
   }
 }
