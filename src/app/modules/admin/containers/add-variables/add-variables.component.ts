@@ -23,6 +23,7 @@ interface Animal {
 })
 export class AddVariablesComponent implements OnInit {
   selectAxeControl = new FormControl(false);
+  //Para modal de advertencia de cambio de pantalla------------------
   flagAddEdit: boolean = false;
 
   variableById: variable;
@@ -108,7 +109,7 @@ export class AddVariablesComponent implements OnInit {
     },
   ];
   ngOnInit(): void {
-    this.setFlagAddEdit(true); //Para modal de advertencia de cambio de pantalla
+    this.setFlagAddEdit(true); //Para colocar modal de advertencia de cambio de pantalla si se da click a item en navbar
     this.idVariable = this.getIdFromRute();
     console.log('id ruta:' + this.idVariable);
     this.completeInputWithVariable(this.idVariable);
@@ -125,7 +126,7 @@ export class AddVariablesComponent implements OnInit {
   }
   //click al botón de confirmar------------------
   onConfirm() {
-    this.setFlagAddEdit(false);
+    this.setFlagAddEdit(false); //Para quitar modal de advertencia de cambio de pantalla de navbar
     console.log('form: ', this.newVariable);
 
     // if (this.newVariable.invalid) {
