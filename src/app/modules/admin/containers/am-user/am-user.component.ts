@@ -17,9 +17,9 @@ import { of } from 'rxjs';
 export class AmUserComponent implements OnInit {
 
   formUpEdit: FormGroup;
-  nombre: any
-  email: any
-  contrasena: any
+  nombre: any = ""
+  email: any = ""
+  contrasena: any = ""
   centroAsignado: any
   flagEdit: boolean = false
   flagTipoRol: boolean = true
@@ -33,6 +33,8 @@ export class AmUserComponent implements OnInit {
   quantityOfPages: number = 1;
   userListComplete: Array<Users> = new Array();
   centrosAsignado: any;
+  centro?: Centro
+
   constructor(
     private router: Router,
     public data: DataService,
@@ -43,7 +45,7 @@ export class AmUserComponent implements OnInit {
     this.formUpEdit = fb.group({
       nombre: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      contrasena: ['',Validators.compose([Validators.required, Validators.minLength(8)]),
+      contrasena: ['', Validators.compose([Validators.required, Validators.minLength(8)]),
       ],
     });
   }
@@ -61,9 +63,13 @@ export class AmUserComponent implements OnInit {
       this.nombre = this.data.user?.nombre
       this.email = this.data.user?.email
       this.contrasena = this.data.user?.contrasena
+      if (this.data.user?.rolNombre === "ROLE_ADMIN") {
+        this.flagTipoRol = false
+      }
     }
     else {
       this.flagEdit = false
+
     }
 
   }
@@ -126,9 +132,41 @@ export class AmUserComponent implements OnInit {
   }
 
   editar(user: Users) {
-    user.rolNombre = "ROLE_USER"
-    this.edit(user, this.data.user?.id)
+    // if (this.centrosAsignados.length >= 1) {
+    //   this.SetCentrosLocalStg()
+    //   this.editCentros(user, this.centrosAsignados[0])
+    // }
+    for (let i of this.centros) {
+      console.log("id",i.id)
+      if (i.id) {
+        if (i.id == this.centrosAsignados[0]) {
+          console.log(user)
+          this.editCentros(user, this.centrosAsignados[0],i)
+          this.edit(user, this.data.user?.id)
+        }
+      }
+
+    }
+    console.log("centros",this.centros)
     this.data.nombreUsuario = this.formUpEdit.value.nombre
+  }
+
+  editCentros(user: Users, idCentro: number, centro: Centro) {
+    if (user) {
+      console.log("centro",centro)
+      console.log("usuario",user)
+      centro.usuario = user
+      this.admin.editCenter(centro, centro.id).subscribe({
+        next: (data: any) => {
+          setTimeout(() => this.cdr.detectChanges())
+          console.log("algo", data)
+        },
+        error: (err) => {
+          setTimeout(() => this.cdr.detectChanges())
+          console.log(err)
+        }
+      })
+    }
   }
 
   addUserAdmin(user: Users) {
@@ -136,7 +174,7 @@ export class AmUserComponent implements OnInit {
     this.admin.addUserAdmin(user).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges())
-        console.log(data, "admin")
+        // console.log(data, "admin")
         this.data.flag = false
         this.data.editar = false
         this.formUpEdit.reset()
@@ -154,7 +192,7 @@ export class AmUserComponent implements OnInit {
     this.admin.addUser(user, id).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges())
-        console.log(data, "done1")
+        // console.log(data, "done1")
         this.data.flag = false
         this.data.editar = false
         this.setUserLocStg(this.data.nombreUsuario, true)
@@ -174,6 +212,7 @@ export class AmUserComponent implements OnInit {
         console.log(data)
         this.data.flag = false
         this.data.editar = false
+        this.formUpEdit.reset()
         this.setUserLocStg(data, false)
         this.router.navigate(['admin/dashboard/usuarios']);
       },
@@ -188,12 +227,13 @@ export class AmUserComponent implements OnInit {
     this.admin.getCentros().subscribe(data => {
       setTimeout(() => this.cdr.detectChanges())
       this.centros = data
+      console.log(this.centros)
     })
   }
 
   // para agregar un usuario a mas de un centro
   SetCentrosLocalStg() {
-    localStorage.setItem("centroA",JSON.stringify(this.centrosAsignados))
+    localStorage.setItem("centroA", JSON.stringify(this.centrosAsignados))
   }
   // 
   capturarCentro(e: any) {
