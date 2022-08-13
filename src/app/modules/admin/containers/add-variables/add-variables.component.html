@@ -73,15 +73,15 @@
       <div class="add-variable__container-input">
         <mat-select
           class="select"
-          [(value)]="ejeAsignado"
+          [(value)]="selectedAxe"
           name="select-axe"
-          (selectionChange)="capturarEje($event.value)"
+          (selectionChange)="captureAxe($event.value)"
           id="select-axe"
           formControlName="selectAxeForm"
         >
           <mat-option
             class="select__option"
-            [value]="item.nombre"
+            [value]="item"
             *ngFor="let item of axesList"
             >{{ item.nombre }}</mat-option
           >
