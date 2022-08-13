@@ -58,12 +58,13 @@ export class UsersComponent implements OnInit {
           .toLocaleLowerCase()
           .match(this.usuario.toLocaleLowerCase());
       });
-      console.log(this.usuario);
-      console.log(this.user);
+      // console.log(this.usuario);
+      // console.log(this.user);
     }
   }
 
   create() {
+    this.data.editar = false;
     this.router.navigate(['admin/dashboard/usuarios/create-user']);
   }
 
@@ -107,11 +108,11 @@ export class UsersComponent implements OnInit {
     this.admin.getUsers().subscribe({
       next: (res: Users[]) => {
         this.userListComplete = res
-        console.log('userlistcomplete', this.userListComplete);
+        // console.log('userlistcomplete', this.userListComplete);
 
         this.pageToShow(this.currentPage, this.userListComplete); //para paginación
         setTimeout(() => this.cdr.detectChanges());
-        console.log(this.user);
+        // console.log(this.user);
       },
       error: (err) => {
         console.log(err);
@@ -243,7 +244,10 @@ export class UsersComponent implements OnInit {
         setTimeout(() => this.cdr.detectChanges());
         this.userAsig = data.usuario
         for (let i of this.centroAsignados) {
-          this.editCentros(this.centros[i])
+          for(let c of this.centros)
+            if(i === c.id){
+              this.editCentros(c)
+            }
         }
       })
     }
