@@ -32,17 +32,17 @@ export class AddVariablesComponent implements OnInit {
   idVariable: number;
   variableInput: string = '';
   descriptionInput: string = '';
-
+  //para chekear si la variable ya existe.
   listOfVariable: variable[] = [];
   isInList: boolean = false;
   flagError: boolean = false;
   flagExist: boolean = false;
-
+  //para modal de alerta de 'variable ya existe'
   flagTimeOut: boolean = false;
   flagTimeOutExist: boolean = false;
   timerId: any = 0;
   timerIdExist: any = 0;
-
+  //para border input en alerta 'debe completar todos los campos'.
   invalidForm: boolean = false;
   // para paginacion de variable
   itemsPerPage: number = 10;
@@ -68,15 +68,12 @@ export class AddVariablesComponent implements OnInit {
   finalsValuesListFromOne: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   finalsValuesListFromtwo: number[] = [2, 3, 4, 5, 6, 7, 8, 9, 10];
   finalsValuesList: number[] = [];
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
+  //Form
   newVariable: FormGroup = this.fb.group({
     variable: [, [Validators.required]],
     descriptionForm: [],
-    selectAxeForm: [],
-    typeAnswerForm: [],
+    selectAxeForm: [, [Validators.required]],
+    typeAnswerForm: [, [Validators.required]],
     genreForm: [false],
     valueScaleForm: [false],
     firstNumberForm: [0],
@@ -96,28 +93,14 @@ export class AddVariablesComponent implements OnInit {
   ejeControl = new FormControl(null, Validators.required);
   selectFormControl = new FormControl('', Validators.required);
   axesList: axes[] = [];
-  // axesList: axes[] = [
-  //   { nombre: 'ACOMPAÑAMIENTO EN SALUD', id: 1 },
-  //   {
-  //     nombre: 'SEGURIDAD NUTRICIONAL',
-  //     id: 2,
-  //   },
-  //   {
-  //     nombre: 'ACOMPAÑAMIENTO EDUCATIVO',
-  //     id: 3,
-  //   },
-  //   {
-  //     nombre: 'GENERAL',
-  //     id: 4,
-  //   },
-  // ];
+
   ngOnInit(): void {
     this.getAxesList();
     this.setFlagAddEdit(false); //Para colocar modal de advertencia de cambio de pantalla si se da click a item en navbar
     this.idVariable = this.getIdFromRute();
     console.log('id ruta:' + this.idVariable);
     this.completeInputWithVariable(this.idVariable);
-    this.getVariableList();
+    // this.getVariableList();
     this.finalsValuesList = this.finalsValuesListFromOne;
     this.newVariable.get('typeAnswerForm')?.setValue('Numérico');
     this.onSelectionChange();
@@ -161,33 +144,31 @@ export class AddVariablesComponent implements OnInit {
   }
   //click al botón de confirmar------------------
   onConfirm() {
-    this.setFlagAddEdit(true); //Para quitar modal de advertencia de cambio de pantalla de navbar del btn confirm
     console.log('form: ', this.newVariable);
-    //this.router.navigate(['admin/dashboard/variables']); //eliminar linea cuando se active onFonfirm
-    // if (this.newVariable.invalid) {
-    //   this.flagError = true;
-    //   this.invalidForm = true;
-    //   this.flagTimeOut = true;
-    //   this.timerId = setTimeout(() => {
-    //     this.close();
-    //   }, 3000);
-    //   return;
-    // } else {
-    //   this.invalidForm = false;
-    //   this.isInList = this.checkInVariableList(
-    //     this.newVariable.get('variable')?.value
-    //   );
-    //   if (this.isInList) {
-    //     //comprueba si esta en la lista, si esta se renderiza un mensaje de error(este eje ya se encuentra cargado)
-    //     this.flagExist = true;
-    //     this.flagTimeOutExist = true;
-    //     this.timerIdExist = setTimeout(() => {
-    //       this.close();
-    //     }, 3000);
-    //   } else {
-    //     this.putOrAddVariable();
-    //   }
-    // }
+    if (this.newVariable.invalid) {
+      this.flagError = true;
+      this.invalidForm = true;
+      this.flagTimeOut = true;
+      this.timerId = setTimeout(() => {
+        this.close();
+      }, 3000);
+      return;
+    } else {
+      this.invalidForm = false;
+      this.isInList = this.checkInVariableList(
+        this.newVariable.get('variable')?.value
+      );
+      if (this.isInList) {
+        //comprueba si esta en la lista, si esta se renderiza un mensaje de error(este eje ya se encuentra cargado)
+        this.flagExist = true;
+        this.flagTimeOutExist = true;
+        this.timerIdExist = setTimeout(() => {
+          this.close();
+        }, 3000);
+      } else {
+        this.putOrAddVariable();
+      }
+    }
   }
   setPageLocalStorage() {
     //para paginación
@@ -197,17 +178,22 @@ export class AddVariablesComponent implements OnInit {
     localStorage.setItem('variablePage', JSON.stringify(this.quantityOfPages));
   }
   putOrAddVariable() {
+    this.setFlagAddEdit(true); //Para quitar modal de advertencia de cambio de pantalla de navbar del btn confirm
+    console.log('idvariable en put or add: ', this.idVariable);
     if (this.idVariable === 0) {
-      let variableToCreate: variable = {
-        nombre: this.newVariable.get('variable')?.value,
-        id: 0,
-        tipo: 'Numerico',
-        descripcion: 'Aqui la descripción',
-        eje: {
-          id: 2,
-          nombre: 'salud',
-        },
-      };
+      let variableToCreate: variable = this.newVariable.value;
+      // {
+      //   nombre: this.newVariable.get('variable')?.value,
+      //   id: 0,
+      //   tipo: 'Numerico',
+      //   descripcion: 'Aqui la descripción',
+      //   eje: {
+      //     id: 2,
+      //     nombre: 'salud',
+      //   },
+      // };
+      console.log('variable a subir: ', variableToCreate);
+
       this.setVariableLocStg(variableToCreate, true); //sube a localStorage la variable creada y un flag que indica que es nueva variable para desplegar modal en página siguiente.
       this.setPageLocalStorage(); //para paginación
       this._adminSvc.createVariable(variableToCreate).subscribe({
@@ -301,8 +287,7 @@ export class AddVariablesComponent implements OnInit {
 
   //OBTIENE LA LISTA DE VARIABLES DEL EJE PARA LUEGO CHEKEAR SI LA VARIABLE YA EXISTE EN EL EJE-----------
   getVariableList() {
-    this._adminSvc.getVariablesGroup('2').subscribe({
-      // borrar el '2' y colocar el id del eje selecionado
+    this._adminSvc.getVariablesGroup(this.selectedAxe.id.toString()).subscribe({
       next: (data: variable[]) => {
         this.listOfVariable = data;
       },
@@ -329,6 +314,7 @@ export class AddVariablesComponent implements OnInit {
   //CAPTURA DATOS DE FORM------------------
   captureAxe(e: any) {
     this.selectedAxe = e;
+    this.getVariableList();
   }
   captureFirstValue(e: number) {
     this.firstValue = e;
