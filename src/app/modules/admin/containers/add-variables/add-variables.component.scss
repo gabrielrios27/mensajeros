@@ -176,6 +176,11 @@
           padding-right: 20px;
         }
       }
+      .mat-select-invalid {
+        border: 1px solid $alert-text !important;
+        outline-color: $alert-text !important;
+        outline-width: 0px !important;
+      }
       .mat-select::-moz-selection {
         background-color: #ffffff;
       }
