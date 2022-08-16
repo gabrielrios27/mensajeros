@@ -18,6 +18,8 @@ import { AddReportComponent } from './containers/add-report/add-report.component
 import { CenterOfReportComponent } from './containers/center-of-report/center-of-report.component';
 import { VariablesGroupComponent } from './containers/variables-group/variables-group.component';
 import { AddModReportComponent } from './containers/add-mod-report/add-mod-report.component';
+import { ConfirmOutModalComponent } from './components/confirm-out-modal/confirm-out-modal.component';
+import { SelecsAxesVariablesComponent } from './containers/selecs-axes-variables/selecs-axes-variables.component';
 /* Containers */
 import * as adminContainers from './containers';
 
@@ -41,8 +43,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { SelecsAxesVariablesComponent } from './containers/selecs-axes-variables/selecs-axes-variables.component';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 
 
 @NgModule({
@@ -62,7 +64,9 @@ import { SelecsAxesVariablesComponent } from './containers/selecs-axes-variables
     MatCardModule,
     MatIconModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatRadioModule,
     // AppCommonModule,
     // NavigationModule,
   ],
@@ -72,7 +76,16 @@ import { SelecsAxesVariablesComponent } from './containers/selecs-axes-variables
     ...adminComponents.components,
     AddAxesComponent,AmUserComponent,AddModCenterComponent, 
     VariablesComponent, AddVariablesComponent, AddReportComponent, 
-    CenterOfReportComponent, VariablesGroupComponent, AddModReportComponent, SelecsAxesVariablesComponent
+    CenterOfReportComponent, VariablesGroupComponent, AddModReportComponent, SelecsAxesVariablesComponent,
+    AddAxesComponent,
+    AmUserComponent,
+    AddModCenterComponent,
+    VariablesComponent,
+    AddVariablesComponent,
+    AddReportComponent,
+    CenterOfReportComponent,
+    VariablesGroupComponent,
+    ConfirmOutModalComponent,
   ],
   exports: [...adminContainers.containers, ...adminComponents.components,SelecsAxesVariablesComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

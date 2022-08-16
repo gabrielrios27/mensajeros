@@ -16,6 +16,8 @@ export class AdminService {
   token: string = '';
   EPAxes: string = '/ejes';
   EPVariables: string = '/variables';
+  EPVariablesQuantityPerAxe: string = '/variables/eje';
+  // https://mensajeros-back-tami.herokuapp.com/variables/eje/2
 
   constructor(private _http: HttpClient) {}
 
@@ -48,16 +50,20 @@ export class AdminService {
     return this._http.get<Users[]>(this.baseUrlTami + '/usuarios');
   }
 
+  addUser(user: Users, id: number): Observable<any> {
+    return this._http.post(this.baseUrlTami + '/usuarios/' + id, user, {
+      responseType: 'text',
+    });
+  }
+  addUserAdmin(user: Users): Observable<Users> {
+    return this._http.post<Users>(this.baseUrlTami + '/auth/agregar', user);
+  }
   deleteUser(id: number): Observable<boolean> {
     return this._http.delete<boolean>(this.baseUrlTami + '/usuarios/' + id);
   }
 
   editUser(user: Users, id: any): Observable<Response> {
     return this._http.put<Response>(this.baseUrlTami + '/usuarios/' + id, user);
-  }
-
-  addUser(user: Users, id: number): Observable<Users> {
-    return this._http.post<Users>(this.baseUrlTami + '/usuarios/' + id, user);
   }
 
   getUser(id: number): Observable<Users> {
@@ -82,9 +88,16 @@ export class AdminService {
   deleteAxeWithId(id: string): Observable<any> {
     return this._http.delete<axes>(this.baseUrlTami + this.EPAxes + '/' + id);
   }
-  // Variables------------
-  getVariables(): Observable<variable[]> {
-    return this._http.get<variable[]>(this.baseUrlTami + this.EPVariables);
+  // Variables-----------------
+  getVariablesQuantityPerAxe(): Observable<variable[]> {
+    return this._http.get<variable[]>(
+      this.baseUrlTami + this.EPVariablesQuantityPerAxe
+    );
+  }
+  getVariablesGroup(id: string): Observable<variable[]> {
+    return this._http.get<variable[]>(
+      this.baseUrlTami + this.EPVariablesQuantityPerAxe + '/' + id
+    );
   }
   getVariableWithId(id: string): Observable<variable> {
     return this._http.get<variable>(

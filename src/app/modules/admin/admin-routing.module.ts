@@ -18,6 +18,7 @@ import { UsersComponent } from './containers/users/users.component';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { AdminGuard } from './guards';
 import { AddModReportComponent } from './containers/add-mod-report/add-mod-report.component';
+import { ConfirmOutGuard } from './guards/confirm-out.guard';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -70,6 +71,7 @@ export const ROUTES: Routes = [
   {
     path: 'variables/add-mod-variables',
     canActivate: [AdminGuard],
+    canDeactivate: [ConfirmOutGuard],
     component: adminContainers.AddVariablesComponent,
     pathMatch: 'full',
   },
