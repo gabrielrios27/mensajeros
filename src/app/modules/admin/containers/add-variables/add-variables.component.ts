@@ -181,12 +181,13 @@ export class AddVariablesComponent implements OnInit {
     this.setFlagAddEdit(true); //Para quitar modal de advertencia de cambio de pantalla de navbar del btn confirm
     console.log('idvariable en put or add: ', this.idVariable);
     if (this.idVariable === 0) {
-      let variableToCreate: variable = this.newVariable.value;
-      // {
+      let variableToCreate = JSON.stringify(this.newVariable.value);
+      // let variableToCreate: variable = {
       //   nombre: this.newVariable.get('variable')?.value,
       //   id: 0,
       //   tipo: 'Numerico',
       //   descripcion: 'Aqui la descripción',
+      //   escala_valor: 'false',
       //   eje: {
       //     id: 2,
       //     nombre: 'salud',
@@ -194,7 +195,7 @@ export class AddVariablesComponent implements OnInit {
       // };
       console.log('variable a subir: ', variableToCreate);
 
-      this.setVariableLocStg(variableToCreate, true); //sube a localStorage la variable creada y un flag que indica que es nueva variable para desplegar modal en página siguiente.
+      // this.setVariableLocStg(variableToCreate, true); //sube a localStorage la variable creada y un flag que indica que es nueva variable para desplegar modal en página siguiente.
       this.setPageLocalStorage(); //para paginación
       this._adminSvc.createVariable(variableToCreate).subscribe({
         next: (data: variable) => {
