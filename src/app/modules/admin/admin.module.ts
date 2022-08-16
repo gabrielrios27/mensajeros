@@ -1,5 +1,5 @@
 /* eslint-disable simple-import-sort/imports */
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -41,6 +41,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { SelecsAxesVariablesComponent } from './containers/selecs-axes-variables/selecs-axes-variables.component';
 
 
 
@@ -71,8 +72,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     ...adminComponents.components,
     AddAxesComponent,AmUserComponent,AddModCenterComponent, 
     VariablesComponent, AddVariablesComponent, AddReportComponent, 
-    CenterOfReportComponent, VariablesGroupComponent, AddModReportComponent
+    CenterOfReportComponent, VariablesGroupComponent, AddModReportComponent, SelecsAxesVariablesComponent
   ],
-  exports: [...adminContainers.containers, ...adminComponents.components],
+  exports: [...adminContainers.containers, ...adminComponents.components,SelecsAxesVariablesComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AdminModule {}
