@@ -42,7 +42,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 
@@ -70,7 +70,7 @@ import { MatRadioModule } from '@angular/material/radio';
     // AppCommonModule,
     // NavigationModule,
   ],
-  providers: [...adminServices.services, ...adminGuards.guards],
+  providers: [...adminServices.services, ...adminGuards.guards,{ provide: MAT_DATE_LOCALE, useValue: 'es-ES' }],
   declarations: [
     ...adminContainers.containers,
     ...adminComponents.components,
