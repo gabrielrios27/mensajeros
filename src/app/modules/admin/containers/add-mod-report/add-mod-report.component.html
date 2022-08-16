@@ -47,37 +47,13 @@
                     </div>
                 </div>
             </section>
-            <section style="margin-top:49px;" id="select" >
+            <section style="margin-top:49px;" id="select">
                 <label style="margin-right: 420px;">Eje</label>
                 <label>Variable</label>
-                <div class="container-ejes" id="select-ejes">
-                    <mat-select class="mat-select-ejes" placeholder="Selecciona un Eje de Variables" [(value)]="eje"
-                        name="eje" (selectionChange)="capturarEje($event.value)">
-                        <mat-option value="ACOMPAÑAMIENTO EDUCATIVO">ACOMPAÑAMIENTO EDUCATIVO</mat-option>
-                        <mat-option value="ACOMPAÑAMIENTO EN SALUD">ACOMPAÑAMIENTO EN SALUD</mat-option>
-                        <mat-option value="TALLER 2">TALLER 2</mat-option>
-                    </mat-select>
-                    <mat-select [disabled]="!eje" class="mat-select-ejes" placeholder="Selecciona una o más."
-                        multiple="" [(value)]="variables" name="variables"
-                        (selectionChange)="capturarVariables($event.value)">
-                        <mat-option [value]="'ACOMPAÑAMIENTO EDUCATIVO'">ACOMPAÑAMIENTO EDUCATIVO</mat-option>
-                        <mat-option [value]="'ACOMPAÑAMIENTO EN SALUD'">ACOMPAÑAMIENTO EN SALUD</mat-option>
-                        <mat-option [value]="'TALLER 2'">TALLER 2</mat-option>
-                    </mat-select>
+                <div *ngFor="let item of arrayc" >
+                    <app-selecs-axes-variables>{{item}}</app-selecs-axes-variables>
                 </div>
-                <div class="container-label-variables">
-                    <div>
-                        <div>
-                            <label>Variables Seleccionadas </label>
-                        </div>
-                        <label class="label-variables" *ngFor="let item of variables">{{item}}<a
-                                style="cursor: pointer; margin-top: 5px;" (click)="removeVariable(item)">
-                                <mat-icon>cancel</mat-icon>
-                            </a>
-                        </label>
-                    </div>
-                </div>
-
+                
             </section>
             <button mat-button class="button-ejes" (click)="createEje()">+ Eje</button>
             <div class="container-alert">
