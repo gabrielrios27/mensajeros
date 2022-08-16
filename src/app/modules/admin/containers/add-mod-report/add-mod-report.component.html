@@ -1,21 +1,31 @@
 <div class="container-create-report">
     <div class="add-mod-report">
         <h1 class="title">Crear Nuevo Reporte</h1>
-        <form class="form-create-report">
+        <form class="form-create-report" [formGroup]="formAdd">
 
             <section>
                 <label>Nombre/Numero</label>
                 <br>
-                <input class="input-create-report" type="text" placeholder="XXXXXXXXXX">
+                <input class="input-create-report" type="text" placeholder="XXXXXXXXXX" formControlName="nombre"
+                    [(ngModel)]="nombre">
+                <div>
+                    <mat-error *ngIf="formAdd.controls['nombre'].invalid && formAdd.controls['nombre'].dirty ">
+                        <span>Campo Requerido</span>
+                    </mat-error>
+                </div>
+
             </section>
             <section>
                 <label>Centros alcanzados</label>
                 <mat-select placeholder="Selecciona al menos un Centro" checkboxPosition="after"
-                    panelClass="example-panel-red" multiple="">
+                    formControlName="centros" panelClass="example-panel-red" multiple="">
                     <mat-option class="mat-option" value="la balsa">la balsa</mat-option>
                     <mat-option value="Hogar san jose">Hogar san jose</mat-option>
                     <mat-option value="Casa matriz">Casa matriz</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formAdd.controls['centros'].invalid && formAdd.controls['centros'].dirty ">
+                    <span>Campo requerido</span>
+                </mat-error>
                 <div class="container-button-expand">
                     <a style="cursor: pointer;" class="button-expand">
                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 20px;" width="24" height="24"
@@ -35,25 +45,32 @@
                 <div class="container-input-date ">
                     <br>
                     <div class="input-wrapper">
-                        <input class="input-fecha " matInput [matDatepicker]="picker" placeholder="Fecha">
+                        <input class="input-fecha " matInput [matDatepicker]="picker" placeholder="Fecha"
+                            formControlName="desde">
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <div style="margin-top: 10px;">
+                            <mat-error *ngIf="formAdd.controls['desde'].invalid && formAdd.controls['desde'].dirty ">
+                                <span>Campo Requerido</span>
+                            </mat-error>
+                        </div>
                     </div>
                     <br>
                     <div class="input-wrapper">
-                        <input class="input-fecha " matInput [matDatepicker]="picker2" placeholder="Fecha">
+                        <input class="input-fecha " matInput [matDatepicker]="picker2" placeholder="Fecha"
+                            formControlName="hasta">
                         <mat-datepicker #picker2></mat-datepicker>
                         <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker2"></mat-datepicker-toggle>
                     </div>
+                    
                 </div>
             </section>
             <section style="margin-top:49px;" id="select">
                 <label style="margin-right: 420px;">Eje</label>
                 <label>Variable</label>
-                <div *ngFor="let item of arrayc" >
+                <div *ngFor="let item of arrayc">
                     <app-selecs-axes-variables>{{item}}</app-selecs-axes-variables>
                 </div>
-                
             </section>
             <button mat-button class="button-ejes" (click)="createEje()">+ Eje</button>
             <div class="container-alert">
@@ -66,8 +83,9 @@
                 </div>
             </div>
             <div class="div-button ">
-                <button mat-stroked-button class="button-create">Crear Reporte</button>
+                <button mat-stroked-button class="button-create" [disabled]="formAdd.invalid">Crear Reporte</button>
             </div>
         </form>
     </div>
+    <app-confirm-out-modal [show]="showDialog" (selection)="onSelection($event)"></app-confirm-out-modal>
 </div>
