@@ -53,6 +53,12 @@
           </p>
           <p class="list-variables__cell--type">
             {{ element.tipo }}
+            <ng-container *ngIf="element.genero == 'true'">
+              - Distinción de género
+            </ng-container>
+            <ng-container *ngIf="element.escala_valor == 'true'">
+              - Escala de Valor
+            </ng-container>
           </p>
           <div class="list-variable__cell list-variables__cell--acction">
             <a [routerLink]="['agregar-eje/', element.id.toString()]">
