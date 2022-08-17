@@ -17,6 +17,7 @@ import { AddModCenterComponent } from './containers/add-mod-center/add-mod-cente
 import { UsersComponent } from './containers/users/users.component';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { AdminGuard } from './guards';
+import { AddModReportComponent } from './containers/add-mod-report/add-mod-report.component';
 import { ConfirmOutGuard } from './guards/confirm-out.guard';
 /* Routes */
 export const ROUTES: Routes = [
@@ -113,6 +114,12 @@ export const ROUTES: Routes = [
   {
     path: 'centros/add-mod-center',
     component: AddModCenterComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'reportes/creacion-de-reportes/add-mod-report',
+    component: AddModReportComponent,
+    canDeactivate: [ConfirmOutGuard],
     pathMatch: 'full',
   },
   {
