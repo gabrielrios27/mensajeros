@@ -33,6 +33,17 @@ export class AddModReportComponent implements OnInit {
       hasta: ['', Validators.required],
     });
   }
+  name = "old name";
+ 
+
+    showIt = false;
+    showModal() {
+        this.showIt = true;
+    }
+    closeModal(newName: string) {
+        this.showIt = false;
+        if (newName) this.name = newName;
+    }
 
   ngOnInit(): void {
     this.setFlagAddEdit(false);
