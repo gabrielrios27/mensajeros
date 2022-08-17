@@ -19,6 +19,7 @@ import { AuthGuard } from '../auth/guards/auth.guard';
 import { AdminGuard } from './guards';
 import { AddModReportComponent } from './containers/add-mod-report/add-mod-report.component';
 import { ConfirmOutGuard } from './guards/confirm-out.guard';
+import { PreviewReportComponent } from './containers/preview-report/preview-report.component';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -120,6 +121,12 @@ export const ROUTES: Routes = [
     path: 'reportes/creacion-de-reportes/add-mod-report',
     component: AddModReportComponent,
     canDeactivate: [ConfirmOutGuard],
+    pathMatch: 'full',
+  },
+  {
+    path: 'reportes/creacion-de-reportes/add-mod-report/preview-report',  
+    component: PreviewReportComponent,
+    canActivate: [AdminGuard],
     pathMatch: 'full',
   },
   {
