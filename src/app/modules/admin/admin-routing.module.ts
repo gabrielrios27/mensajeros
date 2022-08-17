@@ -88,6 +88,13 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'variables/variables-agrupadas/:id-axe/add-mod-variables/:id',
+    canActivate: [AdminGuard],
+    canDeactivate: [ConfirmOutGuard],
+    component: adminContainers.AddVariablesComponent,
+    pathMatch: 'full',
+  },
+  {
     path: 'reportes',
     canActivate: [AdminGuard],
     redirectTo: 'reportes/creacion-de-reportes',
