@@ -11,7 +11,7 @@
         </section>
         <section class="container-user">
             <label>Usuario (direccion de email)*</label>
-            <input type="text" formControlName="email" [(ngModel)]="email" placeholder="jimenajimenez@mdp.com">
+            <input type="text" formControlName="email" [(ngModel)]="email" placeholder="jimenajimenez@mdp.com" autocomplete="off">
 
             <mat-error *ngIf="formUpEdit.controls['email'].invalid && formUpEdit.controls['email'].dirty">
                 <span *ngIf="formUpEdit.controls['email'].hasError('required')">Requerido</span>
@@ -20,7 +20,7 @@
         </section>
         <section class="container-password">
             <label>Contraseña (al menos 8 caracteres) *</label>
-            <input type="password" formControlName="contrasena" [(ngModel)]="contrasena" placeholder="jimena123456">
+            <input type="password" formControlName="contrasena" [(ngModel)]="contrasena" placeholder="jimena123456" autocomplete="off">
             <mat-error *ngIf="formUpEdit.controls['contrasena'].invalid && formUpEdit.controls['contrasena'].dirty">
                 <span *ngIf="formUpEdit.controls['contrasena'].hasError('required')">Requerido</span>
                 <span *ngIf="formUpEdit.controls['contrasena'].hasError('minLength')">Minimo 8 caracteres</span>
