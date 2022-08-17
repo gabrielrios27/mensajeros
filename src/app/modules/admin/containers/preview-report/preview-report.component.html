@@ -1,0 +1,39 @@
+<div class="container-preview">
+    <div>
+        <h1>Previsualización de Reporte Creado</h1>
+    </div>
+    <div class="container-preview-reporte">
+        <section class="container-header-preview">
+            <div class="logo-mdp">
+                <img src="/assets/images/logo-MDP.png" alt="logo-MDP" style="width: 113px;
+                height: 49px;">
+            </div>
+            <label class="label-repor-name">Reporte {{name}} </label>
+            <div class="periodo">
+                <p>Periodo</p>
+                <label>{{desde}} A {{hasta}}</label>
+            </div>
+        </section>
+        <section class="container-centros-preview ">
+            <div class="centros-Alcanzados">
+                <p>Centros Alcanzados:</p>
+                <p class="label-centros" *ngFor="let item of centros">{{item}}</p>
+            </div>
+            <div class="fecha-entrega" >
+                <label>Fecha de Entrega (Alerta)</label>
+                <p>02/01/2023</p>
+            </div>
+        </section>
+        <section class="section-ejes-variables">
+            <div class="container-ejes-variables" *ngFor="let item of ejes">
+                <label class="ejes-preview">{{item}}</label>
+                <div class="variables-preview">
+                    <p class="p-variables" *ngFor="let item of variables">{{item}}</p>
+                </div>
+            </div>
+        </section>
+        <section>
+
+        </section>
+    </div>
+</div>
