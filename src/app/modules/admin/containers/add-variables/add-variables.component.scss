@@ -1,0 +1,437 @@
+@import "../../../../../styles/variables.scss";
+
+.container-add-variable {
+  font-size: 16px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-left: 123px;
+  .container-add-variable__title {
+    font-size: 30px;
+    line-height: 43px;
+    color: $color-text-primary;
+    margin-top: 71px;
+    margin-bottom: 71px;
+    align-self: center;
+  }
+  .add-variable {
+    box-sizing: content-box;
+    width: 100%;
+    max-width: 760px;
+    padding-left: 211px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 250px;
+    .add-variable__form {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      .add-variable__expanse-conteiner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 94px;
+        height: 66px;
+        background: #92cdef;
+        border-radius: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 20;
+        .add-variable__expanse-ico {
+          width: 24px;
+          height: 24px;
+          path {
+            transition: all 0.2s linear;
+            fill: black;
+          }
+        }
+        &:hover {
+          .add-variable__expanse-ico {
+            path {
+              fill: rgb(75, 75, 75);
+            }
+          }
+        }
+      }
+      .add-variable__label {
+        font-size: 18px;
+        line-height: 19px;
+        color: $color-text-primary;
+      }
+      .add-variable__container-input {
+        position: relative;
+        .add-variable__input {
+          width: 549px;
+          height: 56px;
+          font-size: 16px;
+          line-height: 24px;
+          border: 1px solid $btn-confirm-bg;
+          border-radius: 4px;
+          outline-color: $outline-focus;
+          margin-top: 10px;
+          margin-bottom: 28px;
+          padding-left: 20px;
+        }
+        .add-variable__input--alert {
+          border: 1px solid $alert-text;
+          outline-color: $alert-text;
+          outline-width: 0px;
+        }
+        .add-variable__alert {
+          position: absolute;
+          bottom: -10px;
+          color: $alert-text;
+        }
+        .radio-groupAM {
+          display: flex;
+          flex-direction: column;
+          margin: 15px 0;
+          align-items: flex-start;
+          .radio-buttonAM {
+            margin: 5px;
+          }
+        }
+
+        ::ng-deep .radio-buttonAM.mat-radio-checked .mat-radio-outer-circle {
+          border-color: $color-bg-hover-primary;
+        }
+        ::ng-deep .radio-buttonAM .mat-radio-inner-circle {
+          background-color: $color-bg-hover-primary;
+        }
+        ::ng-deep .radio-buttonAM .mat-radio-label {
+          width: 178px;
+          flex-direction: row-reverse;
+          justify-content: space-between;
+        }
+        // para quitar el color de fondo persistente en radio btn de angular material
+        ::ng-deep
+          .radio-buttonAM:not(.mat-radio-disable).cdk-program-focused
+          .mat-radio-persistent-ripple {
+          opacity: 0;
+        }
+        // estilos del checkbox agregar a variable-------
+        ::ng-deep .checkbox-add-to {
+          margin: 15px 0 5px;
+          .mat-checkbox-layout {
+            margin: 5px;
+            display: flex;
+            width: 226px;
+            flex-direction: row-reverse;
+            padding-left: 8px;
+            justify-content: space-between;
+          }
+        }
+        .add-variable__info-text {
+          margin-left: 15px;
+          margin-bottom: 0;
+          font-family: "Roboto Md 500";
+          letter-spacing: 0.4px;
+          font-size: 12px;
+          color: rgba(0, 0, 0, 0.6);
+        }
+        ::ng-deep .mat-checkbox-disabled .mat-checkbox-frame {
+          border-color: rgb(189, 189, 189);
+        }
+        // --------------------------------------------------
+      }
+      // nuevo select de angular material----------------
+      .mat-select {
+        background: #fff;
+        box-sizing: border-box;
+        border: 1px solid $btn-confirm-bg;
+        outline-color: $outline-focus;
+        border-radius: 4px;
+        width: 299px;
+        height: 56px;
+        margin-top: 10px;
+        margin-bottom: 28px;
+
+        background-repeat: no-repeat;
+        background-position-x: 270px;
+        background-position-y: 15px;
+
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;
+        appearance: none;
+
+        font-family: "Futura Bk BT";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        line-height: 56px;
+        letter-spacing: 0.5px;
+        color: #1c1b1f;
+
+        .mat-select-trigger {
+          display: flex;
+          width: 100%;
+
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+      .mat-select::-moz-selection {
+        background-color: #ffffff;
+      }
+
+      .mat-select::selection {
+        background-color: #ffffff;
+      }
+
+      .mat-option {
+        background-color: white;
+      }
+      // ----------------------------
+
+      .add-variable__btn {
+        font-size: 20px;
+        align-self: flex-end;
+        margin-top: 30px;
+        width: 8.05em;
+        height: 3.3em;
+        background: $btn-confirm-bg;
+        border-radius: 1.75em;
+        cursor: pointer;
+        color: $color-text-primary;
+      }
+    }
+  }
+}
+
+// ESTILOS PARA CUSTOMIZAR EL SELECT DE ANGULAR MATERIAL----------
+::ng-deep .mat-select-arrow-wrapper {
+  display: flex !important;
+  height: 56px !important;
+  padding-right: 10px;
+}
+::ng-deep .mat-select-value-text {
+  padding-left: 20px;
+  font-weight: 400;
+}
+::ng-deep .cdk-overlay-container {
+  .select__option {
+    transition: all 0.2s linear;
+    &:hover {
+      background-color: $color-bg-hover-primary;
+    }
+    .mat-option-text:hover {
+      color: white;
+    }
+  }
+  .select__option.mat-selected:not(.mat-option-multiple) {
+    background: $color-bg-hover-primary;
+    .mat-option-text {
+      color: white;
+    }
+  }
+  .select__option.mat-selected:not(.mat-option-multiple):not(.mat-option-disabled) {
+    background: $color-bg-hover-primary;
+    .mat-option-text {
+      color: white;
+    }
+  }
+  .select__option.mat-active {
+    background: $color-bg-hover-primary;
+    .mat-option-text {
+      color: white;
+    }
+  }
+}
+//--------------------------------------------------------
+//ESTILOS DE ESCALA DE VALOR------------------------------
+.value-scale {
+  padding-left: 13px;
+  .value-scale__conteiner-scale {
+    font-size: 16px;
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    .value-scale__value {
+      display: flex;
+      ::ng-deep .mat-select-disabled {
+        border: 1px solid rgb(189, 189, 189) !important;
+      }
+      //select de rango de escala de valores
+      .selectRange {
+        background: #fff;
+        box-sizing: border-box;
+        border: 1px solid $btn-confirm-bg;
+        outline-color: $outline-focus;
+        border-radius: 4px;
+        width: 60px;
+        height: 30px;
+        margin: 0 10px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;
+        appearance: none;
+
+        font-family: "Futura Bk BT";
+        font-weight: 600;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.5px;
+        color: #1c1b1f;
+
+        .mat-select-trigger {
+          display: flex;
+          width: 100%;
+        }
+      }
+      .selectRange::-moz-selection {
+        background-color: #ffffff;
+      }
+
+      .selectRange::selection {
+        background-color: #ffffff;
+      }
+
+      .mat-option {
+        background-color: white;
+      }
+    }
+  }
+
+  .value-scale__conteiner-tags {
+    .value-scale__tag {
+      .value-scale__label {
+        font-size: 14px;
+        padding-left: 8px;
+        padding-right: 15px;
+      }
+      .value-scale__input {
+        font-size: 14px;
+        width: 150px;
+        ::ng-deep .mat-form-field-flex {
+          padding-top: 0;
+        }
+      }
+    }
+  }
+  ::ng-deep .mat-select-arrow-wrapper {
+    padding-right: 5px;
+  }
+  ::ng-deep .mat-select-value-text {
+    padding-left: 10px;
+  }
+}
+.color-disable {
+  color: #00000061;
+}
+::ng-deep .cdk-overlay-container {
+  .selectRange__option {
+    transition: all 0.2s linear;
+    &:hover {
+      background-color: $color-bg-hover-primary;
+    }
+    .mat-option-text:hover {
+      color: white;
+    }
+  }
+  .selectRange__option.mat-selected:not(.mat-option-multiple) {
+    background: $color-bg-hover-primary;
+    .mat-option-text {
+      color: white;
+    }
+  }
+  .selectRange__option.mat-selected:not(.mat-option-multiple):not(.mat-option-disabled) {
+    background: $color-bg-hover-primary;
+    .mat-option-text {
+      color: white;
+    }
+  }
+  .selectRange__option.mat-active {
+    background: $color-bg-hover-primary;
+    .mat-option-text {
+      color: white;
+    }
+  }
+}
+//--------------------------------------------------------
+.modal-error {
+  position: fixed;
+  bottom: 20vh;
+  z-index: 200;
+  width: 525px;
+  height: 203px;
+  background-color: #cce8f4;
+  border: 1px solid #cce8f4;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .modal__container-error {
+    width: 474px;
+    display: flex;
+    align-items: center;
+    .modal__ico-info {
+      width: 88px;
+      height: 90px;
+    }
+    .modal__text {
+      font-size: 24px;
+      text-align: center;
+      letter-spacing: 0.25px;
+      color: #083d5e;
+      margin-bottom: 0;
+      margin-left: 15px;
+    }
+  }
+}
+// ::ng-deep .cdk-overlay-container .cdk-overlay-pane {
+//   margin: 54px 0; //para que el panel de selección aparezca abajo o arriba del input y no sobre él
+// }
+
+@media (max-width: 1400px) {
+  .container-add-variable {
+    .container-add-variable__title {
+      margin-top: 40px;
+      margin-bottom: 30px;
+      font-size: 30px;
+    }
+    .add-variable {
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 211px;
+      padding-right: 20px;
+      // align-self: flex-start;
+      .add-variable__form {
+        .add-variable__btn {
+          font-size: 16px;
+          margin-top: 46px;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .container-add-variable {
+    .container-add-variable__title {
+      margin-top: 25px;
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+    .add-variable {
+      margin-left: 220px;
+      width: 500px;
+      padding-left: 0;
+      .add-variable__form {
+        .add-variable__input {
+          width: auto;
+        }
+        .add-variable__btn {
+          font-size: 16px;
+          margin-top: 46px;
+        }
+      }
+    }
+  }
+}
