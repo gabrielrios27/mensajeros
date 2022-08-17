@@ -51,7 +51,7 @@ export class VariablesGroupComponent implements OnInit {
   getIdFromRute(): number {
     let idToShow;
     this.rutaActiva.paramMap.subscribe((params: ParamMap) => {
-      idToShow = params.get('id');
+      idToShow = params.get('id-axe');
     });
     return Number(idToShow);
   }
