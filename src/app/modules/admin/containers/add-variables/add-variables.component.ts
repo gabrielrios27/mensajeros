@@ -65,6 +65,8 @@ export class AddVariablesComponent implements OnInit {
   flagValueScale: boolean = true;
   firstValue: number = 0;
   lastValue: number = 5;
+  etiquetaInicial: string = '';
+  etiquetaFinal: string = '';
   initialValuesList: number[] = [0, 1];
 
   finalsValuesListFromOne: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -178,7 +180,6 @@ export class AddVariablesComponent implements OnInit {
   }
   setPageLocalStorage() {
     //para paginación
-
     this.quantityOfPages = Math.ceil(
       (this.listOfVariable.length + 1) / this.itemsPerPage
     );
@@ -191,8 +192,10 @@ export class AddVariablesComponent implements OnInit {
     if (this.idVariable === 0) {
       let variableToCreate: variable = this.newVariable.value;
       if (!variableToCreate.escala_valor) {
-        delete variableToCreate.valor_inicial;
-        delete variableToCreate.valor_final;
+        variableToCreate.valor_inicial = 'null';
+        variableToCreate.valor_final = 'null';
+        variableToCreate.etiqueta_inicial = 'null';
+        variableToCreate.etiqueta_final = 'null';
       }
       console.log('variable a subir: ', variableToCreate);
 
@@ -202,8 +205,8 @@ export class AddVariablesComponent implements OnInit {
         next: (data: variable) => {
           this.router.navigate([
             'admin/dashboard/variables/variables-agrupadas/' +
-              variableToCreate.eje.id, //navega hacia la ultima pagina de las variables agrupadas de el eje elegido
-          ]);
+              variableToCreate.eje.id,
+          ]); //navega hacia la ultima pagina de las variables agrupadas de el eje elegido
           console.log(data);
         },
         error: (err) => {
@@ -217,22 +220,23 @@ export class AddVariablesComponent implements OnInit {
         },
       });
     } else {
-      let variableToEdit: variable = {
-        nombre: this.newVariable.get('nombre')?.value,
-        id: this.idVariable,
-        tipo: 'Numerico',
-        descripcion: 'Aqui la descripción',
-        eje: {
-          id: 2,
-          nombre: 'salud',
-        },
-      };
+      let variableToEdit: variable = this.newVariable.value;
+      if (!variableToEdit.escala_valor) {
+        variableToEdit.valor_inicial = 'null';
+        variableToEdit.valor_final = 'null';
+        variableToEdit.etiqueta_inicial = 'null';
+        variableToEdit.etiqueta_final = 'null';
+      }
+      console.log('variable a subir: ', variableToEdit);
       this.setVariableLocStg(variableToEdit, false); //sube a localStorage la variable editada y un flag que indica que es NO es nueva variable para desplegar modal adecuado en página siguiente.
       this._adminSvc
         .editVariableWithId(this.idVariable.toString(), variableToEdit)
         .subscribe({
           next: (data: variable) => {
-            this.router.navigate(['admin/dashboard/variables']);
+            this.router.navigate([
+              'admin/dashboard/variables/variables-agrupadas/' +
+                variableToEdit.eje.id,
+            ]); //navega hacia la ultima pagina de las variables agrupadas de el eje elegido
             console.log(data);
           },
           error: (err) => {
@@ -292,6 +296,36 @@ export class AddVariablesComponent implements OnInit {
         this.variableById = data;
         console.log(this.variableById);
         this.variableInput = data.nombre;
+        this.descriptionInput = data.descripcion;
+        this.typeAnswer = data.tipo;
+        if (data.genero?.toLowerCase() === 'true') {
+          this.addGenre = true;
+          this.flagGenre = true;
+        } else {
+          this.addGenre = false;
+          this.flagGenre = false;
+        }
+        if (data.escala_valor?.toLowerCase() === 'true') {
+          this.addValueEscale = true;
+          this.flagGenre = false;
+          this.flagValueScale = true;
+          this.firstValue = Number(data.valor_inicial);
+          this.lastValue = Number(data.valor_final);
+          this.newVariable.get('etiqueta_inicial')?.enable();
+          this.newVariable.get('etiqueta_final')?.enable();
+          if (data.etiqueta_inicial) {
+            this.etiquetaInicial = data.etiqueta_inicial;
+          }
+          if (data.etiqueta_final) {
+            this.etiquetaFinal = data.etiqueta_final;
+          }
+        } else {
+          this.addValueEscale = false;
+          this.flagGenre = true;
+          this.flagValueScale = false;
+          this.newVariable.get('etiqueta_inicial')?.disable();
+          this.newVariable.get('etiqueta_final')?.disable();
+        }
       },
       error: (err) => {
         console.log(err);
@@ -324,8 +358,17 @@ export class AddVariablesComponent implements OnInit {
   }
   //CHEKEA SI LA VARIABLE YA EXISTE EN EL EJE-----------
   checkInVariableList(variable: string): boolean {
+    console.log('nombre de variable a guardar: ', variable);
+    console.log(
+      'nombre de variable en variableById: ',
+      this.variableById.nombre
+    );
+
     for (let item of this.listOfVariable) {
-      if (item.nombre.toUpperCase() === variable.toUpperCase()) {
+      if (
+        item.nombre.toUpperCase() === variable.toUpperCase() &&
+        variable.toUpperCase() !== this.variableById.nombre.toLocaleUpperCase()
+      ) {
         return true;
       }
     }
