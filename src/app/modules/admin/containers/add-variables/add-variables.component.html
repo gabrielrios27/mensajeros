@@ -283,4 +283,8 @@
       <p class="modal__text">El eje ya existe en el sistema</p>
     </div>
   </div>
+  <app-confirm-out-modal
+    [show]="showDialog"
+    (selection)="onSelection($event)"
+  ></app-confirm-out-modal>
 </section>

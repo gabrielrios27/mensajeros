@@ -23,6 +23,10 @@ interface Animal {
 })
 export class AddVariablesComponent implements OnInit {
   selectAxeControl = new FormControl(false);
+  //Para modal de advertencia de cambio de pantalla------------------
+  flagAddEdit: boolean = false;
+  showDialog = false;
+  subject = new Subject<boolean>();
 
   variableById: variable;
   idVariable: number;
@@ -60,7 +64,6 @@ export class AddVariablesComponent implements OnInit {
   firstValue: number = 0;
   lastValue: number = 5;
   initialValuesList: number[] = [0, 1];
-  // finalsValuesRange: number[] = [1, 10];
 
   finalsValuesListFromOne: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   finalsValuesListFromtwo: number[] = [2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -108,6 +111,7 @@ export class AddVariablesComponent implements OnInit {
     },
   ];
   ngOnInit(): void {
+    this.setFlagAddEdit(false); //Para colocar modal de advertencia de cambio de pantalla si se da click a item en navbar
     this.idVariable = this.getIdFromRute();
     console.log('id ruta:' + this.idVariable);
     this.completeInputWithVariable(this.idVariable);
@@ -117,10 +121,30 @@ export class AddVariablesComponent implements OnInit {
     this.onSelectionChange();
     this.onSelectValueScale();
   }
-
+  //Para modal de advertencia de cambio de pantalla------------------
+  setFlagAddEdit(value: boolean) {
+    this.flagAddEdit = value;
+    localStorage.setItem('flagAddEdit', JSON.stringify(this.flagAddEdit));
+  }
+  onSelection($event: any) {
+    console.log($event);
+    this.showDialog = false;
+    if ($event === 'ok') {
+      this.subject.next(true);
+      this.setFlagAddEdit(false);
+    } else {
+      this.subject.next(false);
+    }
+  }
+  openDialog() {
+    console.log('opn dialog');
+    this.showDialog = true;
+  }
+  //click al botón de confirmar------------------
   onConfirm() {
+    this.setFlagAddEdit(true); //Para quitar modal de advertencia de cambio de pantalla de navbar del btn confirm
     console.log('form: ', this.newVariable);
-
+    this.router.navigate(['admin/dashboard/variables']); //eliminar linea cuando se active onFonfirm
     // if (this.newVariable.invalid) {
     //   this.flagError = true;
     //   this.invalidForm = true;

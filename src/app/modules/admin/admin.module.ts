@@ -40,6 +40,7 @@ import { AddVariablesComponent } from './containers/add-variables/add-variables.
 import { AddReportComponent } from './containers/add-report/add-report.component';
 import { CenterOfReportComponent } from './containers/center-of-report/center-of-report.component';
 import { VariablesGroupComponent } from './containers/variables-group/variables-group.component';
+import { ConfirmOutModalComponent } from './components/confirm-out-modal/confirm-out-modal.component';
 
 @NgModule({
   imports: [
@@ -74,6 +75,7 @@ import { VariablesGroupComponent } from './containers/variables-group/variables-
     AddReportComponent,
     CenterOfReportComponent,
     VariablesGroupComponent,
+    ConfirmOutModalComponent,
   ],
   exports: [...adminContainers.containers, ...adminComponents.components],
 })

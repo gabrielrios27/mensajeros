@@ -57,39 +57,6 @@ export class VariablesGroupComponent implements OnInit {
   }
   getVariablesList() {
     this.currentPage = this.getPageLocalStorage();
-    // this.listOfVariables = [
-    //   {
-    //     id: 1,
-    //     nombre: 'Variable 1',
-    //     tipo: 'escala de valor',
-    //   },
-    //   {
-    //     id: 1,
-    //     nombre: 'Variable 2',
-    //     tipo: 'texto',
-    //   },
-    //   {
-    //     id: 1,
-    //     nombre: 'Variable 3',
-    //     tipo: 'numero',
-    //   },
-    //   {
-    //     id: 1,
-    //     nombre: 'Variable 4',
-    //     tipo: 'numero',
-    //   },
-    //   {
-    //     id: 1,
-    //     nombre: 'Variable 5',
-    //     tipo: 'texto',
-    //   },
-    //   {
-    //     id: 1,
-    //     nombre: 'Variable 6',
-    //     tipo: 'escala de valor',
-    //   },
-    // ];
-    // this.pageToShow(this.currentPage, this.listOfVariables); //para paginación---eliminar cuando se descomente peticion
     this._adminSvc
       .getVariablesGroup(this.idAxeGroup.toString())
       .pipe(takeUntil(this.onDestroy$))
@@ -179,7 +146,7 @@ export class VariablesGroupComponent implements OnInit {
     }
     return pageLocalStorage;
   }
-  //--------------------------------------------
+  //Borrar variable--------------------------------------------
   onClickDelete(id: number) {
     this.flagDelete = true;
     this.idToDelete = id;
@@ -192,11 +159,8 @@ export class VariablesGroupComponent implements OnInit {
         this.listOfVariables_toSearch.push(item);
       }
     }
-
     this.listOfVariables = this.listOfVariables_toSearch;
-
     this.pageToShow(this.currentPage, this.listOfVariables); //para paginación
-
     this._adminSvc
       .deleteVariableWithId(id.toString())
       .pipe(takeUntil(this.onDestroy$))
