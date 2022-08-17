@@ -70,16 +70,16 @@ export class AddVariablesComponent implements OnInit {
   finalsValuesList: number[] = [];
   //Form
   newVariable: FormGroup = this.fb.group({
-    variable: [, [Validators.required]],
-    descriptionForm: [],
-    selectAxeForm: [, [Validators.required]],
-    typeAnswerForm: [, [Validators.required]],
-    genreForm: [false],
-    valueScaleForm: [false],
-    firstNumberForm: [0],
-    lastNumberForm: [5],
-    firstValueForm: [, [Validators.required]],
-    lastValueForm: [, [Validators.required]],
+    nombre: [, [Validators.required]],
+    descripcion: [],
+    eje: [, [Validators.required]],
+    tipo: [, [Validators.required]],
+    genero: [false],
+    escala_valor: [false],
+    valor_inicial: [0],
+    valor_final: [5],
+    etiqueta_inicial: [, [Validators.required]],
+    etiqueta_final: [, [Validators.required]],
   });
   constructor(
     private fb: FormBuilder,
@@ -156,7 +156,7 @@ export class AddVariablesComponent implements OnInit {
     } else {
       this.invalidForm = false;
       this.isInList = this.checkInVariableList(
-        this.newVariable.get('variable')?.value
+        this.newVariable.get('nombre')?.value
       );
       if (this.isInList) {
         //comprueba si esta en la lista, si esta se renderiza un mensaje de error(este eje ya se encuentra cargado)
@@ -181,21 +181,14 @@ export class AddVariablesComponent implements OnInit {
     this.setFlagAddEdit(true); //Para quitar modal de advertencia de cambio de pantalla de navbar del btn confirm
     console.log('idvariable en put or add: ', this.idVariable);
     if (this.idVariable === 0) {
-      let variableToCreate = JSON.stringify(this.newVariable.value);
-      // let variableToCreate: variable = {
-      //   nombre: this.newVariable.get('variable')?.value,
-      //   id: 0,
-      //   tipo: 'Numerico',
-      //   descripcion: 'Aqui la descripción',
-      //   escala_valor: 'false',
-      //   eje: {
-      //     id: 2,
-      //     nombre: 'salud',
-      //   },
-      // };
+      let variableToCreate: variable = this.newVariable.value;
+      if (!variableToCreate.escala_valor) {
+        delete variableToCreate.valor_inicial;
+        delete variableToCreate.valor_final;
+      }
       console.log('variable a subir: ', variableToCreate);
 
-      // this.setVariableLocStg(variableToCreate, true); //sube a localStorage la variable creada y un flag que indica que es nueva variable para desplegar modal en página siguiente.
+      this.setVariableLocStg(variableToCreate, true); //sube a localStorage la variable creada y un flag que indica que es nueva variable para desplegar modal en página siguiente.
       this.setPageLocalStorage(); //para paginación
       this._adminSvc.createVariable(variableToCreate).subscribe({
         next: (data: variable) => {
@@ -214,7 +207,7 @@ export class AddVariablesComponent implements OnInit {
       });
     } else {
       let variableToEdit: variable = {
-        nombre: this.newVariable.get('variable')?.value,
+        nombre: this.newVariable.get('nombre')?.value,
         id: this.idVariable,
         tipo: 'Numerico',
         descripcion: 'Aqui la descripción',
@@ -249,7 +242,7 @@ export class AddVariablesComponent implements OnInit {
     }
   }
   setVariableLocStg(data: variable, isNewVariable: boolean) {
-    localStorage.setItem('newOrEditedVariables', JSON.stringify(data));
+    localStorage.setItem('newOrEditedVariable', JSON.stringify(data));
     localStorage.setItem('isNewVariable', JSON.stringify(isNewVariable));
   }
   //OBTIENE EL ID DE LA VARIABLE EN LA RUTA
@@ -342,12 +335,12 @@ export class AddVariablesComponent implements OnInit {
   onSelectValueScale() {
     if (!this.addValueEscale) {
       this.flagValueScale = false;
-      this.newVariable.get('firstValueForm')?.disable();
-      this.newVariable.get('lastValueForm')?.disable();
+      this.newVariable.get('etiqueta_inicial')?.disable();
+      this.newVariable.get('etiqueta_final')?.disable();
     } else {
       this.flagValueScale = true;
-      this.newVariable.get('firstValueForm')?.enable();
-      this.newVariable.get('lastValueForm')?.enable();
+      this.newVariable.get('etiqueta_inicial')?.enable();
+      this.newVariable.get('etiqueta_final')?.enable();
     }
   }
   close() {
