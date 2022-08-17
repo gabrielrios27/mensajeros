@@ -11,6 +11,7 @@ import { AdminService } from '../../services';
 })
 export class VariablesGroupComponent implements OnInit {
   idAxeGroup: number = 0;
+  nameAxeGroup: string = '';
   newOrEditedVariable: variable = {} as variable;
   flagEdited: boolean = false;
   flagNew: boolean = false;
@@ -45,6 +46,7 @@ export class VariablesGroupComponent implements OnInit {
 
   ngOnInit() {
     this.idAxeGroup = this.getIdFromRute();
+    this.nameAxeGroup = this.geNameAxeLocalStorage();
     this.getVariablesList();
     this.getVariableLocalStorage();
   }
@@ -55,6 +57,7 @@ export class VariablesGroupComponent implements OnInit {
     });
     return Number(idToShow);
   }
+
   getVariablesList() {
     this.currentPage = this.getPageLocalStorage();
     this._adminSvc
@@ -146,6 +149,14 @@ export class VariablesGroupComponent implements OnInit {
       pageLocalStorage = JSON.parse(pageLocalStorageJSON);
     }
     return pageLocalStorage;
+  }
+  geNameAxeLocalStorage(): string {
+    let nameAxeLocalStorage: string = '';
+    let nameAxeLocalStorageJSON = localStorage.getItem('nameAxeGroup');
+    if (nameAxeLocalStorageJSON) {
+      nameAxeLocalStorage = JSON.parse(nameAxeLocalStorageJSON);
+    }
+    return nameAxeLocalStorage;
   }
   //Borrar variable--------------------------------------------
   onClickDelete(id: number) {
