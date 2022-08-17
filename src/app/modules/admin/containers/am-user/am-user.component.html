@@ -1,85 +1,58 @@
 <div class="container">
-  <h1 class="container-title" *ngIf="!data.editar">Agregar Usuario</h1>
-  <h1 class="container-title" *ngIf="data.editar">Editar Usuario</h1>
-  <form [formGroup]="formUpEdit">
-    <section class="container-name">
-      <label for="">Nombre y Apellido *</label>
-      <input type="text" formControlName="nombre" [(ngModel)]="nombre" />
-      <mat-error
-        *ngIf="
-          formUpEdit.controls['nombre'].invalid &&
-          formUpEdit.controls['nombre'].dirty
-        "
-      >
-        <span *ngIf="formUpEdit.controls['nombre'].errors">Requerido</span>
-      </mat-error>
-    </section>
-    <section class="container-select">
-      <label for="">Centro</label>
-      <mat-select
-        [(value)]="centroAsignado"
-        name="centros"
-        (selectionChange)="capturarCentro($event.value)"
-      >
-        <mat-option [value]="item.id" *ngFor="let item of centros">{{
-          item.nombre
-        }}</mat-option>
-      </mat-select>
-    </section>
-    <section class="container-user">
-      <label for="">Usuario (direccion de email)*</label>
-      <input type="text" formControlName="email" [(ngModel)]="email" />
+    <h1 class="container-title" *ngIf="!flagEdit">Agregar Usuario</h1>
+    <h1 class="container-title" *ngIf="flagEdit">Editar Usuario</h1>
+    <form [formGroup]="formUpEdit">
+        <section class="container-name">
+            <label>Nombre y Apellido *</label>
+            <input type="text" formControlName="nombre" [(ngModel)]="nombre" placeholder="Jimena Jiménez">
+            <mat-error *ngIf="formUpEdit.controls['nombre'].invalid && formUpEdit.controls['nombre'].dirty">
+                <span *ngIf="formUpEdit.controls['nombre'].errors">Requerido</span>
+            </mat-error>
+        </section>
+        <section class="container-user">
+            <label>Usuario (direccion de email)*</label>
+            <input type="text" formControlName="email" [(ngModel)]="email" placeholder="jimenajimenez@mdp.com">
 
-      <mat-error
-        *ngIf="
-          formUpEdit.controls['email'].invalid &&
-          formUpEdit.controls['email'].dirty
-        "
-      >
-        <span *ngIf="formUpEdit.controls['email'].hasError('required')"
-          >Requerido</span
-        >
-        <span *ngIf="formUpEdit.controls['email'].hasError('email')"
-          >Email invalido</span
-        >
-      </mat-error>
-    </section>
-    <section class="container-password">
-      <label for="">Contraseña (al menos 8 caracteres) *</label>
-      <input
-        type="password"
-        formControlName="contrasena"
-        [(ngModel)]="contrasena"
-      />
-      <mat-error
-        *ngIf="
-          formUpEdit.controls['contrasena'].invalid &&
-          formUpEdit.controls['contrasena'].dirty
-        "
-      >
-        <span *ngIf="formUpEdit.controls['contrasena'].hasError('required')"
-          >Requerido</span
-        >
-        <span *ngIf="formUpEdit.controls['contrasena'].hasError('minLength')"
-          >Minimo 8 caracteres</span
-        >
-      </mat-error>
-    </section>
-    <button
-      *ngIf="!data.editar"
-      [disabled]="formUpEdit.invalid"
-      mat-button
-      (click)="confirm(formUpEdit.value)"
-    >
-      Confirmar
-    </button>
-    <button
-      *ngIf="data.editar"
-      [disabled]="formUpEdit.invalid"
-      mat-button
-      (click)="editar(formUpEdit.value)"
-    >
-      Confirmar
-    </button>
-  </form>
+            <mat-error *ngIf="formUpEdit.controls['email'].invalid && formUpEdit.controls['email'].dirty">
+                <span *ngIf="formUpEdit.controls['email'].hasError('required')">Requerido</span>
+                <span *ngIf="formUpEdit.controls['email'].hasError('email')">Email invalido</span>
+            </mat-error>
+        </section>
+        <section class="container-password">
+            <label>Contraseña (al menos 8 caracteres) *</label>
+            <input type="password" formControlName="contrasena" [(ngModel)]="contrasena" placeholder="jimena123456">
+            <mat-error *ngIf="formUpEdit.controls['contrasena'].invalid && formUpEdit.controls['contrasena'].dirty">
+                <span *ngIf="formUpEdit.controls['contrasena'].hasError('required')">Requerido</span>
+                <span *ngIf="formUpEdit.controls['contrasena'].hasError('minLength')">Minimo 8 caracteres</span>
+            </mat-error>
+            <label class="labelDatoObligatorio"> *Dato obligatorio</label>
+        </section>
+        <ng-container *ngIf="!flagEdit">
+            <section class="sectionCheckbox">
+                <label>Tipo de Rol</label>
+                <div class="container-checkbox">
+                    <mat-radio-group (change)="onDataChange($event)">
+                        <label>Director de Centro </label>
+                        <mat-radio-button class="mat-radio-button mat-radio-button-centro" [checked]="true"
+                            [value]="'centro'"></mat-radio-button>
+                        <br>
+                        <label>Director de ONG (admin) </label>
+                        <mat-radio-button class="mat-radio-button" [value]="'ong'"></mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </section>
+        </ng-container>
+        <section *ngIf="flagTipoRol" class="container-select">
+            <label>Centro</label>
+            <mat-select [(value)]="centroAsignado" name="centros" multiple
+                (selectionChange)="capturarCentro($event.value)" placeholder="Selecciona al menos un centro"
+                floatlLabel="never">
+                <mat-option [value]="item.id" *ngFor="let item of centros">{{item.nombre}}</mat-option>
+            </mat-select>
+        </section>
+        <button type="button" *ngIf="!data.editar" [disabled]="formUpEdit.invalid" mat-button
+            (click)="confirm(formUpEdit.value)">Confirmar</button>
+        <button type="button" *ngIf="data.editar" [disabled]="formUpEdit.invalid" mat-button
+            (click)="editar(formUpEdit.value)">Confirmar</button>
+    </form>
 </div>

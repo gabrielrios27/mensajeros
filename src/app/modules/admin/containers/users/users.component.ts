@@ -15,12 +15,14 @@ export class UsersComponent implements OnInit {
   user: Array<Users> = new Array();
   centros: Array<Centro> = new Array();
   usershow: Array<Users> = new Array();
+  centroAsig: Array<string> = []
   flagEdited: boolean = false;
   flagNew: boolean = false;
   flagDelete: boolean = false;
   idToDelete: number = 0;
   newOrEditedUser: Users = {} as Users;
-
+  userAsig?: Users = {} as Users;
+  centroAsignados: Array<number> = []
   // pagination
   userListComplete: Array<Users> = new Array();
   listLenght: number = 0;
@@ -37,12 +39,13 @@ export class UsersComponent implements OnInit {
     public data: DataService,
     private admin: AdminService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getUsers();
     this.getCentros();
     this.getUserLocalStorage();
+    this.getCentrosLocalStorage();
   }
 
   busca(e: string) {
@@ -71,9 +74,24 @@ export class UsersComponent implements OnInit {
   }
 
   centroAsignado(user: Users): any {
+    let i = 0
+    this.centroAsig = []
     for (let c of this.centros) {
       if (user.nombre == c.usuario?.nombre) {
-        return c.nombre;
+        this.centroAsig[i] = c.nombre;
+        i += 1
+      }
+    }
+    return this.centroAsig
+  }
+
+  tipoRol(rol: any): any {
+    if (rol) {
+      if (rol === "ROLE_USER") {
+        return 'Director de Centro'
+      }
+      else {
+        return 'Director de ONG(Admin)'
       }
     }
   }
@@ -81,7 +99,6 @@ export class UsersComponent implements OnInit {
   getCentros() {
     this.admin.getCentros().subscribe((data) => {
       this.centros = data;
-      console.log(this.centros);
     });
   }
 
@@ -89,9 +106,7 @@ export class UsersComponent implements OnInit {
     this.currentPage = this.getPageLocalStorage();
     this.admin.getUsers().subscribe({
       next: (res: Users[]) => {
-        this.userListComplete = res.filter((resp) => {
-          return resp.rolNombre?.match('ROLE_USER');
-        });
+        this.userListComplete = res
         console.log('userlistcomplete', this.userListComplete);
 
         this.pageToShow(this.currentPage, this.userListComplete); //para paginación
@@ -182,7 +197,6 @@ export class UsersComponent implements OnInit {
     this.admin.deleteUser(this.idToDelete).subscribe({
       next: (data: any) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(data);
         this.getUsers();
       },
       error: (err) => {
@@ -201,6 +215,7 @@ export class UsersComponent implements OnInit {
     let isNewUserStr = localStorage.getItem('isNewUser');
     let isNewUser;
     if (isNewUserStr) {
+      isNewUser = JSON.parse(isNewUserStr);
     }
     if (newOrEditeduser) {
       if (isNewUser) {
@@ -212,6 +227,44 @@ export class UsersComponent implements OnInit {
       localStorage.removeItem('newOrEditedUser');
     }
   }
+  // para agregar un usuario a mas de un centro
+  getCentrosLocalStorage() {
+    var centosAsig = localStorage.getItem("centroA")
+    if (centosAsig) {
+      this.centroAsignados = JSON.parse(centosAsig)
+      this.getUser(this.centroAsignados[0])
+    }
+    localStorage.removeItem("centroA")
+  }
+
+  getUser(idCentro: number): any {
+    if (idCentro) {
+      this.admin.getCenter(idCentro).subscribe(data => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.userAsig = data.usuario
+        for (let i of this.centroAsignados) {
+          this.editCentros(this.centros[i])
+        }
+      })
+    }
+  }
+
+  editCentros(centro: Centro) {
+    if (this.userAsig) {
+      centro.usuario = this.userAsig
+      console.log(centro.usuario)
+      this.admin.editCenter(centro, centro.id).subscribe({
+        next: (data: any) => {
+          setTimeout(() => this.cdr.detectChanges())
+        },
+        error: (err) => {
+          setTimeout(() => this.cdr.detectChanges())
+          console.log(err)
+        }
+      })
+    }
+  }
+  // 
 
   close() {
     this.flagNew = false;
