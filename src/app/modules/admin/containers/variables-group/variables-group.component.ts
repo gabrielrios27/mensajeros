@@ -78,6 +78,7 @@ export class VariablesGroupComponent implements OnInit {
         },
       });
   }
+
   //para paginación----
   pageToShow(page: number, list: variable[]) {
     this.setPageLocalStorage(page);
@@ -136,11 +137,11 @@ export class VariablesGroupComponent implements OnInit {
     }
   }
   setPageLocalStorage(page: number) {
-    localStorage.setItem('variablesPage', JSON.stringify(page));
+    localStorage.setItem('variablePage', JSON.stringify(page));
   }
   getPageLocalStorage(): number {
     let pageLocalStorage: number = 1;
-    let pageLocalStorageJSON = localStorage.getItem('variablesPage');
+    let pageLocalStorageJSON = localStorage.getItem('variablePage');
     if (pageLocalStorageJSON) {
       pageLocalStorage = JSON.parse(pageLocalStorageJSON);
     }

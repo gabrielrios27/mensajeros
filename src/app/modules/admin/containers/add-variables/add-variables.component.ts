@@ -32,6 +32,8 @@ export class AddVariablesComponent implements OnInit {
   idVariable: number;
   variableInput: string = '';
   descriptionInput: string = '';
+  //para id de eje desde donde se dio click a crear variable
+  idAxeVariable: number;
   //para chekear si la variable ya existe.
   listOfVariable: variable[] = [];
   isInList: boolean = false;
@@ -48,7 +50,7 @@ export class AddVariablesComponent implements OnInit {
   itemsPerPage: number = 10;
   quantityOfPages: number = 1;
   //eje asignado
-  selectedAxe: any;
+  selectedAxe: axes = {} as axes;
   //radio button tipo de respuesta
   typeAnswer: string = 'Numérico';
   flagGenre: boolean = true;
@@ -88,6 +90,7 @@ export class AddVariablesComponent implements OnInit {
     private _adminSvc: AdminService
   ) {
     this.idVariable = 0;
+    this.idAxeVariable = 0;
     this.variableById = {} as variable;
   }
   ejeControl = new FormControl(null, Validators.required);
@@ -98,6 +101,7 @@ export class AddVariablesComponent implements OnInit {
     this.getAxesList();
     this.setFlagAddEdit(false); //Para colocar modal de advertencia de cambio de pantalla si se da click a item en navbar
     this.idVariable = this.getIdFromRute();
+
     console.log('id ruta:' + this.idVariable);
     this.completeInputWithVariable(this.idVariable);
     // this.getVariableList();
@@ -106,11 +110,13 @@ export class AddVariablesComponent implements OnInit {
     this.onSelectionChange();
     this.onSelectValueScale();
   }
+
   //obtiene la lista de ejes
   getAxesList() {
     this._adminSvc.getAxes().subscribe({
       next: (data: axes[]) => {
         this.axesList = data;
+        this.getIdAxeFromRute(); //obtiene el id de eje de la ruta y renderiza el eje elegido en el select de eje
       },
       error: (err) => {
         console.log(err);
@@ -172,9 +178,11 @@ export class AddVariablesComponent implements OnInit {
   }
   setPageLocalStorage() {
     //para paginación
+
     this.quantityOfPages = Math.ceil(
       (this.listOfVariable.length + 1) / this.itemsPerPage
     );
+    console.log('variablePage en loc stg: ', this.quantityOfPages);
     localStorage.setItem('variablePage', JSON.stringify(this.quantityOfPages));
   }
   putOrAddVariable() {
@@ -255,6 +263,21 @@ export class AddVariablesComponent implements OnInit {
       idToShow = params.get('id');
     });
     return Number(idToShow);
+  }
+  //obtiene el id de eje de la ruta y renderiza el eje elegido en el select de eje
+  getIdAxeFromRute() {
+    let idAxeToShow;
+    this.rutaActiva.paramMap.subscribe((params: ParamMap) => {
+      idAxeToShow = Number(params.get('id-axe'));
+      if (idAxeToShow !== 0) {
+        for (let item of this.axesList) {
+          if (item.id === idAxeToShow) {
+            this.selectedAxe = item;
+            this.getVariableList(); //obtiene la lista de variables de ese eje para chekear si el eje creado ya existe
+          }
+        }
+      }
+    });
   }
   //SI EL ID-variable DE RUTA ES DISTINTO DE CERO ENTONCES ES UNA VARIABLE A EDITAR Y LLAMA A METODO getVariableById
   completeInputWithVariable(id: number) {
