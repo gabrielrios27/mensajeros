@@ -192,7 +192,10 @@ export class AddVariablesComponent implements OnInit {
       this.setPageLocalStorage(); //para paginación
       this._adminSvc.createVariable(variableToCreate).subscribe({
         next: (data: variable) => {
-          this.router.navigate(['admin/dashboard/variables']);
+          this.router.navigate([
+            'admin/dashboard/variables/variables-agrupadas/' +
+              variableToCreate.eje.id, //navega hacia la ultima pagina de las variables agrupadas de el eje elegido
+          ]);
           console.log(data);
         },
         error: (err) => {
