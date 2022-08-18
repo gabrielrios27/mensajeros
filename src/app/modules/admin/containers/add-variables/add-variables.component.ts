@@ -278,7 +278,8 @@ export class AddVariablesComponent implements OnInit {
     }
   }
   getVariableList() {
-    this._adminSvc.getVariablesQuantityPerAxe().subscribe({
+    this._adminSvc.getVariablesGroup('2').subscribe({
+      // borrar el '2' y colocar el id del eje selecionado
       next: (data: variable[]) => {
         this.listOfVariable = data;
       },
