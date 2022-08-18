@@ -6,7 +6,7 @@ import { Users } from '../models/users';
 import { axes, flag, user, variable } from '../models';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class AdminService {
   api_key: string = '';
@@ -17,54 +17,61 @@ export class AdminService {
   EPAxes: string = '/ejes';
   EPVariables: string = '/variables';
 
-    constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
-    editCenter(center: Centro, id: any): Observable<Centro> {
-        return this._http.put<Centro>(this.baseUrlTami + '/centros/' + id, center, {
-            headers: this.headers,
-        });
-    }
+  // endpoints centros
 
-    deleteCenter(id: number): Observable<boolean> {
-        return this._http.delete<boolean>(this.baseUrlTami + '/centros/' + id, {
-            headers: this.headers,
-        });
-    }
+  editCenter(center: Centro, id: any): Observable<Centro> {
+    return this._http.put<Centro>(this.baseUrlTami + '/centros/' + id, center, {
+      headers: this.headers,
+    });
+  }
 
-    addCenter(center: Centro): Observable<Centro> {
-        return this._http.post<Centro>(this.baseUrlTami + '/centros', center, {
-            headers: this.headers,
-        });
-    }
-    getCenter(id: number): Observable<Centro> {
-        return this._http.get<Centro>(this.baseUrlTami + '/centros/' + id);
-    }
+  deleteCenter(id: number): Observable<boolean> {
+    return this._http.delete<boolean>(this.baseUrlTami + '/centros/' + id, {
+      headers: this.headers,
+    });
+  }
 
-    getCentros(): Observable<Centro[]> {
-        return this._http.get<Centro[]>(this.baseUrlTami + '/centros');
-    }
+  addCenter(center: Centro): Observable<Centro> {
+    return this._http.post<Centro>(this.baseUrlTami + '/centros', center, {
+      headers: this.headers,
+    });
+  }
+  getCenter(id: number): Observable<Centro> {
+    return this._http.get<Centro>(this.baseUrlTami + '/centros/' + id);
+  }
 
-    getUsers(): Observable<Users[]> {
-        return this._http.get<Users[]>(this.baseUrlTami + '/usuarios');
-    }
+  getCentros(): Observable<Centro[]> {
+    return this._http.get<Centro[]>(this.baseUrlTami + '/centros');
+  }
+  //
 
-    addUser(user: Users, id: number): Observable<any> {
-        return this._http.post(this.baseUrlTami + '/usuarios/' + id, user, {responseType: 'text'})
-    }
-    addUserAdmin(user: Users): Observable<Users> {
-        return this._http.post<Users>(this.baseUrlTami + '/auth/agregar', user)
-    }
-    deleteUser(id: number): Observable<boolean> {
-        return this._http.delete<boolean>(this.baseUrlTami + '/usuarios/' + id);
-    }
+  //endpoints user
+  getUsers(): Observable<Users[]> {
+    return this._http.get<Users[]>(this.baseUrlTami + '/usuarios');
+  }
 
-    editUser(user: Users, id: any): Observable<Response> {
-        return this._http.put<Response>(this.baseUrlTami + '/usuarios/' + id, user);
-    }
+  addUser(user: Users, id: number): Observable<any> {
+    return this._http.post(this.baseUrlTami + '/usuarios/' + id, user, { responseType: 'text' })
+  }
+  addUserAdmin(user: Users): Observable<Users> {
+    return this._http.post<Users>(this.baseUrlTami + '/auth/agregar', user)
+  }
+  deleteUser(id: number): Observable<boolean> {
+    return this._http.delete<boolean>(this.baseUrlTami + '/usuarios/' + id);
+  }
 
-    getUser(id: number): Observable<Users> {
-        return this._http.get<Users>(this.baseUrlTami + '/usuarios/' + id);
-    }
+  editUser(user: Users, id: any): Observable<Response> {
+    return this._http.put<Response>(this.baseUrlTami + '/usuarios/' + id, user);
+  }
+
+  getUser(id: number): Observable<Users> {
+    return this._http.get<Users>(this.baseUrlTami + '/usuarios/' + id);
+  }
+  //
+
+  //endpoints axes
 
   getAxes(): Observable<axes[]> {
     return this._http.get<axes[]>(this.baseUrlTami + this.EPAxes);
@@ -84,6 +91,8 @@ export class AdminService {
   deleteAxeWithId(id: string): Observable<any> {
     return this._http.delete<axes>(this.baseUrlTami + this.EPAxes + '/' + id);
   }
+  //
+
   // Variables------------
   getVariables(): Observable<variable[]> {
     return this._http.get<variable[]>(this.baseUrlTami + this.EPVariables);
