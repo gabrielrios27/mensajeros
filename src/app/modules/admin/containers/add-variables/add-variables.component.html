@@ -1,5 +1,13 @@
 <section class="container-add-variable" (click)="close()">
-  <h1 class="container-add-variable__title">Agregar Variable</h1>
+  <h1
+    *ngIf="idVariable === 0; else editTemplate"
+    class="container-add-variable__title"
+  >
+    Agregar Variable
+  </h1>
+  <ng-template #editTemplate>
+    <h1 class="container-add-variable__title">Editar Variable</h1>
+  </ng-template>
   <div class="add-variable">
     <form
       class="add-variable__form"
