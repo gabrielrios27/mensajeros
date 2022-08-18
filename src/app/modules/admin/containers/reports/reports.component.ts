@@ -1,16 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-
-export interface PeriodicElement {
-  id: number
-  numero: string,
-  fechaCreacion: Date
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1 ,numero: 'reporte 1', fechaCreacion: new Date},
-  {id: 2 ,numero: 'reporte 2', fechaCreacion: new Date}
-];
+import { AdminService } from '../../services/admin.service';
+import { Report } from '../../models/report';
 
 
 @Component({
@@ -21,7 +12,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class ReportsComponent implements OnInit {
   numero: any
-  reports: Array<PeriodicElement> = ELEMENT_DATA;
+  
 
   flagEdited: boolean = false;
   flagNew: boolean = false;
@@ -29,19 +20,22 @@ export class ReportsComponent implements OnInit {
   idToDelete: number = 0;
 
   // pagination
-  userListComplete: Array<PeriodicElement> = new Array();
+  userListComplete: Array<Report> = new Array();
   listLenght: number = 0;
   itemsPerPage: number = 10;
   quantityOfPages: number = 1;
   currentPage: number = 1;
-  listCurrentPage: Array<PeriodicElement> = new Array();
+  listCurrentPage: Array<Report> = new Array();
   initialItem: number = 1;
   finalItem: number = 10;
+  //
 
-  constructor(private router: Router) {}
+  reports: Array<Report> = []
+
+  constructor(private router: Router, private admin: AdminService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.reports = ELEMENT_DATA;
+    this.getReports()
     this.getUserLocalStorage()
   }
 
@@ -51,11 +45,27 @@ export class ReportsComponent implements OnInit {
       this.ngOnInit()
     }
     else {
-      this.reports = this.reports.filter(res => {
-        return res.numero.toLocaleLowerCase().match(this.numero.toLocaleLowerCase())
-      })
+      // this.reports = this.reports.filter(res => {
+      //   return res.numero.toLocaleLowerCase().match(this.numero.toLocaleLowerCase())
+      // })
     }
 
+  }
+
+  getReports(){
+    //this.currentPage = this.getPageLocalStorage();
+    this.admin.getResports().subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.reports = data;
+        this.pageToShow(this.currentPage, this.reports); //para paginación
+        console.log(data);
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(err);
+      },
+    });
   }
 
   create(){ 
@@ -64,7 +74,7 @@ export class ReportsComponent implements OnInit {
   }
 
   //para paginación----
-  pageToShow(page: number, list: PeriodicElement[]) {
+  pageToShow(page: number, list: Report[]) {
     // this.setPageLocalStorage(page);
     this.listLenght = list.length;
     this.quantityOfPages = Math.ceil(this.listLenght / this.itemsPerPage);
