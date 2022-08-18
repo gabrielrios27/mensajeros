@@ -26,7 +26,7 @@ export class AmUserComponent implements OnInit {
   rol: any
   centrosAsignados: Array<number> = []
   userAsignado?: Users
-
+  centerSelects: Array<Centro> = []
   centros: Array<Centro> = new Array<Centro>()
   // para paginacion de centros
   itemsPerPage: number = 10;
@@ -45,8 +45,10 @@ export class AmUserComponent implements OnInit {
     this.formUpEdit = fb.group({
       nombre: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      contrasena: ['', Validators.compose([Validators.required, Validators.minLength(8)]),
-      ],
+      // contrasena: ['', Validators.compose([Validators.required, Validators.minLength(8)]),
+      // ],
+      selectOp: [this.centroAsig()]
+      
     });
   }
 
@@ -55,6 +57,7 @@ export class AmUserComponent implements OnInit {
     this.getCentros()
     this.getUsers()
     this.validatorEdit()
+    this.centroAsig()
   }
 
   validatorEdit() {
@@ -62,7 +65,6 @@ export class AmUserComponent implements OnInit {
       this.flagEdit = true
       this.nombre = this.data.user?.nombre
       this.email = this.data.user?.email
-      this.contrasena = this.data.user?.contrasena
       if (this.data.user?.rolNombre === "ROLE_ADMIN") {
         this.flagTipoRol = false
       }
@@ -85,9 +87,7 @@ export class AmUserComponent implements OnInit {
     //para paginación
     this.admin.getUsers().subscribe({
       next: (res: Users[]) => {
-        this.userListComplete = res.filter((resp) => {
-          return resp.rolNombre?.match('ROLE_USER');
-        });
+        this.userListComplete = res
       },
       error: (err) => {
         console.log(err);
@@ -151,11 +151,18 @@ export class AmUserComponent implements OnInit {
     this.data.nombreUsuario = this.formUpEdit.value.nombre
   }
 
+
   editCentros(user: Users, idCentro: number, centro: Centro) {
     if (user) {
       console.log("centro",centro)
       console.log("usuario",user)
-      centro.usuario = user
+      centro.usuario = {
+        id: this.data.user?.id,
+        nombre: '',
+        contrasena: '',
+        email: '',
+        rolNombre: ''
+      }
       this.admin.editCenter(centro, centro.id).subscribe({
         next: (data: any) => {
           setTimeout(() => this.cdr.detectChanges())
@@ -206,6 +213,13 @@ export class AmUserComponent implements OnInit {
   }
 
   edit(user: Users, id: any) {
+    if( this.contrasena === ''){
+      user.contrasena = ''
+    }
+    else{
+      user.contrasena = this.contrasena
+    }
+    
     this.admin.editUser(user, id).subscribe({
       next: (data: any) => {
         setTimeout(() => this.cdr.detectChanges())
@@ -236,6 +250,18 @@ export class AmUserComponent implements OnInit {
     localStorage.setItem("centroA", JSON.stringify(this.centrosAsignados))
   }
   // 
+
+  centroAsig():any{
+    for(let c of this.centros){
+      console.log("id",c.usuario?.id)
+      if(c.usuario?.nombre === this.data.user?.nombre){
+        console.log("centro",c)
+        this.centerSelects.push(c)
+      }
+    }
+    console.log(this.centerSelects)
+  }
+
   capturarCentro(e: any) {
     this.centrosAsignados = e
   }
