@@ -4,6 +4,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Centro } from '../models/centro';
 import { Users } from '../models/users';
 import { axes, flag, user, variable } from '../models';
+import { Report } from '../models/report';
 
 @Injectable({
   providedIn: 'root',
@@ -118,4 +119,10 @@ export class AdminService {
       this.baseUrlTami + this.EPVariables + '/' + id
     );
   }
+  // enpoints reports
+
+  getResports(): Observable<Report[]> {
+    return this._http.get<Report[]>(this.baseUrlTami + '/reportes');
+  }
+
 }
