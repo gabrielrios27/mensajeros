@@ -68,6 +68,22 @@ export class ReportsComponent implements OnInit {
     });
   }
 
+  deleteReport(){
+    this.admin.deleteReport(this.idToDelete).subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.pageToShow(this.currentPage, this.reports); //para paginación
+        this.getReports();
+        this.close();
+        console.log("delete report",data);
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(err);
+      },
+    });
+  }
+
   create(){ 
     this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes/add-mod-report'])
     
