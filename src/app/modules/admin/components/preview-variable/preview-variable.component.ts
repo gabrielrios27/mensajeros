@@ -24,20 +24,18 @@ export class PreviewVariableComponent implements OnInit {
     console.log(this.variableValue);
   }
   onGoOutPreview(value: boolean) {
-    console.log(value);
     this.goOutPreview.emit(value);
   }
   onChangeInput() {
     this.total = 0;
-    if (!this.female) {
-      this.female = 0;
+    if (this.female) {
+      this.total += this.female;
     }
-    if (!this.male) {
-      this.male = 0;
+    if (this.male) {
+      this.total += this.male;
     }
-    if (!this.noBinary) {
-      this.noBinary = 0;
+    if (this.noBinary) {
+      this.total += this.noBinary;
     }
-    this.total = this.female + this.male + this.noBinary;
   }
 }

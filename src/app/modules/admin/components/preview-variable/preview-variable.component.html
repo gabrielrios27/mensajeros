@@ -32,7 +32,7 @@
           {{ variableValue.nombre }} ({{ variableValue.descripcion }})
         </h3>
       </div>
-      <div class="number-genre">
+      <div class="number-genre" *ngIf="variableValue.genero">
         <input
           class="number-genre__input"
           [(ngModel)]="female"
@@ -56,6 +56,15 @@
         />
         <p class="number-genre__total-text">Total</p>
         <p class="number-genre__total-result">{{ total }}</p>
+      </div>
+      <div class="observations">
+        <label class="observations__label">Observaciones</label>
+        <textarea
+          class="observations__textarea"
+          name="observations"
+          id="observations"
+          rows="1"
+        ></textarea>
       </div>
     </section>
   </div>

@@ -93,7 +93,7 @@
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     text-align: center;
-    outline-color: $outline-focus;
+    outline-color: $outline-focus-center;
     font-size: 20px;
     font-weight: 400;
   }
@@ -116,5 +116,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+.observations {
+  display: flex;
+  margin-top: 93px;
+
+  .observations__label {
+    font-size: 20px;
+    margin-right: 8px;
+    margin-top: 23px;
+  }
+  .observations__textarea {
+    font-size: 20px;
+    width: 100%;
+    max-width: 830.68px;
+    min-height: 71px;
+    max-height: 160px;
+    border: 1px solid #79747e;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 23px 15px;
+    outline-color: $outline-focus-center;
   }
 }
