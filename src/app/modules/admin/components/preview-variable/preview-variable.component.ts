@@ -16,12 +16,15 @@ export class PreviewVariableComponent implements OnInit {
   total: number | null;
   //para variable number
   inputNumber: number | null;
+  //para variable textual
+  inputTextual: number | null;
   constructor() {
     this.female = null;
     this.male = null;
     this.noBinary = null;
     this.total = null;
     this.inputNumber = null;
+    this.inputTextual = null;
   }
 
   ngOnInit(): void {

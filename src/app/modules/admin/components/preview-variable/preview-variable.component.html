@@ -26,12 +26,14 @@
     </button>
     <section class="variable">
       <h1 class="variable__title">EJE 1: {{ variableValue.eje.nombre }}</h1>
+      <!-- nombre de variable con descripción -->
       <div class="variable__conteiner-name">
         <h3 class="variable__index">A</h3>
         <h3 class="variable__name-description">
           {{ variableValue.nombre }} ({{ variableValue.descripcion }})
         </h3>
       </div>
+      <!-- tipo numerico-distinción de genero -->
       <div class="number-genre" *ngIf="variableValue.genero">
         <input
           class="number-genre__input"
@@ -57,6 +59,7 @@
         <p class="number-genre__total-text">Total</p>
         <p class="number-genre__total-result">{{ total }}</p>
       </div>
+      <!-- tipo numerico -->
       <div
         class="number"
         *ngIf="variableValue.tipo === 'Numérico' && !variableValue.genero"
@@ -69,6 +72,21 @@
           (ngModelChange)="checkValue()"
         />
       </div>
+      <!-- tipo textual -->
+      <div
+        class="textual"
+        *ngIf="variableValue.tipo === 'Textual' && !variableValue.escala_valor"
+      >
+        <input
+          class="textual__input"
+          [(ngModel)]="inputTextual"
+          type="text"
+          placeholder="Ingrese texto"
+          (ngModelChange)="checkValue()"
+          maxlength="400"
+        />
+      </div>
+      <!-- observaciones -->
       <div class="observations">
         <label class="observations__label">Observaciones</label>
         <textarea
