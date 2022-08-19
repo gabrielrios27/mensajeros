@@ -85,6 +85,8 @@ export class AddVariablesComponent implements OnInit {
     etiqueta_inicial: [, [Validators.required]],
     etiqueta_final: [, [Validators.required]],
   });
+  //Para previsualización de variable
+  flagPreview: boolean;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -94,6 +96,7 @@ export class AddVariablesComponent implements OnInit {
     this.idVariable = 0;
     this.idAxeVariable = 0;
     this.variableById = {} as variable;
+    this.flagPreview = false;
   }
   ejeControl = new FormControl(null, Validators.required);
   selectFormControl = new FormControl('', Validators.required);
@@ -137,7 +140,7 @@ export class AddVariablesComponent implements OnInit {
     localStorage.setItem('flagAddEdit', JSON.stringify(this.flagAddEdit));
   }
   onSelection($event: any) {
-    console.log($event);
+    console.log('on selection en add variable', $event);
     this.showDialog = false;
     if ($event === 'ok') {
       this.subject.next(true);
@@ -149,6 +152,14 @@ export class AddVariablesComponent implements OnInit {
   openDialog() {
     console.log('opn dialog');
     this.showDialog = true;
+  }
+  //Para preview de variable--------------------
+  toggleFlagPreview(value: boolean) {
+    this.flagPreview = value;
+  }
+  onGoOutPreview($event: boolean) {
+    console.log('evento desde hijo: ', $event);
+    this.toggleFlagPreview(!$event);
   }
   //click al botón de confirmar------------------
   onConfirm() {
