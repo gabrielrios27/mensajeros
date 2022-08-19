@@ -57,6 +57,18 @@
         <p class="number-genre__total-text">Total</p>
         <p class="number-genre__total-result">{{ total }}</p>
       </div>
+      <div
+        class="number"
+        *ngIf="variableValue.tipo === 'Numérico' && !variableValue.genero"
+      >
+        <input
+          class="number__input"
+          [(ngModel)]="inputNumber"
+          type="number"
+          placeholder="Inserte número"
+          (ngModelChange)="checkValue()"
+        />
+      </div>
       <div class="observations">
         <label class="observations__label">Observaciones</label>
         <textarea
