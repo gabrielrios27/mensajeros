@@ -122,7 +122,7 @@ export class AdminService {
   // enpoints reports
 
   getResports(): Observable<Report[]> {
-    return this._http.get<Report[]>(this.baseUrlTami + '/reportes');
+    return this._http.get<Report[]>(this.baseUrl + '/reportes');
   }
 
 }
