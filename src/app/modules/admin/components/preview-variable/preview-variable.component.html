@@ -73,10 +73,7 @@
         />
       </div>
       <!-- tipo textual -->
-      <div
-        class="textual"
-        *ngIf="variableValue.tipo === 'Textual' && !variableValue.escala_valor"
-      >
+      <div class="textual" *ngIf="variableValue.tipo === 'Textual'">
         <input
           class="textual__input"
           [(ngModel)]="inputTextual"
@@ -85,6 +82,31 @@
           (ngModelChange)="checkValue()"
           maxlength="400"
         />
+        <!-- tipo escala de valor -->
+        <div class="value-scale" *ngIf="variableValue.escala_valor">
+          <h4 class="value-scale__title">Escala de Valor</h4>
+          <div class="value-scale__conteiner">
+            <p class="value-scale__tag">{{ variableValue.etiqueta_inicial }}</p>
+
+            <mat-radio-group
+              class="value-scale__radio-group"
+              [(ngModel)]="valueScaleSelected"
+            >
+              <mat-radio-button
+                class="value-scale__radio-btn"
+                [ngClass]="
+                  finalValue > 5 ? 'value-scale__radio-btn--larger' : ''
+                "
+                *ngFor="let item of valueScale"
+                value="{{ item }}"
+              >
+                {{ item }}
+              </mat-radio-button>
+            </mat-radio-group>
+
+            <p class="value-scale__tag">{{ variableValue.etiqueta_final }}</p>
+          </div>
+        </div>
       </div>
       <!-- observaciones -->
       <div class="observations">

@@ -18,6 +18,10 @@ export class PreviewVariableComponent implements OnInit {
   inputNumber: number | null;
   //para variable textual
   inputTextual: number | null;
+  //para escala de valor
+  valueScaleSelected: number | null;
+  valueScale: number[];
+  finalValue: number;
   constructor() {
     this.female = null;
     this.male = null;
@@ -25,10 +29,14 @@ export class PreviewVariableComponent implements OnInit {
     this.total = null;
     this.inputNumber = null;
     this.inputTextual = null;
+    this.valueScaleSelected = null;
+    this.valueScale = [];
+    this.finalValue = 0;
   }
 
   ngOnInit(): void {
-    console.log(this.variableValue);
+    this.createValueScale();
+    this.finalValue = Number(this.variableValue.valor_final);
   }
   //al dar click en salir (X)
   onGoOutPreview(value: boolean) {
@@ -64,6 +72,17 @@ export class PreviewVariableComponent implements OnInit {
       if (this.inputNumber < 0) {
         this.inputNumber = 1;
       }
+    }
+  }
+  //para variable escala de valor
+  //crea array con numeros de la escala elegida para renderizarla como checkbox
+  createValueScale() {
+    for (
+      let i = Number(this.variableValue.valor_inicial);
+      i <= Number(this.variableValue.valor_final);
+      i++
+    ) {
+      this.valueScale.push(i);
     }
   }
 }
