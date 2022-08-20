@@ -309,16 +309,18 @@ export class AddVariablesComponent implements OnInit {
         this.variableInput = data.nombre;
         this.descriptionInput = data.descripcion;
         this.typeAnswer = data.tipo;
+        if (data.tipo === 'Textual') {
+          this.flagGenre = false;
+        } else {
+          this.flagGenre = true;
+        }
         if (data.genero?.toLowerCase() === 'true') {
           this.addGenre = true;
-          this.flagGenre = true;
         } else {
           this.addGenre = false;
-          this.flagGenre = false;
         }
         if (data.escala_valor?.toLowerCase() === 'true') {
           this.addValueEscale = true;
-          this.flagGenre = false;
           this.flagValueScale = true;
           this.firstValue = Number(data.valor_inicial);
           this.lastValue = Number(data.valor_final);
@@ -332,7 +334,6 @@ export class AddVariablesComponent implements OnInit {
           }
         } else {
           this.addValueEscale = false;
-          this.flagGenre = true;
           this.flagValueScale = false;
           this.newVariable.get('etiqueta_inicial')?.disable();
           this.newVariable.get('etiqueta_final')?.disable();
