@@ -23,6 +23,8 @@ import * as layoutsServices from './services';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../modules/auth/services/auth.service';
 import { AuthGuard } from '../../modules/auth/guards/auth.guard';
+import { UserLayoutComponent } from './containers/user-layout/user-layout.component';
+import { UserNavbarComponent } from './components/user-navbar/user-navbar.component';
 
 @NgModule({
   imports: [
@@ -38,6 +40,8 @@ import { AuthGuard } from '../../modules/auth/guards/auth.guard';
   declarations: [
     ...layoutsContainers.containers,
     ...layoutsComponents.components,
+    UserLayoutComponent,
+    UserNavbarComponent,
   ],
   exports: [...layoutsContainers.containers, ...layoutsComponents.components],
 })
