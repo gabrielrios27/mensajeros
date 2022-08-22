@@ -1,16 +1,12 @@
 <div class="container-ejes" id="select-ejes">
-    <mat-select class="mat-select-ejes" placeholder="Selecciona un Eje de Variables" [(value)]="eje"
+    <mat-select class="mat-select-ejes" placeholder="Selecciona un Eje de Variables" [(value)]="axe"
         name="eje" (selectionChange)="capturarEje($event.value)">
-        <mat-option value="ACOMPAÑAMIENTO EDUCATIVO">ACOMPAÑAMIENTO EDUCATIVO</mat-option>
-        <mat-option value="ACOMPAÑAMIENTO EN SALUD">ACOMPAÑAMIENTO EN SALUD</mat-option>
-        <mat-option value="TALLER 2">TALLER 2</mat-option>
+        <mat-option [value]="item.id" *ngFor="let item of listOfAxes">{{item.nombre}}</mat-option>
     </mat-select>
-    <mat-select [disabled]="!eje" class="mat-select-ejes" placeholder="Selecciona una o más."
+    <mat-select [disabled]="!axe" class="mat-select-ejes" placeholder="Selecciona una o más."
         multiple="" [(value)]="variables" name="variables"
         (selectionChange)="capturarVariables($event.value)">
-        <mat-option [value]="'ACOMPAÑAMIENTO EDUCATIVO'">ACOMPAÑAMIENTO EDUCATIVO</mat-option>
-        <mat-option [value]="'ACOMPAÑAMIENTO EN SALUD'">ACOMPAÑAMIENTO EN SALUD</mat-option>
-        <mat-option [value]="'TALLER 2'">TALLER 2</mat-option>
+        <mat-option [value]="item" *ngFor="let item of listOfVariables">{{item.nombre}}</mat-option>
     </mat-select>
 </div>
 <div class="container-label-variables">
@@ -18,7 +14,7 @@
         <div>
             <label>Variables Seleccionadas </label>
         </div>
-        <label class="label-variables" *ngFor="let item of variables">{{item}}<a
+        <label class="label-variables" *ngFor="let item of variables">{{item.nombre}}<a
                 style="cursor: pointer; margin-top: 5px;" (click)="removeVariable(item)">
                 <mat-icon>cancel</mat-icon>
             </a>
