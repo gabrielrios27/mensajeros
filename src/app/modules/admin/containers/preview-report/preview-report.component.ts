@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { flag } from '../../models/admin.model';
 import { Router } from '@angular/router';
 
 @Component({
