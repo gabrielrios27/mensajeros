@@ -48,7 +48,7 @@ export class AmUserComponent implements OnInit {
       // contrasena: ['', Validators.compose([Validators.required, Validators.minLength(8)]),
       // ],
       selectOp: [this.centroAsig()]
-      
+
     });
   }
 
@@ -132,30 +132,40 @@ export class AmUserComponent implements OnInit {
   }
 
   editar(user: Users) {
-    // if (this.centrosAsignados.length >= 1) {
-    //   this.SetCentrosLocalStg()
-    //   this.editCentros(user, this.centrosAsignados[0])
-    // }
-    for (let i of this.centros) {
-      console.log("id",i.id)
-      if (i.id) {
-        if (i.id == this.centrosAsignados[0]) {
-          console.log(user)
-          this.editCentros(user, this.centrosAsignados[0],i)
-          this.edit(user, this.data.user?.id)
+    if (this.centrosAsignados.length >= 2) {
+      this.SetCentrosLocalStg()
+      for (let i of this.centros) {
+        console.log("id", i.id)
+        if (i.id) {
+          if (i.id == this.centrosAsignados[0]) {
+            console.log(user)
+            this.editCentros(user, this.centrosAsignados[0], i)
+            this.edit(user, this.data.user?.id)
+          }
         }
       }
-
     }
-    console.log("centros",this.centros)
+    else {
+      for (let i of this.centros) {
+        console.log("id", i.id)
+        if (i.id) {
+          if (i.id == this.centrosAsignados[0]) {
+            console.log(user)
+            this.editCentros(user, this.centrosAsignados[0], i)
+            this.edit(user, this.data.user?.id)
+          }
+        }
+      }
+    }
+    console.log("centros", this.centros)
     this.data.nombreUsuario = this.formUpEdit.value.nombre
   }
 
 
   editCentros(user: Users, idCentro: number, centro: Centro) {
     if (user) {
-      console.log("centro",centro)
-      console.log("usuario",user)
+      console.log("centro", centro)
+      console.log("usuario", user)
       centro.usuario = {
         id: this.data.user?.id,
         nombre: '',
@@ -213,13 +223,13 @@ export class AmUserComponent implements OnInit {
   }
 
   edit(user: Users, id: any) {
-    if( this.contrasena === ''){
+    if (this.contrasena === '') {
       user.contrasena = ''
     }
-    else{
+    else {
       user.contrasena = this.contrasena
     }
-    
+
     this.admin.editUser(user, id).subscribe({
       next: (data: any) => {
         setTimeout(() => this.cdr.detectChanges())
@@ -241,6 +251,7 @@ export class AmUserComponent implements OnInit {
     this.admin.getCentros().subscribe(data => {
       setTimeout(() => this.cdr.detectChanges())
       this.centros = data
+      this.centroAsig()
       console.log(this.centros)
     })
   }
@@ -251,14 +262,17 @@ export class AmUserComponent implements OnInit {
   }
   // 
 
-  centroAsig():any{
-    for(let c of this.centros){
-      console.log("id",c.usuario?.id)
-      if(c.usuario?.nombre === this.data.user?.nombre){
-        console.log("centro",c)
-        this.centerSelects.push(c)
+  centroAsig(): any {
+    this.centroAsignado = []
+    for (let c of this.centros) {
+      console.log("id", c.usuario?.id)
+      if (c.usuario?.nombre === this.data.user?.nombre) {
+        console.log("centro", c)
+        this.centroAsignado.push(c.id)
+        this.centerSelects.push(this.centroAsignado)
       }
     }
+    console.log(this.centroAsignado)
     console.log(this.centerSelects)
   }
 
