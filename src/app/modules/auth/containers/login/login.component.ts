@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
           setTimeout(() => this.cdr.detectChanges());
           console.log(data);
           this.setLocalStorage(data.token);
-          this.router.navigate(['admin/dashboard/home']);
+          this.router.navigate(['user/dashboard/home']);
         }
       },
       (error) => {
