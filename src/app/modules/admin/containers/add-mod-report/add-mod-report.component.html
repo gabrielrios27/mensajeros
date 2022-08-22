@@ -18,10 +18,9 @@
             <section>
                 <label>Centros alcanzados</label>
                 <mat-select placeholder="Selecciona al menos un Centro" checkboxPosition="after"
-                    formControlName="centros" panelClass="example-panel-red" multiple="">
-                    <mat-option class="mat-option" value="la balsa">la balsa</mat-option>
-                    <mat-option value="Hogar san jose">Hogar san jose</mat-option>
-                    <mat-option value="Casa matriz">Casa matriz</mat-option>
+                    formControlName="centros" panelClass="example-panel-red" multiple="" [(value)]="center"
+                    (selectionChange)="catchCenter($event.value)">
+                    <mat-option class="mat-option" [value]="item.id" *ngFor="let item of listCenters">{{item.nombre}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="formAdd.controls['centros'].invalid && formAdd.controls['centros'].dirty ">
                     <span>Campo requerido</span>
@@ -69,7 +68,7 @@
                 <label style="margin-right: 420px;">Eje</label>
                 <label>Variable</label>
                 <div *ngFor="let item of arrayc">
-                    <app-selecs-axes-variables>{{item}}</app-selecs-axes-variables>
+                    <app-selecs-axes-variables (axes)="storageAxes($event)"(variablesArray)="storageVariables($event)" >{{item}}</app-selecs-axes-variables>
                 </div>
             </section>
             <button mat-button class="button-ejes" (click)="createEje()">+ Eje</button>
@@ -83,7 +82,7 @@
                 </div>
             </div>
             <div class="div-button ">
-                <button mat-stroked-button class="button-create"  (click)="confirm()">Crear Reporte</button>
+                <button mat-stroked-button class="button-create"  (click)="confirm(formAdd.value)">Crear Reporte</button>
             </div>
         </form>
     </div>
