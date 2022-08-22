@@ -20,3 +20,43 @@
     padding-left: 20px;
   }
 }
+.list {
+  max-width: 997px;
+  width: 100%;
+  margin-top: 90px;
+  margin-left: 300px;
+  .list__row-header {
+    min-height: 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    .list__header {
+      list-style: none;
+      font-family: "Inter";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .list__header:first-of-type {
+      padding-left: 7px;
+      justify-self: flex-start;
+    }
+  }
+  .list__row-item {
+    min-height: 53px;
+    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    .list__item {
+      list-style: none;
+      font-family: "Inter";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .list__item:first-of-type {
+      justify-self: flex-start;
+      padding-left: 32px;
+    }
+  }
+}
