@@ -37,7 +37,7 @@ export const ROUTES: Routes = [
     component: ForgotPasswordComponent,
   },
   {
-    path: 'recover-password',
+    path: 'recover-password/:token',
     canActivate: [],
     component: RecoverPasswordComponent,
   },
