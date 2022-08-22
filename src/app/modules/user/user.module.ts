@@ -15,11 +15,12 @@ import * as userGuards from './guards';
 
 /* Services */
 import * as userServices from './services';
+import { PendingReportsComponent } from './containers/pending-reports/pending-reports.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule],
   providers: [...userServices.services, ...userGuards.guards],
-  declarations: [...userContainers.containers, ...userComponents.components],
+  declarations: [...userContainers.containers, ...userComponents.components, PendingReportsComponent],
   exports: [...userContainers.containers, ...userComponents.components],
 })
 export class UserModule {}
