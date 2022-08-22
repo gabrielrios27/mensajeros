@@ -43,7 +43,6 @@ export class VariablesComponent implements OnInit {
 
   ngOnInit() {
     this.getVariablesList();
-    this.getVariableLocalStorage(); //para modales de se creó o editó una variable
   }
   getVariablesList() {
     this.currentPage = this.getPageLocalStorage();
@@ -128,6 +127,9 @@ export class VariablesComponent implements OnInit {
   setPageLocalStorage(page: number) {
     localStorage.setItem('axeWithVariablesPage', JSON.stringify(page));
   }
+  setNameAxeLocalStorage(name: string) {
+    localStorage.setItem('nameAxeGroup', JSON.stringify(name));
+  }
   getPageLocalStorage(): number {
     let pageLocalStorage: number = 1;
     let pageLocalStorageJSON = localStorage.getItem('axeWithVariablesPage');
@@ -137,31 +139,7 @@ export class VariablesComponent implements OnInit {
     return pageLocalStorage;
   }
   //--------------------------------------------
-  //Para mostrar modal de se agrego o modifico una variable------------
-  getVariableLocalStorage() {
-    let newOrEditedVariableStr = localStorage.getItem('newOrEditedVariable');
-    if (newOrEditedVariableStr) {
-      this.newOrEditedVariable = JSON.parse(newOrEditedVariableStr);
-      setTimeout(() => {
-        this.close();
-      }, 3000);
-    }
 
-    let isNewVariableStr = localStorage.getItem('isNewVariable');
-    let isNewVariable;
-    if (isNewVariableStr) {
-      isNewVariable = JSON.parse(isNewVariableStr);
-    }
-    if (newOrEditedVariableStr) {
-      if (isNewVariable) {
-        this.flagNew = true;
-        localStorage.removeItem('isNewVariable');
-      } else {
-        this.flagEdited = true;
-      }
-      localStorage.removeItem('newOrEditedVariable');
-    }
-  }
   //buscador----------------------------
   Search(e: string) {
     /*informacion a buscar*/

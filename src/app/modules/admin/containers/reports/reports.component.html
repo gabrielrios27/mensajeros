@@ -40,10 +40,9 @@
                     <div class="list-reports__cell list-reports__cell--acction">
                         <a>
                             <img class="list-reports__ico-action"
-                                src="../../../../../assets/icons/arrows-angle-expand.svg" 
-                                matTooltip="Vizualizar" />
+                                src="../../../../../assets/icons/arrows-angle-expand.svg" matTooltip="Vizualizar" />
                         </a>
-                        <a (click)="edit(element)">
+                        <a>
                             <img class="list-reports__ico-action list-reports__ico-action--edit"
                                 src="../../../../../assets/icons/Pencil.svg" alt="Icono de editar"
                                 matTooltip="Editar" />
@@ -75,13 +74,17 @@
         </section>
     </div>
 
-    <!-- <div *ngIf="flagNew" class="modal">
+    <div *ngIf="flagNew" class="modal">
         <img class="modal__btnClose" (click)="close()" src="../../../../../assets/icons/X.svg" alt="icono de cerrar" />
         <div class="modal__container">
             <img class="modal__ico" src="../../../../../assets/icons/Check.svg" alt="icon check" />
-            <p class="modal__text">
-                ¡El Usuario {{ data.nombreUsuario }} fue creado con éxito!
-            </p>
+            <div>
+                <p class="modal__text">
+                    ¡Reporte Creado con éxito y enviado correctamente a los Centros Asignados!
+                </p>
+                <p class="modal__text" style="padding-top: 70px;"> Cierra para regresar al Home</p>
+            </div>
+
         </div>
     </div>
 
@@ -90,7 +93,7 @@
         <div class="modal__container">
             <img class="modal__ico" src="../../../../../assets/icons/Check.svg" alt="icon check" />
             <p class="modal__text">
-                ¡El Usuario {{ data.nombreUsuario }} fue editado con éxito!
+
             </p>
         </div>
     </div>
@@ -106,9 +109,9 @@
         </div>
         <div class="modal__options">
             <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
-            <button class="btn-modal__accept" (click)="deleteUser()">
+            <!-- <button class="btn-modal__accept" (click)="deleteUser()">
                 Confirmar y eliminar
-            </button>
+            </button> -->
         </div>
-    </div> -->
+    </div>
 </section>

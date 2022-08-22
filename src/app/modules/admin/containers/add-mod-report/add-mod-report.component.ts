@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 
@@ -24,7 +25,7 @@ export class AddModReportComponent implements OnInit {
   formAdd: FormGroup;
 
 
-  constructor(private fb: FormBuilder,) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.formAdd = fb.group({
       nombre: ['', Validators.required],
       centros: ['', Validators.required],
@@ -32,6 +33,17 @@ export class AddModReportComponent implements OnInit {
       hasta: ['', Validators.required],
     });
   }
+  name = "old name";
+ 
+
+    showIt = false;
+    showModal() {
+        this.showIt = true;
+    }
+    closeModal(newName: string) {
+        this.showIt = false;
+        if (newName) this.name = newName;
+    }
 
   ngOnInit(): void {
     this.setFlagAddEdit(false);
@@ -52,6 +64,11 @@ export class AddModReportComponent implements OnInit {
   removeVariable(variable: any) {
     this.variables = this.variables.filter((res: any) => res !== variable);
   }
+
+  confirm(){
+    this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes/add-mod-report/preview-report'])
+  }
+
 // Para modal de advertencia de cambio de pantalla
   setFlagAddEdit(value: boolean) {
     this.flagAddEdit = value;

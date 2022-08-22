@@ -27,7 +27,7 @@
                     <span>Campo requerido</span>
                 </mat-error>
                 <div class="container-button-expand">
-                    <a style="cursor: pointer;" class="button-expand">
+                    <a style="cursor: pointer;" class="button-expand" (click)="showModal()">
                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 20px;" width="24" height="24"
                             fill="currentColor" class="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
@@ -83,9 +83,10 @@
                 </div>
             </div>
             <div class="div-button ">
-                <button mat-stroked-button class="button-create" [disabled]="formAdd.invalid">Crear Reporte</button>
+                <button mat-stroked-button class="button-create"  (click)="confirm()">Crear Reporte</button>
             </div>
         </form>
     </div>
     <app-confirm-out-modal [show]="showDialog" (selection)="onSelection($event)"></app-confirm-out-modal>
+    <app-preview-report *ngIf="showIt" [oldname]="name" (close)="closeModal($event)"></app-preview-report>
 </div>

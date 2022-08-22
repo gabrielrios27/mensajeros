@@ -20,6 +20,7 @@ import { VariablesGroupComponent } from './containers/variables-group/variables-
 import { AddModReportComponent } from './containers/add-mod-report/add-mod-report.component';
 import { ConfirmOutModalComponent } from './components/confirm-out-modal/confirm-out-modal.component';
 import { SelecsAxesVariablesComponent } from './containers/selecs-axes-variables/selecs-axes-variables.component';
+import { PreviewReportComponent } from './containers/preview-report/preview-report.component';
 /* Containers */
 import * as adminContainers from './containers';
 
@@ -45,6 +46,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+
 
 
 @NgModule({
@@ -86,6 +88,7 @@ import { MatRadioModule } from '@angular/material/radio';
     CenterOfReportComponent,
     VariablesGroupComponent,
     ConfirmOutModalComponent,
+    PreviewReportComponent,
   ],
   exports: [...adminContainers.containers, ...adminComponents.components,SelecsAxesVariablesComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

@@ -32,23 +32,25 @@ export class AddVariablesComponent implements OnInit {
   idVariable: number;
   variableInput: string = '';
   descriptionInput: string = '';
-
+  //para id de eje desde donde se dio click a crear variable
+  idAxeVariable: number;
+  //para chekear si la variable ya existe.
   listOfVariable: variable[] = [];
   isInList: boolean = false;
   flagError: boolean = false;
   flagExist: boolean = false;
-
+  //para modal de alerta de 'variable ya existe'
   flagTimeOut: boolean = false;
   flagTimeOutExist: boolean = false;
   timerId: any = 0;
   timerIdExist: any = 0;
-
+  //para border input en alerta 'debe completar todos los campos'.
   invalidForm: boolean = false;
   // para paginacion de variable
   itemsPerPage: number = 10;
   quantityOfPages: number = 1;
-  //centro asignado
-  ejeAsignado: any;
+  //eje asignado
+  selectedAxe: axes = {} as axes;
   //radio button tipo de respuesta
   typeAnswer: string = 'Numérico';
   flagGenre: boolean = true;
@@ -63,26 +65,25 @@ export class AddVariablesComponent implements OnInit {
   flagValueScale: boolean = true;
   firstValue: number = 0;
   lastValue: number = 5;
+  etiquetaInicial: string = '';
+  etiquetaFinal: string = '';
   initialValuesList: number[] = [0, 1];
 
   finalsValuesListFromOne: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   finalsValuesListFromtwo: number[] = [2, 3, 4, 5, 6, 7, 8, 9, 10];
   finalsValuesList: number[] = [];
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
+  //Form
   newVariable: FormGroup = this.fb.group({
-    variable: [, [Validators.required]],
-    descriptionForm: [],
-    selectAxeForm: [],
-    typeAnswerForm: [],
-    genreForm: [false],
-    valueScaleForm: [false],
-    firstNumberForm: [0],
-    lastNumberForm: [5],
-    firstValueForm: [, [Validators.required]],
-    lastValueForm: [, [Validators.required]],
+    nombre: [, [Validators.required]],
+    descripcion: [],
+    eje: [, [Validators.required]],
+    tipo: [, [Validators.required]],
+    genero: [false],
+    escala_valor: [false],
+    valor_inicial: [0],
+    valor_final: [5],
+    etiqueta_inicial: [, [Validators.required]],
+    etiqueta_final: [, [Validators.required]],
   });
   constructor(
     private fb: FormBuilder,
@@ -91,35 +92,44 @@ export class AddVariablesComponent implements OnInit {
     private _adminSvc: AdminService
   ) {
     this.idVariable = 0;
+    this.idAxeVariable = 0;
     this.variableById = {} as variable;
   }
   ejeControl = new FormControl(null, Validators.required);
   selectFormControl = new FormControl('', Validators.required);
-  axesList: axes[] = [
-    { nombre: 'ACOMPAÑAMIENTO EN SALUD', id: 1 },
-    {
-      nombre: 'SEGURIDAD NUTRICIONAL',
-      id: 2,
-    },
-    {
-      nombre: 'ACOMPAÑAMIENTO EDUCATIVO',
-      id: 3,
-    },
-    {
-      nombre: 'GENERAL',
-      id: 4,
-    },
-  ];
+  axesList: axes[] = [];
+
   ngOnInit(): void {
+    this.getAxesList();
     this.setFlagAddEdit(false); //Para colocar modal de advertencia de cambio de pantalla si se da click a item en navbar
     this.idVariable = this.getIdFromRute();
+
     console.log('id ruta:' + this.idVariable);
     this.completeInputWithVariable(this.idVariable);
-    this.getVariableList();
+    // this.getVariableList();
     this.finalsValuesList = this.finalsValuesListFromOne;
     this.newVariable.get('typeAnswerForm')?.setValue('Numérico');
     this.onSelectionChange();
     this.onSelectValueScale();
+  }
+
+  //obtiene la lista de ejes
+  getAxesList() {
+    this._adminSvc.getAxes().subscribe({
+      next: (data: axes[]) => {
+        this.axesList = data;
+        this.getIdAxeFromRute(); //obtiene el id de eje de la ruta y renderiza el eje elegido en el select de eje
+      },
+      error: (err) => {
+        console.log(err);
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
+      },
+      complete: () => {
+        console.log('Request trending complete');
+      },
+    });
   }
   //Para modal de advertencia de cambio de pantalla------------------
   setFlagAddEdit(value: boolean) {
@@ -142,58 +152,61 @@ export class AddVariablesComponent implements OnInit {
   }
   //click al botón de confirmar------------------
   onConfirm() {
-    this.setFlagAddEdit(true); //Para quitar modal de advertencia de cambio de pantalla de navbar del btn confirm
     console.log('form: ', this.newVariable);
-    this.router.navigate(['admin/dashboard/variables']); //eliminar linea cuando se active onFonfirm
-    // if (this.newVariable.invalid) {
-    //   this.flagError = true;
-    //   this.invalidForm = true;
-    //   this.flagTimeOut = true;
-    //   this.timerId = setTimeout(() => {
-    //     this.close();
-    //   }, 3000);
-    //   return;
-    // } else {
-    //   this.invalidForm = false;
-    //   this.isInList = this.checkInVariableList(
-    //     this.newVariable.get('variable')?.value
-    //   );
-    //   if (this.isInList) {
-    //     //comprueba si esta en la lista, si esta se renderiza un mensaje de error(este eje ya se encuentra cargado)
-    //     this.flagExist = true;
-    //     this.flagTimeOutExist = true;
-    //     this.timerIdExist = setTimeout(() => {
-    //       this.close();
-    //     }, 3000);
-    //   } else {
-    //     this.putOrAddVariable();
-    //   }
-    // }
+    if (this.newVariable.invalid) {
+      this.flagError = true;
+      this.invalidForm = true;
+      this.flagTimeOut = true;
+      this.timerId = setTimeout(() => {
+        this.close();
+      }, 3000);
+      return;
+    } else {
+      this.invalidForm = false;
+      this.isInList = this.checkInVariableList(
+        this.newVariable.get('nombre')?.value
+      );
+      if (this.isInList) {
+        //comprueba si esta en la lista, si esta se renderiza un mensaje de error(este eje ya se encuentra cargado)
+        this.flagExist = true;
+        this.flagTimeOutExist = true;
+        this.timerIdExist = setTimeout(() => {
+          this.close();
+        }, 3000);
+      } else {
+        this.putOrAddVariable();
+      }
+    }
   }
   setPageLocalStorage() {
     //para paginación
     this.quantityOfPages = Math.ceil(
       (this.listOfVariable.length + 1) / this.itemsPerPage
     );
+    console.log('variablePage en loc stg: ', this.quantityOfPages);
     localStorage.setItem('variablePage', JSON.stringify(this.quantityOfPages));
   }
   putOrAddVariable() {
+    this.setFlagAddEdit(true); //Para quitar modal de advertencia de cambio de pantalla de navbar del btn confirm
+    console.log('idvariable en put or add: ', this.idVariable);
     if (this.idVariable === 0) {
-      let variableToCreate: variable = {
-        nombre: this.newVariable.get('variable')?.value,
-        id: 0,
-        tipo: 'Numerico',
-        descripcion: 'Aqui la descripción',
-        eje: {
-          id: 2,
-          nombre: 'salud',
-        },
-      };
-      this.setVariableLocStg(variableToCreate, true);
+      let variableToCreate: variable = this.newVariable.value;
+      if (!variableToCreate.escala_valor) {
+        variableToCreate.valor_inicial = 'null';
+        variableToCreate.valor_final = 'null';
+        variableToCreate.etiqueta_inicial = 'null';
+        variableToCreate.etiqueta_final = 'null';
+      }
+      console.log('variable a subir: ', variableToCreate);
+
+      this.setVariableLocStg(variableToCreate, true); //sube a localStorage la variable creada y un flag que indica que es nueva variable para desplegar modal en página siguiente.
       this.setPageLocalStorage(); //para paginación
       this._adminSvc.createVariable(variableToCreate).subscribe({
         next: (data: variable) => {
-          this.router.navigate(['admin/dashboard/variables']);
+          this.router.navigate([
+            'admin/dashboard/variables/variables-agrupadas/' +
+              variableToCreate.eje.id,
+          ]); //navega hacia la ultima pagina de las variables agrupadas de el eje elegido
           console.log(data);
         },
         error: (err) => {
@@ -207,22 +220,23 @@ export class AddVariablesComponent implements OnInit {
         },
       });
     } else {
-      let variableToEdit: variable = {
-        nombre: this.newVariable.get('variable')?.value,
-        id: this.idVariable,
-        tipo: 'Numerico',
-        descripcion: 'Aqui la descripción',
-        eje: {
-          id: 2,
-          nombre: 'salud',
-        },
-      };
-      this.setVariableLocStg(variableToEdit, false);
+      let variableToEdit: variable = this.newVariable.value;
+      if (!variableToEdit.escala_valor) {
+        variableToEdit.valor_inicial = 'null';
+        variableToEdit.valor_final = 'null';
+        variableToEdit.etiqueta_inicial = 'null';
+        variableToEdit.etiqueta_final = 'null';
+      }
+      console.log('variable a subir: ', variableToEdit);
+      this.setVariableLocStg(variableToEdit, false); //sube a localStorage la variable editada y un flag que indica que es NO es nueva variable para desplegar modal adecuado en página siguiente.
       this._adminSvc
         .editVariableWithId(this.idVariable.toString(), variableToEdit)
         .subscribe({
           next: (data: variable) => {
-            this.router.navigate(['admin/dashboard/variables']);
+            this.router.navigate([
+              'admin/dashboard/variables/variables-agrupadas/' +
+                variableToEdit.eje.id,
+            ]); //navega hacia la ultima pagina de las variables agrupadas de el eje elegido
             console.log(data);
           },
           error: (err) => {
@@ -243,10 +257,10 @@ export class AddVariablesComponent implements OnInit {
     }
   }
   setVariableLocStg(data: variable, isNewVariable: boolean) {
-    localStorage.setItem('newOrEditedVariables', JSON.stringify(data));
+    localStorage.setItem('newOrEditedVariable', JSON.stringify(data));
     localStorage.setItem('isNewVariable', JSON.stringify(isNewVariable));
   }
-
+  //OBTIENE EL ID DE LA VARIABLE EN LA RUTA
   getIdFromRute(): number {
     let idToShow;
     this.rutaActiva.paramMap.subscribe((params: ParamMap) => {
@@ -254,12 +268,64 @@ export class AddVariablesComponent implements OnInit {
     });
     return Number(idToShow);
   }
+  //obtiene el id de eje de la ruta y renderiza el eje elegido en el select de eje
+  getIdAxeFromRute() {
+    let idAxeToShow;
+    this.rutaActiva.paramMap.subscribe((params: ParamMap) => {
+      idAxeToShow = Number(params.get('id-axe'));
+      if (idAxeToShow !== 0) {
+        for (let item of this.axesList) {
+          if (item.id === idAxeToShow) {
+            this.selectedAxe = item;
+            this.getVariableList(); //obtiene la lista de variables de ese eje para chekear si el eje creado ya existe
+          }
+        }
+      }
+    });
+  }
+  //SI EL ID-variable DE RUTA ES DISTINTO DE CERO ENTONCES ES UNA VARIABLE A EDITAR Y LLAMA A METODO getVariableById
+  completeInputWithVariable(id: number) {
+    if (this.idVariable !== 0) {
+      this.getVariableById(id);
+    }
+  }
+  //USA EL ID-variable DE RUTA PARA OBTENER LA VARIABLE Y MOSTRAR EN FORM LA INFORMACION DE LA VARIABLE A MODIFICAR
   getVariableById(id: number) {
     this._adminSvc.getVariableWithId(id.toString()).subscribe({
       next: (data: variable) => {
         this.variableById = data;
         console.log(this.variableById);
         this.variableInput = data.nombre;
+        this.descriptionInput = data.descripcion;
+        this.typeAnswer = data.tipo;
+        if (data.genero?.toLowerCase() === 'true') {
+          this.addGenre = true;
+          this.flagGenre = true;
+        } else {
+          this.addGenre = false;
+          this.flagGenre = false;
+        }
+        if (data.escala_valor?.toLowerCase() === 'true') {
+          this.addValueEscale = true;
+          this.flagGenre = false;
+          this.flagValueScale = true;
+          this.firstValue = Number(data.valor_inicial);
+          this.lastValue = Number(data.valor_final);
+          this.newVariable.get('etiqueta_inicial')?.enable();
+          this.newVariable.get('etiqueta_final')?.enable();
+          if (data.etiqueta_inicial) {
+            this.etiquetaInicial = data.etiqueta_inicial;
+          }
+          if (data.etiqueta_final) {
+            this.etiquetaFinal = data.etiqueta_final;
+          }
+        } else {
+          this.addValueEscale = false;
+          this.flagGenre = true;
+          this.flagValueScale = false;
+          this.newVariable.get('etiqueta_inicial')?.disable();
+          this.newVariable.get('etiqueta_final')?.disable();
+        }
       },
       error: (err) => {
         console.log(err);
@@ -272,14 +338,10 @@ export class AddVariablesComponent implements OnInit {
       },
     });
   }
-  completeInputWithVariable(id: number) {
-    if (this.idVariable !== 0) {
-      this.getVariableById(id);
-    }
-  }
+
+  //OBTIENE LA LISTA DE VARIABLES DEL EJE PARA LUEGO CHEKEAR SI LA VARIABLE YA EXISTE EN EL EJE-----------
   getVariableList() {
-    this._adminSvc.getVariablesGroup('2').subscribe({
-      // borrar el '2' y colocar el id del eje selecionado
+    this._adminSvc.getVariablesGroup(this.selectedAxe.id.toString()).subscribe({
       next: (data: variable[]) => {
         this.listOfVariable = data;
       },
@@ -294,16 +356,28 @@ export class AddVariablesComponent implements OnInit {
       },
     });
   }
+  //CHEKEA SI LA VARIABLE YA EXISTE EN EL EJE-----------
   checkInVariableList(variable: string): boolean {
+    console.log('nombre de variable a guardar: ', variable);
+    console.log(
+      'nombre de variable en variableById: ',
+      this.variableById.nombre
+    );
+
     for (let item of this.listOfVariable) {
-      if (item.nombre.toUpperCase() === variable.toUpperCase()) {
+      if (
+        item.nombre.toUpperCase() === variable.toUpperCase() &&
+        variable.toUpperCase() !== this.variableById.nombre.toLocaleUpperCase()
+      ) {
         return true;
       }
     }
     return false;
   }
-  capturarEje(e: any) {
-    this.ejeAsignado = e;
+  //CAPTURA DATOS DE FORM------------------
+  captureAxe(e: any) {
+    this.selectedAxe = e;
+    this.getVariableList();
   }
   captureFirstValue(e: number) {
     this.firstValue = e;
@@ -330,12 +404,12 @@ export class AddVariablesComponent implements OnInit {
   onSelectValueScale() {
     if (!this.addValueEscale) {
       this.flagValueScale = false;
-      this.newVariable.get('firstValueForm')?.disable();
-      this.newVariable.get('lastValueForm')?.disable();
+      this.newVariable.get('etiqueta_inicial')?.disable();
+      this.newVariable.get('etiqueta_final')?.disable();
     } else {
       this.flagValueScale = true;
-      this.newVariable.get('firstValueForm')?.enable();
-      this.newVariable.get('lastValueForm')?.enable();
+      this.newVariable.get('etiqueta_inicial')?.enable();
+      this.newVariable.get('etiqueta_final')?.enable();
     }
   }
   close() {

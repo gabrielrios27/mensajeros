@@ -23,6 +23,11 @@ export class ReportsComponent implements OnInit {
   numero: any
   reports: Array<PeriodicElement> = ELEMENT_DATA;
 
+  flagEdited: boolean = false;
+  flagNew: boolean = false;
+  flagDelete: boolean = false;
+  idToDelete: number = 0;
+
   // pagination
   userListComplete: Array<PeriodicElement> = new Array();
   listLenght: number = 0;
@@ -37,6 +42,7 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
     this.reports = ELEMENT_DATA;
+    this.getUserLocalStorage()
   }
 
   busca(e: string) {
@@ -55,14 +61,6 @@ export class ReportsComponent implements OnInit {
   create(){ 
     this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes/add-mod-report'])
     
-  }
-
-  edit(report: PeriodicElement){
-
-  }
-
-  onClickDelete(id:number){
-
   }
 
   //para paginación----
@@ -121,5 +119,52 @@ export class ReportsComponent implements OnInit {
       this.currentPage = this.quantityOfPages;
       this.pageToShow(this.currentPage, this.userListComplete);
     }
+  }
+
+  onClickDelete(id: number) {
+    this.flagDelete = true;
+    this.idToDelete = id;
+  }
+
+  // deleteUser() {
+  //   this.flagDelete = false;
+  //   this.admin.deleteUser(this.idToDelete).subscribe({
+  //     next: (data: any) => {
+  //       setTimeout(() => this.cdr.detectChanges());
+  //       this.getUsers();
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     },
+  //   });
+  // }
+  getUserLocalStorage() {
+    let newOrEditeduser = localStorage.getItem('newOrEditedReport');
+    if (newOrEditeduser) {
+      setTimeout(() => {
+        this.close();
+      }, 3000);
+    }
+
+    let isNewUserStr = localStorage.getItem('isNewReport');
+    let isNewUser;
+    if (isNewUserStr) {
+      isNewUser = JSON.parse(isNewUserStr);
+    }
+    if (newOrEditeduser) {
+      if (isNewUser) {
+        this.flagNew = true;
+        localStorage.removeItem('isNewReport');
+      } else {
+        this.flagEdited = true;
+      }
+      localStorage.removeItem('newOrEditedReport');
+    }
+  }
+
+  close() {
+    this.flagNew = false;
+    this.flagEdited = false;
+    this.flagDelete = false;
   }
 }
