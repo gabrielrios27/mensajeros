@@ -1,3 +1,17 @@
 <section class="pending-reports">
   <h1 class="pending-reports__title">REPORTES PENDIENTES</h1>
+  <div class="list">
+    <ul class="list__row-header">
+      <li class="list__header">Reporte Numero</li>
+      <li class="list__header">Reporte asignado para centro</li>
+      <li class="list__header">Periodo a Reportar</li>
+      <li class="list__header">Fecha Limite de Entrega</li>
+    </ul>
+    <ul class="list__row-item" *ngFor="let item of list">
+      <li class="list__item">{{ item.numberReport }}</li>
+      <li class="list__item">{{ item.center }}</li>
+      <li class="list__item">{{ item.period }}</li>
+      <li class="list__item">{{ item.limitDate }}</li>
+    </ul>
+  </div>
 </section>
