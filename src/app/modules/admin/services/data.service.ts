@@ -13,5 +13,8 @@ export class DataService {
   flagDelete: boolean= false
   user?: Users
   center?: Centro
+  arrayAxes?: any
+  arrayVariables? : any
+  arrayCenters?:any
   constructor() { }
 }
