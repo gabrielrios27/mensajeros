@@ -18,6 +18,7 @@ import { DataService } from '../../services/data.service';
 })
 export class AddModReportComponent implements OnInit {
 
+  deliverdate: any
   nombre: any
   variables: any;
   eje: any
@@ -47,7 +48,8 @@ export class AddModReportComponent implements OnInit {
       desde: ['', Validators.required],
       hasta: ['', Validators.required],
       axe: [],
-      variable: []
+      variable: [],
+      deliverdate: ['', Validators.required]
     });
   }
 
@@ -70,17 +72,19 @@ export class AddModReportComponent implements OnInit {
     if (newName) this.name = newName;
   }
   //
-
+//  guarda axes de componente selects
   storageAxes(axes: number,idComponent: number ){
     this.arrayAxes[idComponent] = axes;
     console.log("axes", this.arrayAxes)
     console.log(idComponent)
   }
+  // guarda array variables de componente selects
   storageVariables( variablesArray: any,idComponent: number ){
     this.arrayVaribles[idComponent] = variablesArray;
     console.log("variables", this.arrayVaribles)
   }
-
+  // 
+  // agrega un elemento al arreglo de selects y tambien a axes y variables 
   createEje() {
     this.arrayc.push(this.arrayc.length + 1)
     this.arrayAxes.push(1)
@@ -100,6 +104,7 @@ export class AddModReportComponent implements OnInit {
     this.data.arrayAxes = this.arrayAxes
     this.data.arrayVariables = this.arrayVaribles
     this.data.arrayCenters = this.formAdd.value.centros
+    
     console.log('report',datos)
     this.setFlagAddEdit(true);
     this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes/add-mod-report/preview-report',datos])
