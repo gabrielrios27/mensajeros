@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, pipe, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { role } from '../../admin/models';
+import { changePassword } from '../models/changePassword';
 import { Login } from '../models/login';
 import { Response } from '../models/response';
+
 
 @Injectable()
 export class AuthService {
@@ -63,5 +65,13 @@ export class AuthService {
   }
   get isLogged(): Observable<boolean> {
     return this.loggedIn.asObservable();
+  }
+
+  sendEmail(email: string): Observable<any>{
+    return this._http.post(this.baseUrl + "email-password/send", email)
+  }
+
+  changePassword(form: changePassword): Observable<Response>{
+    return this._http.post<Response>(this.baseUrl + "email-password/change-password" ,form)
   }
 }
