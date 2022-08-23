@@ -3,6 +3,9 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { axes, variable } from '../../models';
 import { AdminService } from '../../services';
 import { DataService } from '../../services/data.service';
+import { report } from 'process';
+import { Report } from '../../models/report';
+import { Centro } from '../../models/centro';
 
 @Component({
   selector: 'app-preview-report',
@@ -17,8 +20,10 @@ export class PreviewReportComponent implements OnInit {
   name: any
   until: any
   since: any
+  deliverdate: any
   reportsd: any
 
+  variables2: Array<number> = []
   flag: boolean = false
   listOfAxes: Array<any> = []
   listOfVariables: Array<any> = []
@@ -30,11 +35,11 @@ export class PreviewReportComponent implements OnInit {
     private cdr: ChangeDetectorRef, public data: DataService) { }
 
   ngOnInit() {
-    // copy all inputs to avoid polluting them
     this.newname = this.oldname;
     console.log(this.report)
     this.getCenters()
     this.getDataFromRute()
+    
   }
 
   getCenters() {
@@ -53,6 +58,8 @@ export class PreviewReportComponent implements OnInit {
     });
   }
 
+
+  //busca centros selecccionados centros que vienen por output en modal
   centerSelect() {
     if(this.data.arrayCenters == null)
     for (let item of this.centers) {
@@ -65,6 +72,8 @@ export class PreviewReportComponent implements OnInit {
     }
     
   }
+  // 
+  // busca centros selecccionados que vienen por service data
   center2(){
     console.log(this.centers2)
       for (let item of this.centers) {
@@ -77,13 +86,17 @@ export class PreviewReportComponent implements OnInit {
       }
     }
   }
+  // 
 
   getDataFromRute() {
     this.routeActiva.paramMap.subscribe((params: ParamMap) => {
       this.name = params.get("nombre");
       this.since = params.get("desde");
       this.until = params.get("hasta");
+      this.deliverdate = params.get('deliverdate')
     });
+    this.until = new Date(this.until)
+    this.since =new Date(this.since) 
   }
 
 
@@ -99,13 +112,45 @@ export class PreviewReportComponent implements OnInit {
   }
 
   confirm() {
-    this.flag = true
+    this.flag = true    
   }
+  
 
   enviar() {
-    this.setUserLocStg("algo", true)
+    // this.setUserLocStg("algo", true)
     this.flag = false
     this.router.navigate(['/admin/dashboard/reportes/creacion-de-reportes']);
+    
+    for(let axe of this.data.arrayAxes){
+      for(let vari of this.data.arrayVariables[this.data.arrayAxes.indexOf(axe)]){
+        this.variables2.push( vari.id)
+      }
+    }
+
+    
+    
+    let report: Report ={
+      nombre : this.name,
+      fechaCreacion :this.since.toISOString() ,
+      fechaEntrega :this.until.toISOString(),
+      variables : this.variables2,
+      centros: this.data.arrayCenters,
+      id: ''
+    }
+    console.log(report)
+    this.admin.addReport(report).subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges())
+        console.log(data, "admin")
+        this.data.flag = false
+        this.data.editar = false
+        this.setUserLocStg(this.name, true)
+        this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes']);
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 
   setUserLocStg(data: string, isNewUser: boolean) {
