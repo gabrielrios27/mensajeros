@@ -16,11 +16,22 @@ import * as userGuards from './guards';
 /* Services */
 import * as userServices from './services';
 import { PendingReportsComponent } from './containers/pending-reports/pending-reports.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatButtonModule,
+  ],
   providers: [...userServices.services, ...userGuards.guards],
-  declarations: [...userContainers.containers, ...userComponents.components, PendingReportsComponent],
+  declarations: [
+    ...userContainers.containers,
+    ...userComponents.components,
+    PendingReportsComponent,
+  ],
   exports: [...userContainers.containers, ...userComponents.components],
 })
 export class UserModule {}

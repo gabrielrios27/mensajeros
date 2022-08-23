@@ -14,4 +14,42 @@
       <li class="list__item">{{ item.limitDate }}</li>
     </ul>
   </div>
+  <div class="report">
+    <div class="report__conteiner">
+      <ul class="report__info">
+        <li class="report__item">Reporte</li>
+        <li class="report__item">C00010</li>
+        <li class="report__item">Carga 0 de 4 Ejes</li>
+      </ul>
+      <button
+        mat-raised-button
+        class="report__btn-start"
+        color="primary"
+        type="submit"
+        (click)="onStartReport()"
+      >
+        Iniciar carga
+      </button>
+    </div>
+    <div class="report__conteiner-btns">
+      <button
+        mat-raised-button
+        class="report__btn-continue"
+        color="primary"
+        type="submit"
+        (click)="onStartReport()"
+      >
+        Reanudar Carga de Reporte
+      </button>
+      <button
+        mat-raised-button
+        class="report__btn-restart"
+        color="primary"
+        type="submit"
+        (click)="onStartReport()"
+      >
+        Volver a empezar
+      </button>
+    </div>
+  </div>
 </section>

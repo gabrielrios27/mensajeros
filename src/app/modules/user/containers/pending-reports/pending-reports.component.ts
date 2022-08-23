@@ -36,4 +36,5 @@ export class PendingReportsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+  onStartReport() {}
 }

@@ -22,7 +22,7 @@
 }
 .list {
   max-width: 997px;
-  max-height: 285px;
+  max-height: 286px;
   margin-top: 90px;
   margin-left: 300px;
   overflow: scroll;
@@ -69,6 +69,65 @@
     .list__item:first-of-type {
       justify-self: flex-start;
       padding-left: 32px;
+    }
+  }
+}
+.report {
+  width: 100%;
+  max-width: 988px;
+  min-height: 352px;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 67px 100px;
+  margin-top: 25px;
+  margin-left: 300px;
+  .report__conteiner {
+    margin-bottom: 90px;
+    display: flex;
+    align-items: center;
+    .report__info {
+      min-width: 511px;
+      min-height: 48px;
+      box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      height: 48px;
+      .report__item {
+        list-style: none;
+        margin: 0 32px;
+        font-family: "Inter";
+      }
+    }
+    .report__btn-start {
+      width: 189px;
+      height: 68px;
+      margin-left: 63px;
+      background: rgba(25, 103, 210, 0.65);
+      border-radius: 35px;
+      font-size: 22px;
+      color: #000000;
+    }
+  }
+  .report__conteiner-btns {
+    display: flex;
+    justify-content: center;
+    .report__btn-continue {
+      width: 341px;
+      height: 68px;
+      background: #92cdef;
+      border-radius: 35px;
+      font-size: 22px;
+      color: #000000;
+      margin-right: 53px;
+    }
+    .report__btn-restart {
+      width: 236px;
+      height: 68px;
+      background: #92cdef;
+      border-radius: 35px;
+      font-size: 22px;
+      color: #000000;
     }
   }
 }
