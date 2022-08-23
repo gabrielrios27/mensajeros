@@ -21,7 +21,7 @@ export class AdminService {
   // https://mensajeros-back-tami.herokuapp.com/variables/eje/2
 
   constructor(private _http: HttpClient) {}
-
+// endpoints centros
   editCenter(center: Centro, id: any): Observable<Centro> {
     return this._http.put<Centro>(this.baseUrlTami + '/centros/' + id, center, {
       headers: this.headers,
@@ -33,6 +33,13 @@ export class AdminService {
       headers: this.headers,
     });
   }
+
+  deleteCenter(id: number): Observable<boolean> {
+    return this._http.delete<boolean>(this.baseUrlTami + '/centros/' + id, {
+      headers: this.headers,
+    });
+  }
+
   getCenter(id: number): Observable<Centro> {
     return this._http.get<Centro>(this.baseUrlTami + '/centros/' + id);
   }
@@ -40,6 +47,8 @@ export class AdminService {
   getCentros(): Observable<Centro[]> {
     return this._http.get<Centro[]>(this.baseUrlTami + '/centros');
   }
+  // 
+  // endpoints user
 
   getUsers(): Observable<Users[]> {
     return this._http.get<Users[]>(this.baseUrlTami + '/usuarios');
@@ -65,6 +74,9 @@ export class AdminService {
     return this._http.get<Users>(this.baseUrlTami + '/usuarios/' + id);
   }
 
+  // 
+  // endpoints axes
+
   getAxes(): Observable<axes[]> {
     return this._http.get<axes[]>(this.baseUrlTami + this.EPAxes);
   }
@@ -83,6 +95,7 @@ export class AdminService {
   deleteAxeWithId(id: string): Observable<any> {
     return this._http.delete<axes>(this.baseUrlTami + this.EPAxes + '/' + id);
   }
+  // 
   // Variables-----------------
   getVariablesQuantityPerAxe(): Observable<AxeWithquantity[]> {
     return this._http.get<AxeWithquantity[]>(
