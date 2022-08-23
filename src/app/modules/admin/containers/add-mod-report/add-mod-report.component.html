@@ -68,7 +68,7 @@
                 <label style="margin-right: 420px;">Eje</label>
                 <label>Variable</label>
                 <div *ngFor="let item of arrayc">
-                    <app-selecs-axes-variables (axes)="storageAxes($event)"(variablesArray)="storageVariables($event)" >{{item}}</app-selecs-axes-variables>
+                    <app-selecs-axes-variables (axes)="storageAxes($event,arrayc.indexOf(item))"(variablesArray)="storageVariables($event,arrayc.indexOf(item))" >{{item}}</app-selecs-axes-variables>
                 </div>
             </section>
             <button mat-button class="button-ejes" (click)="createEje()">+ Eje</button>
@@ -87,5 +87,5 @@
         </form>
     </div>
     <app-confirm-out-modal [show]="showDialog" (selection)="onSelection($event)"></app-confirm-out-modal>
-    <app-preview-report *ngIf="showIt" [oldname]="name" (close)="closeModal($event)"></app-preview-report>
+    <app-preview-report *ngIf="showIt" [oldname]="name" [report] ="formAdd.value" (close)="closeModal($event)"></app-preview-report>
 </div>
