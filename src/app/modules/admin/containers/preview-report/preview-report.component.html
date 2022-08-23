@@ -22,7 +22,7 @@
             <div class="fecha-entrega">
                 <label style="display: flex; margin-top: 4px;">Fecha de Entrega (Alerta) <mat-icon
                         style="color:#FFBD12 ; font-size: 16px ;">notification_important</mat-icon></label>
-                <p>02/01/2023</p>
+                <p>{{report.deliverdate | date: 'dd/MM/yyyy'}}</p>
             </div>
         </section>
         <section class="section-ejes-variables">
@@ -78,7 +78,7 @@
                 <div class="fecha-entrega">
                     <label style="display: flex; margin-top: 4px;">Fecha de Entrega (Alerta) <mat-icon
                             style="color:#FFBD12 ; font-size: 16px ;">notification_important</mat-icon></label>
-                    <p>02/01/2023</p>
+                    <p>{{deliverdate | date: 'dd/MM/yyyy'}}</p>
                 </div>
             </section>
             <section class="section-ejes-variables">
