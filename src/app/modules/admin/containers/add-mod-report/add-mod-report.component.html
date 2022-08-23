@@ -25,13 +25,10 @@
                 <mat-error *ngIf="formAdd.controls['centros'].invalid && formAdd.controls['centros'].dirty ">
                     <span>Campo requerido</span>
                 </mat-error>
-                <div class="container-button-expand">
-                    <a style="cursor: pointer;" class="button-expand" (click)="showModal()">
-                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 20px;" width="24" height="24"
-                            fill="currentColor" class="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z" />
-                        </svg>
+                <div class="container-button-expand"   >
+                    <a style="cursor: pointer;" class="button-expand" (click)="showModal()"matTooltip="Vizualizar" >
+                        <img style="margin-top: 20px;"
+                                src="../../../../../assets/icons/arrows-angle-expand.svg" />
                     </a>
                 </div>
             </section>
@@ -75,14 +72,19 @@
             <div class="container-alert">
                 <Label>Fecha de Entrega(Alerta)</Label>
                 <div class="input-wrapper">
-                    <input class="input-fecha-alerta" type="" autocomplete="off" matInput [matDatepicker]="picker3"
+                    <input class="input-fecha-alerta" type="" formControlName="deliverdate" autocomplete="off" matInput [matDatepicker]="picker3"
                         placeholder="Dia, Mes, Año">
                     <mat-datepicker #picker3></mat-datepicker>
                     <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker3"></mat-datepicker-toggle>
                 </div>
+                <div>
+                    <mat-error *ngIf="formAdd.controls['deliverdate'].invalid && formAdd.controls['deliverdate'].dirty ">
+                        <span>Campo Requerido</span>
+                    </mat-error>
+                </div>
             </div>
             <div class="div-button ">
-                <button mat-stroked-button class="button-create"  (click)="confirm(formAdd.value)">Crear Reporte</button>
+                <button mat-stroked-button class="button-create" [disabled]="formAdd.invalid" (click)="confirm(formAdd.value)">Crear Reporte</button>
             </div>
         </form>
     </div>
