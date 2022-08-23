@@ -2,7 +2,7 @@
   <div class="variables">
     <h1 class="variables__title">Variables</h1>
     <div class="variables__container-search">
-      <a class="btn-add-variables" routerLink="agregar-eje">
+      <a class="btn-add-variables" routerLink="add-mod-variables">
         <img
           class="btn-add-variables__ico"
           src="../../../../../assets/icons/Grid.svg"
@@ -42,13 +42,14 @@
         <div
           class="list-variables__row list-variables__row--click"
           *ngFor="let element of listOfVariables_toShow | async"
+          (click)="setNameAxeLocalStorage(element.nombre)"
           [routerLink]="['variables-agrupadas/', element.id.toString()]"
         >
           <p class="list-variables__cell list-variables__cell--axe">
             {{ element.nombre }}
           </p>
           <p class="list-variables__cell--quantity">
-            {{ element.id }}
+            {{ element.cantidad }}
           </p>
           <div class="list-variables__cell--action">
             <svg
@@ -157,26 +158,6 @@
       <p class="modal__text">
         ¡El Eje {{ newOrEditedVariable.nombre }} fue editado con éxito!
       </p>
-    </div>
-  </div>
-
-  <div *ngIf="flagDelete" class="modal-delete">
-    <div class="modal__container-delete">
-      <img
-        class="modal__ico-info"
-        src="../../../../../assets/icons/Exclamation-triangle.svg"
-        alt="Icono de información"
-      />
-      <p class="modal__text">
-        ¡Estas a punto de eliminar este dato!<br />Esta acción no podrá ser
-        revertida
-      </p>
-    </div>
-    <div class="modal__options">
-      <button class="btn-modal__cancel" (click)="close()">Cancelar</button>
-      <button class="btn-modal__accept" (click)="deleteVariable(idToDelete)">
-        Confirmar y eliminar
-      </button>
     </div>
   </div>
 </section>

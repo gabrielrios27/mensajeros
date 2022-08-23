@@ -1,1 +1,301 @@
-<p>add-variables works!</p>
+<section class="container-add-variable" (click)="close()">
+  <h1
+    *ngIf="idVariable === 0; else editTemplate"
+    class="container-add-variable__title"
+  >
+    Agregar Variable
+  </h1>
+  <ng-template #editTemplate>
+    <h1 class="container-add-variable__title">Editar Variable</h1>
+  </ng-template>
+  <div class="add-variable">
+    <form
+      class="add-variable__form"
+      action=""
+      method="post"
+      [formGroup]="newVariable"
+      (ngSubmit)="onConfirm()"
+    >
+      <!-- btn expandir-------------- -->
+      <div class="add-variable__expanse-conteiner">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          class="bi bi-arrows-angle-expand add-variable__expanse-ico"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill="black"
+            d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"
+          />
+        </svg>
+      </div>
+      <!-- variable---------------- -->
+      <label
+        class="add-variable__label"
+        for="POST-variable"
+        type="text"
+        autocomplete="off"
+        >Nombre de Variable</label
+      >
+      <div class="add-variable__container-input">
+        <input
+          [ngClass]="invalidForm ? 'add-variable__input--alert' : ''"
+          class="add-variable__input"
+          formControlName="nombre"
+          id="POST-variable"
+          type="text"
+          name="variable"
+          autocomplete="off"
+          [(ngModel)]="variableInput"
+          (ngModelChange)="onChangeInput($event)"
+        />
+      </div>
+      <!-- descripcion de variable---------------- -->
+      <label
+        class="add-variable__label"
+        for="description"
+        type="text"
+        autocomplete="off"
+        >Descripción de Variable</label
+      >
+      <div class="add-variable__container-input">
+        <input
+          class="add-variable__input"
+          formControlName="descripcion"
+          id="description"
+          type="text"
+          name="description"
+          autocomplete="off"
+          [(ngModel)]="descriptionInput"
+          (ngModelChange)="onChangeInput($event)"
+        />
+      </div>
+      <!-- Selector de eje------------  -->
+      <label class="add-variable__label" for="select-axe" autocomplete="off"
+        >Eje</label
+      >
+      <div class="add-variable__container-input">
+        <mat-select
+          class="select"
+          [(value)]="selectedAxe"
+          name="select-axe"
+          (selectionChange)="captureAxe($event.value)"
+          id="select-axe"
+          formControlName="eje"
+        >
+          <mat-option
+            class="select__option"
+            [value]="item"
+            *ngFor="let item of axesList"
+            >{{ item.nombre }}</mat-option
+          >
+        </mat-select>
+      </div>
+      <!-- Tipo de respuesta solicitada------------  -->
+      <label
+        class="add-variable__label"
+        for="select-type-of-answer"
+        type="text"
+        autocomplete="off"
+      >
+        Tipo de respuesta solicitada
+      </label>
+      <div class="add-variable__container-input">
+        <mat-radio-group
+          id="select-type-of-answer"
+          class="radio-groupAM"
+          [(ngModel)]="typeAnswer"
+          formControlName="tipo"
+          [ngModel]="typeAnswer"
+          (change)="onSelectionChange()"
+        >
+          <mat-radio-button class="radio-buttonAM" value="Numérico">
+            Numérico
+          </mat-radio-button>
+          <mat-radio-button class="radio-buttonAM" value="Textual">
+            Textual
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <!-- Agregar a Variable:------------  -->
+      <label
+        class="add-variable__label"
+        for="add-to-variable"
+        type="text"
+        autocomplete="off"
+      >
+        Agregar a Variable:
+      </label>
+      <!------------- Distinción de genero -->
+      <div class="add-variable__container-input">
+        <mat-checkbox
+          class="checkbox-add-to"
+          color="accent"
+          [(ngModel)]="addGenre"
+          formControlName="genero"
+          [disabled]="!flagGenre"
+          >Distinción de género</mat-checkbox
+        >
+        <p class="add-variable__info-text">
+          Al seleccionar se añadirán campos extra para Mujeres, Varones y No
+          binarixs.
+        </p>
+      </div>
+      <!-- -----------Escala de Valor  -->
+      <div class="add-variable__container-input">
+        <mat-checkbox
+          class="checkbox-add-to"
+          color="accent"
+          [(ngModel)]="addValueEscale"
+          formControlName="escala_valor"
+          [disabled]="flagGenre"
+          (change)="onSelectValueScale()"
+          >Escala de Valor</mat-checkbox
+        >
+        <p class="add-variable__info-text">
+          Al seleccionara creará una escala de Valor que ira desde un mínimo a
+          un máximo establecido.
+        </p>
+      </div>
+      <!-- ----------------------------- -->
+      <div class="value-scale">
+        <div
+          class="value-scale__conteiner-scale"
+          [ngClass]="!flagValueScale ? 'color-disable' : ''"
+        >
+          De
+          <div class="value-scale__value">
+            <mat-select
+              class="selectRange"
+              [(value)]="firstValue"
+              name="select-first-value"
+              (selectionChange)="captureFirstValue($event.value)"
+              formControlName="valor_inicial"
+              id="select-first-value"
+              [disabled]="!flagValueScale"
+            >
+              <mat-option
+                class="selectRange__option"
+                [value]="item"
+                *ngFor="let item of initialValuesList"
+                >{{ item }}</mat-option
+              >
+            </mat-select>
+          </div>
+          a
+          <div class="value-scale__value">
+            <mat-select
+              class="selectRange"
+              [(value)]="lastValue"
+              name="select-last-value"
+              (selectionChange)="captureLastValue($event.value)"
+              id="select-last-value"
+              formControlName="valor_final"
+              [disabled]="!flagValueScale"
+            >
+              <mat-option
+                class="selectRange__option"
+                [value]="item"
+                *ngFor="let item of finalsValuesList"
+                >{{ item }}</mat-option
+              >
+            </mat-select>
+          </div>
+        </div>
+        <!-- Etiquetas de escala de valor--------------------------- -->
+        <div class="value-scale__conteiner-tags">
+          <div class="value-scale__tag">
+            <label
+              class="value-scale__label"
+              [ngClass]="!flagValueScale ? 'color-disable' : ''"
+              for=""
+              >{{ firstValue }}</label
+            >
+            <mat-form-field class="value-scale__input" appearance="fill">
+              <input
+                color="accent"
+                autocomplete="off"
+                type="text"
+                matInput
+                formControlName="etiqueta_inicial"
+                [(ngModel)]="etiquetaInicial"
+                placeholder="Etiqueta"
+                required
+              />
+              <mat-error
+                *ngIf="
+                  newVariable.get('etiqueta_inicial')?.hasError('required')
+                "
+              >
+                Debe completar este campo
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="value-scale__tag">
+            <label
+              class="value-scale__label"
+              [ngClass]="!flagValueScale ? 'color-disable' : ''"
+              for=""
+              >{{ lastValue }}</label
+            >
+            <mat-form-field class="value-scale__input" appearance="fill">
+              <input
+                color="accent"
+                autocomplete="off"
+                type="text"
+                matInput
+                formControlName="etiqueta_final"
+                [(ngModel)]="etiquetaFinal"
+                placeholder="Etiqueta"
+                required
+              />
+              <mat-error
+                *ngIf="newVariable.get('etiqueta_final')?.hasError('required')"
+              >
+                Debe completar este campo
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <!-- boton de confirmar envio de formulario----------- -->
+      <button
+        mat-raised-button
+        class="add-variable__btn"
+        type="submit"
+        color="primary"
+      >
+        Confirmar
+      </button>
+    </form>
+  </div>
+  <div *ngIf="flagError" class="modal-error">
+    <div class="modal__container-error">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Info-circle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">
+        ¡Todos los campos obligatorios deben ser llenados!
+      </p>
+    </div>
+  </div>
+  <div *ngIf="flagExist" class="modal-error">
+    <div class="modal__container-error">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Info-circle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">El eje ya existe en el sistema</p>
+    </div>
+  </div>
+  <app-confirm-out-modal
+    [show]="showDialog"
+    (selection)="onSelection($event)"
+  ></app-confirm-out-modal>
+</section>

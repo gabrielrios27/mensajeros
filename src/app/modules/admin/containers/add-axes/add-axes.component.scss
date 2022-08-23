@@ -16,7 +16,10 @@
     align-self: center;
   }
   .add-axe {
-    width: 760px;
+    box-sizing: content-box;
+    width: 100%;
+    max-width: 760px;
+    padding-left: 211px;
     display: flex;
     flex-direction: column;
     margin: 0 250px;
@@ -135,9 +138,10 @@
       font-size: 30px;
     }
     .add-axe {
-      margin-left: 280px;
-      margin-right: 20px;
-      align-self: flex-start;
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 211px;
+      padding-right: 20px;
       .add-axe__form {
         .add-axe__btn {
           font-size: 16px;
@@ -157,6 +161,7 @@
     .add-axe {
       margin-left: 220px;
       width: 500px;
+      padding-left: 0;
       .add-axe__form {
         .add-axe__input {
           width: auto;

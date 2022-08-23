@@ -3,7 +3,8 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Centro } from '../models/centro';
 import { Users } from '../models/users';
-import { axes, flag, user, variable } from '../models';
+import { Report } from '../models/report';
+import { axes, AxeWithquantity, flag, user, variable } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -16,19 +17,13 @@ export class AdminService {
   token: string = '';
   EPAxes: string = '/ejes';
   EPVariables: string = '/variables';
+  EPVariablesQuantityPerAxe: string = '/variables/eje';
+  // https://mensajeros-back-tami.herokuapp.com/variables/eje/2
 
-  constructor(private _http: HttpClient) { }
-
-  // endpoints centros
+  constructor(private _http: HttpClient) {}
 
   editCenter(center: Centro, id: any): Observable<Centro> {
     return this._http.put<Centro>(this.baseUrlTami + '/centros/' + id, center, {
-      headers: this.headers,
-    });
-  }
-
-  deleteCenter(id: number): Observable<boolean> {
-    return this._http.delete<boolean>(this.baseUrlTami + '/centros/' + id, {
       headers: this.headers,
     });
   }
@@ -45,18 +40,18 @@ export class AdminService {
   getCentros(): Observable<Centro[]> {
     return this._http.get<Centro[]>(this.baseUrlTami + '/centros');
   }
-  //
 
-  //endpoints user
   getUsers(): Observable<Users[]> {
     return this._http.get<Users[]>(this.baseUrlTami + '/usuarios');
   }
 
   addUser(user: Users, id: number): Observable<any> {
-    return this._http.post(this.baseUrlTami + '/usuarios/' + id, user, { responseType: 'text' })
+    return this._http.post(this.baseUrlTami + '/usuarios/' + id, user, {
+      responseType: 'text',
+    });
   }
   addUserAdmin(user: Users): Observable<Users> {
-    return this._http.post<Users>(this.baseUrlTami + '/auth/agregar', user)
+    return this._http.post<Users>(this.baseUrlTami + '/auth/agregar', user);
   }
   deleteUser(id: number): Observable<boolean> {
     return this._http.delete<boolean>(this.baseUrlTami + '/usuarios/' + id);
@@ -69,9 +64,6 @@ export class AdminService {
   getUser(id: number): Observable<Users> {
     return this._http.get<Users>(this.baseUrlTami + '/usuarios/' + id);
   }
-  //
-
-  //endpoints axes
 
   getAxes(): Observable<axes[]> {
     return this._http.get<axes[]>(this.baseUrlTami + this.EPAxes);
@@ -91,11 +83,16 @@ export class AdminService {
   deleteAxeWithId(id: string): Observable<any> {
     return this._http.delete<axes>(this.baseUrlTami + this.EPAxes + '/' + id);
   }
-  //
-
-  // Variables------------
-  getVariables(): Observable<variable[]> {
-    return this._http.get<variable[]>(this.baseUrlTami + this.EPVariables);
+  // Variables-----------------
+  getVariablesQuantityPerAxe(): Observable<AxeWithquantity[]> {
+    return this._http.get<AxeWithquantity[]>(
+      this.baseUrlTami + this.EPVariablesQuantityPerAxe
+    );
+  }
+  getVariablesGroup(id: string): Observable<variable[]> {
+    return this._http.get<variable[]>(
+      this.baseUrlTami + this.EPVariablesQuantityPerAxe + '/' + id
+    );
   }
   getVariableWithId(id: string): Observable<variable> {
     return this._http.get<variable>(
@@ -116,4 +113,14 @@ export class AdminService {
       this.baseUrlTami + this.EPVariables + '/' + id
     );
   }
+  // enpoints reports
+
+  getResports(): Observable<Report[]> {
+    return this._http.get<Report[]>(this.baseUrl + '/reportes');
+  }
+
+  deleteReport(id: number): Observable<Report> {
+    return this._http.delete<Report>(this.baseUrlTami + '/reportes/'+ id);
+  }
+
 }

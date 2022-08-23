@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { variable } from '../../models';
 import { AdminService } from '../../services';
@@ -10,6 +10,8 @@ import { AdminService } from '../../services';
   styleUrls: ['./variables-group.component.scss'],
 })
 export class VariablesGroupComponent implements OnInit {
+  idAxeGroup: number = 0;
+  nameAxeGroup: string = '';
   newOrEditedVariable: variable = {} as variable;
   flagEdited: boolean = false;
   flagNew: boolean = false;
@@ -36,71 +38,50 @@ export class VariablesGroupComponent implements OnInit {
   onDestroy$: Subject<boolean> = new Subject();
 
   constructor(
+    private rutaActiva: ActivatedRoute,
     private _adminSvc: AdminService,
     private _cdr: ChangeDetectorRef,
     private router: Router
   ) {}
 
   ngOnInit() {
+    this.idAxeGroup = this.getIdFromRute();
+    this.nameAxeGroup = this.geNameAxeLocalStorage();
     this.getVariablesList();
     this.getVariableLocalStorage();
   }
+  getIdFromRute(): number {
+    let idToShow;
+    this.rutaActiva.paramMap.subscribe((params: ParamMap) => {
+      idToShow = params.get('id-axe');
+    });
+    return Number(idToShow);
+  }
+
   getVariablesList() {
     this.currentPage = this.getPageLocalStorage();
-    this.listOfVariables = [
-      {
-        id: 1,
-        nombre: 'Variable 1',
-        tipo: 'escala de valor',
-      },
-      {
-        id: 1,
-        nombre: 'Variable 2',
-        tipo: 'texto',
-      },
-      {
-        id: 1,
-        nombre: 'Variable 3',
-        tipo: 'numero',
-      },
-      {
-        id: 1,
-        nombre: 'Variable 4',
-        tipo: 'numero',
-      },
-      {
-        id: 1,
-        nombre: 'Variable 5',
-        tipo: 'texto',
-      },
-      {
-        id: 1,
-        nombre: 'Variable 6',
-        tipo: 'escala de valor',
-      },
-    ];
-    this.pageToShow(this.currentPage, this.listOfVariables); //para paginación---eliminar cuando se descomente peticion
-    //   this._adminSvc
-    //     .getVariables()
-    //     .pipe(takeUntil(this.onDestroy$))
-    //     .subscribe({
-    //       next: (data: variable[]) => {
-    //         this.listOfVariables = data;
-    //         setTimeout(() => this._cdr.detectChanges());
-    //         console.log(this.listOfVariables);
-    //         this.pageToShow(this.currentPage, this.listOfVariables); //para paginación
-    //       },
-    //       error: (err) => {
-    //         console.log(err);
-    //         if (err.status === 401) {
-    //           this.router.navigate(['/auth']);
-    //         }
-    //       },
-    //       complete: () => {
-    //         console.log('Request get Variables complete');
-    //       },
-    //     });
+    this._adminSvc
+      .getVariablesGroup(this.idAxeGroup.toString())
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: variable[]) => {
+          this.listOfVariables = data;
+          setTimeout(() => this._cdr.detectChanges());
+          console.log(this.listOfVariables);
+          this.pageToShow(this.currentPage, this.listOfVariables); //para paginación
+        },
+        error: (err) => {
+          console.log(err);
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+        complete: () => {
+          console.log('Request get Variables complete');
+        },
+      });
   }
+
   //para paginación----
   pageToShow(page: number, list: variable[]) {
     this.setPageLocalStorage(page);
@@ -159,17 +140,25 @@ export class VariablesGroupComponent implements OnInit {
     }
   }
   setPageLocalStorage(page: number) {
-    localStorage.setItem('variablesPage', JSON.stringify(page));
+    localStorage.setItem('variablePage', JSON.stringify(page));
   }
   getPageLocalStorage(): number {
     let pageLocalStorage: number = 1;
-    let pageLocalStorageJSON = localStorage.getItem('variablesPage');
+    let pageLocalStorageJSON = localStorage.getItem('variablePage');
     if (pageLocalStorageJSON) {
       pageLocalStorage = JSON.parse(pageLocalStorageJSON);
     }
     return pageLocalStorage;
   }
-  //--------------------------------------------
+  geNameAxeLocalStorage(): string {
+    let nameAxeLocalStorage: string = '';
+    let nameAxeLocalStorageJSON = localStorage.getItem('nameAxeGroup');
+    if (nameAxeLocalStorageJSON) {
+      nameAxeLocalStorage = JSON.parse(nameAxeLocalStorageJSON);
+    }
+    return nameAxeLocalStorage;
+  }
+  //Borrar variable--------------------------------------------
   onClickDelete(id: number) {
     this.flagDelete = true;
     this.idToDelete = id;
@@ -182,11 +171,8 @@ export class VariablesGroupComponent implements OnInit {
         this.listOfVariables_toSearch.push(item);
       }
     }
-
     this.listOfVariables = this.listOfVariables_toSearch;
-
     this.pageToShow(this.currentPage, this.listOfVariables); //para paginación
-
     this._adminSvc
       .deleteVariableWithId(id.toString())
       .pipe(takeUntil(this.onDestroy$))

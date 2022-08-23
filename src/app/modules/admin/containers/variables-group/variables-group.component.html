@@ -2,7 +2,7 @@
   <div class="variables">
     <h1 class="variables__title">Variables</h1>
     <div class="variables__container-search">
-      <a class="btn-add-variables" routerLink="agregar-eje">
+      <a class="btn-add-variables" routerLink="add-mod-variables">
         <img
           class="btn-add-variables__ico"
           src="../../../../../assets/icons/Grid.svg"
@@ -27,7 +27,7 @@
         />
       </label>
     </div>
-    <h2 class="variables__subtitle">Eje Salud</h2>
+    <h2 class="variables__subtitle">Eje {{ nameAxeGroup }}</h2>
     <section class="list-variables">
       <div class="list-variables__table">
         <!-- Position Column -->
@@ -48,18 +48,22 @@
           class="list-variables__row"
           *ngFor="let element of listOfVariables_toShow | async"
         >
-          <p class="list-variables__cell list-variables__cell--axe">
+          <p class="list-variables__cell list-variables__cell--variable">
             {{ element.nombre }}
           </p>
           <p class="list-variables__cell--type">
             {{ element.tipo }}
+            <ng-container *ngIf="element.genero == 'true'">
+              - Distinción de género
+            </ng-container>
+            <ng-container *ngIf="element.escala_valor == 'true'">
+              - Escala de Valor
+            </ng-container>
           </p>
           <div class="list-variable__cell list-variables__cell--acction">
-            <a [routerLink]="['agregar-eje/', element.id.toString()]">
+            <a [routerLink]="['add-mod-variables/', element.id.toString()]">
               <img
-                class="
-                  list-variables__ico-action list-variables__ico-action--edit
-                "
+                class="list-variables__ico-action list-variables__ico-action--edit"
                 src="../../../../../assets/icons/Pencil.svg"
                 alt="Icono de editar"
                 matTooltip="Editar"
@@ -131,7 +135,7 @@
         alt="icon check"
       />
       <p class="modal__text">
-        ¡El Eje {{ newOrEditedVariable.nombre }} fue creado con éxito!
+        ¡La Variable {{ newOrEditedVariable.nombre }} fue creada con éxito!
       </p>
     </div>
   </div>
@@ -150,7 +154,7 @@
         alt="icon check"
       />
       <p class="modal__text">
-        ¡El Eje {{ newOrEditedVariable.nombre }} fue editado con éxito!
+        ¡La Variable {{ newOrEditedVariable.nombre }} fue editada con éxito!
       </p>
     </div>
   </div>
