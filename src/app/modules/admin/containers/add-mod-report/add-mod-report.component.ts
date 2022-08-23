@@ -2,11 +2,12 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { getMaxListeners } from 'process';
+import { getMaxListeners, report } from 'process';
 import { AdminService } from '../../services/admin.service';
-import { axes } from '../../models/admin.model';
+import { axes, variable } from '../../models/admin.model';
 import { Centro } from '../../models/centro';
 import { Report } from '../../models/report';
+import { DataService } from '../../services/data.service';
 
 
 
@@ -23,8 +24,7 @@ export class AddModReportComponent implements OnInit {
   ejes: Array<any> = ["hola", "pepe", "jose"]
   arrayc: Array<number> = [1]
   arrayAxes : Array<any> = []
-  arrayVaribles : Array<any> = []
-
+  arrayVaribles :  Array<any> = []
   // para modal de advertencia
   flagAddEdit: boolean = false;
   showDialog = false;
@@ -40,24 +40,29 @@ export class AddModReportComponent implements OnInit {
   showIt = false;
   //
 
-  constructor(private fb: FormBuilder, private router: Router, private admin: AdminService, private cdr: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, private router: Router, private admin: AdminService, private cdr: ChangeDetectorRef, private data : DataService) {
     this.formAdd = fb.group({
       nombre: ['', Validators.required],
       centros: ['', Validators.required],
       desde: ['', Validators.required],
       hasta: ['', Validators.required],
+      axe: [],
+      variable: []
     });
   }
 
   ngOnInit(): void {
     this.setFlagAddEdit(false);
     this.getCenters()
-    
+    console.log(this.arrayAxes)
+
   }
 
   // modal preview report
   showModal() {
     this.showIt = true;
+    this.formAdd.value.axe = this.arrayAxes
+    this.formAdd.value.variable = this.arrayVaribles
   }
 
   closeModal(newName: string) {
@@ -66,17 +71,20 @@ export class AddModReportComponent implements OnInit {
   }
   //
 
-  storageAxes(axes: number ){
-    this.arrayAxes.push(axes);
+  storageAxes(axes: number,idComponent: number ){
+    this.arrayAxes[idComponent] = axes;
     console.log("axes", this.arrayAxes)
+    console.log(idComponent)
   }
-  storageVariables( variablesArray: number ){
-    this.arrayVaribles.push(variablesArray);
+  storageVariables( variablesArray: any,idComponent: number ){
+    this.arrayVaribles[idComponent] = variablesArray;
     console.log("variables", this.arrayVaribles)
   }
 
   createEje() {
-    this.arrayc.push(1)
+    this.arrayc.push(this.arrayc.length + 1)
+    this.arrayAxes.push(1)
+    this.arrayVaribles.push(1)
   }
 
   catchCenter(e: any) {
@@ -89,8 +97,12 @@ export class AddModReportComponent implements OnInit {
   }
 
   confirm(datos:Report) {
+    this.data.arrayAxes = this.arrayAxes
+    this.data.arrayVariables = this.arrayVaribles
+    this.data.arrayCenters = this.formAdd.value.centros
     console.log('report',datos)
-    // this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes/add-mod-report/preview-report'])
+    this.setFlagAddEdit(true);
+    this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes/add-mod-report/preview-report',datos])
   }
 
   getCenters() {
