@@ -99,6 +99,7 @@ import { PreviewVariableComponent } from './components/preview-variable/preview-
     VariablesGroupComponent,
     ConfirmOutModalComponent,
     PreviewVariableComponent,
+    PreviewReportComponent,
   ],
   exports: [
     ...adminContainers.containers,
