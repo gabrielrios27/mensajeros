@@ -7,7 +7,16 @@
       <li class="list__header">Periodo a Reportar</li>
       <li class="list__header">Fecha Limite de Entrega</li>
     </ul>
-    <ul class="list__row-item" *ngFor="let item of list">
+    <ul
+      class="list__row-item"
+      *ngFor="let item of list"
+      (click)="onClickReport(item)"
+      [ngClass]="
+        reportToShow.numberReport === item.numberReport
+          ? 'list__row-item--active'
+          : ''
+      "
+    >
       <li class="list__item">{{ item.numberReport }}</li>
       <li class="list__item">{{ item.center }}</li>
       <li class="list__item">{{ item.period }}</li>
@@ -18,8 +27,11 @@
     <div class="report__conteiner">
       <ul class="report__info">
         <li class="report__item">Reporte</li>
-        <li class="report__item">C00010</li>
-        <li class="report__item">Carga 0 de 4 Ejes</li>
+        <li class="report__item">{{ reportToShow.numberReport }}</li>
+        <li class="report__item">
+          Carga {{ reportToShow.lastAxeComplete }} de
+          {{ reportToShow.quantityOfAxes }} Ejes
+        </li>
       </ul>
       <button
         mat-raised-button
@@ -27,6 +39,7 @@
         color="primary"
         type="submit"
         (click)="onStartReport()"
+        [disabled]="reportToShow.lastAxeComplete !== 0"
       >
         Iniciar carga
       </button>
@@ -38,6 +51,7 @@
         color="primary"
         type="submit"
         (click)="onStartReport()"
+        [disabled]="reportToShow.lastAxeComplete === 0"
       >
         Reanudar Carga de Reporte
       </button>
@@ -47,6 +61,7 @@
         color="primary"
         type="submit"
         (click)="onStartReport()"
+        [disabled]="reportToShow.lastAxeComplete === 0"
       >
         Volver a empezar
       </button>

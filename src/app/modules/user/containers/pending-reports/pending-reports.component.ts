@@ -12,29 +12,42 @@ export class PendingReportsComponent implements OnInit {
       center: 'Colibries',
       period: '07/2021-12/2121',
       limitDate: '02/01/2022',
+      lastAxeComplete: 2,
+      quantityOfAxes: 4,
     },
     {
       numberReport: 'C00011',
       center: 'La Balsa',
       period: '07/2021-12/2121',
       limitDate: '02/01/2022',
+      lastAxeComplete: 1,
+      quantityOfAxes: 8,
     },
     {
       numberReport: 'C00012',
       center: 'La Balsa',
       period: '07/2021-12/2121',
       limitDate: '02/01/2022',
+      lastAxeComplete: 0,
+      quantityOfAxes: 5,
     },
     {
       numberReport: 'C00013',
       center: 'Colibries',
       period: '07/2021-12/2121',
       limitDate: '02/01/2022',
+      lastAxeComplete: 0,
+      quantityOfAxes: 6,
     },
   ];
-
-  constructor() {}
+  reportToShow: any;
+  constructor() {
+    this.reportToShow = this.list[0];
+  }
 
   ngOnInit(): void {}
   onStartReport() {}
+  onClickReport(item: any) {
+    this.reportToShow = item;
+  }
 }
