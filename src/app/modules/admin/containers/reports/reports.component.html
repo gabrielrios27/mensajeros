@@ -13,7 +13,7 @@
                 <span class="btn-add-reports__text"> CREAR REPORTE </span>
             </a>
             <label for="searchAxes" class="lbl-search-reports">
-                <input class="lbl-search-reports__input" id="searchAxes" type="text" [(ngModel)]="numero"
+                <input class="lbl-search-reports__input" id="searchAxes" type="text" [(ngModel)]="nombre"
                     (ngModelChange)="busca($event)" autocomplete="off" spellcheck="false" />
                 <img class="lbl-search-reports__ico" src="../../../../../assets/icons/Search.svg"
                     alt="Icono de lupa para busqueda" />
@@ -42,7 +42,7 @@
                             <img class="list-reports__ico-action"
                                 src="../../../../../assets/icons/arrows-angle-expand.svg" matTooltip="Vizualizar" />
                         </a>
-                        <a>
+                        <a (click)="showModal(element)">
                             <img class="list-reports__ico-action list-reports__ico-action--edit"
                                 src="../../../../../assets/icons/Pencil.svg" alt="Icono de editar"
                                 matTooltip="Editar" />
@@ -114,4 +114,5 @@
             </button>
         </div>
     </div>
+    <app-preview-report *ngIf="showIt" [oldname]="name" [report] ="reports" (close)="closeModal($event)"></app-preview-report>
 </section>
