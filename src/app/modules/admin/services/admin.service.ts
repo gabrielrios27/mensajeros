@@ -126,11 +126,11 @@ export class AdminService {
   }
 
   deleteReport(id: number): Observable<Report> {
-    return this._http.delete<Report>(this.baseUrlTami + '/reportes/'+ id);
+    return this._http.delete<Report>(this.baseUrl + '/reportes/'+ id);
   }
 
   addReport(report:any): Observable<Report> {
-    return this._http.post<Report>(this.baseUrlTami + '/reportes', report);
+    return this._http.post<Report>(this.baseUrl + '/reportes', report);
   }
 
 
