@@ -35,8 +35,19 @@ export class PreviewVariableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkAxeNull();
+    console.log(this.variableValue);
     this.createValueScale();
     this.finalValue = Number(this.variableValue.valor_final);
+  }
+  //si el valor de eje es null se agrega un eje por defecto, para que no se produzcan errores por valor null.
+  checkAxeNull() {
+    if (!this.variableValue.eje) {
+      this.variableValue.eje = {
+        id: 0,
+        nombre: 'Eje seleccionado',
+      };
+    }
   }
   //al dar click en salir (X)
   onGoOutPreview(value: boolean) {
