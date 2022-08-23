@@ -129,4 +129,9 @@ export class AdminService {
     return this._http.delete<Report>(this.baseUrlTami + '/reportes/'+ id);
   }
 
+  addReport(report:any): Observable<Report> {
+    return this._http.post<Report>(this.baseUrlTami + '/reportes', report);
+  }
+
+
 }
