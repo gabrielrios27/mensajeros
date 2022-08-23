@@ -1,10 +1,10 @@
 import { variable } from './admin.model';
 import { Centro } from './centro';
 export interface Report {
-    centros: Centro,
-    fechaCreacion: Date
-    fechaEntrega: Date,
-    id: number,
+    centros: Array<Centro>,
+    fechaCreacion: string
+    fechaEntrega: string,
+    id: any,
     nombre: string,
-    variables: variable
+    variables: Array<number>
 }
