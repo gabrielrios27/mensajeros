@@ -1,8 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminService } from '../../services/admin.service';
 import { Report } from '../../models/report';
-
+import { element } from 'protractor';
+import { axes } from '../../models/admin.model';
 
 @Component({
   selector: 'app-reports',
@@ -11,8 +17,7 @@ import { Report } from '../../models/report';
   styleUrls: ['reports.component.scss'],
 })
 export class ReportsComponent implements OnInit {
-  numero: any
-  
+  nombre: any;
 
   flagEdited: boolean = false;
   flagNew: boolean = false;
@@ -30,36 +35,58 @@ export class ReportsComponent implements OnInit {
   finalItem: number = 10;
   //
 
-  reports: Array<Report> = []
+  // variables para visualizar reporte
+  name = 'old name';
+  showIt = false;
+  arrayAxes: Array<axes> = [];
+  //
 
-  constructor(private router: Router, private admin: AdminService, private cdr: ChangeDetectorRef) {}
+  flag: boolean = false;
+  reports: Array<Report> = [];
+
+  constructor(
+    private router: Router,
+    private admin: AdminService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.getReports()
-    this.getUserLocalStorage()
+    this.getReports();
+    this.getUserLocalStorage();
   }
 
   busca(e: string) {
-
     if (e.toLocaleLowerCase() == '') {
-      this.ngOnInit()
+      this.ngOnInit();
+    } else {
+      this.reports = this.reports.filter((res) => {
+        return res.nombre
+          .toLocaleLowerCase()
+          .match(this.nombre.toLocaleLowerCase());
+      });
     }
-    else {
-      // this.reports = this.reports.filter(res => {
-      //   return res.numero.toLocaleLowerCase().match(this.numero.toLocaleLowerCase())
-      // })
-    }
-
   }
 
-  getReports(){
+  //visualizar reporte
+  showModal(element: Report) {
+    this.showIt = true;
+  }
+
+  closeModal(newName: string) {
+    this.showIt = false;
+    if (newName) this.name = newName;
+  }
+
+  //
+
+  getReports() {
     //this.currentPage = this.getPageLocalStorage();
     this.admin.getResports().subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.reports = data;
         this.pageToShow(this.currentPage, this.reports); //para paginación
-        console.log("reports",data);
+        console.log('reports', data);
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
@@ -68,14 +95,14 @@ export class ReportsComponent implements OnInit {
     });
   }
 
-  deleteReport(){
+  deleteReport() {
     this.admin.deleteReport(this.idToDelete).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.pageToShow(this.currentPage, this.reports); //para paginación
         this.getReports();
         this.close();
-        console.log("delete report",data);
+        console.log('delete report', data);
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
@@ -84,9 +111,10 @@ export class ReportsComponent implements OnInit {
     });
   }
 
-  create(){ 
-    this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes/add-mod-report'])
-    
+  create() {
+    this.router.navigate([
+      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+    ]);
   }
 
   //para paginación----
