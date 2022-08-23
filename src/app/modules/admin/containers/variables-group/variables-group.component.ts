@@ -11,6 +11,7 @@ import { AdminService } from '../../services';
 })
 export class VariablesGroupComponent implements OnInit {
   idAxeGroup: number = 0;
+  nameAxeGroup: string = '';
   newOrEditedVariable: variable = {} as variable;
   flagEdited: boolean = false;
   flagNew: boolean = false;
@@ -45,16 +46,18 @@ export class VariablesGroupComponent implements OnInit {
 
   ngOnInit() {
     this.idAxeGroup = this.getIdFromRute();
+    this.nameAxeGroup = this.geNameAxeLocalStorage();
     this.getVariablesList();
     this.getVariableLocalStorage();
   }
   getIdFromRute(): number {
     let idToShow;
     this.rutaActiva.paramMap.subscribe((params: ParamMap) => {
-      idToShow = params.get('id');
+      idToShow = params.get('id-axe');
     });
     return Number(idToShow);
   }
+
   getVariablesList() {
     this.currentPage = this.getPageLocalStorage();
     this._adminSvc
@@ -78,6 +81,7 @@ export class VariablesGroupComponent implements OnInit {
         },
       });
   }
+
   //para paginación----
   pageToShow(page: number, list: variable[]) {
     this.setPageLocalStorage(page);
@@ -136,15 +140,23 @@ export class VariablesGroupComponent implements OnInit {
     }
   }
   setPageLocalStorage(page: number) {
-    localStorage.setItem('variablesPage', JSON.stringify(page));
+    localStorage.setItem('variablePage', JSON.stringify(page));
   }
   getPageLocalStorage(): number {
     let pageLocalStorage: number = 1;
-    let pageLocalStorageJSON = localStorage.getItem('variablesPage');
+    let pageLocalStorageJSON = localStorage.getItem('variablePage');
     if (pageLocalStorageJSON) {
       pageLocalStorage = JSON.parse(pageLocalStorageJSON);
     }
     return pageLocalStorage;
+  }
+  geNameAxeLocalStorage(): string {
+    let nameAxeLocalStorage: string = '';
+    let nameAxeLocalStorageJSON = localStorage.getItem('nameAxeGroup');
+    if (nameAxeLocalStorageJSON) {
+      nameAxeLocalStorage = JSON.parse(nameAxeLocalStorageJSON);
+    }
+    return nameAxeLocalStorage;
   }
   //Borrar variable--------------------------------------------
   onClickDelete(id: number) {

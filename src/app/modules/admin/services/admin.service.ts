@@ -3,8 +3,8 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Centro } from '../models/centro';
 import { Users } from '../models/users';
-import { axes, flag, user, variable } from '../models';
 import { Report } from '../models/report';
+import { axes, AxeWithquantity, flag, user, variable } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -90,8 +90,8 @@ export class AdminService {
     return this._http.delete<axes>(this.baseUrlTami + this.EPAxes + '/' + id);
   }
   // Variables-----------------
-  getVariablesQuantityPerAxe(): Observable<variable[]> {
-    return this._http.get<variable[]>(
+  getVariablesQuantityPerAxe(): Observable<AxeWithquantity[]> {
+    return this._http.get<AxeWithquantity[]>(
       this.baseUrlTami + this.EPVariablesQuantityPerAxe
     );
   }

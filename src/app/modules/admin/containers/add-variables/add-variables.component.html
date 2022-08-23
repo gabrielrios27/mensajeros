@@ -1,5 +1,13 @@
 <section class="container-add-variable" (click)="close()">
-  <h1 class="container-add-variable__title">Agregar Variable</h1>
+  <h1
+    *ngIf="idVariable === 0; else editTemplate"
+    class="container-add-variable__title"
+  >
+    Agregar Variable
+  </h1>
+  <ng-template #editTemplate>
+    <h1 class="container-add-variable__title">Editar Variable</h1>
+  </ng-template>
   <div class="add-variable">
     <form
       class="add-variable__form"
@@ -36,7 +44,7 @@
         <input
           [ngClass]="invalidForm ? 'add-variable__input--alert' : ''"
           class="add-variable__input"
-          formControlName="variable"
+          formControlName="nombre"
           id="POST-variable"
           type="text"
           name="variable"
@@ -55,9 +63,8 @@
       >
       <div class="add-variable__container-input">
         <input
-          [ngClass]="invalidForm ? 'add-variable__input--alert' : ''"
           class="add-variable__input"
-          formControlName="descriptionForm"
+          formControlName="descripcion"
           id="description"
           type="text"
           name="description"
@@ -73,15 +80,15 @@
       <div class="add-variable__container-input">
         <mat-select
           class="select"
-          [(value)]="ejeAsignado"
+          [(value)]="selectedAxe"
           name="select-axe"
-          (selectionChange)="capturarEje($event.value)"
+          (selectionChange)="captureAxe($event.value)"
           id="select-axe"
-          formControlName="selectAxeForm"
+          formControlName="eje"
         >
           <mat-option
             class="select__option"
-            [value]="item.nombre"
+            [value]="item"
             *ngFor="let item of axesList"
             >{{ item.nombre }}</mat-option
           >
@@ -101,7 +108,7 @@
           id="select-type-of-answer"
           class="radio-groupAM"
           [(ngModel)]="typeAnswer"
-          formControlName="typeAnswerForm"
+          formControlName="tipo"
           [ngModel]="typeAnswer"
           (change)="onSelectionChange()"
         >
@@ -128,7 +135,7 @@
           class="checkbox-add-to"
           color="accent"
           [(ngModel)]="addGenre"
-          formControlName="genreForm"
+          formControlName="genero"
           [disabled]="!flagGenre"
           >Distinción de género</mat-checkbox
         >
@@ -143,7 +150,7 @@
           class="checkbox-add-to"
           color="accent"
           [(ngModel)]="addValueEscale"
-          formControlName="valueScaleForm"
+          formControlName="escala_valor"
           [disabled]="flagGenre"
           (change)="onSelectValueScale()"
           >Escala de Valor</mat-checkbox
@@ -166,7 +173,7 @@
               [(value)]="firstValue"
               name="select-first-value"
               (selectionChange)="captureFirstValue($event.value)"
-              formControlName="firstNumberForm"
+              formControlName="valor_inicial"
               id="select-first-value"
               [disabled]="!flagValueScale"
             >
@@ -186,7 +193,7 @@
               name="select-last-value"
               (selectionChange)="captureLastValue($event.value)"
               id="select-last-value"
-              formControlName="lastNumberForm"
+              formControlName="valor_final"
               [disabled]="!flagValueScale"
             >
               <mat-option
@@ -213,12 +220,15 @@
                 autocomplete="off"
                 type="text"
                 matInput
-                formControlName="firstValueForm"
+                formControlName="etiqueta_inicial"
+                [(ngModel)]="etiquetaInicial"
                 placeholder="Etiqueta"
                 required
               />
               <mat-error
-                *ngIf="newVariable.get('firstValueForm')?.hasError('required')"
+                *ngIf="
+                  newVariable.get('etiqueta_inicial')?.hasError('required')
+                "
               >
                 Debe completar este campo
               </mat-error>
@@ -237,12 +247,13 @@
                 autocomplete="off"
                 type="text"
                 matInput
-                formControlName="lastValueForm"
+                formControlName="etiqueta_final"
+                [(ngModel)]="etiquetaFinal"
                 placeholder="Etiqueta"
                 required
               />
               <mat-error
-                *ngIf="newVariable.get('lastValueForm')?.hasError('required')"
+                *ngIf="newVariable.get('etiqueta_final')?.hasError('required')"
               >
                 Debe completar este campo
               </mat-error>

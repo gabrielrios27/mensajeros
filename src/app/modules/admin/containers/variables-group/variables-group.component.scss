@@ -93,7 +93,7 @@ p {
 
         .list-variables__row {
           box-shadow: 0 2px 2px #00000040;
-          height: 56px;
+          min-height: 56px;
           padding-top: 8px;
           padding-left: 1.5em;
           display: flex;
@@ -126,7 +126,9 @@ p {
               padding-left: 1.5em;
             }
           }
-
+          .list-variables__cell--variable {
+            width: 300px;
+          }
           .list-variables__cell--type {
             font-family: "Inter" !important;
             font-size: 1em;
@@ -137,6 +139,7 @@ p {
             align-items: center;
             transition: all 0.1s linear;
             padding-right: 175px;
+            text-align: center;
           }
           .list-variables__cell--action {
             padding-right: 20px;
