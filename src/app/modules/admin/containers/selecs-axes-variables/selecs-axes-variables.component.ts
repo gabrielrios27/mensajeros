@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { axes, variable } from '../../models';
 import { AdminService } from '../../services/admin.service';
@@ -9,9 +9,10 @@ import { AdminService } from '../../services/admin.service';
   styleUrls: ['./selecs-axes-variables.component.scss']
 })
 export class SelecsAxesVariablesComponent implements OnInit {
-  @Output() axes = new EventEmitter<number>();
-  @Output() variablesArray = new EventEmitter<number>();
-  variables: any;
+  @Output() axes = new EventEmitter<any>();
+  @Output() variablesArray = new EventEmitter<any>();
+  
+  variables: any
   axe: any
 
   listOfAxes: Array<axes> = []
@@ -22,6 +23,7 @@ export class SelecsAxesVariablesComponent implements OnInit {
   ngOnInit(): void {
     this.getAxes()
     this.getVariables()
+    
   }
   capturarVariables(e: any) {
     this.variables = e;
