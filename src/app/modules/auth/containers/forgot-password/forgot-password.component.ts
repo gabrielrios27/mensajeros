@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
+  FormBuilder,
   FormControl,
+  FormGroup,
   FormGroupDirective,
   NgForm,
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { AuthService } from '../../services';
+import { Mail } from '../../models/mail';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -29,22 +33,33 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class ForgotPasswordComponent implements OnInit {
   flag: boolean = false;
+  email: any
 
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
+  emailFormControl: FormGroup;
   matcher = new MyErrorStateMatcher();
-  constructor() {}
+  constructor(private auth:AuthService, private cdr:ChangeDetectorRef, private fb: FormBuilder) {
+    this.emailFormControl = fb.group({
+      mailTo: ['', Validators.required],
+    });
+  }
 
   ngOnInit(): void {
     localStorage.removeItem('isAdmin');
   }
 
-  submit() {
+  submit(email: any) {
     const img = document.getElementById('img');
     this.flag = true;
-    console.log(this.emailFormControl.value);
-    //img?.style.setProperty('margin-top', '267px');
+    console.log(this.emailFormControl.value.mailTo);
+    img?.style.setProperty('margin-top', '267px');
+    this.auth.sendEmail(email).subscribe({
+      next: (res) => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

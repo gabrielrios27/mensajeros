@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
-  FormGroupDirective,
-  NgForm,
   Validators,
 } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { changePassword } from '../../models/changePassword';
 
 @Component({
   selector: 'app-recover-password',
@@ -18,26 +17,49 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export class RecoverPasswordComponent implements OnInit {
   flag: boolean = false;
   formg!: FormGroup;
+  token: any 
 
-  constructor(private router: Router, private fb: FormBuilder) {
+  constructor(private router: Router, private fb: FormBuilder, private auth: AuthService, private cdr: ChangeDetectorRef, private routeActive: ActivatedRoute) {
     this.formg = this.fb.group(
       {
         password: ['', Validators.minLength(8)],
-        cPassword: ['', Validators.required],
+        confirmPassword: ['', Validators.required],
       },
       {
-        validators: this.mustMatch('password', 'cPassword'),
+        validators: this.mustMatch('password', 'confirmPassword'),
       }
     );
   }
 
   ngOnInit(): void {
+    this.getTokenFromRute()
     localStorage.removeItem('isAdmin');
-    console.log(this.formg.controls.errors);
+    
   }
 
-  confirm() {
-    this.router.navigate(['/dashboar']);
+  getTokenFromRute() {
+    let token;
+    this.routeActive.paramMap.subscribe((params: ParamMap) => {
+      token = params.get('token');
+    });
+    console.log(token)
+    this.token =  token;
+  }
+
+  confirm(form: changePassword) {
+    form.tokenPassword = this.token
+    console.log(form.tokenPassword)
+    this.auth.changePassword(form).subscribe({
+      next: (res) => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.router.navigate(['auth/login']);
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+    
   }
 
   get f() {
