@@ -1,23 +1,27 @@
 @import "../../../../../styles/variables.scss";
 
 .pending-reports {
+  display: flex;
+  justify-content: center;
   width: 100%;
-  padding-left: 123px;
-  .pending-reports__title {
-    width: 428px;
-    height: 80px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    background: rgba(25, 103, 210, 0.1);
-    font-size: 36px;
-    text-align: center;
-    color: #083d5e;
-    border-radius: 5px 50px 10px 0px;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    margin-top: 99px;
-    margin-left: 240px;
-    padding-left: 20px;
+  .pending-reports__conteiner {
+    padding-left: 123px;
+    .pending-reports__title {
+      width: 428px;
+      height: 80px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      background: rgba(25, 103, 210, 0.1);
+      font-size: 36px;
+      text-align: center;
+      color: #083d5e;
+      border-radius: 5px 50px 10px 0px;
+      text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      margin-top: 99px;
+      margin-left: 240px;
+      padding-left: 20px;
+    }
   }
 }
 .list {
@@ -87,7 +91,7 @@
 }
 .report {
   width: 100%;
-  max-width: 988px;
+  max-width: 963px;
   min-height: 352px;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
@@ -155,9 +159,12 @@
 }
 @media (max-width: 1400px) {
   .pending-reports {
-    .pending-reports__title {
-      margin-top: 65px;
-      margin-left: 130px;
+    justify-content: flex-start;
+    .pending-reports__conteiner {
+      .pending-reports__title {
+        margin-top: 65px;
+        margin-left: 130px;
+      }
     }
   }
   .list {
@@ -170,9 +177,11 @@
 }
 @media (max-width: 1024px) {
   .pending-reports {
-    .pending-reports__title {
-      margin-top: 50px;
-      margin-left: 70px;
+    .pending-reports__conteiner {
+      .pending-reports__title {
+        margin-top: 50px;
+        margin-left: 70px;
+      }
     }
   }
   .list {
