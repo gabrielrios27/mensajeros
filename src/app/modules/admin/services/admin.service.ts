@@ -95,6 +95,13 @@ export class AdminService {
       this.baseUrlTami + this.EPVariablesQuantityPerAxe
     );
   }
+
+  getVariables(): Observable<variable[]> {
+    return this._http.get<variable[]>(
+      this.baseUrlTami + this.EPVariables
+    );
+  }
+
   getVariablesGroup(id: string): Observable<variable[]> {
     return this._http.get<variable[]>(
       this.baseUrlTami + this.EPVariablesQuantityPerAxe + '/' + id
