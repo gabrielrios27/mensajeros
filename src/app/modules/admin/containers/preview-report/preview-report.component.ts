@@ -156,8 +156,8 @@ export class PreviewReportComponent implements OnInit {
     })
   }
 
-  setUserLocStg(data: string, isNewUser: boolean) {
+  setUserLocStg(data: string, isNewReport: boolean) {
     localStorage.setItem('newOrEditedReport', data);
-    localStorage.setItem('isNewReport', JSON.stringify(isNewUser));
+    localStorage.setItem('isNewReport', JSON.stringify(isNewReport));
   }
 }
