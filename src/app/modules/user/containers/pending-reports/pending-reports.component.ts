@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-pending-reports',
   templateUrl: './pending-reports.component.html',
@@ -41,14 +41,27 @@ export class PendingReportsComponent implements OnInit {
     },
   ];
   reportToShow: any;
+  flagStartReport: boolean;
   flagDeleteReport: boolean;
-  constructor() {
+  timerId: any;
+  constructor(private router: Router) {
     this.reportToShow = this.list[0];
     this.flagDeleteReport = false;
+    this.flagStartReport = false;
+    this.timerId = 0;
   }
 
   ngOnInit(): void {}
-  onStartReport() {}
+  onStartReport() {
+    this.flagStartReport = true;
+    this.timerId = setTimeout(() => {
+      this.flagStartReport = false;
+      this.router.navigate([
+        'user/dashboard/mis-reportes/pendientes/carga-de-reporte',
+      ]);
+    }, 6000);
+  }
+
   onClickReport(item: any) {
     this.reportToShow = item;
   }
