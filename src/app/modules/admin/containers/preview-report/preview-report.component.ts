@@ -97,6 +97,7 @@ export class PreviewReportComponent implements OnInit {
     });
     this.until = new Date(this.until)
     this.since =new Date(this.since) 
+    this.deliverdate = new Date(this.deliverdate)
   }
 
 
@@ -127,12 +128,14 @@ export class PreviewReportComponent implements OnInit {
       }
     }
 
-    
+    let today = new Date()
     
     let report: Report ={
       nombre : this.name,
-      fechaCreacion :this.since.toISOString() ,
-      fechaEntrega :this.until.toISOString(),
+      fechaCreacion :today.toISOString(),
+      fechaEntrega: this.deliverdate.toISOString(),
+      periodoDesde: this.since.toISOString(),
+      periodoHasta: this.until.toISOString(),
       variables : this.variables2,
       centros: this.data.arrayCenters,
       id: ''
