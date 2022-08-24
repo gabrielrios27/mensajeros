@@ -7,4 +7,6 @@ export interface Report {
     id: any,
     nombre: string,
     variables: Array<number>
+    periodoDesde : string
+    periodoHasta : string
 }
