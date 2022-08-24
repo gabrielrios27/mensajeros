@@ -99,7 +99,7 @@ export class AmUserComponent implements OnInit {
         this.userListComplete = res;
       },
       error: (err) => {
-        console.log(err);
+        // console.log(err);
       },
     });
   }
@@ -125,7 +125,7 @@ export class AmUserComponent implements OnInit {
     } else {
       // para agregar un usuario a mas de un centro
       if (this.centrosAsignados.length >= 2) {
-        console.log(this.centrosAsignados[0]);
+        // console.log(this.centrosAsignados[0]);
         this.data.nombreUsuario = this.formUpEdit.value.nombre;
         this.addUser(user, this.centrosAsignados[0]);
         this.SetCentrosLocalStg();
@@ -141,10 +141,10 @@ export class AmUserComponent implements OnInit {
     if (this.centrosAsignados.length >= 2) {
       this.SetCentrosLocalStg();
       for (let i of this.centros) {
-        console.log('id', i.id);
+        // console.log('id', i.id);
         if (i.id) {
           if (i.id == this.centrosAsignados[0]) {
-            console.log(user);
+            // console.log(user);
             this.editCentros(user, this.centrosAsignados[0], i);
             this.edit(user, this.data.user?.id);
           }
@@ -152,24 +152,24 @@ export class AmUserComponent implements OnInit {
       }
     } else {
       for (let i of this.centros) {
-        console.log('id', i.id);
+        // console.log('id', i.id);
         if (i.id) {
           if (i.id == this.centrosAsignados[0]) {
-            console.log(user);
+            // console.log(user);
             this.editCentros(user, this.centrosAsignados[0], i);
             this.edit(user, this.data.user?.id);
           }
         }
       }
     }
-    console.log('centros', this.centros);
+    // console.log('centros', this.centros);
     this.data.nombreUsuario = this.formUpEdit.value.nombre;
   }
 
   editCentros(user: Users, idCentro: number, centro: Centro) {
     if (user) {
-      console.log('centro', centro);
-      console.log('usuario', user);
+      // console.log('centro', centro);
+      // console.log('usuario', user);
       centro.usuario = {
         id: this.data.user?.id,
         nombre: '',
@@ -180,11 +180,11 @@ export class AmUserComponent implements OnInit {
       this.admin.editCenter(centro, centro.id).subscribe({
         next: (data: any) => {
           setTimeout(() => this.cdr.detectChanges());
-          console.log('algo', data);
+          // console.log('algo', data);
         },
         error: (err) => {
           setTimeout(() => this.cdr.detectChanges());
-          console.log(err);
+          // console.log(err);
         },
       });
     }
@@ -195,7 +195,7 @@ export class AmUserComponent implements OnInit {
     this.admin.addUserAdmin(user).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
-        // console.log(data, "admin")
+        console.log(data, "admin")
         this.data.flag = false;
         this.data.editar = false;
         this.formUpEdit.reset();
@@ -203,7 +203,7 @@ export class AmUserComponent implements OnInit {
         this.router.navigate(['admin/dashboard/usuarios']);
       },
       error: (err) => {
-        console.log(err);
+        // console.log(err);
       },
     });
   }
@@ -213,7 +213,7 @@ export class AmUserComponent implements OnInit {
     this.admin.addUser(user, id).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
-        // console.log(data, "done1")
+        console.log(data, "done1")
         this.data.flag = false;
         this.data.editar = false;
         this.setUserLocStg(this.data.nombreUsuario, true);
@@ -221,7 +221,7 @@ export class AmUserComponent implements OnInit {
         this.router.navigate(['admin/dashboard/usuarios']);
       },
       error: (err) => {
-        console.log(err);
+        // console.log(err);
       },
     });
   }
@@ -236,7 +236,7 @@ export class AmUserComponent implements OnInit {
     this.admin.editUser(user, id).subscribe({
       next: (data: any) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(data);
+        // console.log(data);
         this.data.flag = false;
         this.data.editar = false;
         this.formUpEdit.reset();
@@ -254,7 +254,7 @@ export class AmUserComponent implements OnInit {
       setTimeout(() => this.cdr.detectChanges());
       this.centros = data;
       this.centroAsig();
-      console.log(this.centros);
+      // console.log(this.centros);
     });
   }
 
@@ -267,15 +267,15 @@ export class AmUserComponent implements OnInit {
   centroAsig(): any {
     this.centroAsignado = [];
     for (let c of this.centros) {
-      console.log('id', c.usuario?.id);
+      // console.log('id', c.usuario?.id);
       if (c.usuario?.nombre === this.data.user?.nombre) {
-        console.log('centro', c);
+        // console.log('centro', c);
         this.centroAsignado.push(c.id);
         this.centerSelects.push(this.centroAsignado);
       }
     }
-    console.log(this.centroAsignado);
-    console.log(this.centerSelects);
+    // console.log(this.centroAsignado);
+    // console.log(this.centerSelects);
   }
 
   capturarCentro(e: any) {

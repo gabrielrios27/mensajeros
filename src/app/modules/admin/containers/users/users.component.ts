@@ -115,7 +115,7 @@ export class UsersComponent implements OnInit {
         // console.log(this.user);
       },
       error: (err) => {
-        console.log(err);
+        // console.log(err);
       },
     });
   }
@@ -201,7 +201,7 @@ export class UsersComponent implements OnInit {
         this.getUsers();
       },
       error: (err) => {
-        console.log(err);
+        // console.log(err);
       },
     });
   }
@@ -256,14 +256,14 @@ export class UsersComponent implements OnInit {
   editCentros(centro: Centro) {
     if (this.userAsig) {
       centro.usuario = this.userAsig
-      console.log(centro.usuario)
+      // console.log(centro.usuario)
       this.admin.editCenter(centro, centro.id).subscribe({
         next: (data: any) => {
           setTimeout(() => this.cdr.detectChanges())
         },
         error: (err) => {
           setTimeout(() => this.cdr.detectChanges())
-          console.log(err)
+          // console.log(err)
         }
       })
     }
