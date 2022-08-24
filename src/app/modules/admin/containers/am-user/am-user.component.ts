@@ -31,8 +31,9 @@ export class AmUserComponent implements OnInit {
   rol: any;
   centrosAsignados: Array<number> = [];
   userAsignado?: Users;
-  centerSelects: Array<Centro> = [];
+  centerSelects: Array<number> = [];
   centros: Array<Centro> = new Array<Centro>();
+  centerUserNull: Array<any> = [];
   // para paginacion de centros
   itemsPerPage: number = 10;
   quantityOfPages: number = 1;
@@ -60,15 +61,18 @@ export class AmUserComponent implements OnInit {
     this.getUsers();
     this.validatorEdit();
     this.centroAsig();
-    this.validator()
+    this.validator();
+    console.log(this.centerSelects);
   }
 
   validator() {
     if (!this.flagEdit) {
-      return this.formUpEdit.controls.contrasena.setValidators(([Validators.required, Validators.minLength(8)]));
-    }
-    else{
-      return this.formUpEdit.controls.contrasena.setValidators(null)
+      return this.formUpEdit.controls.contrasena.setValidators([
+        Validators.required,
+        Validators.minLength(8),
+      ]);
+    } else {
+      return this.formUpEdit.controls.contrasena.setValidators(null);
     }
   }
 
@@ -138,45 +142,97 @@ export class AmUserComponent implements OnInit {
   }
 
   editar(user: Users) {
-    if (this.centrosAsignados.length >= 2) {
-      this.SetCentrosLocalStg();
-      for (let i of this.centros) {
-        // console.log('id', i.id);
-        if (i.id) {
-          if (i.id == this.centrosAsignados[0]) {
-            // console.log(user);
-            this.editCentros(user, this.centrosAsignados[0], i);
-            this.edit(user, this.data.user?.id);
+    
+    if (this.centerSelects.length != 0) {
+      for (let cen of this.centerSelects) {
+        if(this.centrosAsignados.length >0)
+        for (let c of this.centrosAsignados) {
+          if (cen != c) {
+            this.centerUserNull.push(c);
           }
         }
+        else{
+          this.centerUserNull = this.centerSelects
+        }
       }
-    } else {
-      for (let i of this.centros) {
-        // console.log('id', i.id);
-        if (i.id) {
-          if (i.id == this.centrosAsignados[0]) {
-            // console.log(user);
-            this.editCentros(user, this.centrosAsignados[0], i);
-            this.edit(user, this.data.user?.id);
+      if (this.centerUserNull.length >= 2) {
+        for (let center of this.centerUserNull) {
+          let cen = this.centros.find((elem) => elem.id == center);
+          if (cen) {
+            cen.usuario = {
+              id: '',
+              nombre: '',
+              contrasena: '',
+              email: '',
+              rolNombre: '',
+            };
+            console.log(cen);
+            this.editCentros(user, cen);
           }
+        }
+      } else {
+        let cen = this.centros.find((elem) => elem.id == this.centerUserNull[0]);
+        if (cen) {
+          cen.usuario = {
+            id: '',
+            nombre: '',
+            contrasena: '',
+            email: '',
+            rolNombre: '',
+          };
+          console.log(cen);
+          this.editCentros(user, cen);
         }
       }
     }
-    // console.log('centros', this.centros);
+    // if (this.centrosAsignados.length >= 2) {
+    //   this.SetCentrosLocalStg();
+    //   for (let i of this.centros) {
+    //     // console.log('id', i.id);
+    //     if (i.id) {
+    //       if (i.id == this.centrosAsignados[0]) {
+    //         // console.log(user);
+    // i.usuario = {
+    //   id: this.data.user?.id,
+    //   nombre: '',
+    //   contrasena: '',
+    //   email: '',
+    //   rolNombre: '',
+    // };
+    //         this.editCentros(user, i);
+    //         this.edit(user, this.data.user?.id);
+    //       }
+    //     }
+    //   }
+    // } else {
+    //   for (let i of this.centros) {
+    //     // console.log('id', i.id);
+    //     if (i.id) {
+    //       if (i.id == this.centrosAsignados[0]) {
+    //         // console.log(user);
+    // i.usuario = {
+    //   id: this.data.user?.id,
+    //   nombre: '',
+    //   contrasena: '',
+    //   email: '',
+    //   rolNombre: '',
+    // };
+    //         this.editCentros(user, i);
+    //         this.edit(user, this.data.user?.id);
+    //       }
+    //     }
+    //   }
+    // }
+
+    console.log(this.centerUserNull);
+    console.log('centros', this.centros);
     this.data.nombreUsuario = this.formUpEdit.value.nombre;
   }
 
-  editCentros(user: Users, idCentro: number, centro: Centro) {
+  editCentros(user: Users, centro: Centro) {
     if (user) {
       // console.log('centro', centro);
       // console.log('usuario', user);
-      centro.usuario = {
-        id: this.data.user?.id,
-        nombre: '',
-        contrasena: '',
-        email: '',
-        rolNombre: '',
-      };
       this.admin.editCenter(centro, centro.id).subscribe({
         next: (data: any) => {
           setTimeout(() => this.cdr.detectChanges());
@@ -195,7 +251,7 @@ export class AmUserComponent implements OnInit {
     this.admin.addUserAdmin(user).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(data, "admin")
+        console.log(data, 'admin');
         this.data.flag = false;
         this.data.editar = false;
         this.formUpEdit.reset();
@@ -213,7 +269,7 @@ export class AmUserComponent implements OnInit {
     this.admin.addUser(user, id).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(data, "done1")
+        console.log(data, 'done1');
         this.data.flag = false;
         this.data.editar = false;
         this.setUserLocStg(this.data.nombreUsuario, true);
@@ -271,7 +327,7 @@ export class AmUserComponent implements OnInit {
       if (c.usuario?.nombre === this.data.user?.nombre) {
         // console.log('centro', c);
         this.centroAsignado.push(c.id);
-        this.centerSelects.push(this.centroAsignado);
+        this.centerSelects.push(c.id);
       }
     }
     // console.log(this.centroAsignado);
