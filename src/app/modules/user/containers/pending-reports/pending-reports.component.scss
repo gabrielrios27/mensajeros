@@ -5,7 +5,6 @@
   justify-content: center;
   width: 100%;
   .pending-reports__conteiner {
-    padding-left: 123px;
     .pending-reports__title {
       width: 428px;
       height: 80px;
@@ -19,7 +18,7 @@
       border-radius: 5px 50px 10px 0px;
       text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       margin-top: 99px;
-      margin-left: 240px;
+      // margin-left: 240px;
       padding-left: 20px;
     }
   }
@@ -28,7 +27,7 @@
   max-width: 997px;
   max-height: 286px;
   margin-top: 90px;
-  margin-left: 300px;
+  margin-left: 60px;
   overflow: scroll;
   &::-webkit-scrollbar {
     width: 10px; /* width of the entire scrollbar */
@@ -97,7 +96,7 @@
   border-radius: 10px;
   padding: 67px 100px;
   margin-top: 25px;
-  margin-left: 300px;
+  margin-left: 60px;
   margin-bottom: 50px;
   .report__conteiner {
     margin-bottom: 90px;
@@ -157,9 +156,25 @@
     }
   }
 }
-@media (max-width: 1400px) {
+@media (max-width: 1555px) {
   .pending-reports {
     justify-content: flex-start;
+    .pending-reports__conteiner {
+      padding-left: 123px;
+      .pending-reports__title {
+        margin-left: 130px;
+      }
+    }
+  }
+  .list {
+    margin-left: 190px;
+  }
+  .report {
+    margin-left: 190px;
+  }
+}
+@media (max-width: 1400px) {
+  .pending-reports {
     .pending-reports__conteiner {
       .pending-reports__title {
         margin-top: 65px;
