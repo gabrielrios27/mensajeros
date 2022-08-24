@@ -17,6 +17,7 @@ export class SelecsAxesVariablesComponent implements OnInit {
 
   listOfAxes: Array<axes> = []
   listOfVariables: Array<variable> = []
+  listOfVariablesShow: Array<variable> = []
 
   constructor(private router: Router, private admin: AdminService, private cdr: ChangeDetectorRef) { }
 
@@ -32,6 +33,11 @@ export class SelecsAxesVariablesComponent implements OnInit {
 
   capturarEje(e: any) {
     this.axe = e
+    // filter variables per axe
+    this.listOfVariablesShow = this.listOfVariables.filter((res:any)=>{
+      return res.eje.id == this.axe.id
+    })
+    // 
     this.axes.emit(this.axe);
   }
 
@@ -62,7 +68,7 @@ export class SelecsAxesVariablesComponent implements OnInit {
   }
 
   getVariables(){
-    this.admin.getVariablesQuantityPerAxe().subscribe({ next: (data: variable[]) => {
+    this.admin.getVariables().subscribe({ next: (data: variable[]) => {
       this.listOfVariables = data;
       setTimeout(() => this.cdr.detectChanges());
       console.log(this.listOfVariables);

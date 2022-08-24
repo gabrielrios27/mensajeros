@@ -6,7 +6,7 @@
     <mat-select [disabled]="!axe" class="mat-select-ejes" placeholder="Selecciona una o más."
         multiple="" [(value)]="variables" name="variables"
         (selectionChange)="capturarVariables($event.value)">
-        <mat-option [value]="item" *ngFor="let item of listOfVariables">{{item.nombre}}</mat-option>
+        <mat-option [value]="item" *ngFor="let item of listOfVariablesShow">{{item.nombre}}</mat-option>
     </mat-select>
 </div>
 <div class="container-label-variables">
