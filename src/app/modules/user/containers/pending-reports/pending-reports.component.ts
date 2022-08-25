@@ -67,6 +67,5 @@ export class PendingReportsComponent implements OnInit {
   }
   onDeleteReport(value: boolean) {
     this.flagDeleteReport = value;
-    console.log('flagdelete:', this.flagDeleteReport);
   }
 }
