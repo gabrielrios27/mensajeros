@@ -30,6 +30,7 @@
         }
       }
       .navbar__link {
+        width: 100%;
         height: 3.3125em;
         display: flex;
         align-items: center;
@@ -48,6 +49,7 @@
           height: 1.5em;
           margin-left: 18px;
           margin-right: 15px;
+          justify-self: flex-end;
           path {
             fill: $color-white;
           }
@@ -215,6 +217,15 @@
   .navbar {
     font-size: 12px;
     top: 145px;
+    .navbar__list {
+      .navbar__item {
+        .navbar__link {
+          .navbar__ico-list {
+            margin-left: 7px;
+          }
+        }
+      }
+    }
   }
   .modal-logout {
     top: 222px;

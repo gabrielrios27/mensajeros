@@ -1,0 +1,72 @@
+<section class="pending-reports">
+  <div class="pending-reports__conteiner">
+    <h1 class="pending-reports__title">REPORTES PENDIENTES</h1>
+    <div class="list">
+      <ul class="list__row-header">
+        <li class="list__header">Reporte Numero</li>
+        <li class="list__header">Reporte asignado para centro</li>
+        <li class="list__header">Periodo a Reportar</li>
+        <li class="list__header">Fecha Limite de Entrega</li>
+      </ul>
+      <ul
+        class="list__row-item"
+        *ngFor="let item of list"
+        (click)="onClickReport(item)"
+        [ngClass]="
+          reportToShow.numberReport === item.numberReport
+            ? 'list__row-item--active'
+            : ''
+        "
+      >
+        <li class="list__item">{{ item.numberReport }}</li>
+        <li class="list__item">{{ item.center }}</li>
+        <li class="list__item">{{ item.period }}</li>
+        <li class="list__item">{{ item.limitDate }}</li>
+      </ul>
+    </div>
+    <div class="report">
+      <div class="report__conteiner">
+        <ul class="report__info">
+          <li class="report__item">Reporte</li>
+          <li class="report__item">{{ reportToShow.numberReport }}</li>
+          <li class="report__item">
+            Carga {{ reportToShow.lastAxeComplete }} de
+            {{ reportToShow.quantityOfAxes }} Ejes
+          </li>
+        </ul>
+        <button
+          mat-raised-button
+          class="report__btn-start"
+          color="primary"
+          type="submit"
+          (click)="onStartReport()"
+          [disabled]="reportToShow.lastAxeComplete !== 0"
+        >
+          Iniciar carga
+        </button>
+      </div>
+      <div class="report__conteiner-btns">
+        <button
+          mat-raised-button
+          class="report__btn-continue"
+          color="primary"
+          type="submit"
+          (click)="onStartReport()"
+          [disabled]="reportToShow.lastAxeComplete === 0"
+        >
+          Reanudar Carga de Reporte
+        </button>
+        <button
+          mat-raised-button
+          class="report__btn-restart"
+          color="primary"
+          type="submit"
+          (click)="onStartReport()"
+          [disabled]="reportToShow.lastAxeComplete === 0"
+        >
+          Volver a empezar
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
