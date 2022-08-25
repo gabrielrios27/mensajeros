@@ -73,7 +73,7 @@ export class AddModReportComponent implements OnInit {
   }
   //
 //  guarda axes de componente selects
-  storageAxes(axes: number,idComponent: number ){
+  storageAxes(axes: any,idComponent: number ){
     this.arrayAxes[idComponent] = axes;
     console.log("axes", this.arrayAxes)
     console.log(idComponent)
