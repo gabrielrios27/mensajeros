@@ -1,1 +1,31 @@
-<p>upload-reports works!</p>
+<section class="upload-report">
+  <section class="upload-report__progress">
+    <h1 class="upload-report__title">CARGA DE REPORTE</h1>
+    <div class="progress-bar"></div>
+    <button
+      mat-raised-button
+      class="upload-report__btn-close-save"
+      type="submit"
+      (click)="onCloseSave()"
+    >
+      Cerrar y Guardar
+    </button>
+  </section>
+  <section class="upload-report__conteiner"></section>
+  <section class="footer">
+    <div></div>
+    <img
+      src="../.././../../../assets/images/logo-20a.svg"
+      alt=""
+      class="footer__logo"
+    />
+    <button
+      mat-raised-button
+      class="footer__btn-confirm-axe"
+      type="submit"
+      (click)="onCloseSave()"
+    >
+      Confirmar Eje
+    </button>
+  </section>
+</section>
