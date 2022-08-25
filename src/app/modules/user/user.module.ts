@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { PopUpNoExistComponent } from './components/pop-up-no-exist/pop-up-no-exist.component';
 import { PopUpDeleteReportComponent } from './components/pop-up-delete-report/pop-up-delete-report.component';
 import { PopUpStartComponent } from './components/pop-up-start/pop-up-start.component';
+import { UploadReportsComponent } from './containers/upload-reports/upload-reports.component';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { PopUpStartComponent } from './components/pop-up-start/pop-up-start.comp
     PopUpNoExistComponent,
     PopUpDeleteReportComponent,
     PopUpStartComponent,
+    UploadReportsComponent,
   ],
   exports: [...userContainers.containers, ...userComponents.components],
 })

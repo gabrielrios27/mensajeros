@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-pop-up-start',
@@ -7,11 +7,12 @@ import { Router } from '@angular/router';
 })
 export class PopUpStartComponent implements OnInit {
   constructor(private router: Router) {}
-
+  @Input('idReport') idReport: number = 0;
   ngOnInit(): void {}
   initReport() {
     this.router.navigate([
-      'user/dashboard/mis-reportes/pendientes/carga-de-reporte',
+      'user/dashboard/mis-reportes/pendientes/carga-de-reporte/' +
+        this.idReport,
     ]);
   }
 }
