@@ -17,6 +17,7 @@ import * as userGuards from './guards';
 import * as userServices from './services';
 import { PendingReportsComponent } from './containers/pending-reports/pending-reports.component';
 import { MatButtonModule } from '@angular/material/button';
+import { PopUpNoExistComponent } from './components/pop-up-no-exist/pop-up-no-exist.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { MatButtonModule } from '@angular/material/button';
     ...userContainers.containers,
     ...userComponents.components,
     PendingReportsComponent,
+    PopUpNoExistComponent,
   ],
   exports: [...userContainers.containers, ...userComponents.components],
 })
