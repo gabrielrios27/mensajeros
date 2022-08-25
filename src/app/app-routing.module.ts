@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from './core/layouts/containers';
+import { UserLayoutComponent } from './core/layouts/containers/user-layout/user-layout.component';
 import { AdminGuard } from './modules/admin/guards';
 
 const routes: Routes = [
@@ -31,6 +32,25 @@ const routes: Routes = [
         loadChildren: () =>
           import('./modules/admin/admin-routing.module').then(
             (m) => m.AdminRoutingModule
+          ),
+      },
+    ],
+  },
+  {
+    path: 'user',
+
+    component: UserLayoutComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('./modules/user/user-routing.module').then(
+            (m) => m.UserRoutingModule
           ),
       },
     ],
