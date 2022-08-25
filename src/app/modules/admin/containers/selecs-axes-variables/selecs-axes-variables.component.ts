@@ -53,16 +53,16 @@ export class SelecsAxesVariablesComponent implements OnInit {
         next: (data: axes[]) => {
           this.listOfAxes = data;
           setTimeout(() => this.cdr.detectChanges());
-          console.log(this.listOfAxes);
+          // console.log(this.listOfAxes);
         },
         error: (err) => {
-          console.log(err);
+          // console.log(err);
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
         },
         complete: () => {
-          console.log('Request get axes complete');
+          // console.log('Request get axes complete');
         },
       });
   }
@@ -71,16 +71,16 @@ export class SelecsAxesVariablesComponent implements OnInit {
     this.admin.getVariables().subscribe({ next: (data: variable[]) => {
       this.listOfVariables = data;
       setTimeout(() => this.cdr.detectChanges());
-      console.log(this.listOfVariables);
+      // console.log(this.listOfVariables);
     },
     error: (err) => {
-      console.log(err);
+      // console.log(err);
       if (err.status === 401) {
         this.router.navigate(['/auth']);
       }
     },
     complete: () => {
-      console.log('Request get axes complete');
+      // console.log('Request get axes complete');
     },
   });
   }

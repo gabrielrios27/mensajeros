@@ -37,7 +37,7 @@ export class PreviewReportComponent implements OnInit {
 
   ngOnInit() {
     this.newname = this.oldname;
-    console.log(this.report)
+    // console.log(this.report)
     this.getCenters()
     this.getDataFromRute()
     
@@ -50,11 +50,11 @@ export class PreviewReportComponent implements OnInit {
         this.centers = data;
         this.centerSelect()
         this.center2()
-        console.log(data);
+        // console.log(data);
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(err);
+        // console.log(err);
       },
     });
   }
@@ -66,7 +66,7 @@ export class PreviewReportComponent implements OnInit {
     for (let item of this.centers) {
       for (let c of this.report.centros) {
         if (item.id == c) {
-          console.log(item)
+          // console.log(item)
           this.centerSelects.push(item)
         }
       }
@@ -76,12 +76,12 @@ export class PreviewReportComponent implements OnInit {
   // 
   // busca centros selecccionados que vienen por service data
   center2(){
-    console.log(this.centers2)
+    // console.log(this.centers2)
       for (let item of this.centers) {
       for (let ce of this.data.arrayCenters) {
-        console.log(ce)
+        // console.log(ce)
         if (item.id == ce) {
-          console.log(item)
+          // console.log(item)
           this.centerSelects.push(item)
         }
       }
@@ -128,7 +128,7 @@ export class PreviewReportComponent implements OnInit {
         this.variables.push(vari.id)
       }
     }
-    console.log(this.variables)
+    // console.log(this.variables)
 
     let today = new Date()
     
@@ -143,18 +143,18 @@ export class PreviewReportComponent implements OnInit {
       id: ''
     }
     this.setReportLocStg(this.name, true)
-    console.log(report)
+    // console.log(report)
     this.admin.addReport(report).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges())
-        console.log(data)
+        // console.log(data)
         this.data.flag = false
         this.data.editar = false
         
         this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes']);
       },
       error: (err) => {
-        console.log(err)
+        // console.log(err)
       }
     })
   }

@@ -56,7 +56,7 @@ export class AddModReportComponent implements OnInit {
   ngOnInit(): void {
     this.setFlagAddEdit(false);
     this.getCenters()
-    console.log(this.arrayAxes)
+    // console.log(this.arrayAxes)
 
   }
 
@@ -75,13 +75,13 @@ export class AddModReportComponent implements OnInit {
 //  guarda axes de componente selects
   storageAxes(axes: number,idComponent: number ){
     this.arrayAxes[idComponent] = axes;
-    console.log("axes", this.arrayAxes)
-    console.log(idComponent)
+    // console.log("axes", this.arrayAxes)
+    // console.log(idComponent)
   }
   // guarda array variables de componente selects
   storageVariables( variablesArray: any,idComponent: number ){
     this.arrayVaribles[idComponent] = variablesArray;
-    console.log("variables", this.arrayVaribles)
+    // console.log("variables", this.arrayVaribles)
   }
   // 
   // agrega un elemento al arreglo de selects y tambien a axes y variables 
@@ -105,7 +105,7 @@ export class AddModReportComponent implements OnInit {
     this.data.arrayVariables = this.arrayVaribles
     this.data.arrayCenters = this.formAdd.value.centros
     
-    console.log('report',datos)
+    // console.log('report',datos)
     this.setFlagAddEdit(true);
     this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes/add-mod-report/preview-report',datos])
   }
@@ -115,11 +115,11 @@ export class AddModReportComponent implements OnInit {
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.listCenters = data;
-        console.log(data);
+        // console.log(data);
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(err);
+        // console.log(err);
       },
     });
   }
@@ -131,7 +131,7 @@ export class AddModReportComponent implements OnInit {
       localStorage.setItem('flagAddEdit', JSON.stringify(this.flagAddEdit));
     }
     onSelection($event: any) {
-      console.log($event);
+      // console.log($event);
       this.showDialog = false;
       if ($event === 'ok') {
         this.subject.next(true);
@@ -141,7 +141,7 @@ export class AddModReportComponent implements OnInit {
       }
     }
     openDialog() {
-      console.log('opn dialog');
+      // console.log('opn dialog');
       this.showDialog = true;
     }
     //

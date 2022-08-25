@@ -85,7 +85,7 @@ export class ReportsComponent implements OnInit {
         setTimeout(() => this.cdr.detectChanges());
         this.reports = data;
         this.pageToShow(this.currentPage, this.reports); //para paginación
-        console.log('reports', data);
+        // console.log('reports', data);
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
@@ -101,7 +101,7 @@ export class ReportsComponent implements OnInit {
         this.pageToShow(this.currentPage, this.reports); //para paginación
         this.getReports();
         this.close();
-        console.log('delete report', data);
+        // console.log('delete report', data);
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
