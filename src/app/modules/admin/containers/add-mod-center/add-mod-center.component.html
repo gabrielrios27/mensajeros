@@ -48,7 +48,7 @@
       [disabled]="formUpEdit.invalid"
       mat-button
       *ngIf="!data.editar"
-      (click)="confirm()"
+      (click)="confirm(formUpEdit.value)"
     >
       Confirmar
     </button>

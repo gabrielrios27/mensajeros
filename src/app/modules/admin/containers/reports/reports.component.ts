@@ -7,7 +7,6 @@ import {
 import { Router } from '@angular/router';
 import { AdminService } from '../../services/admin.service';
 import { Report } from '../../models/report';
-import { element } from 'protractor';
 import { axes } from '../../models/admin.model';
 
 @Component({
@@ -90,7 +89,7 @@ export class ReportsComponent implements OnInit {
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(err);
+        // console.log(err);
       },
     });
   }
@@ -106,7 +105,7 @@ export class ReportsComponent implements OnInit {
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(err);
+        // console.log(err);
       },
     });
   }
@@ -188,7 +187,7 @@ export class ReportsComponent implements OnInit {
   //       this.getUsers();
   //     },
   //     error: (err) => {
-  //       console.log(err);
+        // console.log(err);
   //     },
   //   });
   // }

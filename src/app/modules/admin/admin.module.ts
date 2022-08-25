@@ -1,5 +1,5 @@
 /* eslint-disable simple-import-sort/imports */
-import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -42,12 +42,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
-
-
+import { PreviewVariableComponent } from './components/preview-variable/preview-variable.component';
 
 @NgModule({
   imports: [
@@ -72,13 +71,24 @@ import { MatRadioModule } from '@angular/material/radio';
     // AppCommonModule,
     // NavigationModule,
   ],
-  providers: [...adminServices.services, ...adminGuards.guards,{ provide: MAT_DATE_LOCALE, useValue: 'es-ES' }],
+  providers: [
+    ...adminServices.services,
+    ...adminGuards.guards,
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+  ],
   declarations: [
     ...adminContainers.containers,
     ...adminComponents.components,
-    AddAxesComponent,AmUserComponent,AddModCenterComponent, 
-    VariablesComponent, AddVariablesComponent, AddReportComponent, 
-    CenterOfReportComponent, VariablesGroupComponent, AddModReportComponent, SelecsAxesVariablesComponent,
+    AddAxesComponent,
+    AmUserComponent,
+    AddModCenterComponent,
+    VariablesComponent,
+    AddVariablesComponent,
+    AddReportComponent,
+    CenterOfReportComponent,
+    VariablesGroupComponent,
+    AddModReportComponent,
+    SelecsAxesVariablesComponent,
     AddAxesComponent,
     AmUserComponent,
     AddModCenterComponent,
@@ -88,9 +98,14 @@ import { MatRadioModule } from '@angular/material/radio';
     CenterOfReportComponent,
     VariablesGroupComponent,
     ConfirmOutModalComponent,
+    PreviewVariableComponent,
     PreviewReportComponent,
   ],
-  exports: [...adminContainers.containers, ...adminComponents.components,SelecsAxesVariablesComponent],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  exports: [
+    ...adminContainers.containers,
+    ...adminComponents.components,
+    SelecsAxesVariablesComponent,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AdminModule {}
