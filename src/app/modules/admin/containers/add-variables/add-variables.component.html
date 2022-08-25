@@ -17,7 +17,11 @@
       (ngSubmit)="onConfirm()"
     >
       <!-- btn expandir-------------- -->
-      <div class="add-variable__expanse-conteiner">
+      <div
+        matTooltip="Vista previa"
+        class="add-variable__expanse-conteiner"
+        (click)="toggleFlagPreview(true)"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -298,4 +302,10 @@
     [show]="showDialog"
     (selection)="onSelection($event)"
   ></app-confirm-out-modal>
+  <app-preview-variable
+    *ngIf="flagPreview"
+    [variableValue]="newVariable.value"
+    (goOutPreview)="onGoOutPreview($event)"
+  >
+  </app-preview-variable>
 </section>
