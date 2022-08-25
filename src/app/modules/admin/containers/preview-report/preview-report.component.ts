@@ -24,6 +24,7 @@ export class PreviewReportComponent implements OnInit {
   reportsd: any
 
   variables2: Array<number> = []
+  variables: Array<number> = []
   flag: boolean = false
   listOfAxes: Array<any> = []
   listOfVariables: Array<any> = []
@@ -120,13 +121,14 @@ export class PreviewReportComponent implements OnInit {
   enviar() {
     // this.setUserLocStg("algo", true)
     this.flag = false
-    this.router.navigate(['/admin/dashboard/reportes/creacion-de-reportes']);
+    // this.router.navigate(['/admin/dashboard/reportes/creacion-de-reportes']);
     
-    for(let axe of this.data.arrayAxes){
-      for(let vari of this.data.arrayVariables[this.data.arrayAxes.indexOf(axe)]){
-        this.variables2.push( vari.id)
+    for(let varia of this.data.arrayVariables){
+      for(let vari of varia){
+        this.variables.push(vari.id)
       }
     }
+    console.log(this.variables)
 
     let today = new Date()
     
@@ -136,7 +138,7 @@ export class PreviewReportComponent implements OnInit {
       fechaEntrega: this.deliverdate.toISOString(),
       periodoDesde: this.since.toISOString(),
       periodoHasta: this.until.toISOString(),
-      variables : this.variables2,
+      variables : this.variables = this.data.arrayVariables,
       centros: this.data.arrayCenters,
       id: ''
     }
