@@ -116,7 +116,7 @@
     </div>
     
 </section>
-<div class="container-preview modal"*ngIf="showIt">
+<div class="container-preview modal-2"*ngIf="showIt">
         
     <div class="container-preview-reporte">
         <section class="container-header-preview">
@@ -146,7 +146,7 @@
             <div class="container-ejes-variables" *ngFor="let item of report.centros">
                 <label class="ejes-preview">{{item}}</label>
                 <div class="variables-preview">
-                    <p class="p-variables" *ngFor="let variable of report.variables">
+                    <p class="p-variables" *ngFor="let variable of variablesSelects">
                         {{variable}}</p>
                 </div>
             </div>
