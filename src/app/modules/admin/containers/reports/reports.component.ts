@@ -39,14 +39,16 @@ export class ReportsComponent implements OnInit {
   name = 'old name';
   showIt = false;
   arrayAxes: Array<axes> = [];
-  //
   listOfAxes: Array<axes> = []
   listOfVariables: Array<variable> = []
-
-  flag: boolean = false;
-  reports: Array<Report> = [];
   report: Report = {} as Report
   centerSelects: Array<any> = []
+  axesSelects: Array<any> = []
+  variablesSelects: Array<variable> = []
+// 
+  flag: boolean = false;
+  reports: Array<Report> = [];
+  
   centers: Array<Centro> = []
 
   constructor(
@@ -80,6 +82,8 @@ export class ReportsComponent implements OnInit {
     
     this.report = element
     this.centerSelect()
+    this.variablesSelect()
+    this.axesSelect()
     this.showIt = true;
     console.log(element)
   }
@@ -92,17 +96,41 @@ export class ReportsComponent implements OnInit {
 
   centerSelect() {
     for (let item of this.centers) {
-      console.log(item.id)
       for (let c of this.report.centros) {
         console.log(c)
         if (item.id == c) {
-          console.log(item)
           this.centerSelects.push(item.nombre)
+        }
+      }
+    }
+  }
+
+  variablesSelect(){
+    for (let item of this.listOfVariables) {
+      for (let c of this.report.variables) {
+        if (item.id == c) {
+          this.variablesSelects.push(item)
+        }
+      }
+    }
+    console.log(this.variablesSelects)
+  }
+
+  axesSelect(){
+    for (let item of this.listOfAxes) {
+      console.log(item.id)
+      for (let c of this.variablesSelects) {
+        console.log(c.eje)
+        if (item.id == c.eje.id) {
+          console.log(item)
+          this.axesSelects.push(item.nombre)
         }
       }
     }
     console.log(this.centerSelects)
   }
+
+
     //
 
     getCenters() {
@@ -110,11 +138,11 @@ export class ReportsComponent implements OnInit {
         next: (data) => {
           setTimeout(() => this.cdr.detectChanges());
           this.centers = data;
-          console.log(data);
+          // console.log(data);
         },
         error: (err) => {
           setTimeout(() => this.cdr.detectChanges());
-          console.log(err);
+          // console.log(err);
         },
       });
     }
@@ -126,11 +154,11 @@ export class ReportsComponent implements OnInit {
           setTimeout(() => this.cdr.detectChanges());
           this.reports = data;
           this.pageToShow(this.currentPage, this.reports); //para paginación
-          console.log('reports', data);
+          // console.log('reports', data);
         },
         error: (err) => {
           setTimeout(() => this.cdr.detectChanges());
-          console.log(err);
+          // console.log(err);
         },
       });
     }
@@ -142,16 +170,16 @@ export class ReportsComponent implements OnInit {
           next: (data: axes[]) => {
             this.listOfAxes = data;
             setTimeout(() => this.cdr.detectChanges());
-            console.log(this.listOfAxes);
+            // console.log(this.listOfAxes);
           },
           error: (err) => {
-            console.log(err);
+            // console.log(err);
             if (err.status === 401) {
               this.router.navigate(['/auth']);
             }
           },
           complete: () => {
-            console.log('Request get axes complete');
+            // console.log('Request get axes complete');
           },
         });
     }
@@ -160,16 +188,16 @@ export class ReportsComponent implements OnInit {
       this.admin.getVariables().subscribe({ next: (data: variable[]) => {
         this.listOfVariables = data;
         setTimeout(() => this.cdr.detectChanges());
-        console.log(this.listOfVariables);
+         console.log(this.listOfVariables);
       },
       error: (err) => {
-        console.log(err);
+        // console.log(err);
         if (err.status === 401) {
           this.router.navigate(['/auth']);
         }
       },
       complete: () => {
-        console.log('Request get axes complete');
+        // console.log('Request get axes complete');
       },
     });
     }
@@ -181,11 +209,11 @@ export class ReportsComponent implements OnInit {
           this.pageToShow(this.currentPage, this.reports); //para paginación
           this.getReports();
           this.close();
-          console.log('delete report', data);
+          // console.log('delete report', data);
         },
         error: (err) => {
           setTimeout(() => this.cdr.detectChanges());
-          console.log(err);
+          // console.log(err);
         },
       });
     }
@@ -259,18 +287,6 @@ export class ReportsComponent implements OnInit {
       this.idToDelete = id;
     }
 
-    // deleteUser() {
-    //   this.flagDelete = false;
-    //   this.admin.deleteUser(this.idToDelete).subscribe({
-    //     next: (data: any) => {
-    //       setTimeout(() => this.cdr.detectChanges());
-    //       this.getUsers();
-    //     },
-    //     error: (err) => {
-    //       console.log(err);
-    //     },
-    //   });
-    // }
     getUserLocalStorage() {
       let newOrEditeduser = localStorage.getItem('newOrEditedReport');
       if (newOrEditeduser) {
