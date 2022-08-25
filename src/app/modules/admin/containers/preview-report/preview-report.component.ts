@@ -138,18 +138,19 @@ export class PreviewReportComponent implements OnInit {
       fechaEntrega: this.deliverdate.toISOString(),
       periodoDesde: this.since.toISOString(),
       periodoHasta: this.until.toISOString(),
-      variables : this.variables = this.data.arrayVariables,
+      variables : this.variables,
       centros: this.data.arrayCenters,
       id: ''
     }
+    this.setReportLocStg(this.name, true)
     console.log(report)
     this.admin.addReport(report).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges())
-        console.log(data, "admin")
+        console.log(data)
         this.data.flag = false
         this.data.editar = false
-        this.setUserLocStg(this.name, true)
+        
         this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes']);
       },
       error: (err) => {
@@ -158,7 +159,7 @@ export class PreviewReportComponent implements OnInit {
     })
   }
 
-  setUserLocStg(data: string, isNewReport: boolean) {
+  setReportLocStg(data: string, isNewReport: boolean) {
     localStorage.setItem('newOrEditedReport', data);
     localStorage.setItem('isNewReport', JSON.stringify(isNewReport));
   }
