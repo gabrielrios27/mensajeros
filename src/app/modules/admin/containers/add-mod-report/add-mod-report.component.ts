@@ -194,7 +194,43 @@ export class AddModReportComponent implements OnInit {
    
   }
 
-  
+  centerSelect() {
+    for (let item of this.listCenters) {
+      for (let c of this.report.centros) {
+        // console.log(c)
+        if (item.id == c) {
+          this.center.push(item.nombre);
+        }
+      }
+    }
+  }
+
+  variablesSelect() {
+    for (let item of this.listOfVariables) {
+      for (let c of this.report.variables) {
+        if (item.id == c) {
+          this.variablesSelects.push(item);
+        }
+      }
+    }
+    // console.log(this.variablesSelects)
+  }
+
+  axesSelect() {
+    for (let item of this.listOfAxes) {
+      // console.log(item.id)
+      for (let c of this.variablesSelects) {
+        // console.log(c.eje)
+        if (item.id == c.eje.id) {
+          // console.log(item)
+          if (!this.axesSelects.includes(item.nombre)) {
+            this.axesSelects.push(item.nombre);
+          }
+        }
+      }
+    }
+    // console.log(this.centerSelects)
+  }
 
 
   getAxes() {
