@@ -59,7 +59,7 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
     this.getReports();
-    this.getUserLocalStorage();
+    this.getReportLocalStorage();
     this.getCenters()
     this.getAxes()
     this.getVariables()
@@ -188,7 +188,7 @@ export class ReportsComponent implements OnInit {
       this.admin.getVariables().subscribe({ next: (data: variable[]) => {
         this.listOfVariables = data;
         setTimeout(() => this.cdr.detectChanges());
-         console.log(this.listOfVariables);
+        console.log(this.listOfVariables);
       },
       error: (err) => {
         // console.log(err);
@@ -202,21 +202,21 @@ export class ReportsComponent implements OnInit {
     });
     }
 
-    deleteReport() {
-      this.admin.deleteReport(this.idToDelete).subscribe({
-        next: (data) => {
-          setTimeout(() => this.cdr.detectChanges());
-          this.pageToShow(this.currentPage, this.reports); //para paginación
-          this.getReports();
-          this.close();
-          // console.log('delete report', data);
-        },
-        error: (err) => {
-          setTimeout(() => this.cdr.detectChanges());
-          // console.log(err);
-        },
-      });
-    }
+  deleteReport() {
+    this.admin.deleteReport(this.idToDelete).subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.pageToShow(this.currentPage, this.reports); //para paginación
+        this.getReports();
+        this.close();
+        // console.log('delete report', data);
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+        // console.log(err);
+      },
+    });
+  }
 
     create() {
       this.router.navigate([
@@ -287,7 +287,7 @@ export class ReportsComponent implements OnInit {
       this.idToDelete = id;
     }
 
-    getUserLocalStorage() {
+    getReportLocalStorage() {
       let newOrEditeduser = localStorage.getItem('newOrEditedReport');
       if (newOrEditeduser) {
         setTimeout(() => {

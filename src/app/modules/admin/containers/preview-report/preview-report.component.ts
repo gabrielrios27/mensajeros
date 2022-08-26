@@ -24,6 +24,7 @@ export class PreviewReportComponent implements OnInit {
   reportsd: any
 
   variables2: Array<number> = []
+  variables: Array<number> = []
   flag: boolean = false
   listOfAxes: Array<any> = []
   listOfVariables: Array<any> = []
@@ -36,7 +37,7 @@ export class PreviewReportComponent implements OnInit {
 
   ngOnInit() {
     this.newname = this.oldname;
-    console.log(this.report)
+    // console.log(this.report)
     this.getCenters()
     this.getDataFromRute()
     
@@ -49,11 +50,11 @@ export class PreviewReportComponent implements OnInit {
         this.centers = data;
         this.centerSelect()
         this.center2()
-        console.log(data);
+        // console.log(data);
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(err);
+        // console.log(err);
       },
     });
   }
@@ -65,7 +66,7 @@ export class PreviewReportComponent implements OnInit {
     for (let item of this.centers) {
       for (let c of this.report.centros) {
         if (item.id == c) {
-          console.log(item)
+          // console.log(item)
           this.centerSelects.push(item)
         }
       }
@@ -75,12 +76,12 @@ export class PreviewReportComponent implements OnInit {
   // 
   // busca centros selecccionados que vienen por service data
   center2(){
-    console.log(this.centers2)
+    // console.log(this.centers2)
       for (let item of this.centers) {
       for (let ce of this.data.arrayCenters) {
-        console.log(ce)
+        // console.log(ce)
         if (item.id == ce) {
-          console.log(item)
+          // console.log(item)
           this.centerSelects.push(item)
         }
       }
@@ -120,13 +121,14 @@ export class PreviewReportComponent implements OnInit {
   enviar() {
     // this.setUserLocStg("algo", true)
     this.flag = false
-    this.router.navigate(['/admin/dashboard/reportes/creacion-de-reportes']);
+    // this.router.navigate(['/admin/dashboard/reportes/creacion-de-reportes']);
     
-    for(let axe of this.data.arrayAxes){
-      for(let vari of this.data.arrayVariables[this.data.arrayAxes.indexOf(axe)]){
-        this.variables2.push( vari.id)
+    for(let varia of this.data.arrayVariables){
+      for(let vari of varia){
+        this.variables.push(vari.id)
       }
     }
+    // console.log(this.variables)
 
     let today = new Date()
     
@@ -136,27 +138,28 @@ export class PreviewReportComponent implements OnInit {
       fechaEntrega: this.deliverdate.toISOString(),
       periodoDesde: this.since.toISOString(),
       periodoHasta: this.until.toISOString(),
-      variables : this.variables2,
+      variables : this.variables,
       centros: this.data.arrayCenters,
       id: ''
     }
-    console.log(report)
+    this.setReportLocStg(this.name, true)
+    // console.log(report)
     this.admin.addReport(report).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges())
-        console.log(data, "admin")
+        // console.log(data)
         this.data.flag = false
         this.data.editar = false
-        this.setUserLocStg(this.name, true)
+        
         this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes']);
       },
       error: (err) => {
-        console.log(err)
+        // console.log(err)
       }
     })
   }
 
-  setUserLocStg(data: string, isNewReport: boolean) {
+  setReportLocStg(data: string, isNewReport: boolean) {
     localStorage.setItem('newOrEditedReport', data);
     localStorage.setItem('isNewReport', JSON.stringify(isNewReport));
   }

@@ -77,9 +77,23 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'variables/variables-agrupadas/:id',
+    path: 'variables/variables-agrupadas/:id-axe',
     canActivate: [AdminGuard],
     component: adminContainers.VariablesGroupComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'variables/variables-agrupadas/:id-axe/add-mod-variables',
+    canActivate: [AdminGuard],
+    canDeactivate: [ConfirmOutGuard],
+    component: adminContainers.AddVariablesComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'variables/variables-agrupadas/:id-axe/add-mod-variables/:id',
+    canActivate: [AdminGuard],
+    canDeactivate: [ConfirmOutGuard],
+    component: adminContainers.AddVariablesComponent,
     pathMatch: 'full',
   },
   {
