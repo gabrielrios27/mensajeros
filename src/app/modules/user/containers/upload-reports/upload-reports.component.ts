@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LayoutsService } from 'src/app/core/layouts/services';
 
 @Component({
@@ -6,9 +6,10 @@ import { LayoutsService } from 'src/app/core/layouts/services';
   templateUrl: './upload-reports.component.html',
   styleUrls: ['./upload-reports.component.scss'],
 })
-export class UploadReportsComponent implements OnInit {
-  constructor(private layoutSvc: LayoutsService) {}
+export class UploadReportsComponent implements OnInit, OnDestroy {
+  constructor() {}
 
   ngOnInit(): void {}
   onCloseSave() {}
+  ngOnDestroy() {}
 }
