@@ -8,14 +8,19 @@
   width: 100%;
   height: 100vh;
   display: grid;
-  grid-template-rows: 176px 119px calc(100vh - 176px - 127px) 127px;
-  grid-template-areas: "";
+  grid-template-rows: 176px 119px auto 127px;
+  grid-template-areas:
+    "header"
+    "progress"
+    "conteiner"
+    "footer";
   .upload-report__progress {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 36px;
+    grid-area: "progress";
     .upload-report__title {
       width: 428px;
       height: 80px;
@@ -45,14 +50,28 @@
     }
   }
   .upload-report__conteiner {
+    grid-area: "conteiner";
     width: 90vw;
-    margin-top: 32px;
+    min-height: 100px;
+    margin: 32px auto 0;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 15px; /* width of the entire scrollbar */
+    }
+    &::-webkit-scrollbar-track {
+      background: rgb(255, 255, 255); /* color of the tracking area */
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #d9d9d9; /* color of the scroll thumb */
+      border-radius: 50px; /* roundness of the scroll thumb */
+      border: 1px solid #ffffff; /* creates padding around scroll thumb */
+    }
   }
 }
 .header-container {
+  grid-area: "header";
   width: 100%;
   font-size: 16px;
   .header {
@@ -74,7 +93,7 @@
     .lines-container__line1 {
       width: 100%;
       height: 0.5625em;
-      background: $color-line-up-header;
+      background: $color-line-down-header;
       box-shadow: 0em 0.375em 0.5em rgba(0, 0, 0, 0.14),
         0em 0.0625em 0.75em rgba(0, 0, 0, 0.12),
         0em 0.1875em 0.1875em rgba(0, 0, 0, 0.2);
@@ -83,12 +102,13 @@
       margin-top: 0.5625em;
       width: 100%;
       height: 0.5625em;
-      background: $color-line-down-header;
+      background: $color-line-up-header;
       box-shadow: 0em 0.25em 0.25em rgba(0, 0, 0, 0.25);
     }
   }
 }
 .footer {
+  grid-area: "footer";
   display: flex;
   justify-content: space-between;
   align-items: center;
