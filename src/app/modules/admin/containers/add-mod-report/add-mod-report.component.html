@@ -18,21 +18,17 @@
             <section>
                 <label>Centros alcanzados</label>
                 <mat-select placeholder="Selecciona al menos un Centro" checkboxPosition="after"
-                    formControlName="centros" panelClass="example-panel-red" multiple="">
-                    <mat-option class="mat-option" value="la balsa">la balsa</mat-option>
-                    <mat-option value="Hogar san jose">Hogar san jose</mat-option>
-                    <mat-option value="Casa matriz">Casa matriz</mat-option>
+                    formControlName="centros" panelClass="example-panel-red" multiple="" [(value)]="center"
+                    (selectionChange)="catchCenter($event.value)">
+                    <mat-option class="mat-option" [value]="item.id" *ngFor="let item of listCenters">{{item.nombre}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="formAdd.controls['centros'].invalid && formAdd.controls['centros'].dirty ">
                     <span>Campo requerido</span>
                 </mat-error>
-                <div class="container-button-expand">
-                    <a style="cursor: pointer;" class="button-expand" (click)="showModal()">
-                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 20px;" width="24" height="24"
-                            fill="currentColor" class="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z" />
-                        </svg>
+                <div class="container-button-expand"   >
+                    <a style="cursor: pointer;" class="button-expand" (click)="showModal()"matTooltip="Vizualizar" >
+                        <img style="margin-top: 20px;"
+                                src="../../../../../assets/icons/arrows-angle-expand.svg" />
                     </a>
                 </div>
             </section>
@@ -69,24 +65,29 @@
                 <label style="margin-right: 420px;">Eje</label>
                 <label>Variable</label>
                 <div *ngFor="let item of arrayc">
-                    <app-selecs-axes-variables>{{item}}</app-selecs-axes-variables>
+                    <app-selecs-axes-variables (axes)="storageAxes($event,arrayc.indexOf(item))"(variablesArray)="storageVariables($event,arrayc.indexOf(item))" >{{item}}</app-selecs-axes-variables>
                 </div>
             </section>
             <button mat-button class="button-ejes" (click)="createEje()">+ Eje</button>
             <div class="container-alert">
                 <Label>Fecha de Entrega(Alerta)</Label>
                 <div class="input-wrapper">
-                    <input class="input-fecha-alerta" type="" autocomplete="off" matInput [matDatepicker]="picker3"
+                    <input class="input-fecha-alerta" type="" formControlName="deliverdate" autocomplete="off" matInput [matDatepicker]="picker3"
                         placeholder="Dia, Mes, Año">
                     <mat-datepicker #picker3></mat-datepicker>
                     <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker3"></mat-datepicker-toggle>
                 </div>
+                <div>
+                    <mat-error *ngIf="formAdd.controls['deliverdate'].invalid && formAdd.controls['deliverdate'].dirty ">
+                        <span>Campo Requerido</span>
+                    </mat-error>
+                </div>
             </div>
             <div class="div-button ">
-                <button mat-stroked-button class="button-create"  (click)="confirm()">Crear Reporte</button>
+                <button mat-stroked-button class="button-create" [disabled]="formAdd.invalid" (click)="confirm(formAdd.value)">Crear Reporte</button>
             </div>
         </form>
     </div>
     <app-confirm-out-modal [show]="showDialog" (selection)="onSelection($event)"></app-confirm-out-modal>
-    <app-preview-report *ngIf="showIt" [oldname]="name" (close)="closeModal($event)"></app-preview-report>
+    <app-preview-report *ngIf="showIt" [oldname]="name" [report] ="formAdd.value" (close)="closeModal($event)"></app-preview-report>
 </div>
