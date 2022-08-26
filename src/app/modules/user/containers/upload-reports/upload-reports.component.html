@@ -1,17 +1,32 @@
 <section class="upload-report">
-  <section class="upload-report__progress">
-    <h1 class="upload-report__title">CARGA DE REPORTE</h1>
-    <div class="progress-bar"></div>
-    <button
-      mat-raised-button
-      class="upload-report__btn-close-save"
-      type="submit"
-      (click)="onCloseSave()"
-    >
-      Cerrar y Guardar
-    </button>
+  <section class="header-container">
+    <header class="header">
+      <img
+        src="../../../../../assets/images/logo-MDP.png"
+        alt="Logo Mensajeros de la Paz"
+        class="header__logo"
+      />
+    </header>
+    <div class="lines-container">
+      <div class="lines-container__line1"></div>
+      <div class="lines-container__line2"></div>
+    </div>
   </section>
-  <section class="upload-report__conteiner"></section>
+  <div class="upload-report__content">
+    <section class="upload-report__progress">
+      <h1 class="upload-report__title">CARGA DE REPORTE</h1>
+      <div class="progress-bar"></div>
+      <button
+        mat-raised-button
+        class="upload-report__btn-close-save"
+        type="submit"
+        (click)="onCloseSave()"
+      >
+        Cerrar y Guardar
+      </button>
+    </section>
+    <section class="upload-report__conteiner"></section>
+  </div>
   <section class="footer">
     <div></div>
     <img
