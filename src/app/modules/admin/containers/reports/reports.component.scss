@@ -512,15 +512,15 @@
 }
 
 .modal-2 {
-    position: fixed;
+    position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    // top: 50%;
+    transform: translate(-50%, -60%);
     z-index: 1001;
     box-shadow: rgba(0, 0, 0, 0.4) 10px 10px 4px;
     background: white;
     width: 842px;
-    height: 96%;
+    // height: 96%;
     padding: inherit;
 }
 
