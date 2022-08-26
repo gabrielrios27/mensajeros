@@ -42,7 +42,7 @@
                             <img class="list-reports__ico-action"
                                 src="../../../../../assets/icons/arrows-angle-expand.svg" matTooltip="Vizualizar" />
                         </a>
-                        <a>
+                        <a (click)="edit(element)">
                             <img class="list-reports__ico-action list-reports__ico-action--edit"
                                 src="../../../../../assets/icons/Pencil.svg" alt="Icono de editar"
                                 matTooltip="Editar" />
@@ -143,11 +143,12 @@
             </div>
         </section>
         <section class="section-ejes-variables">
-            <div class="container-ejes-variables" *ngFor="let item of report.centros">
+            <div class="container-ejes-variables" *ngFor="let item of axesSelects">
                 <label class="ejes-preview">{{item}}</label>
                 <div class="variables-preview">
-                    <p class="p-variables" *ngFor="let variable of variablesSelects">
-                        {{variable}}</p>
+                    <div style="margin-top: 12px;"  *ngFor="let variable of variablesSelects" >
+                        <span *ngIf="item === variable.eje.nombre" class="p-variables">{{variable.nombre}}</span>
+                    </div>
                 </div>
             </div>
         </section>
