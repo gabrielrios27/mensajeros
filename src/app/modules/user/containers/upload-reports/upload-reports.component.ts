@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LayoutsService } from 'src/app/core/layouts/services';
 
 @Component({
   selector: 'app-upload-reports',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./upload-reports.component.scss'],
 })
 export class UploadReportsComponent implements OnInit {
-  constructor() {}
+  constructor(private layoutSvc: LayoutsService) {}
 
   ngOnInit(): void {}
   onCloseSave() {}

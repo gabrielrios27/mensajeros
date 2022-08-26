@@ -1,7 +1,7 @@
 .upload-report {
   padding-left: 280px;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 176px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -30,7 +30,6 @@
     .progress-bar {
     }
     .upload-report__btn-close-save {
-      width: 174px;
       height: 44px;
       background: #92cdef;
       border-radius: 35px;
@@ -58,11 +57,20 @@
     height: 80px;
   }
   .footer__btn-confirm-axe {
-    width: 142px;
     height: 44px;
     background: #92cdef;
     border-radius: 35px;
     font-size: 20px;
     line-height: 24px;
+  }
+}
+@media (max-width: 1400px) {
+  .upload-report {
+    height: calc(100vh - 132px);
+  }
+}
+@media (max-width: 768px) {
+  .upload-report {
+    height: calc(100vh - 110px);
   }
 }
