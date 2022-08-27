@@ -25,30 +25,10 @@
     </button>
   </section>
   <section class="upload-report__conteiner">
-    <h1>Test</h1>
-    <h1>Test</h1>
-    <h1>Test</h1>
-    <h1>Test</h1>
-    <h1>Test</h1>
-    <h1>Test</h1>
-    <h1>Test</h1>
-    <h1>Test</h1>
-    <h1>Test</h1>
-    <h1>Test</h1>
-    <h1>Test</h1>
-    <h1>Test</h1>
-    <h1>Test</h1>
-
-    <h1>Test</h1>
-    <h1>Test</h1>
-    <h1>Test</h1>
-
-    <h1>Test</h1>
-    <h1>Test</h1>
-    <h1>Test</h1>
-
-    <h1>Test</h1>
-    <h1>Test</h1>
+    <app-report-upload
+      [idReport]="idReport"
+      (reportToUpload)="getReportToUpload($event)"
+    ></app-report-upload>
   </section>
   <section class="footer">
     <div class="footer__direction"></div>

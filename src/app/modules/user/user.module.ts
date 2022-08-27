@@ -21,6 +21,7 @@ import { PopUpNoExistComponent } from './components/pop-up-no-exist/pop-up-no-ex
 import { PopUpDeleteReportComponent } from './components/pop-up-delete-report/pop-up-delete-report.component';
 import { PopUpStartComponent } from './components/pop-up-start/pop-up-start.component';
 import { UploadReportsComponent } from './containers/upload-reports/upload-reports.component';
+import { ReportUploadComponent } from './components/report-upload/report-upload.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { UploadReportsComponent } from './containers/upload-reports/upload-repor
     PopUpDeleteReportComponent,
     PopUpStartComponent,
     UploadReportsComponent,
+    ReportUploadComponent,
   ],
   exports: [...userContainers.containers, ...userComponents.components],
 })

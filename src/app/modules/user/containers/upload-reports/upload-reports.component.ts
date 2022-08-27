@@ -8,6 +8,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 })
 export class UploadReportsComponent implements OnInit, OnDestroy {
   idReport: number;
+  reportToUpload: any;
   constructor(private rutaActiva: ActivatedRoute, private router: Router) {
     this.idReport = this.getIdFromRute();
   }
@@ -23,6 +24,10 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   }
   onCloseSave() {
     this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
+  }
+  //Obtiene el reporte que se esta cargando en el componente report-upload
+  getReportToUpload($event: any) {
+    this.reportToUpload = $event;
   }
   ngOnDestroy() {}
 }
