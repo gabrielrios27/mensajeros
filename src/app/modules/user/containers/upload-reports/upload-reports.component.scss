@@ -120,12 +120,11 @@
     justify-self: center;
     grid-area: "footer-logo";
     width: 255px;
-    height: 80px;
   }
   .footer__btn-confirm-axe {
     justify-self: flex-end;
     grid-area: "footer-btn";
-    width: 165px;
+    width: 8.25em;
     font-size: 20px;
     height: 2.2em;
     background: #92cdef;
@@ -138,7 +137,7 @@
 }
 @media (max-width: 1400px) {
   .upload-report {
-    grid-template-rows: 132px 84px auto 127px;
+    grid-template-rows: 132px 84px auto 70px;
     .upload-report__progress {
       margin-top: 18px;
       .upload-report__title {
@@ -159,11 +158,14 @@
     .footer__btn-confirm-axe {
       font-size: 16px;
     }
+    .footer__logo {
+      width: 145px;
+    }
   }
 }
 @media (max-width: 768px) {
   .upload-report {
-    grid-template-rows: 110px 119px auto 127px;
+    grid-template-rows: 110px 119px auto 70px;
   }
   .header-container {
     font-size: 10px;
