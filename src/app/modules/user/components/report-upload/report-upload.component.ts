@@ -8,7 +8,35 @@ import { variable } from 'src/app/modules/admin/models';
 })
 export class ReportUploadComponent implements OnInit {
   //ejes hardcodeados antes de implementación
-  axes: string[] = ['axe1', 'axe2', 'axe3'];
+  alphabet: string[] = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
+  ];
+  biAlphabet: string[] = [];
   report: any = [
     {
       axe: 'Acompañamiento Educativo',
@@ -16,14 +44,14 @@ export class ReportUploadComponent implements OnInit {
         {
           id: 20,
           nombre: 'cant. talleres',
-          descripcion: 'desc',
+          descripcion: 'descripción',
           tipo: 'Textual',
           genero: 'false',
           escala_valor: 'true',
           valor_inicial: '0',
-          valor_final: '5',
-          etiqueta_inicial: 'aa',
-          etiqueta_final: 'zz',
+          valor_final: '9',
+          etiqueta_inicial: 'Malo',
+          etiqueta_final: 'Muy Bueno',
           eje: {
             id: 5,
             nombre: 'Acompañamiento Educativo',
@@ -92,8 +120,8 @@ export class ReportUploadComponent implements OnInit {
           escala_valor: 'true',
           valor_inicial: '0',
           valor_final: '5',
-          etiqueta_inicial: 'aa',
-          etiqueta_final: 'zz',
+          etiqueta_inicial: 'Malo',
+          etiqueta_final: 'Muy Bueno',
           eje: {
             id: 5,
             nombre: 'Acompañamiento Educativo2',
@@ -162,8 +190,8 @@ export class ReportUploadComponent implements OnInit {
           escala_valor: 'true',
           valor_inicial: '0',
           valor_final: '5',
-          etiqueta_inicial: 'aa',
-          etiqueta_final: 'zz',
+          etiqueta_inicial: 'Malo',
+          etiqueta_final: 'Muy Bueno',
           eje: {
             id: 5,
             nombre: 'Acompañamiento Educativo3',
@@ -225,18 +253,38 @@ export class ReportUploadComponent implements OnInit {
   @Output() reportToUpload = new EventEmitter<any>();
   @Input('idReport') idReport: number = 0;
   axeToUpload: any;
-  variableToUpload: variable[] = {} as variable[];
+  variablesReport: variable[] = {} as variable[];
+  variablesToUpload: variable[] = {} as variable[];
 
   constructor() {}
 
   ngOnInit(): void {
     this.axeToShow();
+    this.createBiAlphabet();
   }
   axeToShow() {
     for (let item of this.report) {
       if (!item.complete) {
         this.axeToUpload = item.axe;
-        this.variableToUpload = item.variables;
+        this.variablesReport = item.variables;
+        break;
+      }
+    }
+  }
+  getVariablesToUpload($event: any) {}
+  createBiAlphabet() {
+    let i;
+    this.biAlphabet = [];
+    for (i = 0; i < 26; i++) {
+      this.biAlphabet.push(this.alphabet[i]);
+    }
+    i++;
+    for (let character1 of this.alphabet) {
+      for (let character2 of this.alphabet) {
+        if (i < 677) {
+          this.biAlphabet.push(character1 + character2);
+          i++;
+        }
       }
     }
   }

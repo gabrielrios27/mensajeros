@@ -1,6 +1,13 @@
 <section class="report">
   <h1 class="report__title">{{ axeToUpload }}</h1>
-  <div class="report__variable" *ngFor="let variable of variableToUpload">
-    <!-- <app-preview-variable></app-preview-variable> -->
+  <div
+    class="report__variable"
+    *ngFor="let variable of variablesReport; let i = index"
+  >
+    <app-variable-upload
+      [indexAlphabet]="biAlphabet[i]"
+      [variableValue]="variable"
+      (goOutPreview)="getVariablesToUpload($event)"
+    ></app-variable-upload>
   </div>
 </section>
