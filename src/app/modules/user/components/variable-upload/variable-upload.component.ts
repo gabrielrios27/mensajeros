@@ -13,9 +13,15 @@ export class VariableUploadComponent implements OnInit {
   @Input('variableValue') variableValue: variable = {} as variable;
   @Input('indexAlphabet') indexAlphabet: string;
   @Output() variableToUpload = new EventEmitter<any>();
+  @Output() variableSaveExit = new EventEmitter<any>();
+  @Output() variableGoBack = new EventEmitter<any>();
   variableComplete: any;
   //para recibir click en el btn confirmar eje del comp. upload report
   clickEventSubscription: Subscription;
+  //para recibir click en el btn guardar y salir del comp. upload report
+  clickSaveExitSubscription: Subscription;
+  //para recibir click en el btn guardar y salir del comp. upload report
+  clickGoBackSubscription: Subscription;
   //para variable number-distinción de genero
   female: number | null;
   male: number | null;
@@ -38,6 +44,16 @@ export class VariableUploadComponent implements OnInit {
     this.clickEventSubscription = this.userSvc.getClickEvent().subscribe(() => {
       this.onConfirmAxe();
     });
+    this.clickSaveExitSubscription = this.userSvc
+      .getClickSaveExit()
+      .subscribe(() => {
+        this.onSaveExit();
+      });
+    this.clickGoBackSubscription = this.userSvc
+      .getClickGoBack()
+      .subscribe(() => {
+        this.onGoBack();
+      });
     this.indexAlphabet = 'A';
     this.female = null;
     this.male = null;
@@ -202,5 +218,15 @@ export class VariableUploadComponent implements OnInit {
   onConfirmAxe() {
     this.createVariableToUpload();
     this.variableToUpload.emit(this.variableComplete);
+  }
+  //al dar click en guardar y salir en upload report
+  onSaveExit() {
+    this.createVariableToUpload();
+    this.variableSaveExit.emit(this.variableComplete);
+  }
+  //al dar click en Atrás en upload report
+  onGoBack() {
+    this.createVariableToUpload();
+    this.variableGoBack.emit(this.variableComplete);
   }
 }

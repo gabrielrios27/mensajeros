@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { variable } from 'src/app/modules/admin/models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-report-upload',
@@ -42,22 +43,6 @@ export class ReportUploadComponent implements OnInit {
       axe: 'Acompañamiento Educativo',
       variables: [
         {
-          id: 20,
-          nombre: 'cant. talleres',
-          descripcion: 'descripción',
-          tipo: 'Textual',
-          genero: 'false',
-          escala_valor: 'true',
-          valor_inicial: '0',
-          valor_final: '9',
-          etiqueta_inicial: 'Malo',
-          etiqueta_final: 'Muy Bueno',
-          eje: {
-            id: 5,
-            nombre: 'Acompañamiento Educativo',
-          },
-        },
-        {
           id: 21,
           nombre: 'Cantidad de participantes en taller1',
           descripcion: 'desc.222',
@@ -73,92 +58,12 @@ export class ReportUploadComponent implements OnInit {
             nombre: 'Acompañamiento Educativo',
           },
         },
-        {
-          id: 22,
-          nombre: 'cantidad 2',
-          descripcion: 'desc',
-          tipo: 'Numérico',
-          genero: 'false',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 5,
-            nombre: 'Acompañamiento Educativo',
-          },
-        },
-        {
-          id: 23,
-          nombre: 'Cantidad de participantes en taller3',
-          descripcion: 'desc.222444',
-          tipo: 'Numérico',
-          genero: 'true',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 8,
-            nombre: 'Acompañamiento Educativo',
-          },
-        },
       ],
       complete: false,
     },
     {
       axe: 'Acompañamiento Educativo2',
       variables: [
-        {
-          id: 51,
-          nombre: 'cant. talleres22222',
-          descripcion: 'desc',
-          tipo: 'Textual',
-          genero: 'false',
-          escala_valor: 'true',
-          valor_inicial: '0',
-          valor_final: '5',
-          etiqueta_inicial: 'Malo',
-          etiqueta_final: 'Muy Bueno',
-          eje: {
-            id: 5,
-            nombre: 'Acompañamiento Educativo2',
-          },
-        },
-        {
-          id: 52,
-          nombre: 'Cantidad de participantes en taller122222',
-          descripcion: 'desc.222',
-          tipo: 'Textual',
-          genero: 'false',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 5,
-            nombre: 'Acompañamiento Educativo2',
-          },
-        },
-        {
-          id: 53,
-          nombre: 'cantidad 2222222',
-          descripcion: 'desc',
-          tipo: 'Numérico',
-          genero: 'false',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 5,
-            nombre: 'Acompañamiento Educativo2',
-          },
-        },
         {
           id: 54,
           nombre: 'Cantidad de participantes en taller3222222',
@@ -179,7 +84,7 @@ export class ReportUploadComponent implements OnInit {
       complete: false,
     },
     {
-      axe: 'Acompañamiento Educativo3',
+      axe: 'Acompañamiento Educativo333',
       variables: [
         {
           id: 71,
@@ -257,9 +162,11 @@ export class ReportUploadComponent implements OnInit {
   variablesReport: variable[] = {} as variable[];
   variablesToUpload: any[] = [];
   reportComplete: any[] = [];
+  reportPartial: any[] = [];
   flagNoVariable: boolean = false;
-
-  constructor() {}
+  indexOfVariables: number = 0;
+  flagLastAxe: boolean = false;
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.axeToShow();
@@ -283,10 +190,16 @@ export class ReportUploadComponent implements OnInit {
     }
   }
   confirmCompleteAxe() {
+    let i = 0;
     for (let item of this.report) {
+      i++;
       if (item.axe === this.axeToUpload) {
         item.complete = true;
+        break;
       }
+    }
+    if (i === this.report.length) {
+      this.flagLastAxe = true;
     }
   }
   getVariablesToUpload($event: any) {
@@ -304,9 +217,39 @@ export class ReportUploadComponent implements OnInit {
         this.reportComplete.push(...this.variablesToUpload);
         this.variablesToUpload = [];
         this.confirmCompleteAxe();
-        this.axeToShow();
+        if (!this.flagLastAxe) {
+          this.axeToShow();
+        }
         console.log('el reporte completo es: ', this.reportComplete);
       }
+    }
+  }
+  getVariablesToSaveExit($event: any) {
+    this.variablesToUpload.push($event);
+    if (this.variablesToUpload.length === this.variablesReport.length) {
+      for (let item of this.variablesToUpload) {
+        if (item) {
+          this.reportPartial.push(item); // variables a guardar cuando se implemente endpoint de editar reporte
+        }
+      }
+      this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
+    }
+  }
+  getVariablesToSaveGoBack($event: any) {
+    this.indexOfVariables++;
+    if (this.indexOfVariables === this.variablesReport.length) {
+      let i = 0;
+      for (let item of this.report) {
+        console.log('ir atras i: ', i);
+        console.log('nombre eje en rep: ', item.axe);
+        console.log('nombre eje actual: ', this.axeToUpload);
+        if (item.axe === this.axeToUpload && i > 0) {
+          this.report[i - 1].complete = false;
+          break;
+        }
+        i++;
+      }
+      this.axeToShow();
     }
   }
   createBiAlphabet() {
