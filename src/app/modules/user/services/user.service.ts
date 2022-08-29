@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable()
 export class UserService {
-    constructor() {}
+  private subject = new Subject<any>();
+  constructor() {}
 
-    getUser$(): Observable<{}> {
-        return of({});
-    }
+  sendClickEvent() {
+    this.subject.next('');
+  }
 
+  getClickEvent(): Observable<any> {
+    return this.subject.asObservable();
+  }
 }
