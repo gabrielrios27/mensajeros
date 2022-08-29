@@ -187,6 +187,7 @@ export class AddModReportComponent implements OnInit {
         this.getAxes();
         this.getCenters();
         this.centerSelect()
+        this.axesSelect();
         console.log(data);
       },
       error: (err) => {
@@ -226,11 +227,17 @@ export class AddModReportComponent implements OnInit {
     for (let c of this.report.variables) {
       if (!this.arrayAxes.includes(c.eje)) {
         this.arrayAxes.push(c.eje);
-       
+        this.createEje()
       }
     }
-    
-    console.log("axes",this.arrayAxes);
+
+    // console.log("axes",this.arrayAxes);
+  }
+
+  axreturn(): any{
+    for(let ax of this.arrayAxes){
+      return ax
+    }
   }
 
   getAxes() {
