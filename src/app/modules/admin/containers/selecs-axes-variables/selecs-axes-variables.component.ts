@@ -11,6 +11,8 @@ import { AdminService } from '../../services/admin.service';
 export class SelecsAxesVariablesComponent implements OnInit {
   @Output() axes = new EventEmitter<any>();
   @Output() variablesArray = new EventEmitter<any>();
+  @Input() arrayAxes : any
+  @Input() arrayVariables: Array<any> = []
   
   variables: any
   axe: any
@@ -24,7 +26,7 @@ export class SelecsAxesVariablesComponent implements OnInit {
   ngOnInit(): void {
     this.getAxes()
     this.getVariables()
-    
+    console.log(this.arrayAxes)
   }
   capturarVariables(e: any) {
     this.variables = e;
@@ -32,18 +34,25 @@ export class SelecsAxesVariablesComponent implements OnInit {
   }
 
   capturarEje(e: any) {
+    // this.axe = this.arrayAxes
     this.axe = e
     // filter variables per axe
     this.listOfVariablesShow = this.listOfVariables.filter((res:any)=>{
       return res.eje.id == this.axe.id
     })
     // 
+    console.log("arrays", this.arrayAxes)
     this.axes.emit(this.axe);
   }
 
   removeVariable(variable: any) {
     this.variablesArray.emit(this.variables)
     this.variables = this.variables.filter((res: any) => res !== variable);
+  }
+
+  axeAsig(){
+    this.axe = this.listOfAxes.find((res:any)=> res.id == this.arrayAxes.id)
+    console.log(this.axe)
   }
 
   getAxes() {
@@ -54,6 +63,8 @@ export class SelecsAxesVariablesComponent implements OnInit {
           this.listOfAxes = data;
           setTimeout(() => this.cdr.detectChanges());
           // console.log(this.listOfAxes);
+          this.axeAsig()
+          // this.axe = this.arrayAxes
         },
         error: (err) => {
           // console.log(err);
