@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { UserService } from '../../services';
 
 @Component({
   selector: 'app-upload-reports',
@@ -9,7 +10,11 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 export class UploadReportsComponent implements OnInit, OnDestroy {
   idReport: number;
   reportToUpload: any;
-  constructor(private rutaActiva: ActivatedRoute, private router: Router) {
+  constructor(
+    private rutaActiva: ActivatedRoute,
+    private router: Router,
+    private userSvc: UserService
+  ) {
     this.idReport = this.getIdFromRute();
   }
 
@@ -24,6 +29,10 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   }
   onCloseSave() {
     this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
+  }
+  onConfirmAxe() {
+    // this.variableUpload.show();
+    this.userSvc.sendClickEvent();
   }
   //Obtiene el reporte que se esta cargando en el componente report-upload
   getReportToUpload($event: any) {
