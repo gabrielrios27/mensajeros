@@ -18,6 +18,7 @@ import * as userServices from './services';
 import { PendingReportsComponent } from './containers/pending-reports/pending-reports.component';
 import { MatButtonModule } from '@angular/material/button';
 import { PopUpNoExistComponent } from './components/pop-up-no-exist/pop-up-no-exist.component';
+import { PopUpDeleteReportComponent } from './components/pop-up-delete-report/pop-up-delete-report.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { PopUpNoExistComponent } from './components/pop-up-no-exist/pop-up-no-ex
     ...userComponents.components,
     PendingReportsComponent,
     PopUpNoExistComponent,
+    PopUpDeleteReportComponent,
   ],
   exports: [...userContainers.containers, ...userComponents.components],
 })
