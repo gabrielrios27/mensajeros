@@ -121,15 +121,20 @@
     grid-area: "footer-logo";
     width: 255px;
   }
-  .footer__btn-confirm-axe {
-    justify-self: flex-end;
+  .footer__btn-conteiner {
     grid-area: "footer-btn";
-    width: 8.25em;
-    font-size: 20px;
-    height: 2.2em;
-    background: #92cdef;
-    border-radius: 1.75em;
-    line-height: 1.2em;
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 20px;
+    .footer__btn-confirm-axe {
+      justify-self: flex-end;
+      width: 8.25em;
+      font-size: 20px;
+      height: 2.2em;
+      background: #92cdef;
+      border-radius: 1.75em;
+      line-height: 1.2em;
+    }
   }
   .footer__direction {
     grid-area: "footer-direction";
@@ -155,8 +160,10 @@
     font-size: 12px; //hacemos responsive todo el componente para este viewport
   }
   .footer {
-    .footer__btn-confirm-axe {
-      font-size: 16px;
+    .footer__btn-conteiner {
+      .footer__btn-confirm-axe {
+        font-size: 16px;
+      }
     }
     .footer__logo {
       width: 145px;

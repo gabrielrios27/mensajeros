@@ -28,6 +28,7 @@
     <app-report-upload
       [idReport]="idReport"
       (reportToUpload)="getReportToUpload($event)"
+      (flagBtnGoBack)="getFlagBtnGoBack($event)"
     ></app-report-upload>
   </section>
   <section class="footer">
@@ -37,13 +38,22 @@
       alt=""
       class="footer__logo"
     />
-    <button
-      mat-raised-button
-      class="footer__btn-confirm-axe"
-      type="submit"
-      (click)="onConfirmAxe()"
-    >
-      Confirmar Eje
-    </button>
+    <div class="footer__btn-conteiner">
+      <button
+        *ngIf="flagBtnGoBack"
+        mat-raised-button
+        class="footer__btn-confirm-axe"
+        (click)="onGoBack()"
+      >
+        Atrás
+      </button>
+      <button
+        mat-raised-button
+        class="footer__btn-confirm-axe"
+        (click)="onConfirmAxe()"
+      >
+        Confirmar Eje
+      </button>
+    </div>
   </section>
 </section>

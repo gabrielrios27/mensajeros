@@ -10,6 +10,7 @@ import { UserService } from '../../services';
 export class UploadReportsComponent implements OnInit, OnDestroy {
   idReport: number;
   reportToUpload: any;
+  flagBtnGoBack: boolean = false;
   constructor(
     private rutaActiva: ActivatedRoute,
     private router: Router,
@@ -38,5 +39,10 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   getReportToUpload($event: any) {
     this.reportToUpload = $event;
   }
+  getFlagBtnGoBack($event: boolean) {
+    this.flagBtnGoBack = $event;
+    console.log(this.flagBtnGoBack);
+  }
+  onGoBack() {}
   ngOnDestroy() {}
 }
