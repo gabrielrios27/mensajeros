@@ -47,6 +47,25 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  getRole(){
+    this.serviceLogin.getRole().subscribe({
+      next: (data: any) => {
+        setTimeout(() => this.cdr.detectChanges());
+        if(data.authority === 'ROLE_ADMIN'){
+          this.router.navigate(['admin/dashboard/home']);
+        }
+        else{
+          this.router.navigate(['user/dashboard/home']);
+        }
+        console.log('algo', data);
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(err);
+      },
+    });
+  }
+
   onLogin(): any {
     const from = this.loginForm.value;
     this.serviceLogin.loginByEmail(from).subscribe(
@@ -55,7 +74,7 @@ export class LoginComponent implements OnInit {
           setTimeout(() => this.cdr.detectChanges());
           console.log(data);
           this.setLocalStorage(data.token);
-          this.router.navigate(['admin/dashboard/home']);
+          this.getRole()
         }
       },
       (error) => {
