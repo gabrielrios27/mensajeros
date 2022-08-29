@@ -58,7 +58,7 @@ export class ReportUploadComponent implements OnInit {
           },
         },
         {
-          id: 32,
+          id: 21,
           nombre: 'Cantidad de participantes en taller1',
           descripcion: 'desc.222',
           tipo: 'Textual',
@@ -74,7 +74,7 @@ export class ReportUploadComponent implements OnInit {
           },
         },
         {
-          id: 37,
+          id: 22,
           nombre: 'cantidad 2',
           descripcion: 'desc',
           tipo: 'Numérico',
@@ -90,7 +90,7 @@ export class ReportUploadComponent implements OnInit {
           },
         },
         {
-          id: 32,
+          id: 23,
           nombre: 'Cantidad de participantes en taller3',
           descripcion: 'desc.222444',
           tipo: 'Numérico',
@@ -112,7 +112,7 @@ export class ReportUploadComponent implements OnInit {
       axe: 'Acompañamiento Educativo2',
       variables: [
         {
-          id: 20,
+          id: 51,
           nombre: 'cant. talleres22222',
           descripcion: 'desc',
           tipo: 'Textual',
@@ -128,7 +128,7 @@ export class ReportUploadComponent implements OnInit {
           },
         },
         {
-          id: 32,
+          id: 52,
           nombre: 'Cantidad de participantes en taller122222',
           descripcion: 'desc.222',
           tipo: 'Textual',
@@ -144,7 +144,7 @@ export class ReportUploadComponent implements OnInit {
           },
         },
         {
-          id: 37,
+          id: 53,
           nombre: 'cantidad 2222222',
           descripcion: 'desc',
           tipo: 'Numérico',
@@ -160,7 +160,7 @@ export class ReportUploadComponent implements OnInit {
           },
         },
         {
-          id: 32,
+          id: 54,
           nombre: 'Cantidad de participantes en taller3222222',
           descripcion: 'desc.222444',
           tipo: 'Numérico',
@@ -182,7 +182,7 @@ export class ReportUploadComponent implements OnInit {
       axe: 'Acompañamiento Educativo3',
       variables: [
         {
-          id: 20,
+          id: 71,
           nombre: 'cant. talleres33333',
           descripcion: 'desc',
           tipo: 'Textual',
@@ -198,7 +198,7 @@ export class ReportUploadComponent implements OnInit {
           },
         },
         {
-          id: 32,
+          id: 72,
           nombre: 'Cantidad de participantes en taller1333333',
           descripcion: 'desc.222',
           tipo: 'Textual',
@@ -214,7 +214,7 @@ export class ReportUploadComponent implements OnInit {
           },
         },
         {
-          id: 37,
+          id: 73,
           nombre: 'cantidad 233333',
           descripcion: 'desc',
           tipo: 'Numérico',
@@ -230,7 +230,7 @@ export class ReportUploadComponent implements OnInit {
           },
         },
         {
-          id: 32,
+          id: 74,
           nombre: 'Cantidad de participantes en taller333333',
           descripcion: 'desc.222444',
           tipo: 'Numérico',
@@ -251,10 +251,13 @@ export class ReportUploadComponent implements OnInit {
   ];
 
   @Output() reportToUpload = new EventEmitter<any>();
+  @Output() flagBtnGoBack = new EventEmitter<boolean>();
   @Input('idReport') idReport: number = 0;
   axeToUpload: any;
   variablesReport: variable[] = {} as variable[];
-  variablesToUpload: variable[] = {} as variable[];
+  variablesToUpload: any[] = [];
+  reportComplete: any[] = [];
+  flagNoVariable: boolean = false;
 
   constructor() {}
 
@@ -267,11 +270,45 @@ export class ReportUploadComponent implements OnInit {
       if (!item.complete) {
         this.axeToUpload = item.axe;
         this.variablesReport = item.variables;
+        if (this.axeToUpload === this.report[0].axe) {
+          this.flagBtnGoBack.emit(false);
+          console.log('btn back false');
+        } else {
+          this.flagBtnGoBack.emit(true);
+          console.log('btn back true');
+        }
+
         break;
       }
     }
   }
-  getVariablesToUpload($event: any) {}
+  confirmCompleteAxe() {
+    for (let item of this.report) {
+      if (item.axe === this.axeToUpload) {
+        item.complete = true;
+      }
+    }
+  }
+  getVariablesToUpload($event: any) {
+    this.variablesToUpload.push($event);
+    this.flagNoVariable = false;
+    if (this.variablesToUpload.length === this.variablesReport.length) {
+      for (let item of this.variablesToUpload) {
+        if (item === undefined) {
+          this.flagNoVariable = true;
+        }
+      }
+      if (this.flagNoVariable) {
+        this.variablesToUpload = [];
+      } else {
+        this.reportComplete.push(...this.variablesToUpload);
+        this.variablesToUpload = [];
+        this.confirmCompleteAxe();
+        this.axeToShow();
+        console.log('el reporte completo es: ', this.reportComplete);
+      }
+    }
+  }
   createBiAlphabet() {
     let i;
     this.biAlphabet = [];
