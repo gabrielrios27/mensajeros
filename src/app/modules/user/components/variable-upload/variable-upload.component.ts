@@ -88,6 +88,12 @@ export class VariableUploadComponent implements OnInit {
       }
       this.total += this.noBinary;
     }
+    if (this.total === 0) {
+      this.total = null;
+      this.female = null;
+      this.male = null;
+      this.noBinary = null;
+    }
   }
   //para variable number
   //si el valor ingresado es negativo entonces cambia a 1
@@ -110,13 +116,11 @@ export class VariableUploadComponent implements OnInit {
       this.valueScale.push(i);
     }
   }
-  show() {
-    console.log('hola desde variable upload');
-  }
   //Crea la variable a enviar a componente report-upload - flag de alerta si no se completaron los campos
   createVariableToUpload() {
+    this.variableComplete = undefined;
     if (this.variableValue.genero === 'true') {
-      if (!this.total) {
+      if (this.total === null) {
         this.flagAlert = true;
       } else {
         this.variableComplete = {
@@ -130,7 +134,6 @@ export class VariableUploadComponent implements OnInit {
           total: this.total,
           observations: this.inputObservations,
         };
-        console.log(this.variableComplete);
       }
     }
     if (
@@ -149,15 +152,11 @@ export class VariableUploadComponent implements OnInit {
           observations: this.inputObservations,
         };
       }
-      console.log(this.variableComplete);
     }
     if (this.variableValue.tipo === 'Textual') {
-      console.log('aaa');
       if (!this.inputTextual) {
         this.flagAlert = true;
-        console.log('bbb', this.variableValue.escala_valor);
       } else if (this.variableValue.escala_valor === 'false') {
-        console.log('eee');
         this.variableComplete = {
           id: this.variableValue.id,
           name: this.variableValue.nombre,
@@ -169,23 +168,24 @@ export class VariableUploadComponent implements OnInit {
       }
 
       if (this.variableValue.escala_valor === 'true') {
-        console.log('uuuu');
         if (this.valueScaleSelected === null) {
           this.flagAlertValueEscale = true;
         } else {
-          this.variableComplete = {
-            id: this.variableValue.id,
-            name: this.variableValue.nombre,
-            description: this.variableValue.descripcion,
-            axe: this.variableValue.eje.nombre,
-            inputTextual: this.inputTextual,
-            valueScaleSelected: this.valueScaleSelected,
-            observations: this.inputObservations,
-          };
+          if (this.flagAlert) {
+            this.variableComplete = undefined;
+          } else {
+            this.variableComplete = {
+              id: this.variableValue.id,
+              name: this.variableValue.nombre,
+              description: this.variableValue.descripcion,
+              axe: this.variableValue.eje.nombre,
+              inputTextual: this.inputTextual,
+              valueScaleSelected: this.valueScaleSelected,
+              observations: this.inputObservations,
+            };
+          }
         }
       }
-
-      console.log(this.variableComplete);
     }
   }
   onChangeValue(e: string) {
