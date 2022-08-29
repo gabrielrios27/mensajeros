@@ -29,11 +29,13 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     return Number(idToShow);
   }
   onCloseSave() {
-    this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
+    this.userSvc.sendClickSaveExit();
   }
   onConfirmAxe() {
-    // this.variableUpload.show();
     this.userSvc.sendClickEvent();
+  }
+  onGoBack() {
+    this.userSvc.sendClickGoBack();
   }
   //Obtiene el reporte que se esta cargando en el componente report-upload
   getReportToUpload($event: any) {
@@ -41,8 +43,6 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   }
   getFlagBtnGoBack($event: boolean) {
     this.flagBtnGoBack = $event;
-    console.log(this.flagBtnGoBack);
   }
-  onGoBack() {}
   ngOnDestroy() {}
 }
