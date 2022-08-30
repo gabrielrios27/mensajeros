@@ -57,11 +57,11 @@ export class LoginComponent implements OnInit {
         else{
           this.router.navigate(['user/dashboard/home']);
         }
-        console.log('algo', data);
+        
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(err);
+        
       },
     });
   }
@@ -72,14 +72,14 @@ export class LoginComponent implements OnInit {
       (data) => {
         if (data) {
           setTimeout(() => this.cdr.detectChanges());
-          console.log(data);
+          
           this.setLocalStorage(data.token);
           this.getRole()
         }
       },
       (error) => {
-        console.error('error', error.status);
-        if (error.status == 401) {
+        console.log(error)
+        if (error === 401) {
           this.errorMessage = error.status;
           setTimeout(() => this.cdr.detectChanges());
           this.flag = true;
@@ -89,6 +89,7 @@ export class LoginComponent implements OnInit {
           this.flag2 = true;
         }
       }
+      
     );
   }
 }
