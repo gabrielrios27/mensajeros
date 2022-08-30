@@ -116,6 +116,15 @@
   margin: 0 94px;
   border-top: solid 5px #344d64;
   align-items: center;
+  .footer__btn__back {
+    justify-self: flex-end;
+    width: 8.25em;
+    font-size: 20px;
+    height: 2.2em;
+    background: #92cdef;
+    border-radius: 1.75em;
+    line-height: 1.2em;
+  }
   .footer__logo {
     justify-self: center;
     grid-area: "footer-logo";
@@ -134,6 +143,9 @@
       background: #92cdef;
       border-radius: 1.75em;
       line-height: 1.2em;
+    }
+    .footer__btn-confirm-axe--end {
+      width: 9.5em;
     }
   }
   .footer__direction {
@@ -160,6 +172,9 @@
     font-size: 12px; //hacemos responsive todo el componente para este viewport
   }
   .footer {
+    .footer__btn__back {
+      font-size: 16px;
+    }
     .footer__btn-conteiner {
       .footer__btn-confirm-axe {
         font-size: 16px;

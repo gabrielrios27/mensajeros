@@ -27,12 +27,23 @@
   <section class="upload-report__conteiner">
     <app-report-upload
       [idReport]="idReport"
+      [flagLastAxe]="flagLastAxe"
       (reportToUpload)="getReportToUpload($event)"
       (flagBtnGoBack)="getFlagBtnGoBack($event)"
+      (flagLastAxeEmit)="getFlagLastAxeEmit($event)"
     ></app-report-upload>
   </section>
   <section class="footer">
-    <div class="footer__direction"></div>
+    <div class="footer__direction">
+      <button
+        *ngIf="flagLastAxe"
+        mat-raised-button
+        class="footer__btn__back"
+        (click)="onGoBackLastAxe()"
+      >
+        Atrás
+      </button>
+    </div>
     <img
       src="../.././../../../assets/images/logo-20a.svg"
       alt=""
@@ -48,11 +59,20 @@
         Atrás
       </button>
       <button
+        *ngIf="!flagLastAxe"
         mat-raised-button
         class="footer__btn-confirm-axe"
         (click)="onConfirmAxe()"
       >
         Confirmar Eje
+      </button>
+      <button
+        *ngIf="flagLastAxe"
+        mat-raised-button
+        class="footer__btn-confirm-axe footer__btn-confirm-axe--end"
+        (click)="onEndReport()"
+      >
+        Finalizar Reporte
       </button>
     </div>
   </section>
