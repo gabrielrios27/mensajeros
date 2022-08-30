@@ -102,6 +102,13 @@ export class AdminService {
       this.baseUrlTami + this.EPVariablesQuantityPerAxe
     );
   }
+
+  getVariables(): Observable<variable[]> {
+    return this._http.get<variable[]>(
+      this.baseUrlTami + this.EPVariables
+    );
+  }
+
   getVariablesGroup(id: string): Observable<variable[]> {
     return this._http.get<variable[]>(
       this.baseUrlTami + this.EPVariablesQuantityPerAxe + '/' + id
@@ -133,7 +140,12 @@ export class AdminService {
   }
 
   deleteReport(id: number): Observable<Report> {
-    return this._http.delete<Report>(this.baseUrlTami + '/reportes/'+ id);
+    return this._http.delete<Report>(this.baseUrl + '/reportes/'+ id);
   }
+
+  addReport(report:any): Observable<Report> {
+    return this._http.post<Report>(this.baseUrl + '/reportes', report);
+  }
+
 
 }

@@ -144,6 +144,12 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'reportes/creacion-de-reportes/add-mod-report/preview-report/:report',  
+    component: PreviewReportComponent,
+    canActivate: [AdminGuard],
+    pathMatch: 'full',
+  },
+  {
     path: '**',
     canActivate: [AdminGuard],
     redirectTo: 'home',
