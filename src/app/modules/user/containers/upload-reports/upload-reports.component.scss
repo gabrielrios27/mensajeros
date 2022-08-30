@@ -40,6 +40,9 @@
     }
     .progress-bar {
       width: auto;
+      .progress-bar__img {
+        padding-top: 15px;
+      }
     }
     .upload-report__btn-close-save {
       font-size: 20px;
