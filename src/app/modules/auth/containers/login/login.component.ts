@@ -78,7 +78,6 @@ export class LoginComponent implements OnInit {
         }
       },
       (error) => {
-        console.log(error)
         if (error === 401) {
           this.errorMessage = error.status;
           setTimeout(() => this.cdr.detectChanges());
