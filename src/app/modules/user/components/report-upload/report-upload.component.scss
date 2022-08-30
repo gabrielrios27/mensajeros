@@ -1,5 +1,7 @@
+@import "../../../../../styles/variables.scss";
 .report {
   width: 100%;
+  font-size: 16px;
   .report__title {
     display: flex;
     align-items: center;
@@ -12,8 +14,75 @@
     margin-bottom: 0;
     padding-left: 20px;
   }
-  .report-complete {
-    .report-complete__conteiner {
+}
+.report-complete {
+  margin: 5.375em 1.625em;
+  display: inline-block;
+  .report-complete__conteiner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 51.3125em;
+    min-height: 3.25em;
+    background: #446787;
+    border-radius: 0.3125em 3.125em 0.625em 0px;
+    margin-bottom: 0.75em;
+    padding: 0 1.5625em;
+    .report-complete__title {
+      font-size: 1.5625em;
+      color: white;
+      margin-bottom: 0;
+      line-height: 3.25em;
     }
+    .report-complete__completed {
+      display: flex;
+      align-items: center;
+      column-gap: 0.375em;
+      margin-left: 1.5625em;
+      .report-complete__text {
+        color: white;
+        margin-bottom: 0;
+        font-size: 1.25em;
+        letter-spacing: 0.0125em;
+      }
+      .report-complete__ico-check {
+        width: 1em;
+      }
+    }
+  }
+}
+.comment {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 7.5em 1.5em;
+  .comment__label {
+    font-size: 1.25em;
+    line-height: 1.2em;
+    margin-left: 0.25em;
+    margin-bottom: 1em;
+  }
+  .comment__textarea {
+    font-size: 1.25em;
+    line-height: 1.2em;
+    height: 12.2em;
+    padding: 1.2em;
+    resize: none;
+    background: #ffffff;
+    border: 1px solid #79747e;
+    box-shadow: inset 0px 0.2em 0.2em rgba(0, 0, 0, 0.25);
+    border-radius: 0.5em;
+    outline-color: $outline-focus-center;
+  }
+}
+@media (max-width: 1400px) {
+  .report {
+    font-size: 10px;
+  }
+  .report-complete {
+    margin: 3em 1.625em;
+  }
+  .comment {
+    font-size: 12px;
   }
 }

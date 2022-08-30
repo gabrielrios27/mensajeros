@@ -1,5 +1,7 @@
 <section class="report" *ngIf="!flagLastAxe">
-  <h1 class="report__title">{{ axeToUpload }}</h1>
+  <h1 class="report__title">
+    EJE {{ indexOfAxe }}: {{ axeToUpload.toUpperCase() }}
+  </h1>
   <div
     class="report__variable"
     *ngFor="let variable of variablesReport; let i = index"
@@ -15,8 +17,13 @@
 </section>
 <section class="report" *ngIf="flagLastAxe">
   <div class="report-complete">
-    <div class="report-complete__conteiner" *ngFor="let item of report">
-      <h1 class="report-complete__title">{{ item.axe }}</h1>
+    <div
+      class="report-complete__conteiner"
+      *ngFor="let item of report; let i = index"
+    >
+      <h1 class="report-complete__title">
+        EJE {{ i + 1 }}: {{ item.axe.toUpperCase() }}
+      </h1>
       <div class="report-complete__completed">
         <p class="report-complete__text">Completo</p>
         <img
@@ -27,18 +34,15 @@
       </div>
     </div>
   </div>
-
-  <h1 class="report__title">{{ axeToUpload }}</h1>
-  <div
-    class="report__variable"
-    *ngFor="let variable of variablesReport; let i = index"
-  >
-    <app-variable-upload
-      [indexAlphabet]="biAlphabet[i]"
-      [variableValue]="variable"
-      (variableToUpload)="getVariablesToUpload($event)"
-      (variableSaveExit)="getVariablesToSaveExit($event)"
-      (variableGoBack)="getVariablesToSaveGoBack($event)"
-    ></app-variable-upload>
+  <div class="comment">
+    <label class="comment__label" for="comment"
+      >Observaciones, comentarios sobre el reporte {{ nameReport }}</label
+    >
+    <textarea
+      class="comment__textarea"
+      name="comment"
+      id="comment"
+      placeholder="Ingrese texto"
+    ></textarea>
   </div>
 </section>
