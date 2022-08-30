@@ -1,9 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { variable } from 'src/app/modules/admin/models';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../services';
-import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-report-upload',
@@ -11,7 +18,6 @@ import { ViewportScroller } from '@angular/common';
   styleUrls: ['./report-upload.component.scss'],
 })
 export class ReportUploadComponent implements OnInit {
-  //ejes hardcodeados antes de implementación
   alphabet: string[] = [
     'A',
     'B',
@@ -41,6 +47,7 @@ export class ReportUploadComponent implements OnInit {
     'Z',
   ];
   biAlphabet: string[] = [];
+  //ejes hardcodeados antes de implementación
   report: any = [
     {
       axe: 'Acompañamiento Educativo',
@@ -157,7 +164,7 @@ export class ReportUploadComponent implements OnInit {
       complete: false,
     },
   ];
-
+  //outputs e inputs
   @Output() reportToUpload = new EventEmitter<any>();
   @Output() flagBtnGoBack = new EventEmitter<boolean>();
   @Output() flagLastAxeEmit = new EventEmitter<boolean>();
@@ -174,12 +181,9 @@ export class ReportUploadComponent implements OnInit {
   flagNoVariable: boolean = false;
   indexOfVariables: number = 0;
   indexOfAxe: number = 0;
-
-  constructor(
-    private router: Router,
-    private userSvc: UserService,
-    private viewportScr: ViewportScroller
-  ) {
+  //para scroll to top en cada cambio de eje
+  @ViewChild('scroll') scroll: ElementRef = {} as ElementRef;
+  constructor(private router: Router, private userSvc: UserService) {
     this.clickSaveExitSubscription = this.userSvc
       .getClickSaveExit()
       .subscribe(() => {
@@ -191,6 +195,7 @@ export class ReportUploadComponent implements OnInit {
     this.axeToShow();
     this.createBiAlphabet();
   }
+  //BUSCA EL EJE INCOMPLETO Y LO RENDERIZA EN PANTALLA CON SUS VARIABLES
   axeToShow() {
     this.indexOfAxe = 0;
     for (let item of this.report) {
@@ -200,18 +205,16 @@ export class ReportUploadComponent implements OnInit {
         this.variablesReport = item.variables;
         if (this.axeToUpload === this.report[0].axe) {
           this.flagBtnGoBack.emit(false);
-          console.log('btn back false');
         } else {
           this.flagBtnGoBack.emit(true);
-          console.log('btn back true');
         }
-
         break;
       }
     }
   }
+  //SI EL EJE ESTÁ COMPLETO SE COLOCA COMPLETE TRUE PARA QUE PUEDA RENDERIZAR EL EJE SIGUIENTE QUE ESTÉ INCOMPLETO
   confirmCompleteAxe() {
-    this.viewportScr.scrollToPosition([0, 0]);
+    this.scroll.nativeElement.scrollTop = 0; //scroll to top cada vez que se renderiza un nuevo eje
     let i = 0;
     for (let item of this.report) {
       i++;
@@ -225,6 +228,7 @@ export class ReportUploadComponent implements OnInit {
       this.flagLastAxeEmit.next(this.flagLastAxe);
     }
   }
+  //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'CONFIRMAR EJE' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
   getVariablesToUpload($event: any) {
     this.variablesToUpload.push($event);
     this.flagNoVariable = false;
@@ -243,14 +247,12 @@ export class ReportUploadComponent implements OnInit {
         if (!this.flagLastAxe) {
           this.axeToShow();
         }
-        console.log('el reporte completo es: ', this.reportComplete);
       }
     }
   }
+  //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'GUARDAR Y SALIR' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
   getVariablesToSaveExit($event: any) {
     this.variablesToUpload.push($event);
-    console.log(this.variablesToUpload);
-
     if (this.variablesToUpload.length === this.variablesReport.length) {
       for (let item of this.variablesToUpload) {
         if (item) {
@@ -260,14 +262,12 @@ export class ReportUploadComponent implements OnInit {
       this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
     }
   }
+  //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'ATRÁS' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
   getVariablesToSaveGoBack($event: any) {
     this.indexOfVariables++;
     if (this.indexOfVariables === this.variablesReport.length) {
       let i = 0;
       for (let item of this.report) {
-        console.log('ir atras i: ', i);
-        console.log('nombre eje en rep: ', item.axe);
-        console.log('nombre eje actual: ', this.axeToUpload);
         if (item.axe === this.axeToUpload && i > 0) {
           this.report[i - 1].complete = false;
           break;
@@ -277,6 +277,7 @@ export class ReportUploadComponent implements OnInit {
       this.axeToShow();
     }
   }
+  //crea un indice de alfabeto doble
   createBiAlphabet() {
     let i;
     this.biAlphabet = [];
@@ -293,6 +294,7 @@ export class ReportUploadComponent implements OnInit {
       }
     }
   }
+  // click al btn FINALIZAR REPORTE
   onSaveExit() {
     if (this.flagLastAxe) {
       this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
