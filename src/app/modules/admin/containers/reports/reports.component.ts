@@ -1,17 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { Router } from '@angular/router';
-
-export interface PeriodicElement {
-  id: number
-  numero: string,
-  fechaCreacion: Date
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1 ,numero: 'reporte 1', fechaCreacion: new Date},
-  {id: 2 ,numero: 'reporte 2', fechaCreacion: new Date}
-];
-
+import { AdminService } from '../../services/admin.service';
+import { Report } from '../../models/report';
+import { axes } from '../../models/admin.model';
 
 @Component({
   selector: 'app-reports',
@@ -20,8 +16,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['reports.component.scss'],
 })
 export class ReportsComponent implements OnInit {
-  numero: any
-  reports: Array<PeriodicElement> = ELEMENT_DATA;
+  nombre: any;
 
   flagEdited: boolean = false;
   flagNew: boolean = false;
@@ -29,42 +24,100 @@ export class ReportsComponent implements OnInit {
   idToDelete: number = 0;
 
   // pagination
-  userListComplete: Array<PeriodicElement> = new Array();
+  userListComplete: Array<Report> = new Array();
   listLenght: number = 0;
   itemsPerPage: number = 10;
   quantityOfPages: number = 1;
   currentPage: number = 1;
-  listCurrentPage: Array<PeriodicElement> = new Array();
+  listCurrentPage: Array<Report> = new Array();
   initialItem: number = 1;
   finalItem: number = 10;
+  //
 
-  constructor(private router: Router) {}
+  // variables para visualizar reporte
+  name = 'old name';
+  showIt = false;
+  arrayAxes: Array<axes> = [];
+  //
+
+  flag: boolean = false;
+  reports: Array<Report> = [];
+
+  constructor(
+    private router: Router,
+    private admin: AdminService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.reports = ELEMENT_DATA;
-    this.getUserLocalStorage()
+    this.getReports();
+    this.getUserLocalStorage();
   }
 
   busca(e: string) {
-
     if (e.toLocaleLowerCase() == '') {
-      this.ngOnInit()
+      this.ngOnInit();
+    } else {
+      this.reports = this.reports.filter((res) => {
+        return res.nombre
+          .toLocaleLowerCase()
+          .match(this.nombre.toLocaleLowerCase());
+      });
     }
-    else {
-      this.reports = this.reports.filter(res => {
-        return res.numero.toLocaleLowerCase().match(this.numero.toLocaleLowerCase())
-      })
-    }
-
   }
 
-  create(){ 
-    this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes/add-mod-report'])
-    
+  //visualizar reporte
+  showModal(element: Report) {
+    this.showIt = true;
+  }
+
+  closeModal(newName: string) {
+    this.showIt = false;
+    if (newName) this.name = newName;
+  }
+
+  //
+
+  getReports() {
+    //this.currentPage = this.getPageLocalStorage();
+    this.admin.getResports().subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.reports = data;
+        this.pageToShow(this.currentPage, this.reports); //para paginación
+        // console.log('reports', data);
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+        // console.log(err);
+      },
+    });
+  }
+
+  deleteReport() {
+    this.admin.deleteReport(this.idToDelete).subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.pageToShow(this.currentPage, this.reports); //para paginación
+        this.getReports();
+        this.close();
+        // console.log('delete report', data);
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+        // console.log(err);
+      },
+    });
+  }
+
+  create() {
+    this.router.navigate([
+      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+    ]);
   }
 
   //para paginación----
-  pageToShow(page: number, list: PeriodicElement[]) {
+  pageToShow(page: number, list: Report[]) {
     // this.setPageLocalStorage(page);
     this.listLenght = list.length;
     this.quantityOfPages = Math.ceil(this.listLenght / this.itemsPerPage);
@@ -134,7 +187,7 @@ export class ReportsComponent implements OnInit {
   //       this.getUsers();
   //     },
   //     error: (err) => {
-  //       console.log(err);
+        // console.log(err);
   //     },
   //   });
   // }

@@ -38,7 +38,7 @@ export class AddModCenterComponent implements OnInit {
     this.getCenters(); //para paginación
   }
 
-  confirm() {
+  confirm(center: Centro) {
     this.addCenter(this.formUpEdit.value);
   }
   getCenters() {
@@ -62,6 +62,7 @@ export class AddModCenterComponent implements OnInit {
     localStorage.setItem('centerPage', JSON.stringify(this.quantityOfPages));
   }
   addCenter(center: Centro) {
+    console.log(center)
     this.setPageLocalStorage(); //para paginación
     this.admin.addCenter(center).subscribe({
       next: (data) => {

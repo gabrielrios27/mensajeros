@@ -73,6 +73,7 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
   onDeleteReport(value: boolean) {
     this.flagDeleteReport = value;
   }
+
   ngOnDestroy(): void {
     clearTimeout(this.timerId);
   }

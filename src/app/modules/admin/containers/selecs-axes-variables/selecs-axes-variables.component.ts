@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { axes, variable } from '../../models';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-selecs-axes-variables',
@@ -6,25 +9,80 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./selecs-axes-variables.component.scss']
 })
 export class SelecsAxesVariablesComponent implements OnInit {
+  @Output() axes = new EventEmitter<any>();
+  @Output() variablesArray = new EventEmitter<any>();
+  
+  variables: any
+  axe: any
 
-  variables: any;
-  eje: any
-  ejes: Array<any> = ["hola","pepe","jose"]
+  listOfAxes: Array<axes> = []
+  listOfVariables: Array<variable> = []
+  listOfVariablesShow: Array<variable> = []
 
-  constructor() { }
+  constructor(private router: Router, private admin: AdminService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    this.getAxes()
+    this.getVariables()
+    
   }
   capturarVariables(e: any) {
     this.variables = e;
+    this.variablesArray.emit(this.variables)
   }
 
   capturarEje(e: any) {
-    this.eje = e
+    this.axe = e
+    // filter variables per axe
+    this.listOfVariablesShow = this.listOfVariables.filter((res:any)=>{
+      return res.eje.id == this.axe.id
+    })
+    // 
+    this.axes.emit(this.axe);
   }
 
   removeVariable(variable: any) {
+    this.variablesArray.emit(this.variables)
     this.variables = this.variables.filter((res: any) => res !== variable);
+  }
+
+  getAxes() {
+    this.admin
+      .getAxes()
+      .subscribe({
+        next: (data: axes[]) => {
+          this.listOfAxes = data;
+          setTimeout(() => this.cdr.detectChanges());
+          // console.log(this.listOfAxes);
+        },
+        error: (err) => {
+          // console.log(err);
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+        complete: () => {
+          // console.log('Request get axes complete');
+        },
+      });
+  }
+
+  getVariables(){
+    this.admin.getVariables().subscribe({ next: (data: variable[]) => {
+      this.listOfVariables = data;
+      setTimeout(() => this.cdr.detectChanges());
+      // console.log(this.listOfVariables);
+    },
+    error: (err) => {
+      // console.log(err);
+      if (err.status === 401) {
+        this.router.navigate(['/auth']);
+      }
+    },
+    complete: () => {
+      // console.log('Request get axes complete');
+    },
+  });
   }
 
 }
