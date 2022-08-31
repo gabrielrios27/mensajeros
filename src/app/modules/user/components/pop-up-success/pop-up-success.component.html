@@ -1,0 +1,18 @@
+<section class="modal" *ngIf="flagAxeSuccess" (click)="close()">
+  <div class="modal-success">
+    <img
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__conteiner">
+      <img
+        class="modal__ico"
+        src="../../../../../assets/icons/Check.svg"
+        alt="icon check"
+      />
+      <p class="modal__text">{{ textSuccess }}</p>
+    </div>
+  </div>
+</section>
