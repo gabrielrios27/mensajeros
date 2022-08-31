@@ -65,4 +65,32 @@
     "
   >
   </app-pop-up-success>
+  <div class="modal-end">
+    <div class="modal-end__conteiner">
+      <div class="modal-end__info">
+        <img
+          class="modal-end__ico"
+          src="../../../../../assets/icons/File earmark arrow up.svg"
+          alt="Icono de carga de reporte"
+        />
+        <p class="modal-end__text">Enviar Reporte a ONG</p>
+      </div>
+      <div class="modal-end__btn-conteiner">
+        <button
+          class="modal-end__btn-cancel"
+          mat-raised-button
+          (click)="onConfirmEnd(true)"
+        >
+          Cancelar
+        </button>
+        <button
+          class="modal-end__btn-accept"
+          mat-raised-button
+          (click)="onConfirmEnd(false)"
+        >
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
 </section>

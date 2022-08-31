@@ -168,8 +168,10 @@ export class ReportUploadComponent implements OnInit {
   @Output() reportToUpload = new EventEmitter<any>();
   @Output() flagBtnGoBack = new EventEmitter<boolean>();
   @Output() flagLastAxeEmit = new EventEmitter<boolean>();
+  @Output() flagEndReportEmit = new EventEmitter<boolean>();
   @Input('idReport') idReport: number = 0;
   @Input('flagLastAxe') flagLastAxe: boolean = false;
+  @Input('flagEndReport') flagEndReport: boolean = false;
   //para recibir click en el btn guardar y salir del comp. upload report
   clickSaveExitSubscription: Subscription;
   nameReport: string = 'C00010';
@@ -318,6 +320,11 @@ export class ReportUploadComponent implements OnInit {
     if (!$event) {
       this.flagAxeError = false;
       clearTimeout(this.timerId);
+    }
+  }
+  onConfirmEnd(value: boolean) {
+    if (value) {
+    } else {
     }
   }
 }
