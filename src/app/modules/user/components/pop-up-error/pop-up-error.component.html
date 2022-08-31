@@ -1,0 +1,21 @@
+<section class="modal" *ngIf="flagAxeError" (click)="close()">
+  <div class="modal-error">
+    <img
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X  red.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__conteiner">
+      <img
+        class="modal__ico"
+        src="../../../../../assets/icons/Slash circle.svg"
+        alt="icon check"
+      />
+      <p class="modal__text">
+        {{ textError1 }}<br />
+        {{ textError2 }}
+      </p>
+    </div>
+  </div>
+</section>
