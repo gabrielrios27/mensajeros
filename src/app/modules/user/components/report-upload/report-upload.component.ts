@@ -183,6 +183,10 @@ export class ReportUploadComponent implements OnInit {
   indexOfAxe: number = 0;
   //para scroll to top en cada cambio de eje
   @ViewChild('scroll') scroll: ElementRef = {} as ElementRef;
+  //para pop up success cuando eje fue completado
+  flagAxeSuccess: boolean = false;
+  //para pop up success cuando reporte fue completado
+  flagReportSuccess: boolean = true;
   constructor(private router: Router, private userSvc: UserService) {
     this.clickSaveExitSubscription = this.userSvc
       .getClickSaveExit()
@@ -214,6 +218,10 @@ export class ReportUploadComponent implements OnInit {
   }
   //SI EL EJE ESTÁ COMPLETO SE COLOCA COMPLETE TRUE PARA QUE PUEDA RENDERIZAR EL EJE SIGUIENTE QUE ESTÉ INCOMPLETO
   confirmCompleteAxe() {
+    this.flagAxeSuccess = true;
+    setTimeout(() => {
+      this.flagAxeSuccess = false;
+    }, 2000);
     this.scroll.nativeElement.scrollTop = 0; //scroll to top cada vez que se renderiza un nuevo eje
     let i = 0;
     for (let item of this.report) {

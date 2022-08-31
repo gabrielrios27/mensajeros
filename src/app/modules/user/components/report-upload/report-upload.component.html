@@ -15,6 +15,10 @@
       (variableGoBack)="getVariablesToSaveGoBack($event)"
     ></app-variable-upload>
   </div>
+  <app-pop-up-success
+    [flagAxeSuccess]="flagAxeSuccess"
+    [textSuccess]="'¡Eje guardado con éxito! Continuarás con el siguiente Eje'"
+  ></app-pop-up-success>
 </section>
 <!-- VISTA CUANDO TODOS LOS EJES FUERON COMPLETADOS -->
 <section class="report" *ngIf="flagLastAxe">
