@@ -35,9 +35,11 @@
     <app-report-upload
       [idReport]="idReport"
       [flagLastAxe]="flagLastAxe"
+      [flagEndReport]="flagEndReport"
       (reportToUpload)="getReportToUpload($event)"
       (flagBtnGoBack)="getFlagBtnGoBack($event)"
       (flagLastAxeEmit)="getFlagLastAxeEmit($event)"
+      (flagEndReportEmit)="getFlagEndReportEmit($event)"
     ></app-report-upload>
   </section>
   <section class="footer">
