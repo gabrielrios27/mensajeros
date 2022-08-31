@@ -19,6 +19,13 @@
     [flagAxeSuccess]="flagAxeSuccess"
     [textSuccess]="'¡Eje guardado con éxito! Continuarás con el siguiente Eje'"
   ></app-pop-up-success>
+  <app-pop-up-error
+    [flagAxeError]="flagAxeError"
+    [textError1]="'¡Todos los campos deben ser completados!'"
+    [textError2]="'Revisá e intentalo nuevamente'"
+    (goOut)="onCloseModal($event)"
+  >
+  </app-pop-up-error>
 </section>
 <!-- VISTA CUANDO TODOS LOS EJES FUERON COMPLETADOS -->
 <section class="report" *ngIf="flagLastAxe">
