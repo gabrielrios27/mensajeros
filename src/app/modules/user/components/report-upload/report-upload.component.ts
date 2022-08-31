@@ -185,8 +185,7 @@ export class ReportUploadComponent implements OnInit {
   @ViewChild('scroll') scroll: ElementRef = {} as ElementRef;
   //para pop up success cuando eje fue completado
   flagAxeSuccess: boolean = false;
-  //para pop up success cuando reporte fue completado
-  flagReportSuccess: boolean = true;
+
   constructor(private router: Router, private userSvc: UserService) {
     this.clickSaveExitSubscription = this.userSvc
       .getClickSaveExit()
@@ -221,7 +220,7 @@ export class ReportUploadComponent implements OnInit {
     this.flagAxeSuccess = true;
     setTimeout(() => {
       this.flagAxeSuccess = false;
-    }, 2000);
+    }, 3000);
     this.scroll.nativeElement.scrollTop = 0; //scroll to top cada vez que se renderiza un nuevo eje
     let i = 0;
     for (let item of this.report) {
