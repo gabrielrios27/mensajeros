@@ -85,11 +85,11 @@ export class ReportsComponent implements OnInit {
         setTimeout(() => this.cdr.detectChanges());
         this.reports = data;
         this.pageToShow(this.currentPage, this.reports); //para paginación
-        // console.log('reports', data);
+        
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        // console.log(err);
+        
       },
     });
   }
@@ -101,11 +101,11 @@ export class ReportsComponent implements OnInit {
         this.pageToShow(this.currentPage, this.reports); //para paginación
         this.getReports();
         this.close();
-        // console.log('delete report', data);
+        
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        // console.log(err);
+        
       },
     });
   }
@@ -178,19 +178,7 @@ export class ReportsComponent implements OnInit {
     this.flagDelete = true;
     this.idToDelete = id;
   }
-
-  // deleteUser() {
-  //   this.flagDelete = false;
-  //   this.admin.deleteUser(this.idToDelete).subscribe({
-  //     next: (data: any) => {
-  //       setTimeout(() => this.cdr.detectChanges());
-  //       this.getUsers();
-  //     },
-  //     error: (err) => {
-        // console.log(err);
-  //     },
-  //   });
-  // }
+  
   getUserLocalStorage() {
     let newOrEditeduser = localStorage.getItem('newOrEditedReport');
     if (newOrEditeduser) {
