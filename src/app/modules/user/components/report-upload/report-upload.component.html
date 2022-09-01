@@ -65,7 +65,8 @@
     "
   >
   </app-pop-up-success>
-  <div class="modal-end">
+  <!-- MODAL DE ENVIAR REPORTE A ONG  -->
+  <div class="modal-end" *ngIf="flagEndReport">
     <div class="modal-end__conteiner">
       <div class="modal-end__info">
         <img
@@ -79,14 +80,14 @@
         <button
           class="modal-end__btn-cancel"
           mat-raised-button
-          (click)="onConfirmEnd(true)"
+          (click)="onConfirmEnd(false)"
         >
           Cancelar
         </button>
         <button
           class="modal-end__btn-accept"
           mat-raised-button
-          (click)="onConfirmEnd(false)"
+          (click)="onConfirmEnd(true)"
         >
           Confirmar
         </button>

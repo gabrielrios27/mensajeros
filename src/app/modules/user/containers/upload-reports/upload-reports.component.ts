@@ -11,8 +11,8 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   idReport: number;
   reportToUpload: any;
   flagBtnGoBack: boolean = false;
-  flagLastAxe: boolean = true;
-  flagEndReport: boolean = true;
+  flagLastAxe: boolean = false;
+  flagEndReport: boolean = false;
   constructor(
     private rutaActiva: ActivatedRoute,
     private router: Router,
@@ -45,7 +45,6 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   }
   onEndReport() {
     this.flagEndReport = true;
-    // this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
   }
   //Obtiene el reporte que se esta cargando en el componente report-upload
   getReportToUpload($event: any) {
