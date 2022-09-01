@@ -25,6 +25,8 @@ import { ReportUploadComponent } from './components/report-upload/report-upload.
 import { VariableUploadComponent } from './components/variable-upload/variable-upload.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { PopUpSuccessComponent } from './components/pop-up-success/pop-up-success.component';
+import { PopUpErrorComponent } from './components/pop-up-error/pop-up-error.component';
 
 @NgModule({
   imports: [
@@ -47,6 +49,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     UploadReportsComponent,
     ReportUploadComponent,
     VariableUploadComponent,
+    PopUpSuccessComponent,
+    PopUpErrorComponent,
   ],
   exports: [...userContainers.containers, ...userComponents.components],
 })
