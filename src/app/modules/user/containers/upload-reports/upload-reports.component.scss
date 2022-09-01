@@ -40,6 +40,9 @@
     }
     .progress-bar {
       width: auto;
+      .progress-bar__img {
+        padding-top: 15px;
+      }
     }
     .upload-report__btn-close-save {
       font-size: 20px;
@@ -57,18 +60,6 @@
     margin: 32px auto 0;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
-    overflow-y: scroll;
-    &::-webkit-scrollbar {
-      width: 15px; /* width of the entire scrollbar */
-    }
-    &::-webkit-scrollbar-track {
-      background: rgb(255, 255, 255); /* color of the tracking area */
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: #d9d9d9; /* color of the scroll thumb */
-      border-radius: 50px; /* roundness of the scroll thumb */
-      border: 1px solid #ffffff; /* creates padding around scroll thumb */
-    }
   }
 }
 .header-container {
@@ -116,20 +107,38 @@
   margin: 0 94px;
   border-top: solid 5px #344d64;
   align-items: center;
-  .footer__logo {
-    justify-self: center;
-    grid-area: "footer-logo";
-    width: 255px;
-  }
-  .footer__btn-confirm-axe {
+  .footer__btn__back {
     justify-self: flex-end;
-    grid-area: "footer-btn";
     width: 8.25em;
     font-size: 20px;
     height: 2.2em;
     background: #92cdef;
     border-radius: 1.75em;
     line-height: 1.2em;
+  }
+  .footer__logo {
+    justify-self: center;
+    grid-area: "footer-logo";
+    width: 255px;
+  }
+  .footer__btn-conteiner {
+    grid-area: "footer-btn";
+    display: flex;
+    justify-content: flex-end;
+    -moz-column-gap: 20px;
+    column-gap: 20px;
+    .footer__btn-confirm-axe {
+      justify-self: flex-end;
+      width: 8.25em;
+      font-size: 20px;
+      height: 2.2em;
+      background: #92cdef;
+      border-radius: 1.75em;
+      line-height: 1.2em;
+    }
+    .footer__btn-confirm-axe--end {
+      width: 9.5em;
+    }
   }
   .footer__direction {
     grid-area: "footer-direction";
@@ -155,8 +164,13 @@
     font-size: 12px; //hacemos responsive todo el componente para este viewport
   }
   .footer {
-    .footer__btn-confirm-axe {
+    .footer__btn__back {
       font-size: 16px;
+    }
+    .footer__btn-conteiner {
+      .footer__btn-confirm-axe {
+        font-size: 16px;
+      }
     }
     .footer__logo {
       width: 145px;

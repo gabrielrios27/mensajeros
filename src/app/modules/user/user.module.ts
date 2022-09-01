@@ -21,6 +21,10 @@ import { PopUpNoExistComponent } from './components/pop-up-no-exist/pop-up-no-ex
 import { PopUpDeleteReportComponent } from './components/pop-up-delete-report/pop-up-delete-report.component';
 import { PopUpStartComponent } from './components/pop-up-start/pop-up-start.component';
 import { UploadReportsComponent } from './containers/upload-reports/upload-reports.component';
+import { ReportUploadComponent } from './components/report-upload/report-upload.component';
+import { VariableUploadComponent } from './components/variable-upload/variable-upload.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -29,6 +33,8 @@ import { UploadReportsComponent } from './containers/upload-reports/upload-repor
     ReactiveFormsModule,
     FormsModule,
     MatButtonModule,
+    MatRadioModule,
+    MatCheckboxModule,
   ],
   providers: [...userServices.services, ...userGuards.guards],
   declarations: [
@@ -39,6 +45,8 @@ import { UploadReportsComponent } from './containers/upload-reports/upload-repor
     PopUpDeleteReportComponent,
     PopUpStartComponent,
     UploadReportsComponent,
+    ReportUploadComponent,
+    VariableUploadComponent,
   ],
   exports: [...userContainers.containers, ...userComponents.components],
 })

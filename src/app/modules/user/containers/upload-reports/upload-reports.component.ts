@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { UserService } from '../../services';
 
 @Component({
   selector: 'app-upload-reports',
@@ -8,7 +9,14 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 })
 export class UploadReportsComponent implements OnInit, OnDestroy {
   idReport: number;
-  constructor(private rutaActiva: ActivatedRoute, private router: Router) {
+  reportToUpload: any;
+  flagBtnGoBack: boolean = false;
+  flagLastAxe: boolean = false;
+  constructor(
+    private rutaActiva: ActivatedRoute,
+    private router: Router,
+    private userSvc: UserService
+  ) {
     this.idReport = this.getIdFromRute();
   }
 
@@ -22,7 +30,31 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     return Number(idToShow);
   }
   onCloseSave() {
+    this.userSvc.sendClickSaveExit();
+  }
+  onConfirmAxe() {
+    this.userSvc.sendClickEvent();
+  }
+  onGoBack() {
+    this.userSvc.sendClickGoBack();
+  }
+  onGoBackLastAxe() {
+    this.flagLastAxe = false;
+    this.flagBtnGoBack = true;
+  }
+  onEndReport() {
     this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
+  }
+  //Obtiene el reporte que se esta cargando en el componente report-upload
+  getReportToUpload($event: any) {
+    this.reportToUpload = $event;
+  }
+  getFlagBtnGoBack($event: boolean) {
+    this.flagBtnGoBack = $event;
+  }
+  getFlagLastAxeEmit($event: boolean) {
+    this.flagLastAxe = $event;
+    this.flagBtnGoBack = false;
   }
   ngOnDestroy() {}
 }
