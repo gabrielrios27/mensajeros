@@ -75,5 +75,8 @@
     (goOut)="onDeleteReport(!$event)"
   >
   </app-pop-up-delete-report>
-  <app-pop-up-start *ngIf="flagStartReport"> </app-pop-up-start>
+  <app-pop-up-start
+    *ngIf="flagStartReport"
+    [idReport]="reportToShow.id"
+  ></app-pop-up-start>
 </section>

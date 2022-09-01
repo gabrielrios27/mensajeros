@@ -36,7 +36,12 @@ import { UserNavbarComponent } from './components/user-navbar/user-navbar.compon
     // NavigationModule,
     MatIconModule,
   ],
-  providers: [...layoutsServices.services, ...layoutsGuards.guards,AuthService,AuthGuard],
+  providers: [
+    ...layoutsServices.services,
+    ...layoutsGuards.guards,
+    AuthService,
+    AuthGuard,
+  ],
   declarations: [
     ...layoutsContainers.containers,
     ...layoutsComponents.components,

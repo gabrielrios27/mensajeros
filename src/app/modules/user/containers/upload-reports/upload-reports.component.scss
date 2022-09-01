@@ -1,0 +1,178 @@
+@import "../../../../../styles/variables.scss";
+.upload-report {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3000;
+  background-color: white;
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 176px 119px auto 127px;
+  grid-template-areas:
+    "header"
+    "progress"
+    "conteiner"
+    "footer";
+  .upload-report__progress {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 36px;
+    grid-area: "progress";
+    .upload-report__title {
+      font-size: 36px;
+      width: 11.888em;
+      height: 2.222em;
+      background: rgba(25, 103, 210, 0.1);
+      border-radius: 0px 1.388em 0.277em 0px;
+      line-height: 1.194em;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #083d5e;
+      text-shadow: 0px 0.111em 0.111em rgba(0, 0, 0, 0.25);
+      margin-right: 1.638em;
+      margin-bottom: 0;
+      padding-left: 0.833em;
+    }
+    .progress-bar {
+      width: auto;
+    }
+    .upload-report__btn-close-save {
+      font-size: 20px;
+      height: 2.2em;
+      background: #92cdef;
+      border-radius: 1.75em;
+      line-height: 1.2em;
+      margin: 0 2.95em;
+    }
+  }
+  .upload-report__conteiner {
+    grid-area: "conteiner";
+    width: 90vw;
+    min-height: 100px;
+    margin: 32px auto 0;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 15px; /* width of the entire scrollbar */
+    }
+    &::-webkit-scrollbar-track {
+      background: rgb(255, 255, 255); /* color of the tracking area */
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #d9d9d9; /* color of the scroll thumb */
+      border-radius: 50px; /* roundness of the scroll thumb */
+      border: 1px solid #ffffff; /* creates padding around scroll thumb */
+    }
+  }
+}
+.header-container {
+  grid-area: "header";
+  width: 100%;
+  font-size: 16px;
+  .header {
+    width: 100%;
+    height: 8.75em;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-bottom: 0.1875em solid $color-bg-light-grey;
+    .header__logo {
+      width: 16.25em;
+      padding: 0.5625em 0;
+    }
+  }
+  .lines-container {
+    width: 100%;
+    background-color: white;
+    padding-top: 0.5625em;
+    .lines-container__line1 {
+      width: 100%;
+      height: 0.5625em;
+      background: $color-line-down-header;
+      box-shadow: 0em 0.375em 0.5em rgba(0, 0, 0, 0.14),
+        0em 0.0625em 0.75em rgba(0, 0, 0, 0.12),
+        0em 0.1875em 0.1875em rgba(0, 0, 0, 0.2);
+    }
+    .lines-container__line2 {
+      margin-top: 0.5625em;
+      width: 100%;
+      height: 0.5625em;
+      background: $color-line-up-header;
+      box-shadow: 0em 0.25em 0.25em rgba(0, 0, 0, 0.25);
+    }
+  }
+}
+.footer {
+  grid-area: "footer";
+  grid-template-columns: repeat(3, 1fr);
+  display: grid;
+  grid-template-areas: "footer-direction footer-logo footer-btn";
+  margin: 0 94px;
+  border-top: solid 5px #344d64;
+  align-items: center;
+  .footer__logo {
+    justify-self: center;
+    grid-area: "footer-logo";
+    width: 255px;
+  }
+  .footer__btn-confirm-axe {
+    justify-self: flex-end;
+    grid-area: "footer-btn";
+    width: 8.25em;
+    font-size: 20px;
+    height: 2.2em;
+    background: #92cdef;
+    border-radius: 1.75em;
+    line-height: 1.2em;
+  }
+  .footer__direction {
+    grid-area: "footer-direction";
+  }
+}
+@media (max-width: 1400px) {
+  .upload-report {
+    grid-template-rows: 132px 84px auto 70px;
+    .upload-report__progress {
+      margin-top: 18px;
+      .upload-report__title {
+        font-size: 24px;
+      }
+      .upload-report__btn-close-save {
+        font-size: 16px;
+      }
+    }
+    .upload-report__conteiner {
+      margin: 24px auto 0;
+    }
+  }
+  .header-container {
+    font-size: 12px; //hacemos responsive todo el componente para este viewport
+  }
+  .footer {
+    .footer__btn-confirm-axe {
+      font-size: 16px;
+    }
+    .footer__logo {
+      width: 145px;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .upload-report {
+    grid-template-rows: 110px 119px auto 70px;
+  }
+  .header-container {
+    font-size: 10px;
+    .header {
+      .header__logo {
+        margin-left: 2.25rem;
+      }
+    }
+  }
+}
