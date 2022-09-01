@@ -73,10 +73,9 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data: UserData) => {
           this.userData = data;
-          console.log(this.userData);
+          console.log('datos de usuario', this.userData);
         },
         error: (err) => {
-          console.log(err);
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }

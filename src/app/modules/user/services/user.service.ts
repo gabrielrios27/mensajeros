@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { UserData } from '../models/user.model';
+import { ReportInfo, UserData } from '../models/user.model';
 
 @Injectable()
 export class UserService {
@@ -10,7 +10,8 @@ export class UserService {
   private subjectGoBack = new Subject<any>();
   baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com';
   baseUrlTami: string = 'https://mensajeros-back-tami.herokuapp.com';
-  EPUserData: string = '/usuarios/datosUsuario';
+  ePUserData: string = '/usuarios/datosUsuario';
+  ePPendingReports: string = '/reportes/reportesPendientes';
   constructor(private _http: HttpClient) {}
   //envia click cuando se da click al btn confirmar eje en el upload-report.ts
   sendClickEvent() {
@@ -35,7 +36,10 @@ export class UserService {
   }
   //obtener datos del usuario logeado
   getUserData(): Observable<UserData> {
-    return this._http.get<UserData>(this.baseUrlTami + this.EPUserData);
+    return this._http.get<UserData>(this.baseUrlTami + this.ePUserData);
   }
   //Para carga de reportes
+  getPendingReports(): Observable<ReportInfo> {
+    return this._http.get<ReportInfo>(this.baseUrlTami + this.ePPendingReports);
+  }
 }
