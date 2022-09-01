@@ -34,7 +34,7 @@ export class AuthService {
     let direccion = this.baseUrlTami + 'auth/login';
     return this._http.post<Response>(direccion, form).pipe(
       map((res: Response) => {
-        console.log('done');
+        
         this.loggedIn.next(true);
         return res;
       }),
@@ -43,9 +43,9 @@ export class AuthService {
   }
 
   private handlerError(err: any): Observable<never> {
-    let errorMsj = ' error';
+    let errorMsj = 'error';
     if (err) {
-      console.log(err.status);
+      errorMsj = err.status
     }
     return throwError(errorMsj);
   }
@@ -53,12 +53,12 @@ export class AuthService {
   getRole() {
     return this._http.get<role>(this.baseUrlTami + this.EPAuthority).pipe(
       map((data) => {
-        console.log(data);
+        
 
         return data;
       }),
       catchError((err) => {
-        console.log(err.status);
+        
         return this.handlerError(err);
       })
     );
