@@ -1,5 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { UserData } from '../../models';
+import { UserService } from '../../services';
 @Component({
   selector: 'app-pending-reports',
   templateUrl: './pending-reports.component.html',
@@ -48,14 +51,38 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
   flagStartReport: boolean;
   flagDeleteReport: boolean;
   timerId: any;
-  constructor(private router: Router) {
+  //guarda datos del usuario logeado
+  userData: UserData;
+  // suscripciones
+  onDestroy$: Subject<boolean> = new Subject();
+  constructor(private router: Router, private userSvc: UserService) {
     this.reportToShow = this.list[0];
     this.flagDeleteReport = false;
     this.flagStartReport = false;
     this.timerId = 0;
+    this.userData = {} as UserData;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getUserData();
+  }
+  getUserData() {
+    this.userSvc
+      .getUserData()
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: UserData) => {
+          this.userData = data;
+          console.log(this.userData);
+        },
+        error: (err) => {
+          console.log(err);
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
+  }
   onStartReport() {
     this.flagStartReport = true;
     this.timerId = setTimeout(() => {
@@ -76,5 +103,6 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     clearTimeout(this.timerId);
+    this.onDestroy$.next(true);
   }
 }
