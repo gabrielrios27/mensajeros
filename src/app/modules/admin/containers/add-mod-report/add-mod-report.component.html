@@ -65,7 +65,9 @@
                 <label style="margin-right: 420px;">Eje</label>
                 <label>Variable</label>
                 <div *ngFor="let item of arrayc">
-                    <app-selecs-axes-variables [arrayAxes] ="axreturn()"  (axes)="storageAxes($event,arrayc.indexOf(item))"(variablesArray)="storageVariables($event,arrayc.indexOf(item))" >{{item}}</app-selecs-axes-variables>
+                    <app-selecs-axes-variables [arrayAxes] ="axreturn(item)"  [arrayVariables] ="variableReturn(item)" 
+                    (axes)="storageAxes($event,arrayc.indexOf(item))"(variablesArray)="storageVariables($event,arrayc.indexOf(item))" 
+                    >{{item}}</app-selecs-axes-variables>
                 </div>
             </section>
             <button mat-button class="button-ejes" (click)="createEje()">+ Eje</button>
