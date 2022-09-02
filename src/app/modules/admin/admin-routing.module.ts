@@ -138,7 +138,7 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'reportes/creacion-de-reportes/add-mod-report/:report',
+    path: 'reportes/creacion-de-reportes/add-mod-report/:report-id',
     component: AddModReportComponent,
     canDeactivate: [ConfirmOutGuard],
     pathMatch: 'full',
@@ -151,6 +151,12 @@ export const ROUTES: Routes = [
   },
   {
     path: 'reportes/creacion-de-reportes/add-mod-report/preview-report/:report',  
+    component: PreviewReportComponent,
+    canActivate: [AdminGuard],
+    pathMatch: 'full',
+  },
+  {
+    path: 'reportes/creacion-de-reportes/add-mod-report/:report-id/preview-report/:report',
     component: PreviewReportComponent,
     canActivate: [AdminGuard],
     pathMatch: 'full',
