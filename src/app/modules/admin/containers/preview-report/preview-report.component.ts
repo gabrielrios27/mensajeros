@@ -7,6 +7,7 @@ import { report } from 'process';
 import { Report } from '../../models/report';
 import { Centro } from '../../models/centro';
 
+
 @Component({
   selector: 'app-preview-report',
   templateUrl: './preview-report.component.html',
@@ -37,7 +38,7 @@ export class PreviewReportComponent implements OnInit {
 
   ngOnInit() {
     this.newname = this.oldname;
-    // console.log(this.report)
+    console.log(this.data.arrayVariables)
     this.getCenters()
     this.getDataFromRute()
     
@@ -89,16 +90,19 @@ export class PreviewReportComponent implements OnInit {
   }
   // 
 
+  variablesse(item:any):any{
+    // console.log(this.report.variable.filter((res:any) => res.eje.id === item.id))
+    return this.report.variable.filter((res:any) => res.eje.id === item.id)
+  }
+
   getDataFromRute() {
-    this.routeActiva.paramMap.subscribe((params: ParamMap) => {
-      this.name = params.get("nombre");
-      this.since = params.get("desde");
-      this.until = params.get("hasta");
-      this.deliverdate = params.get('deliverdate')
-    });
-    this.until = new Date(this.until)
-    this.since =new Date(this.since) 
-    this.deliverdate = new Date(this.deliverdate)
+    console.log(this.data.report)
+    this.name = this.data.report?.nombre
+    this.until = this.data.report?.periodoHasta
+    this.since = this.data.report?.periodoDesde
+    this.deliverdate = this.data.report?.fechaEntrega
+    
+    
   }
 
 
@@ -128,7 +132,7 @@ export class PreviewReportComponent implements OnInit {
         this.variables.push(vari.id)
       }
     }
-    // console.log(this.variables)
+     console.log(this.variables)
 
     let today = new Date()
     
@@ -143,11 +147,11 @@ export class PreviewReportComponent implements OnInit {
       id: ''
     }
     this.setReportLocStg(this.name, true)
-    // console.log(report)
+    console.log(report)
     this.admin.addReport(report).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges())
-        // console.log(data)
+         console.log(data)
         this.data.flag = false
         this.data.editar = false
         
