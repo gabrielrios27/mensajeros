@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AdminService } from '../../services/admin.service';
@@ -69,11 +69,8 @@ export class AddModReportComponent implements OnInit {
     this.setFlagAddEdit(false);
     this.getCenters();
     this.getDataFromRute();
-    this.getReportByID();
     this.getAxes();
     this.getVariables();
-    this.axesSelect();
-
     // console.log(this.arrayAxes)
   }
 
@@ -92,13 +89,13 @@ export class AddModReportComponent implements OnInit {
   //  guarda axes de componente selects
   storageAxes(axes: any, idComponent: number) {
     this.arrayAxes[idComponent] = axes;
-    // console.log("axes", this.arrayAxes)
+    console.log("axes", this.arrayAxes)
     // console.log(idComponent)
   }
   // guarda array variables de componente selects
   storageVariables(variablesArray: any, idComponent: number) {
     this.arrayVaribles[idComponent] = variablesArray;
-    // console.log("variables", this.arrayVaribles)
+    console.log("variables", this.arrayVaribles)
   }
   //
   // agrega un elemento al arreglo de selects y tambien a axes y variables
@@ -119,13 +116,23 @@ export class AddModReportComponent implements OnInit {
   confirm(datos: Report) {
     this.data.arrayAxes = this.arrayAxes;
     this.data.arrayVariables = this.arrayVaribles;
-    this.data.arrayCenters = this.formAdd.value.centros;
+    this.data.arrayCenters = this.center;
+    this.data.report = {
+      centros: [],
+      fechaCreacion: '',
+      fechaEntrega: this.formAdd.value.deliverdate,
+      id: [],
+      nombre: this.formAdd.value.nombre,
+      variables: [],
+      periodoDesde : this.formAdd.value.desde,
+      periodoHasta : this.formAdd.value.hasta
+    }
 
-    // console.log('report',datos)
+    console.log('report',this.data.arrayVariables)
     this.setFlagAddEdit(true);
     this.router.navigate([
-      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report/preview-report',
-      datos,
+      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report/preview-report/'+
+      datos.nombre + datos.fechaCreacion + datos.fechaEntrega,
     ]);
   }
 
@@ -134,8 +141,8 @@ export class AddModReportComponent implements OnInit {
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.listCenters = data;
-        // this.centerSelect()
-        console.log(data);
+        this.centerSelect()
+        // console.log(data);
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
@@ -167,9 +174,9 @@ export class AddModReportComponent implements OnInit {
 
   getDataFromRute() {
     this.routeActiva.paramMap.subscribe((params: ParamMap) => {
-      this.id = params.get('report');
+      this.id = params.get('report-id');
     });
-    console.log(this.id);
+    // console.log(this.id);
     if (this.id) {
       this.getReportByID();
     }
@@ -184,11 +191,12 @@ export class AddModReportComponent implements OnInit {
         this.desde = this.report.periodoDesde;
         this.hasta = this.report.periodoHasta;
         this.deliverdate = this.report.fechaEntrega;
+        console.log(data);
         this.getAxes();
         this.getCenters();
-        this.centerSelect()
+        this.centerSelect();
+        this.variablesSelect();
         this.axesSelect();
-        console.log(data);
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
@@ -197,6 +205,8 @@ export class AddModReportComponent implements OnInit {
     });
   }
 
+
+  // gets centers selected
   centerSelect() {
     this.center = [];
     for (let item of this.listCenters) {
@@ -207,45 +217,77 @@ export class AddModReportComponent implements OnInit {
         }
       }
     }
-    // console.log("center",this.center)
+    console.log("center",this.center)
   }
+  // 
 
   variablesSelect() {
-    for (let item of this.listOfVariables) {
-      for (let c of this.report.variables) {
-        if (item.id == c.id) {
-          if (!this.arrayVaribles.includes(item.nombre)) {
-            this.arrayVaribles.push(item.nombre);
-          }
-        }
-      }
-    }
+    // for (let item of this.listOfVariables) {
+    //   for (let c of this.report.variables) {
+    //     if (item.id == c.id) {
+    //       if (!this.arrayVaribles.includes(item.nombre)) {
+    //         this.arrayVaribles.push(item);
+    //       }
+    //     }
+    //   }
+    // }
+    
     console.log(this.arrayVaribles);
   }
 
+  // thi function add elements in arrays for edit
   axesSelect(): any {
-    for (let c of this.report.variables) {
-      if (!this.arrayAxes.includes(c.eje)) {
-        this.arrayAxes.push(c.eje);
-        this.createEje()
+      for (let c of this.report.variables) {
+        console.log("eje ",c.eje)
+        if (this.arrayAxes.find(c.eje) == undefined) {
+          this.arrayAxes.push(c.eje);
+        }
       }
-    }
-
-    // console.log("axes",this.arrayAxes);
+      console.log(this.arrayAxes)
+      this.arrayc.pop();
+      for (let c of this.arrayAxes) {
+        console.log(c)
+        this.arrayc.push(this.arrayc.length + 1);
+        // for(let v of this.listOfVariables){
+        //   if(v.eje.id === c.id){
+        //     this.variablesSelects.push(v)
+        //   }
+        //   console.log("varible",this.variablesSelects)
+        //   this.arrayVaribles[this.arrayAxes.indexOf(c)] = this.variablesSelects
+        // }
+        this.arrayVaribles.push(this.listOfVariables.filter((res:any) => {return res.eje.id == c.id}))
+      }
+      console.log("variables",this.arrayVaribles);
   }
-
-  axreturn(): any{
-    for(let ax of this.arrayAxes){
-      return ax
-    }
+  // 
+  // returns axes by componente  
+  axreturn(item: any): any {
+    if(this.report!= null)
+    // console.log(this.arrayc.indexOf(item))
+    
+    return this.arrayAxes[this.arrayc.indexOf(item)];
   }
+  // 
+
+  // returns varibles by componente 
+  variableReturn(item: any): any {
+    if(this.report!= null)
+      // console.log(
+      //   this.arrayVaribles.filter((res: any) => {
+      //     return res.eje.id == this.arrayAxes[this.arrayc.indexOf(item)].id;
+      //   })
+      // );
+      return this.arrayVaribles[this.arrayc.indexOf(item)]
+  }
+  // 
+  
 
   getAxes() {
     this.admin.getAxes().subscribe({
       next: (data: axes[]) => {
         this.listOfAxes = data;
         setTimeout(() => this.cdr.detectChanges());
-        console.log('axes', this.listOfAxes);
+        // console.log('axes', this.listOfAxes);
       },
       error: (err) => {
         // console.log(err);
@@ -264,7 +306,7 @@ export class AddModReportComponent implements OnInit {
       next: (data: variable[]) => {
         this.listOfVariables = data;
         setTimeout(() => this.cdr.detectChanges());
-        console.log('variables', this.listOfVariables);
+        // console.log('variables', this.listOfVariables);
       },
       error: (err) => {
         // console.log(err);
