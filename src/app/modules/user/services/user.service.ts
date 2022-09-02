@@ -39,7 +39,9 @@ export class UserService {
     return this._http.get<UserData>(this.baseUrlTami + this.ePUserData);
   }
   //Para carga de reportes
-  getPendingReports(): Observable<ReportInfo> {
-    return this._http.get<ReportInfo>(this.baseUrlTami + this.ePPendingReports);
+  getPendingReports(): Observable<ReportInfo[]> {
+    return this._http.get<ReportInfo[]>(
+      this.baseUrlTami + this.ePPendingReports
+    );
   }
 }

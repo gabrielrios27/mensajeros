@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { userInfo } from 'os';
 import { Subject, takeUntil } from 'rxjs';
-import { UserData } from '../../models';
+import { ReportInfo, UserData } from '../../models';
 import { UserService } from '../../services';
 @Component({
   selector: 'app-pending-reports',
@@ -53,6 +54,10 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
   timerId: any;
   //guarda datos del usuario logeado
   userData: UserData;
+  //guarda Todos los reportes pendientes
+  allPendingReports: ReportInfo[];
+  //guarda los reportes pendientes del usuario logeado
+  userPendingReports: ReportInfo[];
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(private router: Router, private userSvc: UserService) {
@@ -61,10 +66,13 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
     this.flagStartReport = false;
     this.timerId = 0;
     this.userData = {} as UserData;
+    this.allPendingReports = [];
+    this.userPendingReports = [];
   }
 
   ngOnInit(): void {
     this.getUserData();
+    this.getPendingReports();
   }
   getUserData() {
     this.userSvc
@@ -81,6 +89,38 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
           }
         },
       });
+  }
+  getPendingReports() {
+    this.userSvc
+      .getPendingReports()
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: ReportInfo[]) => {
+          this.allPendingReports = data;
+          console.log(
+            'todos los reportes pendientes: ',
+            this.allPendingReports
+          );
+          this.saveUserPendingReports();
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
+  }
+  saveUserPendingReports() {
+    for (let center of this.userData.centros) {
+      this.userPendingReports = this.allPendingReports.map((report) => {
+        let filterUserReport: ReportInfo = {} as ReportInfo;
+        if (center.nombre === report.nom_centro) {
+          filterUserReport = report;
+        }
+        return filterUserReport;
+      });
+      console.log('reportes filtrados: ', this.userPendingReports);
+    }
   }
   onStartReport() {
     this.flagStartReport = true;
