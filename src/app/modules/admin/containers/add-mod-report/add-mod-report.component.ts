@@ -239,7 +239,7 @@ export class AddModReportComponent implements OnInit {
   axesSelect(): any {
       for (let c of this.report.variables) {
         console.log("eje ",c.eje)
-        if (this.arrayAxes.find(c.eje) == undefined) {
+        if (!this.arrayAxes.includes(c.eje)) {
           this.arrayAxes.push(c.eje);
         }
       }
