@@ -28,6 +28,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { PopUpSuccessComponent } from './components/pop-up-success/pop-up-success.component';
 import { PopUpErrorComponent } from './components/pop-up-error/pop-up-error.component';
 
+// angular material
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import {CdkStepperModule} from '@angular/cdk/stepper';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 @NgModule({
   imports: [
     CommonModule,
@@ -37,6 +44,11 @@ import { PopUpErrorComponent } from './components/pop-up-error/pop-up-error.comp
     MatButtonModule,
     MatRadioModule,
     MatCheckboxModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CdkStepperModule,
+    MatProgressBarModule
   ],
   providers: [...userServices.services, ...userGuards.guards],
   declarations: [
@@ -51,6 +63,7 @@ import { PopUpErrorComponent } from './components/pop-up-error/pop-up-error.comp
     VariableUploadComponent,
     PopUpSuccessComponent,
     PopUpErrorComponent,
+    ProgressBarComponent,
   ],
   exports: [...userContainers.containers, ...userComponents.components],
 })
