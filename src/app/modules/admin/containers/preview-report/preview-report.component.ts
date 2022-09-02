@@ -40,7 +40,7 @@ export class PreviewReportComponent implements OnInit {
     this.newname = this.oldname;
     console.log(this.data.arrayVariables)
     this.getCenters()
-    this.getDataFromRute()
+    this.getDataFromService()
     
   }
 
@@ -95,15 +95,15 @@ export class PreviewReportComponent implements OnInit {
     return this.report.variable.filter((res:any) => res.eje.id === item.id)
   }
 
-  getDataFromRute() {
+  // gets data from service
+  getDataFromService() {
     console.log(this.data.report)
     this.name = this.data.report?.nombre
     this.until = this.data.report?.periodoHasta
     this.since = this.data.report?.periodoDesde
     this.deliverdate = this.data.report?.fechaEntrega
-    
-    
   }
+  // 
 
 
   ok() {
@@ -132,7 +132,7 @@ export class PreviewReportComponent implements OnInit {
         this.variables.push(vari.id)
       }
     }
-     console.log(this.variables)
+    console.log(this.variables)
 
     let today = new Date()
     
@@ -151,7 +151,7 @@ export class PreviewReportComponent implements OnInit {
     this.admin.addReport(report).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges())
-         console.log(data)
+        console.log(data)
         this.data.flag = false
         this.data.editar = false
         
