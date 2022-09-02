@@ -50,9 +50,31 @@ export class SelecsAxesVariablesComponent implements OnInit {
     this.variables = this.variables.filter((res: any) => res !== variable);
   }
 
-  axeAsig(){
-    this.axe = this.listOfAxes.find((res:any)=> res.id == this.arrayAxes.id)
-    console.log(this.axe)
+    // this function assigns the variables and the axes and displays on the screen 
+  axeAsig() {
+    this.variables =[]
+    if (this.arrayAxes != null) {
+      
+      this.axe = this.listOfAxes.find(
+        (res: any) => res.id == this.arrayAxes.id
+      );
+      this.listOfVariablesShow = this.listOfVariables.filter((res: any) => {
+        return res.eje.id == this.axe.id;
+      });
+      this.variables = ( this.arrayVariables.filter((res: any) => {
+        return res.eje.id == this.axe.id;
+      }));
+
+      console.log("variablesss",this.variables);
+      console.log(this.axe);
+    }
+  }
+  // 
+  variableAsig() {
+    if (this.arrayVariables) {
+      this.variables = this.arrayVariables;
+      // console.log('variables', this.variables);
+    }
   }
 
   getAxes() {

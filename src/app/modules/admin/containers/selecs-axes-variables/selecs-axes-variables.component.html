@@ -3,7 +3,7 @@
         name="eje" (selectionChange)="capturarEje($event.value)">
         <mat-option [value]="item" *ngFor="let item of listOfAxes">{{item.nombre}}</mat-option>
     </mat-select>
-    <mat-select [disabled]="!axe" class="mat-select-ejes" placeholder="Selecciona una o más."
+    <mat-select  class="mat-select-ejes" placeholder="Selecciona una o más."
         multiple="" [(value)]="variables" name="variables"
         (selectionChange)="capturarVariables($event.value)">
         <mat-option [value]="item" *ngFor="let item of listOfVariablesShow">{{item.nombre}}</mat-option>
