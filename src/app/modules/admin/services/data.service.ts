@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Users } from '../models/users';
 import { Centro } from '../models/centro';
+import { report } from 'process';
+import { Report } from '../models/report';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +18,6 @@ export class DataService {
   arrayAxes?: any
   arrayVariables? : any
   arrayCenters?:any
+  report? : Report  
   constructor() { }
 }
