@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { ReportInfo, UserData } from '../models/user.model';
+import { ReportInfo, ReportToUpload, UserData } from '../models/user.model';
 
 @Injectable()
 export class UserService {
@@ -12,6 +12,7 @@ export class UserService {
   baseUrlTami: string = 'https://mensajeros-back-tami.herokuapp.com';
   ePUserData: string = '/usuarios/datosUsuario';
   ePPendingReports: string = '/reportes/reportesPendientes';
+  ePReportToUpload: string = '/carga/';
   constructor(private _http: HttpClient) {}
   //envia click cuando se da click al btn confirmar eje en el upload-report.ts
   sendClickEvent() {
@@ -42,6 +43,15 @@ export class UserService {
   getPendingReports(): Observable<ReportInfo[]> {
     return this._http.get<ReportInfo[]>(
       this.baseUrlTami + this.ePPendingReports
+    );
+  }
+
+  getReportToUpload(
+    idReport: number,
+    idCenter: number
+  ): Observable<ReportToUpload> {
+    return this._http.get<ReportToUpload>(
+      this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter
     );
   }
 }

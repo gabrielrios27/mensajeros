@@ -11,28 +11,40 @@
       </ul>
       <ul
         class="list__row-item"
-        *ngFor="let item of list"
+        *ngFor="let item of userPendingReports"
         (click)="onClickReport(item)"
         [ngClass]="
-          reportToShow.numberReport === item.numberReport
+          reportToShow.idReporte === item.idReporte &&
+          reportToShow.idCentro === item.idCentro
             ? 'list__row-item--active'
             : ''
         "
       >
-        <li class="list__item">{{ item.numberReport }}</li>
-        <li class="list__item">{{ item.center }}</li>
-        <li class="list__item">{{ item.period }}</li>
-        <li class="list__item">{{ item.limitDate }}</li>
+        <li class="list__item">{{ item.nombreReporte }}</li>
+        <li class="list__item">{{ item.nom_centro }}</li>
+        <li class="list__item">
+          {{ item.periodo_desde.substring(5, 7) }}/{{
+            item.periodo_desde.substring(0, 4)
+          }}
+          - {{ item.periodo_hasta.substring(5, 7) }}/{{
+            item.periodo_hasta.substring(0, 4)
+          }}
+        </li>
+        <li class="list__item">
+          {{ item.fecha_entrega.substring(8, 10) }}/{{
+            item.fecha_entrega.substring(5, 7)
+          }}/{{ item.fecha_entrega.substring(0, 4) }}
+        </li>
       </ul>
     </div>
-    <div class="report" *ngIf="list.length !== 0">
+    <div class="report" *ngIf="userPendingReports.length !== 0">
       <div class="report__conteiner">
         <ul class="report__info">
           <li class="report__item">Reporte</li>
-          <li class="report__item">{{ reportToShow.numberReport }}</li>
+          <li class="report__item">{{ reportToShow.nombreReporte }}</li>
           <li class="report__item">
-            Carga {{ reportToShow.lastAxeComplete }} de
-            {{ reportToShow.quantityOfAxes }} Ejes
+            Carga {{ reportToShowExample.lastAxeComplete }} de
+            {{ reportToShowExample.quantityOfAxes }} Ejes
           </li>
         </ul>
         <button
@@ -41,7 +53,7 @@
           color="primary"
           type="submit"
           (click)="onStartReport()"
-          [disabled]="reportToShow.lastAxeComplete !== 0"
+          [disabled]="reportToShowExample.lastAxeComplete !== 0"
         >
           Iniciar carga
         </button>
@@ -53,7 +65,7 @@
           color="primary"
           type="submit"
           (click)="onStartReport()"
-          [disabled]="reportToShow.lastAxeComplete === 0"
+          [disabled]="reportToShowExample.lastAxeComplete === 0"
         >
           Reanudar Carga de Reporte
         </button>
@@ -63,7 +75,7 @@
           color="primary"
           type="submit"
           (click)="onDeleteReport(true)"
-          [disabled]="reportToShow.lastAxeComplete === 0"
+          [disabled]="reportToShowExample.lastAxeComplete === 0"
         >
           Volver a empezar
         </button>
@@ -77,6 +89,6 @@
   </app-pop-up-delete-report>
   <app-pop-up-start
     *ngIf="flagStartReport"
-    [idReport]="reportToShow.id"
+    [idReport]="reportToShow.idReporte"
   ></app-pop-up-start>
 </section>

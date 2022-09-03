@@ -2,7 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { userInfo } from 'os';
 import { Subject, takeUntil } from 'rxjs';
-import { ReportInfo, UserData } from '../../models';
+import {
+  AxeAndVariables,
+  ReportInfo,
+  ReportToUpload,
+  UserData,
+} from '../../models';
 import { UserService } from '../../services';
 @Component({
   selector: 'app-pending-reports',
@@ -48,7 +53,16 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
       quantityOfAxes: 6,
     },
   ];
-  reportToShow: any;
+  reportToShowExample: any = {
+    id: 4,
+    numberReport: 'C00013',
+    center: 'Colibries',
+    period: '07/2021-12/2121',
+    limitDate: '02/01/2022',
+    lastAxeComplete: 0,
+    quantityOfAxes: 6,
+  };
+  reportToShow: ReportInfo;
   flagStartReport: boolean;
   flagDeleteReport: boolean;
   timerId: any;
@@ -58,16 +72,21 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
   allPendingReports: ReportInfo[];
   //guarda los reportes pendientes del usuario logeado
   userPendingReports: ReportInfo[];
+  //Guarda periodos desde y hasta con mes y año
+  periodFrom: string;
+  periodTo: string;
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(private router: Router, private userSvc: UserService) {
-    this.reportToShow = this.list[0];
+    this.reportToShow = {} as ReportInfo;
     this.flagDeleteReport = false;
     this.flagStartReport = false;
     this.timerId = 0;
     this.userData = {} as UserData;
     this.allPendingReports = [];
     this.userPendingReports = [];
+    this.periodFrom = '';
+    this.periodTo = '';
   }
 
   ngOnInit(): void {
@@ -82,6 +101,9 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
         next: (data: UserData) => {
           this.userData = data;
           console.log('datos de usuario', this.userData);
+          if (this.allPendingReports.length !== 0) {
+            this.saveUserPendingReports();
+          }
         },
         error: (err) => {
           if (err.status === 401) {
@@ -101,7 +123,9 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
             'todos los reportes pendientes: ',
             this.allPendingReports
           );
-          this.saveUserPendingReports();
+          if (this.userData.id) {
+            this.saveUserPendingReports();
+          }
         },
         error: (err) => {
           if (err.status === 401) {
@@ -110,17 +134,49 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
         },
       });
   }
+  //usa los centros del usuario logeado para buscar los reportes asignados a los centros de ese usuario.
   saveUserPendingReports() {
     for (let center of this.userData.centros) {
-      this.userPendingReports = this.allPendingReports.map((report) => {
-        let filterUserReport: ReportInfo = {} as ReportInfo;
-        if (center.nombre === report.nom_centro) {
-          filterUserReport = report;
-        }
-        return filterUserReport;
-      });
+      let pendingReporsCenter = this.allPendingReports.filter(
+        (report) => center.nombre === report.nom_centro
+      );
+      this.userPendingReports.push(...pendingReporsCenter);
       console.log('reportes filtrados: ', this.userPendingReports);
+      if (this.userPendingReports.length !== 0) {
+        this.reportToShow = this.userPendingReports[0];
+      }
     }
+    this.setReportInEveryPendingReport(this.userPendingReports);
+  }
+  //Obtiene el reporte con respuestas y variables y lo guarda en .reporteACargar del reporte seleccionado de pendingReports
+  setReportInEveryPendingReport(pendingReports: ReportInfo[]) {
+    for (let report of pendingReports) {
+      this.userSvc
+        .getReportToUpload(report.idReporte, report.idCentro)
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe({
+          next: (data: ReportToUpload) => {
+            report.reporteACargar = data;
+            console.log(pendingReports);
+            this.listAxesOfReport(data);
+          },
+          error: (err) => {
+            if (err.status === 401) {
+              this.router.navigate(['/auth']);
+            }
+          },
+        });
+    }
+  }
+  //Luego de obtener el reporte con variables y respuestas lista los ejes diferentes
+  listAxesOfReport(report: ReportToUpload) {
+    let axeWithVariables: AxeAndVariables[] = [];
+    for (let variable of report.variables) {
+      if (!axeWithVariables.filter((axe) => axe.axe === variable.eje.nombre)) {
+        axeWithVariables.push({ axe: variable.eje.nombre, variables: [] });
+      }
+    }
+    console.log('axeWithVar: ', axeWithVariables);
   }
   onStartReport() {
     this.flagStartReport = true;
@@ -128,7 +184,7 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
       this.flagStartReport = false;
       this.router.navigate([
         'user/dashboard/mis-reportes/pendientes/carga-de-reporte/' +
-          this.reportToShow.id,
+          this.reportToShow.idReporte,
       ]);
     }, 6000);
   }
