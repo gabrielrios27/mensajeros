@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import {
   AxeAndVariables,
   ReportInfo,
+  ReportResponse,
   ReportToUpload,
   UserData,
 } from '../../models';
@@ -158,7 +159,7 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
           next: (data: ReportToUpload) => {
             report.reporteACargar = data;
             console.log(pendingReports);
-            this.listAxesOfReport(data);
+            this.listAxesOfReport(report);
           },
           error: (err) => {
             if (err.status === 401) {
@@ -168,15 +169,60 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
         });
     }
   }
-  //Luego de obtener el reporte con variables y respuestas lista los ejes diferentes
-  listAxesOfReport(report: ReportToUpload) {
+  //Luego de obtener el reporte con variables y respuestas, lista los diferentes ejes de ese reporte
+  listAxesOfReport(report: ReportInfo) {
     let axeWithVariables: AxeAndVariables[] = [];
-    for (let variable of report.variables) {
-      if (!axeWithVariables.filter((axe) => axe.axe === variable.eje.nombre)) {
-        axeWithVariables.push({ axe: variable.eje.nombre, variables: [] });
+    let axesInReport: string[] = [];
+    for (let variable of report.reporteACargar.variables) {
+      if (axesInReport.length === 0) {
+        axesInReport.push(variable.eje.nombre);
+        axeWithVariables.push({
+          axe: variable.eje.nombre,
+          variables: [],
+          responses: [],
+          complete: false,
+        });
+      } else if (!axesInReport.includes(variable.eje.nombre)) {
+        axesInReport.push(variable.eje.nombre);
+        axeWithVariables.push({
+          axe: variable.eje.nombre,
+          variables: [],
+          responses: [],
+          complete: false,
+        });
       }
     }
-    console.log('axeWithVar: ', axeWithVariables);
+    report.ejesConVariables = axeWithVariables;
+    report.cantidadDeEjes = axeWithVariables.length;
+    this.setVariablesOfAxes(report);
+  }
+  //carga en cada reporte las variables de cada eje
+  setVariablesOfAxes(report: ReportInfo) {
+    report.ejesConVariables.map((item) => {
+      for (let variable of report.reporteACargar.variables) {
+        if (item.axe === variable.eje.nombre) {
+          item.variables.push(variable);
+          this.checkVariableResponse(
+            item,
+            variable.id,
+            report.reporteACargar.respuestas
+          );
+        }
+      }
+    });
+    console.log('report con ejes y var: ', report);
+  }
+  //chekea si la variable ya esta cargada
+  checkVariableResponse(
+    item: AxeAndVariables,
+    id: number,
+    responses: ReportResponse[]
+  ) {
+    for (let response of responses) {
+      if (response.idVariable === id) {
+        item.responses.push(response);
+      }
+    }
   }
   onStartReport() {
     this.flagStartReport = true;

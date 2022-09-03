@@ -57,11 +57,14 @@ export interface ReportInfo {
   nombreReporte: string;
   periodo_desde: string;
   periodo_hasta: string;
-  reporteACargar?: ReportToUpload;
+  reporteACargar: ReportToUpload;
+  ejesConVariables: AxeAndVariables[];
   cantidadDeEjes?: number;
   ultimoEjeCompleto?: number;
 }
 export interface AxeAndVariables {
   axe: string;
   variables: variable[];
+  responses: ReportResponse[];
+  complete: boolean;
 }
