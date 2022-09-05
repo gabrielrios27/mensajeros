@@ -1,47 +1,62 @@
 import { Component, OnInit } from '@angular/core';
-import { CdkStepper } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-progress-bar',
   templateUrl: './progress-bar.component.html',
-  styleUrls: ['./progress-bar.component.scss'],
-  providers: [{ provide: CdkStepper, useExisting: ProgressBarComponent }]
+  styleUrls: ['./progress-bar.component.scss']
 })
-export class ProgressBarComponent extends CdkStepper  implements OnInit {
+export class ProgressBarComponent implements OnInit {
 
-  
-  progress!: number;
-  stepss: Array<number> = [1,2,3,4]
+  progress = document.getElementById("progress")
+  prev = document.getElementById("prev")
+  next = document.getElementById("next")
+  circles:any
+  flag1 = false
+  currentActive:number = 1
+
+  constructor(){
+  }
 
   ngOnInit(): void {
-
-    setTimeout(() => {
-      this.progress = 100 / this.steps.length;
-    }, 100);
   }
 
-  selectStepByIndex(index: number): void {
-    this.selectedIndex = index;
-  }
-
-  backStep() {
-    this.progress -= 100 / this.steps.length;
-    console.log(this.progress);
-
-  }
-
-  nextStep() {
-
-    if (this.selected?.stepControl?.valid) {
-      this.progress +=  this.progress <100 ? 100 / this.steps.length: 0;
-      this.next();
-    } else {
-      if(this.selected?.stepControl == undefined) {
-        this.progress += this.progress <100 ? 100 / this.steps.length: 0
-        this.next();
-      }
+  nextButton(){
+    this.circles = document.querySelectorAll('.circle');
+    this.currentActive +=1
+    console.log(this.circles.length)
+    if(this.currentActive > this.circles.length){
+      this.flag1 = true
+      console.log(this.circles.length)
+      this.currentActive = this.circles.length
+      
     }
+    console.log(this.currentActive)
+    this.update()
   }
+
+  prevButton(){
+    this.currentActive-=1
+    if(this.currentActive<1){
+      this.currentActive = 1
+      this.flag1 = false
+      console.log(this.currentActive)
+    }
+    this.update()
+  }
+
+  update(){
+    this.circles.forEach((circle:any,idx:any)=>{
+      if(idx< this.currentActive){
+        circle.classList.add("active");
+      }
+      else{
+        circle.classList.remove("active");
+      }
+    })
+    const actives = document.querySelectorAll("active")
+    console.log(actives.length,this.circles.length)
+  }
+
 
 
 }
