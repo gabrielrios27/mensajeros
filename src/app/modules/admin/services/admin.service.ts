@@ -5,6 +5,7 @@ import { Centro } from '../models/centro';
 import { Users } from '../models/users';
 import { Report } from '../models/report';
 import { axes, AxeWithquantity, flag, user, variable } from '../models';
+import { report } from 'process';
 
 @Injectable({
   providedIn: 'root',
@@ -149,6 +150,10 @@ export class AdminService {
 
   getReportById(id:any): Observable<Report> {
     return this._http.get<Report>(this.baseUrl + '/reportes/' + id);
+  }
+
+  editReport(id:any,report:Report): Observable<Report> {
+    return this._http.put<Report>(this.baseUrl + '/reportes/' + id , report);
   }
 
 }
