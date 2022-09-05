@@ -35,6 +35,7 @@ import {MatInputModule} from '@angular/material/input';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import {CdkStepperModule} from '@angular/cdk/stepper';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatIconModule} from '@angular/material/icon'
 @NgModule({
   imports: [
     CommonModule,
@@ -48,7 +49,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatFormFieldModule,
     MatInputModule,
     CdkStepperModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatIconModule
+    
   ],
   providers: [...userServices.services, ...userGuards.guards],
   declarations: [
