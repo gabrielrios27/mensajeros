@@ -1,0 +1,21 @@
+<div class="modal">
+  <div class="modal-logout">
+    <div class="modal__container-logout">
+      <img
+        class="modal__ico-info"
+        src="../../../../../assets/icons/Exclamation-triangle.svg"
+        alt="Icono de información"
+      />
+      <p class="modal__text">
+        ¡Estas a punto de eliminar este reporte para volver a comenzar! Esta
+        acción no podrá ser revertida
+      </p>
+    </div>
+    <div class="modal__options">
+      <button class="btn-modal__cancel" (click)="onGoOut(true)">
+        Cancelar
+      </button>
+      <button class="btn-modal__accept" (click)="logout()">Confirmar</button>
+    </div>
+  </div>
+</div>

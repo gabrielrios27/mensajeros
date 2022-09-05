@@ -146,10 +146,11 @@ export class AmUserComponent implements OnInit {
           if (i.id == this.centrosAsignados[0]) {
             // console.log(user);
             this.editCentros(user, this.centrosAsignados[0], i);
-            this.edit(user, this.data.user?.id);
+            
           }
         }
       }
+      this.edit(user, this.data.user?.id);
     } else {
       for (let i of this.centros) {
         // console.log('id', i.id);
@@ -157,10 +158,11 @@ export class AmUserComponent implements OnInit {
           if (i.id == this.centrosAsignados[0]) {
             // console.log(user);
             this.editCentros(user, this.centrosAsignados[0], i);
-            this.edit(user, this.data.user?.id);
+            
           }
         }
       }
+      this.edit(user, this.data.user?.id);
     }
     // console.log('centros', this.centros);
     this.data.nombreUsuario = this.formUpEdit.value.nombre;

@@ -112,13 +112,13 @@ export class SelecsAxesVariablesComponent implements OnInit {
           // this.axe = this.arrayAxes
         },
         error: (err) => {
-          // console.log(err);
+          
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
         },
         complete: () => {
-          // console.log('Request get axes complete');
+          
         },
       });
   }
@@ -131,13 +131,13 @@ export class SelecsAxesVariablesComponent implements OnInit {
       // console.log(this.listOfVariables);
     },
     error: (err) => {
-      // console.log(err);
+      
       if (err.status === 401) {
         this.router.navigate(['/auth']);
       }
     },
     complete: () => {
-      // console.log('Request get axes complete');
+      
     },
   });
   }

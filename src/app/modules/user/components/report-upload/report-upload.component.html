@@ -1,0 +1,97 @@
+<!-- VISTA DE EJES A COMPLETAR, UNO POR VEZ -->
+<section class="report" *ngIf="!flagLastAxe" #scroll>
+  <h1 class="report__title">
+    EJE {{ indexOfAxe }}: {{ axeToUpload.toUpperCase() }}
+  </h1>
+  <div
+    class="report__variable"
+    *ngFor="let variable of variablesReport; let i = index"
+  >
+    <app-variable-upload
+      [indexAlphabet]="biAlphabet[i]"
+      [variableValue]="variable"
+      (variableToUpload)="getVariablesToUpload($event)"
+      (variableSaveExit)="getVariablesToSaveExit($event)"
+      (variableGoBack)="getVariablesToSaveGoBack($event)"
+    ></app-variable-upload>
+  </div>
+  <app-pop-up-success
+    [flagAxeSuccess]="flagAxeSuccess"
+    [textSuccess]="'¡Eje guardado con éxito! Continuarás con el siguiente Eje'"
+  ></app-pop-up-success>
+  <app-pop-up-error
+    [flagAxeError]="flagAxeError"
+    [textError1]="'¡Todos los campos deben ser completados!'"
+    [textError2]="'Revisá e intentalo nuevamente'"
+    (goOut)="onCloseModal($event)"
+  >
+  </app-pop-up-error>
+</section>
+<!-- VISTA CUANDO TODOS LOS EJES FUERON COMPLETADOS -->
+<section class="report" *ngIf="flagLastAxe">
+  <div class="report-complete">
+    <div
+      class="report-complete__conteiner"
+      *ngFor="let item of report; let i = index"
+    >
+      <h1 class="report-complete__title">
+        EJE {{ i + 1 }}: {{ item.axe.toUpperCase() }}
+      </h1>
+      <div class="report-complete__completed">
+        <p class="report-complete__text">Completo</p>
+        <img
+          class="report-complete__ico-check"
+          src="../../../../../assets/icons/checked white.svg"
+          alt="Icono check"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="comment">
+    <label class="comment__label" for="comment"
+      >Observaciones, comentarios sobre el reporte {{ nameReport }}</label
+    >
+    <textarea
+      class="comment__textarea"
+      name="comment"
+      id="comment"
+      placeholder="Ingrese texto"
+    ></textarea>
+  </div>
+  <app-pop-up-success
+    [flagAxeSuccess]="flagAxeSuccess"
+    [textSuccess]="
+      '¡Eje guardado con éxito! Todos los Ejes han sido completados'
+    "
+  >
+  </app-pop-up-success>
+  <!-- MODAL DE ENVIAR REPORTE A ONG  -->
+  <div class="modal-end" *ngIf="flagEndReport">
+    <div class="modal-end__conteiner">
+      <div class="modal-end__info">
+        <img
+          class="modal-end__ico"
+          src="../../../../../assets/icons/File earmark arrow up.svg"
+          alt="Icono de carga de reporte"
+        />
+        <p class="modal-end__text">Enviar Reporte a ONG</p>
+      </div>
+      <div class="modal-end__btn-conteiner">
+        <button
+          class="modal-end__btn-cancel"
+          mat-raised-button
+          (click)="onConfirmEnd(false)"
+        >
+          Cancelar
+        </button>
+        <button
+          class="modal-end__btn-accept"
+          mat-raised-button
+          (click)="onConfirmEnd(true)"
+        >
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

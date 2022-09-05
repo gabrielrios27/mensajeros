@@ -1,0 +1,116 @@
+<section class="variable">
+  <!-- nombre de variable con descripción -->
+  <div class="variable__conteiner-name">
+    <h3 class="variable__index">{{ indexAlphabet }}</h3>
+    <h3 class="variable__name-description">
+      {{ variableValue.nombre }} ({{ variableValue.descripcion }})
+    </h3>
+  </div>
+  <!-- tipo numerico-distinción de genero -->
+  <div class="number-genre" *ngIf="variableValue.genero === 'true'">
+    <input
+      class="number-genre__input"
+      [ngClass]="flagAlert ? 'number-genre__input--alert' : ''"
+      [(ngModel)]="female"
+      type="number"
+      placeholder="Cantidad femenimo"
+      (ngModelChange)="onChangeInput()"
+    />
+    <input
+      class="number-genre__input"
+      [ngClass]="flagAlert ? 'number-genre__input--alert' : ''"
+      [(ngModel)]="male"
+      type="number"
+      placeholder="Cantidad masculino"
+      (ngModelChange)="onChangeInput()"
+    />
+    <input
+      class="number-genre__input"
+      [ngClass]="flagAlert ? 'number-genre__input--alert' : ''"
+      [(ngModel)]="noBinary"
+      type="number"
+      placeholder="Cantidad No binario"
+      (ngModelChange)="onChangeInput()"
+    />
+    <p class="number-genre__total-text">Total</p>
+    <p class="number-genre__total-result">{{ total }}</p>
+  </div>
+  <!-- tipo numerico -->
+  <div
+    class="number"
+    *ngIf="
+      variableValue.tipo === 'Numérico' && variableValue.genero === 'false'
+    "
+  >
+    <input
+      class="number__input"
+      [ngClass]="flagAlert ? 'number__input--alert' : ''"
+      [(ngModel)]="inputNumber"
+      type="number"
+      placeholder="Inserte número"
+      (ngModelChange)="checkValue()"
+    />
+  </div>
+  <!-- tipo textual -->
+  <div class="textual" *ngIf="variableValue.tipo === 'Textual'">
+    <input
+      class="textual__input"
+      [ngClass]="flagAlert ? 'textual__input--alert' : ''"
+      [(ngModel)]="inputTextual"
+      type="text"
+      placeholder="Ingrese texto"
+      (ngModelChange)="checkValue()"
+      maxlength="400"
+    />
+    <!-- tipo escala de valor -->
+    <div class="value-scale" *ngIf="variableValue.escala_valor === 'true'">
+      <h4
+        class="value-scale__title"
+        [ngClass]="flagAlertValueEscale ? 'value-scale__title--alert' : ''"
+      >
+        Escala de Valor
+      </h4>
+      <div class="value-scale__conteiner">
+        <p
+          class="value-scale__tag"
+          [ngClass]="flagAlertValueEscale ? 'value-scale__tag--alert' : ''"
+        >
+          {{ variableValue.etiqueta_inicial }}
+        </p>
+
+        <mat-radio-group
+          class="value-scale__radio-group"
+          [(ngModel)]="valueScaleSelected"
+          (ngModelChange)="checkScaleValue()"
+        >
+          <mat-radio-button
+            class="value-scale__radio-btn"
+            [ngClass]="finalValue > 5 ? 'value-scale__radio-btn--larger' : ''"
+            *ngFor="let item of valueScale"
+            value="{{ item }}"
+          >
+            {{ item }}
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <p
+          class="value-scale__tag"
+          [ngClass]="flagAlertValueEscale ? 'value-scale__tag--alert' : ''"
+        >
+          {{ variableValue.etiqueta_final }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <!-- observaciones -->
+  <div class="observations">
+    <label class="observations__label">Observaciones</label>
+    <textarea
+      class="observations__textarea"
+      [(ngModel)]="inputObservations"
+      name="observations"
+      id="observations"
+      rows="1"
+    ></textarea>
+  </div>
+</section>

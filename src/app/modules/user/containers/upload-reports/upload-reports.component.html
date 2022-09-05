@@ -1,0 +1,88 @@
+<section class="upload-report">
+  <section class="header-container">
+    <header class="header">
+      <img
+        src="../../../../../assets/images/logo-MDP.png"
+        alt="Logo Mensajeros de la Paz"
+        class="header__logo"
+      />
+    </header>
+    <div class="lines-container">
+      <div class="lines-container__line1"></div>
+      <div class="lines-container__line2"></div>
+    </div>
+  </section>
+  <section class="upload-report__progress">
+    <h1 class="upload-report__title">CARGA DE REPORTE</h1>
+    <div class="progress-bar">
+      <!-- Aqui iria la maqueta de la barra de progreso -->
+      <img
+        class="progress-bar__img"
+        src="../../../../../assets/images/progressBar.png"
+        alt=""
+      />
+    </div>
+    <button
+      mat-raised-button
+      class="upload-report__btn-close-save"
+      type="submit"
+      (click)="onCloseSave()"
+    >
+      Cerrar y Guardar
+    </button>
+  </section>
+  <section class="upload-report__conteiner">
+    <app-report-upload
+      [idReport]="idReport"
+      [flagLastAxe]="flagLastAxe"
+      [flagEndReport]="flagEndReport"
+      (reportToUpload)="getReportToUpload($event)"
+      (flagBtnGoBack)="getFlagBtnGoBack($event)"
+      (flagLastAxeEmit)="getFlagLastAxeEmit($event)"
+      (flagEndReportEmit)="getFlagEndReportEmit($event)"
+    ></app-report-upload>
+  </section>
+  <section class="footer">
+    <div class="footer__direction">
+      <button
+        *ngIf="flagLastAxe"
+        mat-raised-button
+        class="footer__btn__back"
+        (click)="onGoBackLastAxe()"
+      >
+        Atrás
+      </button>
+    </div>
+    <img
+      src="../.././../../../assets/images/logo-20a.svg"
+      alt=""
+      class="footer__logo"
+    />
+    <div class="footer__btn-conteiner">
+      <button
+        *ngIf="flagBtnGoBack"
+        mat-raised-button
+        class="footer__btn-confirm-axe"
+        (click)="onGoBack()"
+      >
+        Atrás
+      </button>
+      <button
+        *ngIf="!flagLastAxe"
+        mat-raised-button
+        class="footer__btn-confirm-axe"
+        (click)="onConfirmAxe()"
+      >
+        Confirmar Eje
+      </button>
+      <button
+        *ngIf="flagLastAxe"
+        mat-raised-button
+        class="footer__btn-confirm-axe footer__btn-confirm-axe--end"
+        (click)="onEndReport()"
+      >
+        Finalizar Reporte
+      </button>
+    </div>
+  </section>
+</section>

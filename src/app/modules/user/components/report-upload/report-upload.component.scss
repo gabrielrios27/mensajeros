@@ -1,0 +1,173 @@
+@import "../../../../../styles/variables.scss";
+.report {
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 15px; /* width of the entire scrollbar */
+  }
+  &::-webkit-scrollbar-track {
+    background: rgb(255, 255, 255); /* color of the tracking area */
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #d9d9d9; /* color of the scroll thumb */
+    border-radius: 50px; /* roundness of the scroll thumb */
+    border: 1px solid #ffffff; /* creates padding around scroll thumb */
+  }
+  .report__title {
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+    width: 821px;
+    height: 52px;
+    color: white;
+    background: #446787;
+    border-radius: 5px 50px 10px 0px;
+    margin-bottom: 0;
+    padding-left: 20px;
+  }
+}
+.report-complete {
+  margin: 5.375em 1.625em;
+  display: inline-block;
+  .report-complete__conteiner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 51.3125em;
+    min-height: 3.25em;
+    background: #446787;
+    border-radius: 0.3125em 3.125em 0.625em 0px;
+    margin-bottom: 0.75em;
+    padding: 0 1.5625em;
+    .report-complete__title {
+      font-size: 1.5625em;
+      color: white;
+      margin-bottom: 0;
+      line-height: 3.25em;
+    }
+    .report-complete__completed {
+      display: flex;
+      align-items: center;
+      -moz-column-gap: 0.375em;
+      column-gap: 0.375em;
+      margin-left: 1.5625em;
+      .report-complete__text {
+        color: white;
+        margin-bottom: 0;
+        font-size: 1.25em;
+        letter-spacing: 0.0125em;
+      }
+      .report-complete__ico-check {
+        width: 1em;
+      }
+    }
+  }
+}
+.comment {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 7.5em 1.5em;
+  .comment__label {
+    font-size: 1.25em;
+    line-height: 1.2em;
+    margin-left: 0.25em;
+    margin-bottom: 1em;
+  }
+  .comment__textarea {
+    font-size: 1.25em;
+    line-height: 1.2em;
+    height: 12.2em;
+    padding: 1.2em;
+    resize: none;
+    background: #ffffff;
+    border: 1px solid #79747e;
+    box-shadow: inset 0px 0.2em 0.2em rgba(0, 0, 0, 0.25);
+    border-radius: 0.5em;
+    outline-color: $outline-focus-center;
+  }
+}
+.modal-end {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  background-color: $color-bg-modal;
+  .modal-end__conteiner {
+    width: 536px;
+    height: 265px;
+    background: #cce8f4;
+    border: 1px solid #cce8f4;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 64px 55px;
+    .modal-end__info {
+      display: flex;
+      align-items: center;
+      .modal-end__ico {
+        width: 76px;
+        margin-right: 34px;
+      }
+      .modal-end__text {
+        font-size: 24px;
+        line-height: 40px;
+        text-align: center;
+        letter-spacing: 0.25px;
+        color: #083d5e;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        margin-bottom: 0;
+      }
+    }
+    .modal-end__btn-conteiner {
+      display: flex;
+      justify-content: space-between;
+      width: 347px;
+      margin-left: 56px;
+      margin-top: 17px;
+      .modal-end__btn-cancel {
+        width: 138px;
+        height: 34px;
+        background: #ffffff;
+        border: 1px solid #c70f0f;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 35px;
+        font-size: 20px;
+        line-height: 24px;
+        text-align: center;
+        color: #fe0808;
+      }
+      .modal-end__btn-accept {
+        width: 138px;
+        height: 34px;
+        background: #ffffff;
+        border: 1px solid #22502b;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 35px;
+        font-size: 20px;
+        line-height: 24px;
+        text-align: center;
+        color: #22502b;
+      }
+    }
+  }
+}
+@media (max-width: 1400px) {
+  .report {
+    font-size: 10px;
+  }
+  .report-complete {
+    margin: 3em 1.625em;
+  }
+  .comment {
+    font-size: 12px;
+  }
+}

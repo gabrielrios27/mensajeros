@@ -7,7 +7,6 @@ import { axes, variable } from '../../models/admin.model';
 import { Centro } from '../../models/centro';
 import { Report } from '../../models/report';
 import { DataService } from '../../services/data.service';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-add-mod-report',
@@ -149,7 +148,6 @@ export class AddModReportComponent implements OnInit {
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        // console.log(err);
       },
     });
   }

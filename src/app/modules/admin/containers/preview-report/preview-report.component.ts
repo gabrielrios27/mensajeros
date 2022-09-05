@@ -66,7 +66,6 @@ export class PreviewReportComponent implements OnInit {
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        // console.log(err);
       },
     });
   }
@@ -89,7 +88,6 @@ export class PreviewReportComponent implements OnInit {
     // console.log(this.centers2)
     for (let item of this.centers) {
       for (let ce of this.data.arrayCenters) {
-        // console.log(ce)
         if (item.id == ce) {
           // console.log(item)
           this.centerSelects.push(item);

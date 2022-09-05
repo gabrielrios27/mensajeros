@@ -62,7 +62,7 @@
           class="report__btn-restart"
           color="primary"
           type="submit"
-          (click)="onStartReport()"
+          (click)="onDeleteReport(true)"
           [disabled]="reportToShow.lastAxeComplete === 0"
         >
           Volver a empezar
@@ -70,4 +70,13 @@
       </div>
     </div>
   </div>
+  <app-pop-up-delete-report
+    *ngIf="flagDeleteReport"
+    (goOut)="onDeleteReport(!$event)"
+  >
+  </app-pop-up-delete-report>
+  <app-pop-up-start
+    *ngIf="flagStartReport"
+    [idReport]="reportToShow.id"
+  ></app-pop-up-start>
 </section>

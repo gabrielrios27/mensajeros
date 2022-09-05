@@ -13,6 +13,7 @@ import * as adminContainers from '../admin/containers';
 import * as userGuards from './guards';
 import { HomeComponent } from '../admin/containers';
 import { PendingReportsComponent } from './containers/pending-reports/pending-reports.component';
+import { UploadReportsComponent } from './containers/upload-reports/upload-reports.component';
 
 /* Routes */
 export const ROUTES: Routes = [
@@ -31,6 +32,12 @@ export const ROUTES: Routes = [
     path: 'mis-reportes/pendientes',
     canActivate: [],
     component: PendingReportsComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'mis-reportes/pendientes/carga-de-reporte/:id',
+    canActivate: [],
+    component: UploadReportsComponent,
     pathMatch: 'full',
   },
   {
