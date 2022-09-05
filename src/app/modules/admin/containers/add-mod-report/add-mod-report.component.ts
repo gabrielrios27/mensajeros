@@ -277,7 +277,7 @@ export class AddModReportComponent implements OnInit {
       //     return res.eje.id == this.arrayAxes[this.arrayc.indexOf(item)].id;
       //   })
       // );
-      return this.arrayVaribles[this.arrayc.indexOf(item)]
+      return this.report.variables
   }
   // 
   
