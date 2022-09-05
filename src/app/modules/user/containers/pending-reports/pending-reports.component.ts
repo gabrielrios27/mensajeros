@@ -1,13 +1,16 @@
+import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { userInfo } from 'os';
 import { Subject, takeUntil } from 'rxjs';
+import { variable } from 'src/app/modules/admin/models';
 import {
   AxeAndVariables,
   ReportInfo,
   ReportResponse,
   ReportToUpload,
   UserData,
+  VariableRep,
 } from '../../models';
 import { UserService } from '../../services';
 @Component({
@@ -204,7 +207,7 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
           item.variables.push(variable);
           this.checkVariableResponse(
             item,
-            variable.id,
+            variable,
             report.reporteACargar.respuestas
           );
         }
@@ -212,18 +215,23 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
     });
     console.log('report con ejes y var: ', report);
   }
-  //chekea si la variable ya esta cargada
+  //chekea si la variable ya esta cargada y si lo esta la guarda en response y tambien dentro de la variable para iterar de manera mas sencilla en upload report
   checkVariableResponse(
     item: AxeAndVariables,
-    id: number,
+    variable: VariableRep,
     responses: ReportResponse[]
   ) {
     for (let response of responses) {
-      if (response.idVariable === id) {
+      if (response.idVariable === variable.id) {
+        //response se usara para ver si todas las variables fueron completadas
         item.responses.push(response);
+        //respuesta dentro de la variable se usara para cargar en los inputs los valores de las respuestas.
+        variable.respuesta = response;
       }
     }
   }
+  //chekea si el eje ya fue completado
+  checkAxeComplete() {}
   onStartReport() {
     this.flagStartReport = true;
     this.timerId = setTimeout(() => {

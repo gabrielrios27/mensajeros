@@ -28,7 +28,7 @@ export interface Axe {
   nombre: string;
 }
 
-export interface Variable {
+export interface VariableRep {
   descripcion: string;
   eje: Axe;
   escala_valor: string;
@@ -40,6 +40,7 @@ export interface Variable {
   tipo: string;
   valor_final: string;
   valor_inicial: string;
+  respuesta: ReportResponse;
 }
 
 export interface ReportToUpload {
@@ -47,7 +48,7 @@ export interface ReportToUpload {
   idCentro: number;
   idReporte: number;
   respuestas: ReportResponse[];
-  variables: Variable[];
+  variables: VariableRep[];
 }
 export interface ReportInfo {
   fecha_entrega: string;
@@ -64,7 +65,7 @@ export interface ReportInfo {
 }
 export interface AxeAndVariables {
   axe: string;
-  variables: variable[];
+  variables: VariableRep[];
   responses: ReportResponse[];
   complete: boolean;
 }
