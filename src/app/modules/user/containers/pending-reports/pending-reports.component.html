@@ -43,8 +43,8 @@
           <li class="report__item">Reporte</li>
           <li class="report__item">{{ reportToShow.nombreReporte }}</li>
           <li class="report__item">
-            Carga {{ reportToShowExample.lastAxeComplete }} de
-            {{ reportToShowExample.quantityOfAxes }} Ejes
+            Carga {{ reportToShow.ultimoEjeCompleto }} de
+            {{ reportToShow.cantidadDeEjes }} Ejes
           </li>
         </ul>
         <button
@@ -53,7 +53,7 @@
           color="primary"
           type="submit"
           (click)="onStartReport()"
-          [disabled]="reportToShowExample.lastAxeComplete !== 0"
+          [disabled]="reportToShow.ultimoEjeCompleto !== 0"
         >
           Iniciar carga
         </button>
@@ -65,7 +65,7 @@
           color="primary"
           type="submit"
           (click)="onStartReport()"
-          [disabled]="reportToShowExample.lastAxeComplete === 0"
+          [disabled]="reportToShow.ultimoEjeCompleto === 0"
         >
           Reanudar Carga de Reporte
         </button>
@@ -75,7 +75,7 @@
           color="primary"
           type="submit"
           (click)="onDeleteReport(true)"
-          [disabled]="reportToShowExample.lastAxeComplete === 0"
+          [disabled]="reportToShow.ultimoEjeCompleto === 0"
         >
           Volver a empezar
         </button>

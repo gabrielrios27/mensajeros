@@ -104,7 +104,6 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data: UserData) => {
           this.userData = data;
-          console.log('datos de usuario', this.userData);
           if (this.allPendingReports.length !== 0) {
             this.saveUserPendingReports();
           }
@@ -123,10 +122,6 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data: ReportInfo[]) => {
           this.allPendingReports = data;
-          console.log(
-            'todos los reportes pendientes: ',
-            this.allPendingReports
-          );
           if (this.userData.id) {
             this.saveUserPendingReports();
           }
@@ -145,7 +140,6 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
         (report) => center.nombre === report.nom_centro
       );
       this.userPendingReports.push(...pendingReporsCenter);
-      console.log('reportes filtrados: ', this.userPendingReports);
       if (this.userPendingReports.length !== 0) {
         this.reportToShow = this.userPendingReports[0];
       }
@@ -161,7 +155,6 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (data: ReportToUpload) => {
             report.reporteACargar = data;
-            console.log(pendingReports);
             this.listAxesOfReport(report);
           },
           error: (err) => {
@@ -198,6 +191,7 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
     report.ejesConVariables = axeWithVariables;
     report.cantidadDeEjes = axeWithVariables.length;
     this.setVariablesOfAxes(report);
+    this.checkAxeComplete(report);
   }
   //carga en cada reporte las variables de cada eje
   setVariablesOfAxes(report: ReportInfo) {
@@ -213,7 +207,6 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
         }
       }
     });
-    console.log('report con ejes y var: ', report);
   }
   //chekea si la variable ya esta cargada y si lo esta la guarda en response y tambien dentro de la variable para iterar de manera mas sencilla en upload report
   checkVariableResponse(
@@ -231,7 +224,15 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
     }
   }
   //chekea si el eje ya fue completado
-  checkAxeComplete() {}
+  checkAxeComplete(report: ReportInfo) {
+    report.ultimoEjeCompleto = 0;
+    report.ejesConVariables.map((axe) => {
+      if (axe.responses.length === axe.variables.length) {
+        axe.complete = true;
+        report.ultimoEjeCompleto++;
+      }
+    });
+  }
   onStartReport() {
     this.flagStartReport = true;
     this.timerId = setTimeout(() => {

@@ -61,7 +61,7 @@ export interface ReportInfo {
   reporteACargar: ReportToUpload;
   ejesConVariables: AxeAndVariables[];
   cantidadDeEjes?: number;
-  ultimoEjeCompleto?: number;
+  ultimoEjeCompleto: number;
 }
 export interface AxeAndVariables {
   axe: string;
