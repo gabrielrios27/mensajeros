@@ -10,6 +10,7 @@ import { Report } from '../../models/report';
 import { axes, variable } from '../../models/admin.model';
 import { Centro } from '../../models/centro';
 import { report } from 'process';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-reports',
@@ -55,7 +56,8 @@ export class ReportsComponent implements OnInit {
   constructor(
     private router: Router,
     private admin: AdminService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private data: DataService
   ) {}
 
   ngOnInit() {
@@ -223,6 +225,7 @@ export class ReportsComponent implements OnInit {
 
   edit(rep: any) {
     this.report = rep;
+    this.data.editar = true
     this.router.navigate([
       'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
       this.report.id
