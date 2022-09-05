@@ -51,7 +51,7 @@ export class AddModReportComponent implements OnInit {
     private router: Router,
     private admin: AdminService,
     private cdr: ChangeDetectorRef,
-    private data: DataService,
+    public data: DataService,
     private routeActiva: ActivatedRoute
   ) {
     this.formAdd = fb.group({
