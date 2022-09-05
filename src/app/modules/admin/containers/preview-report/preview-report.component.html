@@ -103,7 +103,8 @@
                 <p>{{item.nombre}}</p>
                 <label class="label" type="text" disabled>{{item.usuario?.email}}</label>
             </div>
-            <button mat-button (click)="enviar()">Confirmar</button>
+            <button *ngIf="data.editar" mat-button (click)="editar()">Confirmar</button>
+            <button *ngIf="!data.editar" mat-button (click)="enviar()">Confirmar</button>
         </div>
         <div *ngIf="flag" class="overlay"></div>
     
