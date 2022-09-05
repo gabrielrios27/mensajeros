@@ -1,6 +1,7 @@
 <div class="container-create-report">
     <div class="add-mod-report">
-        <h1 class="title">Crear Nuevo Reporte</h1>
+        <h1 *ngIf="!data.editar" class="title">Crear Nuevo Reporte</h1>
+        <h1 *ngIf="data.editar" class="title">Editar Nuevo Reporte</h1>
         <form class="form-create-report" [formGroup]="formAdd">
 
             <section>
