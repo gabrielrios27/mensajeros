@@ -28,7 +28,7 @@ export class SelecsAxesVariablesComponent implements OnInit {
   ngOnInit(): void {
     this.getAxes()
     // this.getVariables()
-    console.log(this.arrayAxes)
+    
   }
   capturarVariables(e: any) {
     this.variables = e;
@@ -43,7 +43,6 @@ export class SelecsAxesVariablesComponent implements OnInit {
       return res.eje.id == this.axe.id
     })
     // 
-    console.log("arrays", this.arrayAxes)
     this.axes.emit(this.axe);
   }
 
@@ -72,31 +71,13 @@ export class SelecsAxesVariablesComponent implements OnInit {
           return res.id == vari.id
         }))
       }
-      // this.variables = this.listOfVariablesShow.filter((res:any)=>{
-      //   return res == this.variablesSelects.forEach(element =>{
-
-      //     return element
-      //   })
-      // })
-      // this.variables = ( this.arrayVariables.filter((res: any) => {
-      //   return res.eje.id == this.axe.id;
-      // }));
-
-      // this.variables = this.listOfVariables.filter((res: any)=>{
-      //   return res.eje == this.arrayVariables.forEach((element:any) => {
-      //     console.log(element.eje)
-      //     return element.eje
-      //   })
-      // })
-      console.log("variablesss",this.variables);
-      console.log(this.axe);
     }
   }
   // 
   variableAsig() {
     if (this.arrayVariables) {
       this.variables = this.arrayVariables;
-      // console.log('variables', this.variables);
+      
     }
   }
 
@@ -107,7 +88,7 @@ export class SelecsAxesVariablesComponent implements OnInit {
         next: (data: axes[]) => {
           this.listOfAxes = data;
           setTimeout(() => this.cdr.detectChanges());
-          // console.log(this.listOfAxes);
+          
           this.getVariables()
           // this.axe = this.arrayAxes
         },
@@ -128,7 +109,7 @@ export class SelecsAxesVariablesComponent implements OnInit {
       this.listOfVariables = data;
       setTimeout(() => this.cdr.detectChanges());
       this.axeAsig()
-      // console.log(this.listOfVariables);
+      
     },
     error: (err) => {
       

@@ -71,7 +71,6 @@ export class AddModReportComponent implements OnInit {
     this.getDataFromRute();
     this.getAxes();
     this.getVariables();
-    // console.log(this.arrayAxes)
   }
 
   // modal preview report
@@ -89,13 +88,10 @@ export class AddModReportComponent implements OnInit {
   //  guarda axes de componente selects
   storageAxes(axes: any, idComponent: number) {
     this.arrayAxes[idComponent] = axes;
-    console.log('axes', this.arrayAxes);
-    // console.log(idComponent)
   }
   // guarda array variables de componente selects
   storageVariables(variablesArray: any, idComponent: number) {
     this.arrayVaribles[idComponent] = variablesArray;
-    console.log('variables', this.arrayVaribles);
   }
   //
   // agrega un elemento al arreglo de selects y tambien a axes y variables
@@ -128,7 +124,7 @@ export class AddModReportComponent implements OnInit {
       periodoHasta: this.formAdd.value.hasta,
     };
 
-    console.log('report', this.data.arrayVariables);
+
     this.setFlagAddEdit(true);
     this.router.navigate([
       'admin/dashboard/reportes/creacion-de-reportes/add-mod-report/preview-report/' +
@@ -144,7 +140,7 @@ export class AddModReportComponent implements OnInit {
         setTimeout(() => this.cdr.detectChanges());
         this.listCenters = data;
         this.centerSelect();
-        // console.log(data);
+
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
@@ -158,7 +154,7 @@ export class AddModReportComponent implements OnInit {
     localStorage.setItem('flagAddEdit', JSON.stringify(this.flagAddEdit));
   }
   onSelection($event: any) {
-    // console.log($event);
+
     this.showDialog = false;
     if ($event === 'ok') {
       this.subject.next(true);
@@ -168,7 +164,6 @@ export class AddModReportComponent implements OnInit {
     }
   }
   openDialog() {
-    // console.log('opn dialog');
     this.showDialog = true;
   }
   //
@@ -178,7 +173,6 @@ export class AddModReportComponent implements OnInit {
       this.id = params.get('report-id');
       this.data.editar = true;
     });
-    // console.log(this.id);
     if (this.id) {
       this.getReportByID();
     }
@@ -193,7 +187,6 @@ export class AddModReportComponent implements OnInit {
         this.desde = this.report.periodoDesde;
         this.hasta = this.report.periodoHasta;
         this.deliverdate = this.report.fechaEntrega;
-        console.log(data);
         this.getAxes();
         this.getCenters();
         this.centerSelect();
@@ -202,7 +195,6 @@ export class AddModReportComponent implements OnInit {
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        // console.log(err);
       },
     });
   }
@@ -212,13 +204,11 @@ export class AddModReportComponent implements OnInit {
     this.center = [];
     for (let item of this.listCenters) {
       for (let c of this.report.centros) {
-        // console.log(c)
         if (item.id == c.id) {
           this.center.push(item.id);
         }
       }
     }
-    console.log('center', this.center);
   }
   //
 
@@ -233,43 +223,33 @@ export class AddModReportComponent implements OnInit {
     //   }
     // }
 
-    console.log(this.arrayVaribles);
   }
 
   // thi function add elements in arrays for edit
   axesSelect(): any {
     for (let c of this.report.variables) {
-      console.log('eje ', c.eje);
+
       if (!this.arrayAxes.includes(c.eje.id)) {
         this.arrayAxes.push(c.eje);
       }
     }
 
-    console.log(this.arrayAxes);
+
     this.arrayc.pop();
     for (let c of this.arrayAxes) {
-      console.log(c);
+
       this.arrayc.push(this.arrayc.length + 1);
-      // for(let v of this.listOfVariables){
-      //   if(v.eje.id === c.id){
-      //     this.variablesSelects.push(v)
-      //   }
-      //   console.log("varible",this.variablesSelects)
-      //   this.arrayVaribles[this.arrayAxes.indexOf(c)] = this.variablesSelects
-      // }
       this.arrayVaribles.push(
         this.listOfVariables.filter((res: any) => {
           return res.eje.id == c.id;
         })
       );
     }
-    console.log('variables', this.arrayVaribles);
   }
   //
   // returns axes by componente
   axreturn(item: any): any {
     if (this.report != null)
-      // console.log(this.arrayc.indexOf(item))
 
       return this.arrayAxes[this.arrayc.indexOf(item)];
   }
@@ -278,11 +258,7 @@ export class AddModReportComponent implements OnInit {
   // returns varibles by componente
   variableReturn(item: any): any {
     if (this.report != null)
-      // console.log(
-      //   this.arrayVaribles.filter((res: any) => {
-      //     return res.eje.id == this.arrayAxes[this.arrayc.indexOf(item)].id;
-      //   })
-      // );
+
       return this.report.variables;
   }
   //
@@ -292,16 +268,16 @@ export class AddModReportComponent implements OnInit {
       next: (data: axes[]) => {
         this.listOfAxes = data;
         setTimeout(() => this.cdr.detectChanges());
-        // console.log('axes', this.listOfAxes);
+
       },
       error: (err) => {
-        // console.log(err);
+
         if (err.status === 401) {
           this.router.navigate(['/auth']);
         }
       },
       complete: () => {
-        // console.log('Request get axes complete');
+
       },
     });
   }
@@ -311,16 +287,14 @@ export class AddModReportComponent implements OnInit {
       next: (data: variable[]) => {
         this.listOfVariables = data;
         setTimeout(() => this.cdr.detectChanges());
-        // console.log('variables', this.listOfVariables);
       },
       error: (err) => {
-        // console.log(err);
+
         if (err.status === 401) {
           this.router.navigate(['/auth']);
         }
       },
       complete: () => {
-        // console.log('Request get axes complete');
       },
     });
   }
