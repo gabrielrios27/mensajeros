@@ -3,21 +3,23 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { variable } from 'src/app/modules/admin/models';
 import { Router } from '@angular/router';
-import { Subscription, timer } from 'rxjs';
+import { Subject, Subscription, takeUntil, timer } from 'rxjs';
 import { UserService } from '../../services';
+import { AxeAndVariables, ReportToUpload } from '../../models';
 
 @Component({
   selector: 'app-report-upload',
   templateUrl: './report-upload.component.html',
   styleUrls: ['./report-upload.component.scss'],
 })
-export class ReportUploadComponent implements OnInit {
+export class ReportUploadComponent implements OnInit, OnDestroy {
   alphabet: string[] = [
     'A',
     'B',
@@ -48,7 +50,7 @@ export class ReportUploadComponent implements OnInit {
   ];
   biAlphabet: string[] = [];
   //ejes hardcodeados antes de implementación
-  report: any = [
+  reportHC: any = [
     {
       axe: 'SEGURIDAD NUTRICIONAL',
       variables: [
@@ -58,22 +60,6 @@ export class ReportUploadComponent implements OnInit {
           descripcion: 'desayuno, merienda, almuerzo, cena',
           tipo: 'Numérico',
           genero: 'false',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 8,
-            nombre: 'SEGURIDAD NUTRICIONAL',
-          },
-        },
-        {
-          id: 54,
-          nombre: 'Cantidad de participantes',
-          descripcion: 'En todos los comedores',
-          tipo: 'Numérico',
-          genero: 'true',
           escala_valor: 'false',
           valor_inicial: 'null',
           valor_final: 'null',
@@ -122,70 +108,19 @@ export class ReportUploadComponent implements OnInit {
             nombre: 'ACOMPAÑAMIENTO EN SALUD',
           },
         },
-        {
-          id: 73,
-          nombre: 'Cantidad de acompañamientos/intervenciones',
-          descripcion: 'vacunas, ESI, anticoncepción, atención directa',
-          tipo: 'Numérico',
-          genero: 'false',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 5,
-            nombre: 'ACOMPAÑAMIENTO EN SALUD',
-          },
-        },
-      ],
-      complete: false,
-    },
-    {
-      axe: 'Acompañamiento Educativo',
-      variables: [
-        {
-          id: 21,
-          nombre: 'Cantidad de participantes en talleres',
-          descripcion: 'Taller 1 y talller 2',
-          tipo: 'Numérico',
-          genero: 'true',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 5,
-            nombre: 'Acompañamiento Educativo',
-          },
-        },
-        {
-          id: 71,
-          nombre: 'Utilidad de los talleres 1 y 2',
-          descripcion: '',
-          tipo: 'Textual',
-          genero: 'false',
-          escala_valor: 'true',
-          valor_inicial: '0',
-          valor_final: '10',
-          etiqueta_inicial: 'NADA ÚTIL',
-          etiqueta_final: 'MUY ÚTIL',
-          eje: {
-            id: 5,
-            nombre: 'Acompañamiento Educativo',
-          },
-        },
       ],
       complete: false,
     },
   ];
+  report: AxeAndVariables[];
+  reportToUploadComplete: ReportToUpload;
   //outputs e inputs
   @Output() reportToUpload = new EventEmitter<any>();
   @Output() flagBtnGoBack = new EventEmitter<boolean>();
   @Output() flagLastAxeEmit = new EventEmitter<boolean>();
   @Output() flagEndReportEmit = new EventEmitter<boolean>();
   @Input('idReport') idReport: number = 0;
+  @Input('idCenter') idCenter: number = 0;
   @Input('flagLastAxe') flagLastAxe: boolean = false;
   @Input('flagEndReport') flagEndReport: boolean = false;
   //para recibir click en el btn guardar y salir del comp. upload report
@@ -206,19 +141,39 @@ export class ReportUploadComponent implements OnInit {
   //para pop up error cuando falta completar un input
   flagAxeError: boolean = false;
   timerId: any;
-
+  // suscripciones
+  onDestroy$: Subject<boolean> = new Subject();
   constructor(private router: Router, private userSvc: UserService) {
     this.clickSaveExitSubscription = this.userSvc
       .getClickSaveExit()
       .subscribe(() => {
         this.onSaveExit();
       });
+    this.report = [];
+    this.reportToUploadComplete = {} as ReportToUpload;
   }
 
   ngOnInit(): void {
     this.axeToShow();
     this.createBiAlphabet();
   }
+  getReportToUpload() {
+    this.userSvc
+      .getReportToUpload(this.idReport, this.idCenter)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: ReportToUpload) => {
+          this.reportToUploadComplete = data;
+          this.listAxes(data);
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
+  }
+  listAxes(data: ReportToUpload) {}
   //BUSCA EL EJE INCOMPLETO Y LO RENDERIZA EN PANTALLA CON SUS VARIABLES
   axeToShow() {
     this.indexOfAxe = 0;
@@ -346,5 +301,8 @@ export class ReportUploadComponent implements OnInit {
       this.flagEndReport = false;
       this.flagEndReportEmit.next(false);
     }
+  }
+  ngOnDestroy(): void {
+    this.onDestroy$.next(true);
   }
 }
