@@ -16,7 +16,26 @@
     <h1 class="upload-report__title">CARGA DE REPORTE</h1>
     <div class="progress-bar">
       <!-- Aqui iria la maqueta de la barra de progreso -->
-      <app-progress-bar></app-progress-bar>
+      <div class="container" id="container">
+        <div class="progress-container" id="progress-container">
+            <div class="progress" id="progress"></div>
+            <div class="circle active">
+                <span>Inicio</span>
+            </div>
+            <div class="circle">
+                <mat-icon *ngIf="flag1" style="color: #1967d2">check</mat-icon>
+                <span>Eje 1</span>
+            </div>
+            <div class="circle">
+                <mat-icon *ngIf="flag2" style="color: #1967d2">check</mat-icon>
+                <span>Eje 2</span>
+            </div>
+            <div class="circle">
+                <mat-icon *ngIf="flag3" style="color: #1967d2">check</mat-icon>
+                <span>Envio</span>
+            </div>
+        </div>
+    </div>
     </div>
     <button
       mat-raised-button
@@ -34,6 +53,7 @@
       (reportToUpload)="getReportToUpload($event)"
       (flagBtnGoBack)="getFlagBtnGoBack($event)"
       (flagLastAxeEmit)="getFlagLastAxeEmit($event)"
+      (flagNextAxe)="getFlagNextAxeEmit($event)"
     ></app-report-upload>
   </section>
   <section class="footer">
