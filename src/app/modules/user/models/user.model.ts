@@ -60,8 +60,6 @@ export interface ReportInfo {
   periodo_hasta: string;
   reporteACargar: ReportToUpload;
   ejesConVariables: AxeAndVariables[];
-  cantidadDeEjes?: number;
-  ultimoEjeCompleto: number;
 }
 export interface AxeAndVariables {
   axe: string;

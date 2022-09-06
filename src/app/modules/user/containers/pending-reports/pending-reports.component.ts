@@ -134,9 +134,18 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
     this.flagStartReport = true;
     this.timerId = setTimeout(() => {
       this.flagStartReport = false;
+      console.log(
+        'user/dashboard/mis-reportes/pendientes/carga-de-reporte/' +
+          this.reportToShow.idReporte +
+          '/' +
+          this.reportToShow.idCentro
+      );
+
       this.router.navigate([
         'user/dashboard/mis-reportes/pendientes/carga-de-reporte/' +
-          this.reportToShow.idReporte,
+          this.reportToShow.idReporte +
+          '/' +
+          this.reportToShow.idCentro,
       ]);
     }, 6000);
   }
