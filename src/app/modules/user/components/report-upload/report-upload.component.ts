@@ -158,22 +158,50 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
     this.createBiAlphabet();
   }
   getReportToUpload() {
+    console.log('entra en get...');
+
     this.userSvc
       .getReportToUpload(this.idReport, this.idCenter)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe({
         next: (data: ReportToUpload) => {
           this.reportToUploadComplete = data;
-          this.listAxes(data);
+          this.listAxesOfReport(this.reportToUploadComplete);
         },
         error: (err) => {
+          console.log('error en get...');
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
         },
       });
   }
-  listAxes(data: ReportToUpload) {}
+  //Luego de obtener el reporte con variables y respuestas, lista los diferentes ejes de ese reporte
+  listAxesOfReport(report: ReportToUpload) {
+    let axeWithVariables: AxeAndVariables[] = [];
+    let axesInReport: string[] = [];
+    for (let variable of report.variables) {
+      if (axesInReport.length === 0) {
+        axesInReport.push(variable.eje.nombre);
+        axeWithVariables.push({
+          axe: variable.eje.nombre,
+          variables: [],
+          responses: [],
+          complete: false,
+        });
+      } else if (!axesInReport.includes(variable.eje.nombre)) {
+        axesInReport.push(variable.eje.nombre);
+        axeWithVariables.push({
+          axe: variable.eje.nombre,
+          variables: [],
+          responses: [],
+          complete: false,
+        });
+      }
+    }
+    report.ejesConVariables = axeWithVariables;
+    console.log(report);
+  }
   //BUSCA EL EJE INCOMPLETO Y LO RENDERIZA EN PANTALLA CON SUS VARIABLES
   axeToShow() {
     this.indexOfAxe = 0;
