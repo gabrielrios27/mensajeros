@@ -1,17 +1,15 @@
 import { variable } from '../../admin/models';
 
 export interface UserData {
-  centros: [
-    {
-      nombre: string;
-    }
-  ];
+  centros: CenterOfUser[];
   contrasena: string;
   email: string;
   id: 0;
   nombre: string;
 }
-
+export interface CenterOfUser {
+  nombre: string;
+}
 export interface ReportResponse {
   escala: number;
   femenino: number;
@@ -49,6 +47,8 @@ export interface ReportToUpload {
   idReporte: number;
   respuestas: ReportResponse[];
   variables: VariableRep[];
+  ejeActual: number;
+  totalEjes: number;
 }
 export interface ReportInfo {
   fecha_entrega: string;

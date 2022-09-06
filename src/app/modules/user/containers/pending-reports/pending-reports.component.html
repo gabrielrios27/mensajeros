@@ -1,8 +1,8 @@
 <section class="pending-reports">
   <div class="pending-reports__conteiner">
     <h1 class="pending-reports__title">REPORTES PENDIENTES</h1>
-    <app-pop-up-no-exist *ngIf="list.length === 0"></app-pop-up-no-exist>
-    <div class="list" *ngIf="list.length !== 0">
+    <app-pop-up-no-exist *ngIf="flagNoPendingReport"></app-pop-up-no-exist>
+    <div class="list" *ngIf="userPendingReports.length !== 0">
       <ul class="list__row-header">
         <li class="list__header">Reporte Numero</li>
         <li class="list__header">Reporte asignado para centro</li>
@@ -43,8 +43,8 @@
           <li class="report__item">Reporte</li>
           <li class="report__item">{{ reportToShow.nombreReporte }}</li>
           <li class="report__item">
-            Carga {{ reportToShow.ultimoEjeCompleto }} de
-            {{ reportToShow.cantidadDeEjes }} Ejes
+            Carga {{ reportToShow.reporteACargar.ejeActual - 1 || 0 }} de
+            {{ reportToShow.reporteACargar.totalEjes }} Ejes
           </li>
         </ul>
         <button
@@ -53,7 +53,7 @@
           color="primary"
           type="submit"
           (click)="onStartReport()"
-          [disabled]="reportToShow.ultimoEjeCompleto !== 0"
+          [disabled]="(reportToShow.reporteACargar.ejeActual - 1 || 0) !== 0"
         >
           Iniciar carga
         </button>
@@ -65,7 +65,7 @@
           color="primary"
           type="submit"
           (click)="onStartReport()"
-          [disabled]="reportToShow.ultimoEjeCompleto === 0"
+          [disabled]="(reportToShow.reporteACargar.ejeActual - 1 || 0) === 0"
         >
           Reanudar Carga de Reporte
         </button>
@@ -75,7 +75,7 @@
           color="primary"
           type="submit"
           (click)="onDeleteReport(true)"
-          [disabled]="reportToShow.ultimoEjeCompleto === 0"
+          [disabled]="(reportToShow.reporteACargar.ejeActual - 1 || 0) === 0"
         >
           Volver a empezar
         </button>
