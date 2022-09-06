@@ -233,6 +233,7 @@ export class ReportsComponent implements OnInit {
   }
 
   create() {
+    this.data.editar = false
     this.router.navigate([
       'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
     ]);
