@@ -168,6 +168,7 @@ export class ReportUploadComponent implements OnInit {
   @Output() reportToUpload = new EventEmitter<any>();
   @Output() flagBtnGoBack = new EventEmitter<boolean>();
   @Output() flagLastAxeEmit = new EventEmitter<boolean>();
+  @Output() flagNextAxe = new EventEmitter<boolean>();
   @Input('idReport') idReport: number = 0;
   @Input('flagLastAxe') flagLastAxe: boolean = false;
   //para recibir click en el btn guardar y salir del comp. upload report
@@ -211,6 +212,7 @@ export class ReportUploadComponent implements OnInit {
         this.variablesReport = item.variables;
         if (this.axeToUpload === this.report[0].axe) {
           this.flagBtnGoBack.emit(false);
+          this.flagNextAxe.emit(false)
         } else {
           this.flagBtnGoBack.emit(true);
         }
@@ -221,6 +223,7 @@ export class ReportUploadComponent implements OnInit {
   //SI EL EJE ESTÁ COMPLETO SE COLOCA COMPLETE TRUE PARA QUE PUEDA RENDERIZAR EL EJE SIGUIENTE QUE ESTÉ INCOMPLETO
   confirmCompleteAxe() {
     this.flagAxeSuccess = true;
+    this.flagNextAxe.emit(true)
     setTimeout(() => {
       this.flagAxeSuccess = false;
     }, 3000);
