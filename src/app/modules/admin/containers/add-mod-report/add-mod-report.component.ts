@@ -7,6 +7,7 @@ import { axes, variable } from '../../models/admin.model';
 import { Centro } from '../../models/centro';
 import { Report } from '../../models/report';
 import { DataService } from '../../services/data.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-add-mod-report',
@@ -21,7 +22,6 @@ export class AddModReportComponent implements OnInit {
   id: any;
   variables: any;
   eje: any;
-  ejes: Array<any> = ['hola', 'pepe', 'jose'];
   arrayc: Array<number> = [1];
   arrayAxes: Array<any> = [];
   arrayVaribles: Array<any> = [];
@@ -124,7 +124,6 @@ export class AddModReportComponent implements OnInit {
       periodoHasta: this.formAdd.value.hasta,
     };
 
-
     this.setFlagAddEdit(true);
     this.router.navigate([
       'admin/dashboard/reportes/creacion-de-reportes/add-mod-report/preview-report/' +
@@ -140,7 +139,6 @@ export class AddModReportComponent implements OnInit {
         setTimeout(() => this.cdr.detectChanges());
         this.listCenters = data;
         this.centerSelect();
-
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
@@ -154,7 +152,6 @@ export class AddModReportComponent implements OnInit {
     localStorage.setItem('flagAddEdit', JSON.stringify(this.flagAddEdit));
   }
   onSelection($event: any) {
-
     this.showDialog = false;
     if ($event === 'ok') {
       this.subject.next(true);
@@ -183,6 +180,7 @@ export class AddModReportComponent implements OnInit {
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.report = data;
+        console.log(data);
         this.nombre = this.report.nombre;
         this.desde = this.report.periodoDesde;
         this.hasta = this.report.periodoHasta;
@@ -222,22 +220,31 @@ export class AddModReportComponent implements OnInit {
     //     }
     //   }
     // }
-
   }
+  // Esta funcion elimina elementos repetidos
+  deleteDuplicate() {
+    let duplicate: any = [];
+    let temporary: any = [];
+    this.arrayAxes.forEach((value, index) => {
+      temporary = Object.assign([], this.arrayAxes);
+      temporary.splice(index, 1);
+      if (temporary.indexOf(value) != -1 && duplicate.indexOf(value) == -1)
+        duplicate.push(value);
+    });
+    this.arrayAxes.splice(this.arrayAxes.indexOf(temporary[0].id) + 1, 1);
+  }
+  //
 
-  // thi function add elements in arrays for edit
+  // this function add elements in arrays for edit
   axesSelect(): any {
-    for (let c of this.report.variables) {
-
-      if (!this.arrayAxes.includes(c.eje.id)) {
-        this.arrayAxes.push(c.eje);
+    for (let vari of this.report.variables) {
+      if (!this.arrayAxes.includes(vari.eje.id)) {
+        this.arrayAxes.push(vari.eje);
       }
     }
-
-
+    this.deleteDuplicate();
     this.arrayc.pop();
     for (let c of this.arrayAxes) {
-
       this.arrayc.push(this.arrayc.length + 1);
       this.arrayVaribles.push(
         this.listOfVariables.filter((res: any) => {
@@ -249,17 +256,13 @@ export class AddModReportComponent implements OnInit {
   //
   // returns axes by componente
   axreturn(item: any): any {
-    if (this.report != null)
-
-      return this.arrayAxes[this.arrayc.indexOf(item)];
+    if (this.report != null) return this.arrayAxes[this.arrayc.indexOf(item)];
   }
   //
 
   // returns varibles by componente
   variableReturn(item: any): any {
-    if (this.report != null)
-
-      return this.report.variables;
+    if (this.report != null) return this.report.variables;
   }
   //
 
@@ -268,17 +271,13 @@ export class AddModReportComponent implements OnInit {
       next: (data: axes[]) => {
         this.listOfAxes = data;
         setTimeout(() => this.cdr.detectChanges());
-
       },
       error: (err) => {
-
         if (err.status === 401) {
           this.router.navigate(['/auth']);
         }
       },
-      complete: () => {
-
-      },
+      complete: () => {},
     });
   }
 
@@ -289,13 +288,11 @@ export class AddModReportComponent implements OnInit {
         setTimeout(() => this.cdr.detectChanges());
       },
       error: (err) => {
-
         if (err.status === 401) {
           this.router.navigate(['/auth']);
         }
       },
-      complete: () => {
-      },
+      complete: () => {},
     });
   }
 }
