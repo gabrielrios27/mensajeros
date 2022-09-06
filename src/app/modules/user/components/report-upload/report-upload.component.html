@@ -1,6 +1,6 @@
 <!-- VISTA DE EJES A COMPLETAR, UNO POR VEZ -->
 <section class="report" *ngIf="!flagLastAxe" #scroll>
-  <h1 class="report__title">EJE {{ indexOfAxe }}:</h1>
+  <h1 class="report__title">EJE {{ indexOfAxe + 1 }}: {{ axeToUpload }}</h1>
   <div
     class="report__variable"
     *ngFor="let variable of variablesReport; let i = index"
@@ -30,7 +30,10 @@
   <div class="report-complete">
     <div
       class="report-complete__conteiner"
-      *ngFor="let item of report; let i = index"
+      *ngFor="
+        let item of reportToUploadComplete.ejesConVariables;
+        let i = index
+      "
     >
       <h1 class="report-complete__title">
         EJE {{ i + 1 }}: {{ item.axe.toUpperCase() }}

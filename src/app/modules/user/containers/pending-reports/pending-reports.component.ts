@@ -120,7 +120,11 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.onDestroy$))
         .subscribe({
           next: (data: ReportToUpload) => {
+            if (!data.ejeActual) {
+              data.ejeActual = 1;
+            }
             report.reporteACargar = data;
+            console.log(report);
           },
           error: (err) => {
             if (err.status === 401) {
@@ -135,13 +139,6 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
     this.flagStartReport = true;
     this.timerId = setTimeout(() => {
       this.flagStartReport = false;
-      console.log(
-        'user/dashboard/mis-reportes/pendientes/carga-de-reporte/' +
-          this.reportToShow.idReporte +
-          '/' +
-          this.reportToShow.idCentro
-      );
-
       this.router.navigate([
         'user/dashboard/mis-reportes/pendientes/carga-de-reporte/' +
           this.reportToShow.idReporte +

@@ -67,4 +67,5 @@ export interface AxeAndVariables {
   variables: VariableRep[];
   responses: ReportResponse[];
   complete: boolean;
+  idAxe: number;
 }
