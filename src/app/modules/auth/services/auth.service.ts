@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, pipe, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, window } from 'rxjs/operators';
 import { role } from '../../admin/models';
 import { changePassword } from '../models/changePassword';
 import { Login } from '../models/login';
@@ -27,7 +27,6 @@ export class AuthService {
   logout() {
     this.loggedIn.next(false);
     localStorage.removeItem('Usuario');
-    this.router.navigate(['auth']);
   }
 
   loginByEmail(form: Login): Observable<Response | void> {
