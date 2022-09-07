@@ -55,68 +55,6 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   ];
   biAlphabet: string[] = [];
   //ejes hardcodeados antes de implementación
-  reportHC: any = [
-    {
-      axe: 'SEGURIDAD NUTRICIONAL',
-      variables: [
-        {
-          id: 54,
-          nombre: 'Cantidad de comidas dadas anualmente por persona',
-          descripcion: 'desayuno, merienda, almuerzo, cena',
-          tipo: 'Numérico',
-          genero: 'false',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 8,
-            nombre: 'SEGURIDAD NUTRICIONAL',
-          },
-        },
-      ],
-      complete: false,
-    },
-    {
-      axe: 'ACOMPAÑAMIENTO EN SALUD',
-      variables: [
-        {
-          id: 71,
-          nombre: 'Calidad de la intervención en salud',
-          descripcion: '',
-          tipo: 'Textual',
-          genero: 'false',
-          escala_valor: 'true',
-          valor_inicial: '1',
-          valor_final: '5',
-          etiqueta_inicial: 'MUY MALO',
-          etiqueta_final: 'EXCELENTE',
-          eje: {
-            id: 5,
-            nombre: 'ACOMPAÑAMIENTO EN SALUD',
-          },
-        },
-        {
-          id: 72,
-          nombre: 'Descripcion de eventos realizados',
-          descripcion: 'En las diferentes localidades',
-          tipo: 'Textual',
-          genero: 'false',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 5,
-            nombre: 'ACOMPAÑAMIENTO EN SALUD',
-          },
-        },
-      ],
-      complete: false,
-    },
-  ];
   report: AxeAndVariables[];
   reportToUploadComplete: ReportToUpload;
   //outputs e inputs
