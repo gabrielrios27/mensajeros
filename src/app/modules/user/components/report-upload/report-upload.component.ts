@@ -12,7 +12,12 @@ import { variable } from 'src/app/modules/admin/models';
 import { Router } from '@angular/router';
 import { Subject, Subscription, takeUntil, timer } from 'rxjs';
 import { UserService } from '../../services';
-import { AxeAndVariables, ReportToUpload } from '../../models';
+import {
+  AxeAndVariables,
+  ReportResponse,
+  ReportToUpload,
+  VariableRep,
+} from '../../models';
 
 @Component({
   selector: 'app-report-upload',
@@ -128,7 +133,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   nameReport: string | number = '';
   axesInReport: string[] = [];
   axeToUpload: string = '';
-  variablesReport: variable[] = {} as variable[];
+  variablesReport: variable[] = [];
   variablesToUpload: any[] = [];
   reportComplete: any[] = [];
   reportPartial: any[] = [];
@@ -201,31 +206,41 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       }
     }
     report.ejesConVariables = axeWithVariables;
-    this.getVariablesResponsesPerAxe(report);
+    this.setVariablesOfAxes(report);
   }
-  getVariablesResponsesPerAxe(report: ReportToUpload) {
-    let indexAxes: number = 0;
-    report.ejesConVariables.map((axe) => {
-      this.userSvc
-        .getReportToUploadPerAxe(report.idReporte, report.idCentro, axe.idAxe)
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe({
-          next: (data: ReportToUpload) => {
-            axe.variables = data.variables;
-            axe.responses = data.respuestas;
-            indexAxes++;
-            if (indexAxes === report.totalEjes) {
-              this.axeToShow();
-              console.log('enttra en if final: ', report);
-            }
-          },
-          error: (err) => {
-            if (err.status === 401) {
-              this.router.navigate(['/auth']);
-            }
-          },
-        });
+  //carga en cada reporte las variables de cada eje
+  setVariablesOfAxes(report: ReportToUpload) {
+    report.ejesConVariables.map((item) => {
+      for (let variable of report.variables) {
+        if (item.axe === variable.eje.nombre) {
+          item.variables.push(variable);
+          this.checkVariableResponse(item, variable, report.respuestas);
+        }
+      }
     });
+  }
+  //chekea si la variable ya esta cargada y si lo esta la guarda en response y tambien dentro de la variable para iterar de manera mas sencilla en upload report
+  checkVariableResponse(
+    item: AxeAndVariables,
+    variable: VariableRep,
+    responses: ReportResponse[]
+  ) {
+    for (let response of responses) {
+      if (
+        (response.idVariable === variable.id && response.escala) ||
+        response.femenino ||
+        response.masculino ||
+        response.noBinario ||
+        response.numerico ||
+        response.textual
+      ) {
+        //response se usara para ver si todas las variables fueron completadas
+        item.responses.push(response);
+        //respuesta dentro de la variable se usara para cargar en los inputs los valores de las respuestas.
+        variable.respuesta = response;
+      }
+    }
+    this.axeToShow();
   }
   //BUSCA EL EJE INCOMPLETO Y LO RENDERIZA EN PANTALLA CON SUS VARIABLES
   axeToShow() {
@@ -242,8 +257,6 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       } else {
         this.indexOfAxe++;
       }
-
-      console.log(this.indexOfAxe);
     }
   }
   //SI EL EJE ESTÁ COMPLETO SE COLOCA COMPLETE TRUE PARA QUE PUEDA RENDERIZAR EL EJE SIGUIENTE QUE ESTÉ INCOMPLETO
@@ -264,6 +277,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         i++;
       }
     }
+
     //con el indice anterior chekea si es ultimo eje y emite ese valor a upload-report para mostrar botones de finalizar reporte
     if (i === this.reportToUploadComplete.ejesConVariables.length) {
       this.flagLastAxe = true;
@@ -312,8 +326,6 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'ATRÁS' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
   getVariablesToSaveGoBack($event: any) {
     this.indexOfVariables++;
-    console.log('atras - variab report', this.variablesReport);
-
     if (this.indexOfVariables === this.variablesReport.length) {
       let i = 0;
       for (let item of this.reportToUploadComplete.ejesConVariables) {

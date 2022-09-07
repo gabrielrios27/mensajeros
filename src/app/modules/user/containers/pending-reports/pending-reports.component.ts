@@ -124,7 +124,6 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
               data.ejeActual = 1;
             }
             report.reporteACargar = data;
-            console.log(report);
           },
           error: (err) => {
             if (err.status === 401) {
