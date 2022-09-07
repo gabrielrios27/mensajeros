@@ -139,7 +139,7 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
     this.timerId = setTimeout(() => {
       this.flagStartReport = false;
       this.router.navigate([
-        'user/dashboard/mis-reportes/pendientes/carga-de-reporte/' +
+        'user/dashboard/mis-reportes/pendientes/carga-de-reporte/iniciar-carga/' +
           this.reportToShow.idReporte +
           '/' +
           this.reportToShow.idCentro,

@@ -8,6 +8,7 @@ import { UserService } from '../../services';
   styleUrls: ['./upload-reports.component.scss'],
 })
 export class UploadReportsComponent implements OnInit, OnDestroy {
+  action: string;
   idReport: number;
   idCenter: number;
   reportToUpload: any;
@@ -19,11 +20,22 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     private router: Router,
     private userSvc: UserService
   ) {
+    this.action = this.getActionFromRute('accion');
+    console.log(this.action);
+
     this.idReport = this.getIdReportFromRute('idReporte');
     this.idCenter = this.getIdReportFromRute('idCentro');
   }
 
   ngOnInit(): void {}
+  //OBTIENE LA ACCIÓN A REALIZAR DE LA RUTA
+  getActionFromRute(action: string): string {
+    let actionRoute: string | null = '';
+    this.rutaActiva.paramMap.subscribe((params: ParamMap) => {
+      actionRoute = params.get(action);
+    });
+    return actionRoute;
+  }
   //OBTIENE EL ID DE LA VARIABLE EN LA RUTA
   getIdReportFromRute(nameId: string): number {
     let idToShow;
