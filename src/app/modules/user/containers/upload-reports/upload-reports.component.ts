@@ -83,6 +83,8 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {}
 
+  // Barra de progreso
+
   nextButton() {
     this.circles = document.querySelectorAll('.circle');
     this.currentActive += 1;
@@ -137,4 +139,5 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
       }
     }
   }
+  // 
 }
