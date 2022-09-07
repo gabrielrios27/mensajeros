@@ -14,41 +14,42 @@ import * as userGuards from './guards';
 import { HomeComponent } from '../admin/containers';
 import { PendingReportsComponent } from './containers/pending-reports/pending-reports.component';
 import { UploadReportsComponent } from './containers/upload-reports/upload-reports.component';
+import { UserGuard } from './guards/user.guard';
 
 /* Routes */
 export const ROUTES: Routes = [
   {
     path: '',
-    canActivate: [],
+    canActivate: [UserGuard],
     redirectTo: 'home',
   },
   {
     path: 'mis-reportes',
-    canActivate: [],
+    canActivate: [UserGuard],
     redirectTo: 'mis-reportes/pendientes',
     pathMatch: 'full',
   },
   {
     path: 'mis-reportes/pendientes',
-    canActivate: [],
+    canActivate: [UserGuard],
     component: PendingReportsComponent,
     pathMatch: 'full',
   },
   {
     path: 'mis-reportes/pendientes/carga-de-reporte/:id',
-    canActivate: [],
+    canActivate: [UserGuard],
     component: UploadReportsComponent,
     pathMatch: 'full',
   },
   {
     path: 'home',
-    canActivate: [],
+    canActivate: [UserGuard],
     component: HomeComponent,
     pathMatch: 'full',
   },
   {
     path: '**',
-    canActivate: [],
+    canActivate: [UserGuard],
     redirectTo: 'home',
   },
 ];
