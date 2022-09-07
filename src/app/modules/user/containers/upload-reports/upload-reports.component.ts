@@ -20,6 +20,7 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   flag2 = false;
   flag3 = false;
   currentActive: number = 1;
+  flagEndReport: boolean = false;
   constructor(
     private rutaActiva: ActivatedRoute,
     private router: Router,
@@ -59,7 +60,7 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     this.flagBtnGoBack = true;
   }
   onEndReport() {
-    this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
+    this.flagEndReport = true;
   }
   //Obtiene el reporte que se esta cargando en el componente report-upload
   getReportToUpload($event: any) {
@@ -75,6 +76,9 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
 
   getFlagNextAxeEmit($event: boolean){
     this.axeSucces = $event
+  }
+  getFlagEndReportEmit($event: boolean) {
+    this.flagEndReport = $event;
   }
   ngOnDestroy() {}
 

@@ -7,7 +7,10 @@ import {
 import { Router } from '@angular/router';
 import { AdminService } from '../../services/admin.service';
 import { Report } from '../../models/report';
-import { axes } from '../../models/admin.model';
+import { axes, variable } from '../../models/admin.model';
+import { Centro } from '../../models/centro';
+import { report } from 'process';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-reports',
@@ -38,20 +41,31 @@ export class ReportsComponent implements OnInit {
   name = 'old name';
   showIt = false;
   arrayAxes: Array<axes> = [];
+  listOfAxes: Array<axes> = [];
+  listOfVariables: Array<variable> = [];
+  report: Report = {} as Report;
+  centerSelects: Array<any> = [];
+  axesSelects: Array<any> = [];
+  variablesSelects: Array<variable> = [];
   //
-
   flag: boolean = false;
   reports: Array<Report> = [];
+
+  centers: Array<Centro> = [];
 
   constructor(
     private router: Router,
     private admin: AdminService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private data: DataService
   ) {}
 
   ngOnInit() {
     this.getReports();
-    this.getUserLocalStorage();
+    this.getReportLocalStorage();
+    this.getCenters();
+    this.getAxes();
+    this.getVariables();
   }
 
   busca(e: string) {
@@ -68,15 +82,76 @@ export class ReportsComponent implements OnInit {
 
   //visualizar reporte
   showModal(element: Report) {
+    this.centerSelects = [];
+    this.variablesSelects = [];
+    this.axesSelects = [];
+
+    this.report = element;
+    this.centerSelect();
+    this.variablesSelect();
+    this.axesSelect();
     this.showIt = true;
+    // console.log(element)
   }
 
-  closeModal(newName: string) {
+  closeModal() {
     this.showIt = false;
-    if (newName) this.name = newName;
+    this.centerSelects = [];
+  }
+
+  centerSelect() {
+    for (let item of this.centers) {
+      for (let c of this.report.centros) {
+        // console.log(c)
+        if (item.id == c) {
+          this.centerSelects.push(item.nombre);
+        }
+      }
+    }
+  }
+
+  variablesSelect() {
+    for (let item of this.listOfVariables) {
+      for (let c of this.report.variables) {
+        if (item.id == c) {
+          this.variablesSelects.push(item);
+        }
+      }
+    }
+    // console.log(this.variablesSelects)
+  }
+
+  axesSelect() {
+    for (let item of this.listOfAxes) {
+      // console.log(item.id)
+      for (let c of this.variablesSelects) {
+        // console.log(c.eje)
+        if (item.id == c.eje.id) {
+          // console.log(item)
+          if (!this.axesSelects.includes(item.nombre)) {
+            this.axesSelects.push(item.nombre);
+          }
+        }
+      }
+    }
+    // console.log(this.centerSelects)
   }
 
   //
+
+  getCenters() {
+    this.admin.getCentros().subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.centers = data;
+        // console.log(data);
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+        // console.log(err);
+      },
+    });
+  }
 
   getReports() {
     //this.currentPage = this.getPageLocalStorage();
@@ -90,6 +165,44 @@ export class ReportsComponent implements OnInit {
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
         
+      },
+    });
+  }
+
+  getAxes() {
+    this.admin.getAxes().subscribe({
+      next: (data: axes[]) => {
+        this.listOfAxes = data;
+        setTimeout(() => this.cdr.detectChanges());
+        // console.log(this.listOfAxes);
+      },
+      error: (err) => {
+        // console.log(err);
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
+      },
+      complete: () => {
+        // console.log('Request get axes complete');
+      },
+    });
+  }
+
+  getVariables() {
+    this.admin.getVariables().subscribe({
+      next: (data: variable[]) => {
+        this.listOfVariables = data;
+        setTimeout(() => this.cdr.detectChanges());
+        // console.log(this.listOfVariables);
+      },
+      error: (err) => {
+        // console.log(err);
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
+      },
+      complete: () => {
+        // console.log('Request get axes complete');
       },
     });
   }
@@ -110,7 +223,17 @@ export class ReportsComponent implements OnInit {
     });
   }
 
+  edit(rep: any) {
+    this.report = rep;
+    this.data.editar = true
+    this.router.navigate([
+      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+      this.report.id
+    ]);
+  }
+
   create() {
+    this.data.editar = false
     this.router.navigate([
       'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
     ]);
@@ -178,8 +301,8 @@ export class ReportsComponent implements OnInit {
     this.flagDelete = true;
     this.idToDelete = id;
   }
-  
-  getUserLocalStorage() {
+
+  getReportLocalStorage() {
     let newOrEditeduser = localStorage.getItem('newOrEditedReport');
     if (newOrEditeduser) {
       setTimeout(() => {

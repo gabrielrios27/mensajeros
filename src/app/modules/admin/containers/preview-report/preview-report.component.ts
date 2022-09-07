@@ -49,9 +49,10 @@ export class PreviewReportComponent implements OnInit {
 
   ngOnInit() {
     this.newname = this.oldname;
-
+    
     this.getCenters();
-    this.getDataFromRute();
+    this.getDataFromService();
+    
   }
 
   getCenters() {
@@ -61,6 +62,7 @@ export class PreviewReportComponent implements OnInit {
         this.centers = data;
         this.centerSelect();
         this.center2();
+        
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
@@ -92,17 +94,21 @@ export class PreviewReportComponent implements OnInit {
   }
   //
 
-  getDataFromRute() {
-    this.routeActiva.paramMap.subscribe((params: ParamMap) => {
-      this.name = params.get('nombre');
-      this.since = params.get('desde');
-      this.until = params.get('hasta');
-      this.deliverdate = params.get('deliverdate');
-    });
-    this.until = new Date(this.until);
-    this.since = new Date(this.since);
-    this.deliverdate = new Date(this.deliverdate);
+  variablesse(item: any): any {
+    return this.report.variable.filter((res: any) => res.eje.id === item.id);
   }
+
+  // gets data from service
+  getDataFromService() {
+    this.name = this.data.report?.nombre;
+    this.until = this.data.report?.periodoHasta;
+    this.since = this.data.report?.periodoDesde;
+    this.deliverdate = this.data.report?.fechaEntrega;
+    this.deliverdate = new Date(this.deliverdate)
+    this.since = new Date(this.since)
+    this.until = new Date(this.until)
+  }
+  //
 
   ok() {
     this.close.emit(this.newname);
@@ -119,6 +125,42 @@ export class PreviewReportComponent implements OnInit {
 
   confirm() {
     this.flag = true;
+  }
+
+  editar() {
+    // this.setUserLocStg("algo", true)
+    this.flag = false;
+    // this.router.navigate(['/admin/dashboard/reportes/creacion-de-reportes']);
+
+    for (let varia of this.data.arrayVariables) {
+      for (let vari of varia) {
+        this.variables.push(vari.id);
+      }
+    }
+
+    let today = new Date();
+
+    let report: Report = {
+      nombre: this.name,
+      fechaCreacion:'',
+      fechaEntrega: this.deliverdate.toISOString(),
+      periodoDesde: this.since.toISOString(),
+      periodoHasta: this.until.toISOString(),
+      variables: this.variables,
+      centros: this.data.arrayCenters,
+      id: '',
+    };
+    this.setReportLocStg(this.name, false);
+    this.admin.editReport(this.data.report?.id,report).subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.data.flag = false;
+        this.data.editar = false;
+        this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes']);
+      },
+      error: (err) => {
+      },
+    });
   }
 
   enviar() {
@@ -145,17 +187,15 @@ export class PreviewReportComponent implements OnInit {
       id: '',
     };
     this.setReportLocStg(this.name, true);
-
     this.admin.addReport(report).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
-
         this.data.flag = false;
         this.data.editar = false;
-
         this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes']);
       },
-      error: (err) => {},
+      error: (err) => {
+      },
     });
   }
 

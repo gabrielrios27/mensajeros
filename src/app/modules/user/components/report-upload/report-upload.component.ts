@@ -50,28 +50,6 @@ export class ReportUploadComponent implements OnInit {
   //ejes hardcodeados antes de implementación
   report: any = [
     {
-      axe: 'Acompañamiento Educativo',
-      variables: [
-        {
-          id: 21,
-          nombre: 'Cantidad de participantes en talleres',
-          descripcion: 'Taller 1 y talller 2',
-          tipo: 'Numérico',
-          genero: 'true',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 5,
-            nombre: 'Acompañamiento Educativo',
-          },
-        },
-      ],
-      complete: false,
-    },
-    {
       axe: 'SEGURIDAD NUTRICIONAL',
       variables: [
         {
@@ -163,14 +141,54 @@ export class ReportUploadComponent implements OnInit {
       ],
       complete: false,
     },
+    {
+      axe: 'Acompañamiento Educativo',
+      variables: [
+        {
+          id: 21,
+          nombre: 'Cantidad de participantes en talleres',
+          descripcion: 'Taller 1 y talller 2',
+          tipo: 'Numérico',
+          genero: 'true',
+          escala_valor: 'false',
+          valor_inicial: 'null',
+          valor_final: 'null',
+          etiqueta_inicial: 'null',
+          etiqueta_final: 'null',
+          eje: {
+            id: 5,
+            nombre: 'Acompañamiento Educativo',
+          },
+        },
+        {
+          id: 71,
+          nombre: 'Utilidad de los talleres 1 y 2',
+          descripcion: '',
+          tipo: 'Textual',
+          genero: 'false',
+          escala_valor: 'true',
+          valor_inicial: '0',
+          valor_final: '10',
+          etiqueta_inicial: 'NADA ÚTIL',
+          etiqueta_final: 'MUY ÚTIL',
+          eje: {
+            id: 5,
+            nombre: 'Acompañamiento Educativo',
+          },
+        },
+      ],
+      complete: false,
+    },
   ];
   //outputs e inputs
   @Output() reportToUpload = new EventEmitter<any>();
   @Output() flagBtnGoBack = new EventEmitter<boolean>();
   @Output() flagLastAxeEmit = new EventEmitter<boolean>();
   @Output() flagNextAxe = new EventEmitter<boolean>();
+  @Output() flagEndReportEmit = new EventEmitter<boolean>();
   @Input('idReport') idReport: number = 0;
   @Input('flagLastAxe') flagLastAxe: boolean = false;
+  @Input('flagEndReport') flagEndReport: boolean = false;
   //para recibir click en el btn guardar y salir del comp. upload report
   clickSaveExitSubscription: Subscription;
   nameReport: string = 'C00010';
@@ -321,6 +339,15 @@ export class ReportUploadComponent implements OnInit {
     if (!$event) {
       this.flagAxeError = false;
       clearTimeout(this.timerId);
+    }
+  }
+  onConfirmEnd(value: boolean) {
+    if (value) {
+      //Aquí enviar repote con endpoint
+      this.router.navigate(['/user/dashboard/mis-reportes/pendientes']); //cambiar ruta a reportes enviados cuando se cree ese componente
+    } else {
+      this.flagEndReport = false;
+      this.flagEndReportEmit.next(false);
     }
   }
 }
