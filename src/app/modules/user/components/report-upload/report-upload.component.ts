@@ -226,6 +226,36 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'CONFIRMAR EJE' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
+  getVariablesToUpload($event: any) {
+    this.variablesToUpload.push($event);
+    this.flagNoVariable = false;
+    //Cuando se cargaron todas las respuestas de los componentes variables-upload recien chekea si todas estan completas
+    if (this.variablesToUpload.length === this.variablesReport.length) {
+      for (let item of this.variablesToUpload) {
+        if (item === undefined) {
+          this.flagNoVariable = true;
+          this.flagAxeError = true;
+          this.timerId = setTimeout(() => {
+            this.flagAxeError = false;
+          }, 3000);
+        }
+      }
+      if (this.flagNoVariable) {
+        this.variablesToUpload = [];
+      } else {
+        this.reportComplete.push(...this.variablesToUpload);
+        console.log('rep complete: ', this.reportComplete);
+        this.reportToUploadComplete.respuestas.push(...this.variablesToUpload);
+        this.variablesToUpload = [];
+        this.confirmCompleteAxe();
+        if (!this.flagLastAxe) {
+          this.setVariablesOfAxes(this.reportToUploadComplete);
+        }
+      }
+    }
+  }
   //SI EL EJE ESTÁ COMPLETO SE COLOCA COMPLETE TRUE PARA QUE PUEDA RENDERIZAR EL EJE SIGUIENTE QUE ESTÉ INCOMPLETO
   confirmCompleteAxe() {
     //lanza modal de exito en la carga de eje
@@ -251,34 +281,28 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       this.flagLastAxeEmit.next(this.flagLastAxe);
     }
   }
-  //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'CONFIRMAR EJE' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
-  getVariablesToUpload($event: any) {
-    this.variablesToUpload.push($event);
-    this.flagNoVariable = false;
-    //Cuando se cargaron todas las respuestas de los componentes variables-upload recien chekea si todas estan completas
-    if (this.variablesToUpload.length === this.variablesReport.length) {
-      for (let item of this.variablesToUpload) {
-        if (item === undefined) {
-          this.flagNoVariable = true;
-          this.flagAxeError = true;
-          this.timerId = setTimeout(() => {
-            this.flagAxeError = false;
-          }, 3000);
+  saveResponsesInReport(
+    report: ReportToUpload,
+    responsesUpload: ReportResponse[]
+  ) {
+    let flagResponseExist: boolean = false;
+    responsesUpload.map((respUpload) => {
+      report.respuestas.map((respuesta) => {
+        if (respuesta.idVariable === respUpload.idVariable) {
+          respuesta = respUpload;
+          flagResponseExist = true;
         }
+      });
+      if (!flagResponseExist) {
+        report.respuestas.push(respUpload);
       }
-      if (this.flagNoVariable) {
-        this.variablesToUpload = [];
-      } else {
-        this.reportComplete.push(...this.variablesToUpload);
-        console.log('rep complete: ', this.reportComplete);
-        // this.reportToUploadComplete.variables =
-        this.variablesToUpload = [];
-        this.confirmCompleteAxe();
-        if (!this.flagLastAxe) {
-          this.axeToShow();
+      report.ejesConVariables.map((axe) => {
+        if (axe.axe === this.axeToUpload) {
+          axe.responses = responsesUpload;
+          // axe.variables.map();
         }
-      }
-    }
+      });
+    });
   }
   //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'GUARDAR Y SALIR' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
   getVariablesToSaveExit($event: any) {
