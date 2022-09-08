@@ -1,12 +1,19 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { ReportInfo, ReportToUpload, UserData } from '../models/user.model';
 
 @Injectable()
 export class UserService {
   private subject = new Subject<any>();
   private subjectSaveExit = new Subject<any>();
   private subjectGoBack = new Subject<any>();
-  constructor() {}
+  baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com';
+  baseUrlTami: string = 'https://mensajeros-back-tami.herokuapp.com';
+  ePUserData: string = '/usuarios/datosUsuario';
+  ePPendingReports: string = '/reportes/reportesPendientes';
+  ePReportToUpload: string = '/carga/';
+  constructor(private _http: HttpClient) {}
   //envia click cuando se da click al btn confirmar eje en el upload-report.ts
   sendClickEvent() {
     this.subject.next('');
@@ -27,5 +34,38 @@ export class UserService {
   }
   getClickGoBack(): Observable<any> {
     return this.subjectGoBack.asObservable();
+  }
+  //obtener datos del usuario logeado
+  getUserData(): Observable<UserData> {
+    return this._http.get<UserData>(this.baseUrlTami + this.ePUserData);
+  }
+  //Para carga de reportes
+  getPendingReports(): Observable<ReportInfo[]> {
+    return this._http.get<ReportInfo[]>(
+      this.baseUrlTami + this.ePPendingReports
+    );
+  }
+  getReportToUpload(
+    idReport: number,
+    idCenter: number
+  ): Observable<ReportToUpload> {
+    return this._http.get<ReportToUpload>(
+      this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter
+    );
+  }
+  getReportToUploadPerAxe(
+    idReport: number,
+    idCenter: number,
+    idAxe: number
+  ): Observable<ReportToUpload> {
+    return this._http.get<ReportToUpload>(
+      this.baseUrlTami +
+        this.ePReportToUpload +
+        idReport +
+        '/' +
+        idCenter +
+        '/' +
+        idAxe
+    );
   }
 }

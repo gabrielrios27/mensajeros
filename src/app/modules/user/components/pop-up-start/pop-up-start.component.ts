@@ -8,11 +8,14 @@ import { Router } from '@angular/router';
 export class PopUpStartComponent implements OnInit {
   constructor(private router: Router) {}
   @Input('idReport') idReport: number = 0;
+  @Input('idCentro') idCentro: number = 0;
   ngOnInit(): void {}
   initReport() {
     this.router.navigate([
       'user/dashboard/mis-reportes/pendientes/carga-de-reporte/' +
-        this.idReport,
+        this.idReport +
+        '/' +
+        this.idCentro,
     ]);
   }
 }
