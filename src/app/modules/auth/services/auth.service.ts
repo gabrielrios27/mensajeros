@@ -8,7 +8,6 @@ import { changePassword } from '../models/changePassword';
 import { Login } from '../models/login';
 import { Response } from '../models/response';
 
-
 @Injectable()
 export class AuthService {
   url: string = 'https://mensajeros-back-tami.herokuapp.com/';
@@ -34,7 +33,6 @@ export class AuthService {
     let direccion = this.baseUrlTami + 'auth/login';
     return this._http.post<Response>(direccion, form).pipe(
       map((res: Response) => {
-        
         this.loggedIn.next(true);
         return res;
       }),
@@ -45,7 +43,7 @@ export class AuthService {
   private handlerError(err: any): Observable<never> {
     let errorMsj = 'error';
     if (err) {
-      errorMsj = err.status
+      errorMsj = err.status;
     }
     return throwError(errorMsj);
   }
@@ -53,12 +51,9 @@ export class AuthService {
   getRole() {
     return this._http.get<role>(this.baseUrlTami + this.EPAuthority).pipe(
       map((data) => {
-        
-
         return data;
       }),
       catchError((err) => {
-        
         return this.handlerError(err);
       })
     );
@@ -67,11 +62,14 @@ export class AuthService {
     return this.loggedIn.asObservable();
   }
 
-  sendEmail(email: string): Observable<any>{
-    return this._http.post(this.baseUrl + "email-password/send", email)
+  sendEmail(email: string): Observable<any> {
+    return this._http.post(this.baseUrl + 'email-password/send', email);
   }
 
-  changePassword(form: changePassword): Observable<Response>{
-    return this._http.post<Response>(this.baseUrl + "email-password/change-password" ,form)
+  changePassword(form: changePassword): Observable<Response> {
+    return this._http.post<Response>(
+      this.baseUrl + 'email-password/change-password',
+      form
+    );
   }
 }
