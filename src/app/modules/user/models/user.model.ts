@@ -49,23 +49,23 @@ export interface ReportToUpload {
   variables: VariableRep[];
   ejeActual: number;
   totalEjes: number;
+  ejesConVariables: AxeAndVariables[];
 }
 export interface ReportInfo {
   fecha_entrega: string;
-  idCentro: 0;
-  idReporte: 0;
+  idCentro: number;
+  idReporte: number;
   nom_centro: string;
   nombreReporte: string;
   periodo_desde: string;
   periodo_hasta: string;
   reporteACargar: ReportToUpload;
   ejesConVariables: AxeAndVariables[];
-  cantidadDeEjes?: number;
-  ultimoEjeCompleto: number;
 }
 export interface AxeAndVariables {
   axe: string;
   variables: VariableRep[];
   responses: ReportResponse[];
   complete: boolean;
+  idAxe: number;
 }

@@ -45,13 +45,27 @@ export class UserService {
       this.baseUrlTami + this.ePPendingReports
     );
   }
-
   getReportToUpload(
     idReport: number,
     idCenter: number
   ): Observable<ReportToUpload> {
     return this._http.get<ReportToUpload>(
       this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter
+    );
+  }
+  getReportToUploadPerAxe(
+    idReport: number,
+    idCenter: number,
+    idAxe: number
+  ): Observable<ReportToUpload> {
+    return this._http.get<ReportToUpload>(
+      this.baseUrlTami +
+        this.ePReportToUpload +
+        idReport +
+        '/' +
+        idCenter +
+        '/' +
+        idAxe
     );
   }
 }

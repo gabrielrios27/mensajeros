@@ -113,12 +113,16 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
         variables: [],
         ejeActual: 0,
         totalEjes: 0,
+        ejesConVariables: [],
       };
       this.userSvc
         .getReportToUpload(report.idReporte, report.idCentro)
         .pipe(takeUntil(this.onDestroy$))
         .subscribe({
           next: (data: ReportToUpload) => {
+            if (!data.ejeActual) {
+              data.ejeActual = 1;
+            }
             report.reporteACargar = data;
           },
           error: (err) => {
@@ -136,7 +140,9 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
       this.flagStartReport = false;
       this.router.navigate([
         'user/dashboard/mis-reportes/pendientes/carga-de-reporte/' +
-          this.reportToShow.idReporte,
+          this.reportToShow.idReporte +
+          '/' +
+          this.reportToShow.idCentro,
       ]);
     }, 6000);
   }

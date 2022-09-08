@@ -3,21 +3,28 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { variable } from 'src/app/modules/admin/models';
 import { Router } from '@angular/router';
-import { Subscription, timer } from 'rxjs';
+import { Subject, Subscription, takeUntil, timer } from 'rxjs';
 import { UserService } from '../../services';
+import {
+  AxeAndVariables,
+  ReportResponse,
+  ReportToUpload,
+  VariableRep,
+} from '../../models';
 
 @Component({
   selector: 'app-report-upload',
   templateUrl: './report-upload.component.html',
   styleUrls: ['./report-upload.component.scss'],
 })
-export class ReportUploadComponent implements OnInit {
+export class ReportUploadComponent implements OnInit, OnDestroy {
   alphabet: string[] = [
     'A',
     'B',
@@ -48,151 +55,23 @@ export class ReportUploadComponent implements OnInit {
   ];
   biAlphabet: string[] = [];
   //ejes hardcodeados antes de implementación
-  report: any = [
-    {
-      axe: 'SEGURIDAD NUTRICIONAL',
-      variables: [
-        {
-          id: 54,
-          nombre: 'Cantidad de comidas dadas anualmente por persona',
-          descripcion: 'desayuno, merienda, almuerzo, cena',
-          tipo: 'Numérico',
-          genero: 'false',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 8,
-            nombre: 'SEGURIDAD NUTRICIONAL',
-          },
-        },
-        {
-          id: 54,
-          nombre: 'Cantidad de participantes',
-          descripcion: 'En todos los comedores',
-          tipo: 'Numérico',
-          genero: 'true',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 8,
-            nombre: 'SEGURIDAD NUTRICIONAL',
-          },
-        },
-      ],
-      complete: false,
-    },
-    {
-      axe: 'ACOMPAÑAMIENTO EN SALUD',
-      variables: [
-        {
-          id: 71,
-          nombre: 'Calidad de la intervención en salud',
-          descripcion: '',
-          tipo: 'Textual',
-          genero: 'false',
-          escala_valor: 'true',
-          valor_inicial: '1',
-          valor_final: '5',
-          etiqueta_inicial: 'MUY MALO',
-          etiqueta_final: 'EXCELENTE',
-          eje: {
-            id: 5,
-            nombre: 'ACOMPAÑAMIENTO EN SALUD',
-          },
-        },
-        {
-          id: 72,
-          nombre: 'Descripcion de eventos realizados',
-          descripcion: 'En las diferentes localidades',
-          tipo: 'Textual',
-          genero: 'false',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 5,
-            nombre: 'ACOMPAÑAMIENTO EN SALUD',
-          },
-        },
-        {
-          id: 73,
-          nombre: 'Cantidad de acompañamientos/intervenciones',
-          descripcion: 'vacunas, ESI, anticoncepción, atención directa',
-          tipo: 'Numérico',
-          genero: 'false',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 5,
-            nombre: 'ACOMPAÑAMIENTO EN SALUD',
-          },
-        },
-      ],
-      complete: false,
-    },
-    {
-      axe: 'Acompañamiento Educativo',
-      variables: [
-        {
-          id: 21,
-          nombre: 'Cantidad de participantes en talleres',
-          descripcion: 'Taller 1 y talller 2',
-          tipo: 'Numérico',
-          genero: 'true',
-          escala_valor: 'false',
-          valor_inicial: 'null',
-          valor_final: 'null',
-          etiqueta_inicial: 'null',
-          etiqueta_final: 'null',
-          eje: {
-            id: 5,
-            nombre: 'Acompañamiento Educativo',
-          },
-        },
-        {
-          id: 71,
-          nombre: 'Utilidad de los talleres 1 y 2',
-          descripcion: '',
-          tipo: 'Textual',
-          genero: 'false',
-          escala_valor: 'true',
-          valor_inicial: '0',
-          valor_final: '10',
-          etiqueta_inicial: 'NADA ÚTIL',
-          etiqueta_final: 'MUY ÚTIL',
-          eje: {
-            id: 5,
-            nombre: 'Acompañamiento Educativo',
-          },
-        },
-      ],
-      complete: false,
-    },
-  ];
+  report: AxeAndVariables[];
+  reportToUploadComplete: ReportToUpload;
   //outputs e inputs
   @Output() reportToUpload = new EventEmitter<any>();
   @Output() flagBtnGoBack = new EventEmitter<boolean>();
   @Output() flagLastAxeEmit = new EventEmitter<boolean>();
   @Output() flagEndReportEmit = new EventEmitter<boolean>();
   @Input('idReport') idReport: number = 0;
+  @Input('idCenter') idCenter: number = 0;
   @Input('flagLastAxe') flagLastAxe: boolean = false;
   @Input('flagEndReport') flagEndReport: boolean = false;
   //para recibir click en el btn guardar y salir del comp. upload report
   clickSaveExitSubscription: Subscription;
-  nameReport: string = 'C00010';
-  axeToUpload: any;
-  variablesReport: variable[] = {} as variable[];
+  nameReport: string | number = '';
+  axesInReport: string[] = [];
+  axeToUpload: string = '';
+  variablesReport: variable[] = [];
   variablesToUpload: any[] = [];
   reportComplete: any[] = [];
   reportPartial: any[] = [];
@@ -206,52 +85,139 @@ export class ReportUploadComponent implements OnInit {
   //para pop up error cuando falta completar un input
   flagAxeError: boolean = false;
   timerId: any;
-
+  // suscripciones
+  onDestroy$: Subject<boolean> = new Subject();
   constructor(private router: Router, private userSvc: UserService) {
     this.clickSaveExitSubscription = this.userSvc
       .getClickSaveExit()
       .subscribe(() => {
         this.onSaveExit();
       });
+    this.report = [];
+    this.reportToUploadComplete = {} as ReportToUpload;
   }
 
   ngOnInit(): void {
-    this.axeToShow();
+    this.getReportToUpload();
     this.createBiAlphabet();
+  }
+  getReportToUpload() {
+    this.userSvc
+      .getReportToUpload(this.idReport, this.idCenter)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: ReportToUpload) => {
+          this.reportToUploadComplete = data;
+          this.nameReport = this.reportToUploadComplete.idReporte;
+          this.listAxesOfReport(this.reportToUploadComplete);
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
+  }
+  //Luego de obtener el reporte con variables y respuestas, lista los diferentes ejes de ese reporte
+  listAxesOfReport(report: ReportToUpload) {
+    let axeWithVariables: AxeAndVariables[] = [];
+    this.axesInReport = [];
+    for (let variable of report.variables) {
+      if (this.axesInReport.length === 0) {
+        this.axesInReport.push(variable.eje.nombre);
+        axeWithVariables.push({
+          idAxe: variable.eje.id,
+          axe: variable.eje.nombre,
+          variables: [],
+          responses: [],
+          complete: false,
+        });
+      } else if (!this.axesInReport.includes(variable.eje.nombre)) {
+        this.axesInReport.push(variable.eje.nombre);
+        axeWithVariables.push({
+          idAxe: variable.eje.id,
+          axe: variable.eje.nombre,
+          variables: [],
+          responses: [],
+          complete: false,
+        });
+      }
+    }
+    report.ejesConVariables = axeWithVariables;
+    this.setVariablesOfAxes(report);
+  }
+  //carga en cada reporte las variables de cada eje
+  setVariablesOfAxes(report: ReportToUpload) {
+    report.ejesConVariables.map((item) => {
+      for (let variable of report.variables) {
+        if (item.axe === variable.eje.nombre) {
+          item.variables.push(variable);
+          this.checkVariableResponse(item, variable, report.respuestas);
+        }
+      }
+    });
+  }
+  //chekea si la variable ya esta cargada y si lo esta la guarda en response y tambien dentro de la variable para iterar de manera mas sencilla en upload report
+  checkVariableResponse(
+    item: AxeAndVariables,
+    variable: VariableRep,
+    responses: ReportResponse[]
+  ) {
+    for (let response of responses) {
+      if (
+        (response.idVariable === variable.id && response.escala) ||
+        response.femenino ||
+        response.masculino ||
+        response.noBinario ||
+        response.numerico ||
+        response.textual
+      ) {
+        //response se usara para ver si todas las variables fueron completadas
+        item.responses.push(response);
+        //respuesta dentro de la variable se usara para cargar en los inputs los valores de las respuestas.
+        variable.respuesta = response;
+      }
+    }
+    this.axeToShow();
   }
   //BUSCA EL EJE INCOMPLETO Y LO RENDERIZA EN PANTALLA CON SUS VARIABLES
   axeToShow() {
     this.indexOfAxe = 0;
-    for (let item of this.report) {
-      this.indexOfAxe++;
+    for (let item of this.reportToUploadComplete.ejesConVariables) {
+      if (this.indexOfAxe === 0) {
+        this.flagBtnGoBack.emit(false);
+      } else {
+        this.flagBtnGoBack.emit(true);
+      }
       if (!item.complete) {
         this.axeToUpload = item.axe;
         this.variablesReport = item.variables;
-        if (this.axeToUpload === this.report[0].axe) {
-          this.flagBtnGoBack.emit(false);
-        } else {
-          this.flagBtnGoBack.emit(true);
-        }
-        break;
+      } else {
+        this.indexOfAxe++;
       }
     }
   }
   //SI EL EJE ESTÁ COMPLETO SE COLOCA COMPLETE TRUE PARA QUE PUEDA RENDERIZAR EL EJE SIGUIENTE QUE ESTÉ INCOMPLETO
   confirmCompleteAxe() {
+    //lanza modal de exito en la carga de eje
     this.flagAxeSuccess = true;
     setTimeout(() => {
       this.flagAxeSuccess = false;
     }, 3000);
     this.scroll.nativeElement.scrollTop = 0; //scroll to top cada vez que se renderiza un nuevo eje
     let i = 0;
-    for (let item of this.report) {
-      i++;
+    //coloca complete true al eje que se completo y checkea si es el ultimo eje
+    for (let item of this.reportToUploadComplete.ejesConVariables) {
       if (item.axe === this.axeToUpload) {
         item.complete = true;
-        break;
+        i++;
+      } else if (item.complete) {
+        i++;
       }
     }
-    if (i === this.report.length) {
+
+    //con el indice anterior chekea si es ultimo eje y emite ese valor a upload-report para mostrar botones de finalizar reporte
+    if (i === this.reportToUploadComplete.ejesConVariables.length) {
       this.flagLastAxe = true;
       this.flagLastAxeEmit.next(this.flagLastAxe);
     }
@@ -260,6 +226,7 @@ export class ReportUploadComponent implements OnInit {
   getVariablesToUpload($event: any) {
     this.variablesToUpload.push($event);
     this.flagNoVariable = false;
+    //Cuando se cargaron todas las respuestas de los componentes variables-upload recien chekea si todas estan completas
     if (this.variablesToUpload.length === this.variablesReport.length) {
       for (let item of this.variablesToUpload) {
         if (item === undefined) {
@@ -299,7 +266,7 @@ export class ReportUploadComponent implements OnInit {
     this.indexOfVariables++;
     if (this.indexOfVariables === this.variablesReport.length) {
       let i = 0;
-      for (let item of this.report) {
+      for (let item of this.reportToUploadComplete.ejesConVariables) {
         if (item.axe === this.axeToUpload && i > 0) {
           this.report[i - 1].complete = false;
           break;
@@ -346,5 +313,8 @@ export class ReportUploadComponent implements OnInit {
       this.flagEndReport = false;
       this.flagEndReportEmit.next(false);
     }
+  }
+  ngOnDestroy(): void {
+    this.onDestroy$.next(true);
   }
 }
