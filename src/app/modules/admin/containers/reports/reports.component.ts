@@ -66,6 +66,7 @@ export class ReportsComponent implements OnInit {
     this.getCenters();
     this.getAxes();
     this.getVariables();
+    this.data.flagDuplicated = false
   }
 
   busca(e: string) {
@@ -226,6 +227,21 @@ export class ReportsComponent implements OnInit {
   edit(rep: any) {
     this.report = rep;
     this.data.editar = true
+    this.router.navigate([
+      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+      this.report.id
+    ]);
+  }
+
+  // esta funcion permite duplicar el reporte seleccionado
+
+  duplicated(rep: any) {
+    this.report = rep;
+    this.data.editar = true
+    this.data.flagDuplicated = true
+    let repD = this.reports.filter((res:any) => {return res.nombre === rep.nombre + " duplicado "})
+    this.data.cantDuplicated = repD.length
+    console.log(repD)
     this.router.navigate([
       'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
       this.report.id
