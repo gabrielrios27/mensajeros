@@ -20,6 +20,7 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   flag1 = false;
   flag2 = false;
   flag3 = false;
+  items = [1,2,3]
   currentActive: number = 1;
   flagEndReport: boolean = false;
   constructor(
@@ -84,6 +85,8 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {}
 
+  // Barra de progreso
+
   nextButton() {
     this.circles = document.querySelectorAll('.circle');
     this.currentActive += 1;
@@ -138,4 +141,5 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
       }
     }
   }
+  // 
 }
