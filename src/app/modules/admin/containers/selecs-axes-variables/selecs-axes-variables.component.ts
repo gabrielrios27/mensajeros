@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } fro
 import { Router } from '@angular/router';
 import { axes, variable } from '../../models';
 import { AdminService } from '../../services/admin.service';
+import { map } from 'rxjs/operators';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-selecs-axes-variables',
@@ -11,10 +13,12 @@ import { AdminService } from '../../services/admin.service';
 export class SelecsAxesVariablesComponent implements OnInit {
   @Output() axes = new EventEmitter<any>();
   @Output() variablesArray = new EventEmitter<any>();
+  @Input() arrayAxes : any
+  @Input() arrayVariables: Array<any> = []
   
   variables: any
   axe: any
-
+  variablesSelects:Array<any> = []
   listOfAxes: Array<axes> = []
   listOfVariables: Array<variable> = []
   listOfVariablesShow: Array<variable> = []
@@ -23,7 +27,7 @@ export class SelecsAxesVariablesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAxes()
-    this.getVariables()
+    // this.getVariables()
     
   }
   capturarVariables(e: any) {
@@ -32,6 +36,7 @@ export class SelecsAxesVariablesComponent implements OnInit {
   }
 
   capturarEje(e: any) {
+    // this.axe = this.arrayAxes
     this.axe = e
     // filter variables per axe
     this.listOfVariablesShow = this.listOfVariables.filter((res:any)=>{
@@ -46,6 +51,36 @@ export class SelecsAxesVariablesComponent implements OnInit {
     this.variables = this.variables.filter((res: any) => res !== variable);
   }
 
+    // this function assigns the variables and the axes and displays on the screen 
+  axeAsig() {
+    this.variables =[]
+    if (this.arrayAxes != null) {
+      
+      this.axe = this.listOfAxes.find(
+        (res: any) => res.id == this.arrayAxes.id
+      ); 
+      
+      this.listOfVariablesShow = this.listOfVariables.filter((res: any) => {
+        return res.eje.id == this.axe.id;
+      });
+      this.variablesSelects = this.arrayVariables.filter((element:any)=>{
+        return element.eje.id == this.axe.id
+      })
+      for(let vari of this.variablesSelects){
+        this.variables.push(this.listOfVariablesShow.find(res =>{
+          return res.id == vari.id
+        }))
+      }
+    }
+  }
+  // 
+  variableAsig() {
+    if (this.arrayVariables) {
+      this.variables = this.arrayVariables;
+      
+    }
+  }
+
   getAxes() {
     this.admin
       .getAxes()
@@ -54,6 +89,8 @@ export class SelecsAxesVariablesComponent implements OnInit {
           this.listOfAxes = data;
           setTimeout(() => this.cdr.detectChanges());
           
+          this.getVariables()
+          // this.axe = this.arrayAxes
         },
         error: (err) => {
           
@@ -71,6 +108,7 @@ export class SelecsAxesVariablesComponent implements OnInit {
     this.admin.getVariables().subscribe({ next: (data: variable[]) => {
       this.listOfVariables = data;
       setTimeout(() => this.cdr.detectChanges());
+      this.axeAsig()
       
     },
     error: (err) => {

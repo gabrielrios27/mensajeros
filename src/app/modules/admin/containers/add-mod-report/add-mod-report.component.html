@@ -1,6 +1,7 @@
 <div class="container-create-report">
     <div class="add-mod-report">
-        <h1 class="title">Crear Nuevo Reporte</h1>
+        <h1 *ngIf="!data.editar" class="title">Crear Nuevo Reporte</h1>
+        <h1 *ngIf="data.editar" class="title">Editar Reporte</h1>
         <form class="form-create-report" [formGroup]="formAdd">
 
             <section>
@@ -41,7 +42,7 @@
                 <div class="container-input-date ">
                     <br>
                     <div class="input-wrapper">
-                        <input class="input-fecha " matInput [matDatepicker]="picker" placeholder="Fecha"
+                        <input class="input-fecha " [(ngModel)]="desde" matInput [matDatepicker]="picker" placeholder="Fecha"
                             formControlName="desde">
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -53,7 +54,7 @@
                     </div>
                     <br>
                     <div class="input-wrapper">
-                        <input class="input-fecha " matInput [matDatepicker]="picker2" placeholder="Fecha"
+                        <input class="input-fecha " [(ngModel)]="hasta" matInput [matDatepicker]="picker2" placeholder="Fecha"
                             formControlName="hasta">
                         <mat-datepicker #picker2></mat-datepicker>
                         <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker2"></mat-datepicker-toggle>
@@ -65,14 +66,16 @@
                 <label style="margin-right: 420px;">Eje</label>
                 <label>Variable</label>
                 <div *ngFor="let item of arrayc">
-                    <app-selecs-axes-variables (axes)="storageAxes($event,arrayc.indexOf(item))"(variablesArray)="storageVariables($event,arrayc.indexOf(item))" >{{item}}</app-selecs-axes-variables>
+                    <app-selecs-axes-variables [arrayAxes] ="axreturn(item)"  [arrayVariables] ="variableReturn(item)" 
+                    (axes)="storageAxes($event,arrayc.indexOf(item))"(variablesArray)="storageVariables($event,arrayc.indexOf(item))" 
+                    >{{item}}</app-selecs-axes-variables>
                 </div>
             </section>
             <button mat-button class="button-ejes" (click)="createEje()">+ Eje</button>
             <div class="container-alert">
                 <Label>Fecha de Entrega(Alerta)</Label>
                 <div class="input-wrapper">
-                    <input class="input-fecha-alerta" type="" formControlName="deliverdate" autocomplete="off" matInput [matDatepicker]="picker3"
+                    <input class="input-fecha-alerta" [(ngModel)]="deliverdate" type="" formControlName="deliverdate" autocomplete="off" matInput [matDatepicker]="picker3"
                         placeholder="Dia, Mes, Año">
                     <mat-datepicker #picker3></mat-datepicker>
                     <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker3"></mat-datepicker-toggle>

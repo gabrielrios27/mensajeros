@@ -61,6 +61,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   @Output() reportToUpload = new EventEmitter<any>();
   @Output() flagBtnGoBack = new EventEmitter<boolean>();
   @Output() flagLastAxeEmit = new EventEmitter<boolean>();
+  @Output() flagNextAxe = new EventEmitter<boolean>();
   @Output() flagEndReportEmit = new EventEmitter<boolean>();
   @Input('idReport') idReport: number = 0;
   @Input('idCenter') idCenter: number = 0;
@@ -192,6 +193,13 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       if (!item.complete) {
         this.axeToUpload = item.axe;
         this.variablesReport = item.variables;
+        if (this.axeToUpload === this.report[0].axe) {
+          this.flagBtnGoBack.emit(false);
+          this.flagNextAxe.emit(false)
+        } else {
+          this.flagBtnGoBack.emit(true);
+        }
+        break;
       } else {
         this.indexOfAxe++;
       }
@@ -201,6 +209,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   confirmCompleteAxe() {
     //lanza modal de exito en la carga de eje
     this.flagAxeSuccess = true;
+    this.flagNextAxe.emit(true)
     setTimeout(() => {
       this.flagAxeSuccess = false;
     }, 3000);

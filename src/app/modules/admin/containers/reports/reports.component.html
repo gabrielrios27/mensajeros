@@ -38,11 +38,11 @@
                         {{ element.fechaCreacion | date: 'dd/MM/yyyy'}}
                     </div>
                     <div class="list-reports__cell list-reports__cell--acction">
-                        <a>
+                        <a (click)="showModal(element)">
                             <img class="list-reports__ico-action"
                                 src="../../../../../assets/icons/arrows-angle-expand.svg" matTooltip="Vizualizar" />
                         </a>
-                        <a (click)="showModal(element)">
+                        <a (click)="edit(element)">
                             <img class="list-reports__ico-action list-reports__ico-action--edit"
                                 src="../../../../../assets/icons/Pencil.svg" alt="Icono de editar"
                                 matTooltip="Editar" />
@@ -93,7 +93,7 @@
         <div class="modal__container">
             <img class="modal__ico" src="../../../../../assets/icons/Check.svg" alt="icon check" />
             <p class="modal__text">
-
+                ¡Reporte Editado con éxito y enviado correctamente a los Centros Asignados!
             </p>
         </div>
     </div>
@@ -114,5 +114,52 @@
             </button>
         </div>
     </div>
-    <app-preview-report *ngIf="showIt" [oldname]="name" [report] ="reports" (close)="closeModal($event)"></app-preview-report>
+    
 </section>
+<div class="container-preview modal-2"*ngIf="showIt">
+        
+    <div class="container-preview-reporte">
+        <section class="container-header-preview">
+            <div class="logo-mdp">
+                <img src="/assets/images/logo-MDP.png" alt="logo-MDP" style="width: 113px;
+        height: 49px;">
+            </div>
+            <label class="label-repor-name">Reporte {{report.nombre}} </label>
+            <div class="periodo">
+                <p>Periodo</p>
+                <label>{{report.periodoDesde | date: 'dd/MM/yyyy'}} A {{report.periodoHasta|date: 'dd/MM/yyyy'}}</label>
+            </div>
+        </section>
+        <section class="container-centros-preview ">
+            <div class="centros-Alcanzados">
+                <p>Centros Alcanzados:</p>
+                <p class="label-centros" *ngFor="let item of centerSelects">{{item}}</p>
+            </div>
+            <div class="fecha-entrega">
+                <label style="display: flex; margin-top: 4px;">Fecha de Entrega (Alerta) 
+                    <mat-icon style="color:#FFBD12 ; font-size: 16px ;">notification_important</mat-icon>
+                </label>
+                <p>{{report.fechaEntrega | date: 'dd/MM/yyyy'}}</p>
+            </div>
+        </section>
+        <section class="section-ejes-variables">
+            <div class="container-ejes-variables" *ngFor="let item of axesSelects">
+                <label class="ejes-preview">{{item}}</label>
+                <div class="variables-preview">
+                    <div style="margin-top: 12px;"  *ngFor="let variable of variablesSelects" >
+                        <span *ngIf="item === variable.eje.nombre" class="p-variables">{{variable.nombre}}</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section style="border-top: 2px solid  #D9D9D9; margin-top: 20px ;">
+            <div class="buttons">
+                <button (click)="closeModal()" class="button" mat-button>Cerrar</button> 
+            </div>
+        </section>
+    </div>
+    <div *ngIf="flag" class="overlay"></div>
+
+    
+</div>
+<div *ngIf="showIt" class="overlay"></div>

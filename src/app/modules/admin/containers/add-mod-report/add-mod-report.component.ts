@@ -1,13 +1,13 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { getMaxListeners, report } from 'process';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AdminService } from '../../services/admin.service';
 import { axes, variable } from '../../models/admin.model';
 import { Centro } from '../../models/centro';
 import { Report } from '../../models/report';
 import { DataService } from '../../services/data.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-add-mod-report',
@@ -17,12 +17,20 @@ import { DataService } from '../../services/data.service';
 export class AddModReportComponent implements OnInit {
   deliverdate: any;
   nombre: any;
+  desde: any;
+  hasta: any;
+  id: any;
   variables: any;
   eje: any;
-  ejes: Array<any> = ['hola', 'pepe', 'jose'];
   arrayc: Array<number> = [1];
   arrayAxes: Array<any> = [];
   arrayVaribles: Array<any> = [];
+  report: Report = {} as Report;
+  centerSelects: Array<any> = [];
+  axesSelects: Array<any> = [];
+  variablesSelects: Array<variable> = [];
+  listOfAxes: Array<axes> = [];
+  listOfVariables: Array<variable> = [];
   // para modal de advertencia
   flagAddEdit: boolean = false;
   showDialog = false;
@@ -43,7 +51,8 @@ export class AddModReportComponent implements OnInit {
     private router: Router,
     private admin: AdminService,
     private cdr: ChangeDetectorRef,
-    private data: DataService
+    public data: DataService,
+    private routeActiva: ActivatedRoute
   ) {
     this.formAdd = fb.group({
       nombre: ['', Validators.required],
@@ -56,9 +65,12 @@ export class AddModReportComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.setFlagAddEdit(false);
     this.getCenters();
+    this.getDataFromRute();
+    this.getAxes();
+    this.getVariables();
   }
 
   // modal preview report
@@ -74,7 +86,7 @@ export class AddModReportComponent implements OnInit {
   }
   //
   //  guarda axes de componente selects
-  storageAxes(axes: number, idComponent: number) {
+  storageAxes(axes: any, idComponent: number) {
     this.arrayAxes[idComponent] = axes;
   }
   // guarda array variables de componente selects
@@ -100,12 +112,24 @@ export class AddModReportComponent implements OnInit {
   confirm(datos: Report) {
     this.data.arrayAxes = this.arrayAxes;
     this.data.arrayVariables = this.arrayVaribles;
-    this.data.arrayCenters = this.formAdd.value.centros;
+    this.data.arrayCenters = this.center;
+    this.data.report = {
+      centros: [],
+      fechaCreacion: '',
+      fechaEntrega: this.formAdd.value.deliverdate,
+      id: this.id,
+      nombre: this.formAdd.value.nombre,
+      variables: [],
+      periodoDesde: this.formAdd.value.desde,
+      periodoHasta: this.formAdd.value.hasta,
+    };
 
     this.setFlagAddEdit(true);
     this.router.navigate([
-      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report/preview-report',
-      datos,
+      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report/preview-report/' +
+        datos.nombre +
+        datos.fechaCreacion +
+        datos.fechaEntrega,
     ]);
   }
 
@@ -114,6 +138,7 @@ export class AddModReportComponent implements OnInit {
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.listCenters = data;
+        this.centerSelect();
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
@@ -139,4 +164,135 @@ export class AddModReportComponent implements OnInit {
     this.showDialog = true;
   }
   //
+
+  getDataFromRute() {
+    this.routeActiva.paramMap.subscribe((params: ParamMap) => {
+      this.id = params.get('report-id');
+      this.data.editar = true;
+    });
+    if (this.id) {
+      this.getReportByID();
+    }
+  }
+
+  getReportByID() {
+    this.admin.getReportById(this.id).subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.report = data;
+        console.log(data);
+        this.nombre = this.report.nombre;
+        this.desde = this.report.periodoDesde;
+        this.hasta = this.report.periodoHasta;
+        this.deliverdate = this.report.fechaEntrega;
+        this.getAxes();
+        this.getCenters();
+        this.centerSelect();
+        this.variablesSelect();
+        this.axesSelect();
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+      },
+    });
+  }
+
+  // gets centers selected
+  centerSelect() {
+    this.center = [];
+    for (let item of this.listCenters) {
+      for (let c of this.report.centros) {
+        if (item.id == c.id) {
+          this.center.push(item.id);
+        }
+      }
+    }
+  }
+  //
+
+  variablesSelect() {
+    // for (let item of this.listOfVariables) {
+    //   for (let c of this.report.variables) {
+    //     if (item.id == c.id) {
+    //       if (!this.arrayVaribles.includes(item.nombre)) {
+    //         this.arrayVaribles.push(item);
+    //       }
+    //     }
+    //   }
+    // }
+  }
+  // Esta funcion elimina elementos repetidos
+  deleteDuplicate() {
+    let duplicate: any = [];
+    let temporary: any = [];
+    this.arrayAxes.forEach((value, index) => {
+      temporary = Object.assign([], this.arrayAxes);
+      temporary.splice(index, 1);
+      if (temporary.indexOf(value) != -1 && duplicate.indexOf(value) == -1)
+        duplicate.push(value);
+    });
+    this.arrayAxes.splice(this.arrayAxes.indexOf(temporary[0].id) + 1, 1);
+  }
+  //
+
+  // this function add elements in arrays for edit
+  axesSelect(): any {
+    for (let vari of this.report.variables) {
+      if (!this.arrayAxes.includes(vari.eje.id)) {
+        this.arrayAxes.push(vari.eje);
+      }
+    }
+    this.deleteDuplicate();
+    this.arrayc.pop();
+    for (let c of this.arrayAxes) {
+      this.arrayc.push(this.arrayc.length + 1);
+      this.arrayVaribles.push(
+        this.listOfVariables.filter((res: any) => {
+          return res.eje.id == c.id;
+        })
+      );
+    }
+  }
+  //
+  // returns axes by componente
+  axreturn(item: any): any {
+    if (this.report != null) return this.arrayAxes[this.arrayc.indexOf(item)];
+  }
+  //
+
+  // returns varibles by componente
+  variableReturn(item: any): any {
+    if (this.report != null) return this.report.variables;
+  }
+  //
+
+  getAxes() {
+    this.admin.getAxes().subscribe({
+      next: (data: axes[]) => {
+        this.listOfAxes = data;
+        setTimeout(() => this.cdr.detectChanges());
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
+      },
+      complete: () => {},
+    });
+  }
+
+  getVariables() {
+    this.admin.getVariables().subscribe({
+      next: (data: variable[]) => {
+        this.listOfVariables = data;
+        setTimeout(() => this.cdr.detectChanges());
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
+      },
+      complete: () => {},
+    });
+  }
 }
