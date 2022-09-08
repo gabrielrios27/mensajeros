@@ -10,6 +10,8 @@ import { Report } from '../models/report';
 export class DataService {
   nombreUsuario: string =''
   nombreCentro:string=''
+  cantDuplicated: number = 0
+  flagDuplicated = false
   flag: boolean = false
   editar: boolean = false
   flagDelete: boolean= false
