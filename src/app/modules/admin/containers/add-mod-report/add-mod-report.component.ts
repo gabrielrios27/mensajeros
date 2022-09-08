@@ -168,7 +168,6 @@ export class AddModReportComponent implements OnInit {
   getDataFromRute() {
     this.routeActiva.paramMap.subscribe((params: ParamMap) => {
       this.id = params.get('report-id');
-      console.log(this.data.flagDuplicated)
       if(this.data.flagDuplicated){
         this.data.editar = false;
       }
@@ -187,7 +186,6 @@ export class AddModReportComponent implements OnInit {
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.report = data;
-        console.log(data);
         if(this.data.flagDuplicated){
           this.changeReportName()
         }
