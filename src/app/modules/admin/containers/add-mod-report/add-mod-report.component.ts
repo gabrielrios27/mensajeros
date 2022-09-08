@@ -168,7 +168,14 @@ export class AddModReportComponent implements OnInit {
   getDataFromRute() {
     this.routeActiva.paramMap.subscribe((params: ParamMap) => {
       this.id = params.get('report-id');
-      this.data.editar = true;
+      console.log(this.data.flagDuplicated)
+      if(this.data.flagDuplicated){
+        this.data.editar = false;
+      }
+      else{
+        this.data.editar = true;
+      }
+      
     });
     if (this.id) {
       this.getReportByID();
@@ -181,7 +188,12 @@ export class AddModReportComponent implements OnInit {
         setTimeout(() => this.cdr.detectChanges());
         this.report = data;
         console.log(data);
-        this.nombre = this.report.nombre;
+        if(this.data.flagDuplicated){
+          this.changeReportName()
+        }
+        else{
+          this.nombre = this.report.nombre;
+        } 
         this.desde = this.report.periodoDesde;
         this.hasta = this.report.periodoHasta;
         this.deliverdate = this.report.fechaEntrega;
@@ -195,6 +207,15 @@ export class AddModReportComponent implements OnInit {
         setTimeout(() => this.cdr.detectChanges());
       },
     });
+  }
+
+  changeReportName(){
+    if(this.data.cantDuplicated >0 ){
+      this.nombre = this.report.nombre + " duplicado " + this.data.cantDuplicated+1;
+    }
+    else{
+      this.nombre = this.report.nombre + " duplicado "
+    }
   }
 
   // gets centers selected
