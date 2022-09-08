@@ -21,7 +21,7 @@ export class AdminService {
   // https://mensajeros-back-tami.herokuapp.com/variables/eje/2
 
   constructor(private _http: HttpClient) {}
-// endpoints centros
+  // endpoints centros
   editCenter(center: Centro, id: any): Observable<Centro> {
     return this._http.put<Centro>(this.baseUrlTami + '/centros/' + id, center, {
       headers: this.headers,
@@ -47,7 +47,7 @@ export class AdminService {
   getCentros(): Observable<Centro[]> {
     return this._http.get<Centro[]>(this.baseUrlTami + '/centros');
   }
-  // 
+  //
   // endpoints user
 
   getUsers(): Observable<Users[]> {
@@ -74,7 +74,7 @@ export class AdminService {
     return this._http.get<Users>(this.baseUrlTami + '/usuarios/' + id);
   }
 
-  // 
+  //
   // endpoints axes
 
   getAxes(): Observable<axes[]> {
@@ -95,7 +95,7 @@ export class AdminService {
   deleteAxeWithId(id: string): Observable<any> {
     return this._http.delete<axes>(this.baseUrlTami + this.EPAxes + '/' + id);
   }
-  // 
+  //
   // Variables-----------------
   getVariablesQuantityPerAxe(): Observable<AxeWithquantity[]> {
     return this._http.get<AxeWithquantity[]>(
@@ -104,9 +104,7 @@ export class AdminService {
   }
 
   getVariables(): Observable<variable[]> {
-    return this._http.get<variable[]>(
-      this.baseUrlTami + this.EPVariables
-    );
+    return this._http.get<variable[]>(this.baseUrlTami + this.EPVariables);
   }
 
   getVariablesGroup(id: string): Observable<variable[]> {
@@ -136,16 +134,14 @@ export class AdminService {
   // enpoints reports
 
   getResports(): Observable<Report[]> {
-    return this._http.get<Report[]>(this.baseUrl + '/reportes');
+    return this._http.get<Report[]>(this.baseUrlTami + '/reportes');
   }
 
   deleteReport(id: number): Observable<Report> {
-    return this._http.delete<Report>(this.baseUrl + '/reportes/'+ id);
+    return this._http.delete<Report>(this.baseUrlTami + '/reportes/' + id);
   }
 
-  addReport(report:any): Observable<Report> {
-    return this._http.post<Report>(this.baseUrl + '/reportes', report);
+  addReport(report: any): Observable<Report> {
+    return this._http.post<Report>(this.baseUrlTami + '/reportes', report);
   }
-
-
 }

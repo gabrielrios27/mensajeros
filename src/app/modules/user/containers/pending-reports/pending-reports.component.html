@@ -1,8 +1,8 @@
 <section class="pending-reports">
   <div class="pending-reports__conteiner">
     <h1 class="pending-reports__title">REPORTES PENDIENTES</h1>
-    <app-pop-up-no-exist *ngIf="list.length === 0"></app-pop-up-no-exist>
-    <div class="list" *ngIf="list.length !== 0">
+    <app-pop-up-no-exist *ngIf="flagNoPendingReport"></app-pop-up-no-exist>
+    <div class="list" *ngIf="userPendingReports.length !== 0">
       <ul class="list__row-header">
         <li class="list__header">Reporte Numero</li>
         <li class="list__header">Reporte asignado para centro</li>
@@ -11,28 +11,40 @@
       </ul>
       <ul
         class="list__row-item"
-        *ngFor="let item of list"
+        *ngFor="let item of userPendingReports"
         (click)="onClickReport(item)"
         [ngClass]="
-          reportToShow.numberReport === item.numberReport
+          reportToShow.idReporte === item.idReporte &&
+          reportToShow.idCentro === item.idCentro
             ? 'list__row-item--active'
             : ''
         "
       >
-        <li class="list__item">{{ item.numberReport }}</li>
-        <li class="list__item">{{ item.center }}</li>
-        <li class="list__item">{{ item.period }}</li>
-        <li class="list__item">{{ item.limitDate }}</li>
+        <li class="list__item">{{ item.nombreReporte }}</li>
+        <li class="list__item">{{ item.nom_centro }}</li>
+        <li class="list__item">
+          {{ item.periodo_desde.substring(5, 7) }}/{{
+            item.periodo_desde.substring(0, 4)
+          }}
+          - {{ item.periodo_hasta.substring(5, 7) }}/{{
+            item.periodo_hasta.substring(0, 4)
+          }}
+        </li>
+        <li class="list__item">
+          {{ item.fecha_entrega.substring(8, 10) }}/{{
+            item.fecha_entrega.substring(5, 7)
+          }}/{{ item.fecha_entrega.substring(0, 4) }}
+        </li>
       </ul>
     </div>
-    <div class="report" *ngIf="list.length !== 0">
+    <div class="report" *ngIf="userPendingReports.length !== 0">
       <div class="report__conteiner">
         <ul class="report__info">
           <li class="report__item">Reporte</li>
-          <li class="report__item">{{ reportToShow.numberReport }}</li>
+          <li class="report__item">{{ reportToShow.nombreReporte }}</li>
           <li class="report__item">
-            Carga {{ reportToShow.lastAxeComplete }} de
-            {{ reportToShow.quantityOfAxes }} Ejes
+            Carga {{ reportToShow.reporteACargar.ejeActual - 1 || 0 }} de
+            {{ reportToShow.reporteACargar.totalEjes }} Ejes
           </li>
         </ul>
         <button
@@ -41,7 +53,7 @@
           color="primary"
           type="submit"
           (click)="onStartReport()"
-          [disabled]="reportToShow.lastAxeComplete !== 0"
+          [disabled]="(reportToShow.reporteACargar.ejeActual - 1 || 0) !== 0"
         >
           Iniciar carga
         </button>
@@ -53,7 +65,7 @@
           color="primary"
           type="submit"
           (click)="onStartReport()"
-          [disabled]="reportToShow.lastAxeComplete === 0"
+          [disabled]="(reportToShow.reporteACargar.ejeActual - 1 || 0) === 0"
         >
           Reanudar Carga de Reporte
         </button>
@@ -63,7 +75,7 @@
           color="primary"
           type="submit"
           (click)="onDeleteReport(true)"
-          [disabled]="reportToShow.lastAxeComplete === 0"
+          [disabled]="(reportToShow.reporteACargar.ejeActual - 1 || 0) === 0"
         >
           Volver a empezar
         </button>
@@ -77,6 +89,6 @@
   </app-pop-up-delete-report>
   <app-pop-up-start
     *ngIf="flagStartReport"
-    [idReport]="reportToShow.id"
+    [idReport]="reportToShow.idReporte"
   ></app-pop-up-start>
 </section>
