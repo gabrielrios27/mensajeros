@@ -8,7 +8,6 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { variable } from 'src/app/modules/admin/models';
 import { Router } from '@angular/router';
 import { Subject, Subscription, takeUntil, timer } from 'rxjs';
 import { UserService } from '../../services';
@@ -72,7 +71,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   nameReport: string | number = '';
   axesInReport: string[] = [];
   axeToUpload: string = '';
-  variablesReport: variable[] = [];
+  variablesReport: VariableRep[] = [];
   variablesToUpload: any[] = [];
   reportComplete: any[] = [];
   reportPartial: any[] = [];
@@ -208,14 +207,9 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   }
   //BUSCA EL EJE INCOMPLETO Y LO RENDERIZA EN PANTALLA CON SUS VARIABLES
   axeToShow() {
-    this.indexOfAxe = 0;
+    this.indexOfAxe = 1;
+    console.log('fuera de for: ', this.indexOfAxe);
     for (let item of this.reportToUploadComplete.ejesConVariables) {
-      //para mostrar o no mostrar el botón para ir atrás
-      if (this.indexOfAxe === 0) {
-        this.flagBtnGoBack.emit(false);
-      } else {
-        this.flagBtnGoBack.emit(true);
-      }
       //si ese eje no esta completo entonces lo renderiza en pantalla
       if (!item.complete) {
         this.axeToUpload = item.axe;
@@ -223,7 +217,16 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       } else {
         //si esta completo suma el index de eje, para usar en cuando se da click a btn atrás
         this.indexOfAxe++;
+        console.log('en for: ', this.indexOfAxe);
       }
+    }
+    this.reportToUploadComplete.ejeActual = this.indexOfAxe;
+    console.log('this.reportToUploadComplete ', this.reportToUploadComplete);
+    //para mostrar o no mostrar el botón para ir atrás
+    if (this.indexOfAxe === 1) {
+      this.flagBtnGoBack.emit(false);
+    } else {
+      this.flagBtnGoBack.emit(true);
     }
   }
 
@@ -247,11 +250,18 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       } else {
         this.reportComplete.push(...this.variablesToUpload);
         console.log('rep complete: ', this.reportComplete);
-        this.reportToUploadComplete.respuestas.push(...this.variablesToUpload);
+        // this.reportToUploadComplete.respuestas.push(...this.variablesToUpload);
         this.variablesToUpload = [];
         this.confirmCompleteAxe();
+        this.saveResponsesInReport(
+          this.reportToUploadComplete,
+          this.reportComplete
+        );
+        this.reportComplete = [];
+        console.log('se guardan variables: ', this.reportToUploadComplete);
+
         if (!this.flagLastAxe) {
-          this.setVariablesOfAxes(this.reportToUploadComplete);
+          this.axeToShow();
         }
       }
     }
@@ -281,25 +291,36 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       this.flagLastAxeEmit.next(this.flagLastAxe);
     }
   }
+  //guarda las respuestas en todo el reporte
   saveResponsesInReport(
     report: ReportToUpload,
     responsesUpload: ReportResponse[]
   ) {
     let flagResponseExist: boolean = false;
     responsesUpload.map((respUpload) => {
-      report.respuestas.map((respuesta) => {
-        if (respuesta.idVariable === respUpload.idVariable) {
-          respuesta = respUpload;
+      for (let respuestaRep of report.respuestas) {
+        if (respuestaRep.idVariable === respUpload.idVariable) {
+          respuestaRep.numerico = respUpload.numerico;
+          respuestaRep.escala = respUpload.escala;
+          respuestaRep.femenino = respUpload.femenino;
+          respuestaRep.masculino = respUpload.masculino;
+          respuestaRep.noBinario = respUpload.noBinario;
+          respuestaRep.observaciones = respUpload.observaciones;
+          respuestaRep.textual = respUpload.textual;
           flagResponseExist = true;
         }
-      });
+      }
       if (!flagResponseExist) {
         report.respuestas.push(respUpload);
       }
       report.ejesConVariables.map((axe) => {
         if (axe.axe === this.axeToUpload) {
           axe.responses = responsesUpload;
-          // axe.variables.map();
+          axe.variables.map((variable) => {
+            if (variable.id === respUpload.idVariable) {
+              variable.respuesta = respUpload;
+            }
+          });
         }
       });
     });

@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { variable } from 'src/app/modules/admin/models';
-import { ReportResponse } from '../../models';
+import { ReportResponse, VariableRep } from '../../models';
 import { UserService } from '../../services';
 
 @Component({
@@ -11,7 +10,7 @@ import { UserService } from '../../services';
   styleUrls: ['./variable-upload.component.scss'],
 })
 export class VariableUploadComponent implements OnInit {
-  @Input('variableValue') variableValue: variable = {} as variable;
+  @Input('variableValue') variableValue: VariableRep = {} as VariableRep;
   @Input('indexAlphabet') indexAlphabet: string;
   @Output() variableToUpload = new EventEmitter<any>();
   @Output() variableSaveExit = new EventEmitter<any>();
@@ -31,7 +30,7 @@ export class VariableUploadComponent implements OnInit {
   //para variable number
   inputNumber: number | null;
   //para variable textual
-  inputTextual: number | null;
+  inputTextual: string | null;
   //para escala de valor
   valueScaleSelected: number | null;
   valueScale: number[];
@@ -68,9 +67,19 @@ export class VariableUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('variableValue', this.variableValue);
     this.checkAxeNull();
     this.createValueScale();
     this.finalValue = Number(this.variableValue.valor_final);
+    this.setVariableResponse();
+  }
+  setVariableResponse() {
+    this.female = this.variableValue.respuesta.femenino;
+    this.male = this.variableValue.respuesta.masculino;
+    this.noBinary = this.variableValue.respuesta.noBinario;
+    this.inputNumber = this.variableValue.respuesta.numerico;
+    this.inputTextual = this.variableValue.respuesta.textual;
+    this.valueScaleSelected = this.variableValue.respuesta.escala;
   }
   //si el valor de eje es null se agrega un eje por defecto, para que no se produzcan errores por valor null.
   checkAxeNull() {
