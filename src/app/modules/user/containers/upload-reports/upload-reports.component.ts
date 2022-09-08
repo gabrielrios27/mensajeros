@@ -21,8 +21,6 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     private userSvc: UserService
   ) {
     this.action = this.getActionFromRute('accion');
-    console.log(this.action);
-
     this.idReport = this.getIdReportFromRute('idReporte');
     this.idCenter = this.getIdReportFromRute('idCentro');
   }

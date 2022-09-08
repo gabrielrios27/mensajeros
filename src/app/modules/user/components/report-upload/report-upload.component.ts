@@ -62,6 +62,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   @Output() flagBtnGoBack = new EventEmitter<boolean>();
   @Output() flagLastAxeEmit = new EventEmitter<boolean>();
   @Output() flagEndReportEmit = new EventEmitter<boolean>();
+  @Input('action') action: string = '';
   @Input('idReport') idReport: number = 0;
   @Input('idCenter') idCenter: number = 0;
   @Input('flagLastAxe') flagLastAxe: boolean = false;
@@ -98,8 +99,29 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getReportToUpload();
+    if (this.action === 'iniciar-carga') {
+      this.postReportToUpload();
+    } else {
+      this.getReportToUpload();
+    }
     this.createBiAlphabet();
+  }
+  postReportToUpload() {
+    this.userSvc
+      .postReportToUpload(this.idReport, this.idCenter)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: ReportToUpload) => {
+          this.reportToUploadComplete = data;
+          this.nameReport = this.reportToUploadComplete.idReporte;
+          this.listAxesOfReport(this.reportToUploadComplete);
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
   }
   getReportToUpload() {
     this.userSvc
@@ -156,6 +178,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         }
       }
     });
+    console.log(report);
   }
   //chekea si la variable ya esta cargada y si lo esta la guarda en response y tambien dentro de la variable para iterar de manera mas sencilla en upload report
   checkVariableResponse(
@@ -165,15 +188,18 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   ) {
     for (let response of responses) {
       if (
-        (response.idVariable === variable.id && response.escala) ||
-        response.femenino ||
-        response.masculino ||
-        response.noBinario ||
-        response.numerico ||
-        response.textual
+        response.idVariable === variable.id &&
+        (response.escala ||
+          response.femenino ||
+          response.masculino ||
+          response.noBinario ||
+          response.numerico ||
+          response.textual)
       ) {
         //response se usara para ver si todas las variables fueron completadas
         item.responses.push(response);
+      }
+      if (response.idVariable === variable.id) {
         //respuesta dentro de la variable se usara para cargar en los inputs los valores de las respuestas.
         variable.respuesta = response;
       }
