@@ -48,6 +48,7 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem('userPage');
     localStorage.removeItem('centerPage');
     this._http.logout();
+    window.location.reload()
     setTimeout(() => this.cdr.detectChanges());
   }
   onClickLogout() {
