@@ -9,11 +9,12 @@ import { UserModule } from './user.module';
 import * as userContainers from './containers';
 import * as adminContainers from '../admin/containers';
 
+import { PendingReportsComponent } from './containers/pending-reports/pending-reports.component';
+import { UploadReportsComponent } from './containers/upload-reports/upload-reports.component';
+
 /* Guards */
 import * as userGuards from './guards';
 import { HomeComponent } from '../admin/containers';
-import { PendingReportsComponent } from './containers/pending-reports/pending-reports.component';
-import { UploadReportsComponent } from './containers/upload-reports/upload-reports.component';
 import { UserGuard } from './guards/user.guard';
 
 /* Routes */
@@ -36,7 +37,7 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'mis-reportes/pendientes/carga-de-reporte/:id',
+    path: 'mis-reportes/pendientes/carga-de-reporte/:idReporte/:idCentro',
     canActivate: [UserGuard],
     component: UploadReportsComponent,
     pathMatch: 'full',
