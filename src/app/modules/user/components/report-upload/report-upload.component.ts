@@ -58,7 +58,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   report: AxeAndVariables[];
   reportToUploadComplete: ReportToUpload;
   //outputs e inputs
-  @Output() reportToUpload = new EventEmitter<any>();
+  @Output() reportToUpload = new EventEmitter<ReportToUpload>();
   @Output() flagBtnGoBack = new EventEmitter<boolean>();
   @Output() flagLastAxeEmit = new EventEmitter<boolean>();
   @Output() flagEndReportEmit = new EventEmitter<boolean>();
@@ -210,15 +210,18 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   axeToShow() {
     this.indexOfAxe = 0;
     for (let item of this.reportToUploadComplete.ejesConVariables) {
+      //para mostrar o no mostrar el botón para ir atrás
       if (this.indexOfAxe === 0) {
         this.flagBtnGoBack.emit(false);
       } else {
         this.flagBtnGoBack.emit(true);
       }
+      //si ese eje no esta completo entonces lo renderiza en pantalla
       if (!item.complete) {
         this.axeToUpload = item.axe;
         this.variablesReport = item.variables;
       } else {
+        //si esta completo suma el index de eje, para usar en cuando se da click a btn atrás
         this.indexOfAxe++;
       }
     }
@@ -230,7 +233,8 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.flagAxeSuccess = false;
     }, 3000);
-    this.scroll.nativeElement.scrollTop = 0; //scroll to top cada vez que se renderiza un nuevo eje
+    //scroll to top cada vez que se renderiza un nuevo eje
+    this.scroll.nativeElement.scrollTop = 0;
     let i = 0;
     //coloca complete true al eje que se completo y checkea si es el ultimo eje
     for (let item of this.reportToUploadComplete.ejesConVariables) {
@@ -241,7 +245,6 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         i++;
       }
     }
-
     //con el indice anterior chekea si es ultimo eje y emite ese valor a upload-report para mostrar botones de finalizar reporte
     if (i === this.reportToUploadComplete.ejesConVariables.length) {
       this.flagLastAxe = true;
@@ -267,6 +270,8 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         this.variablesToUpload = [];
       } else {
         this.reportComplete.push(...this.variablesToUpload);
+        console.log('rep complete: ', this.reportComplete);
+        // this.reportToUploadComplete.variables =
         this.variablesToUpload = [];
         this.confirmCompleteAxe();
         if (!this.flagLastAxe) {

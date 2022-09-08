@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { variable } from 'src/app/modules/admin/models';
+import { ReportResponse } from '../../models';
 import { UserService } from '../../services';
 
 @Component({
@@ -217,16 +218,36 @@ export class VariableUploadComponent implements OnInit {
   //al dar click en confirmar eje en upload report
   onConfirmAxe() {
     this.createVariableToUpload();
+    this.createResponse();
     this.variableToUpload.emit(this.variableComplete);
   }
+
   //al dar click en guardar y salir en upload report
   onSaveExit() {
     this.createVariableToUpload();
+    this.createResponse();
     this.variableSaveExit.emit(this.variableComplete);
   }
   //al dar click en Atrás en upload report
   onGoBack() {
     this.createVariableToUpload();
+    this.createResponse();
     this.variableGoBack.emit(this.variableComplete);
+  }
+  createResponse() {
+    if (this.variableComplete !== undefined) {
+      let response: ReportResponse = {} as ReportResponse;
+      response = {
+        escala: this.variableComplete.valueScaleSelected || null,
+        femenino: this.variableComplete.female || null,
+        idVariable: this.variableComplete.id || null,
+        masculino: this.variableComplete.male || null,
+        noBinario: this.variableComplete.noBinary || null,
+        numerico: this.variableComplete.inputNumber || null,
+        observaciones: this.variableComplete.observations || null,
+        textual: this.variableComplete.inputTextual || null,
+      };
+      this.variableComplete = response;
+    }
   }
 }
