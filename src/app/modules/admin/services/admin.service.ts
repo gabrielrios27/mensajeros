@@ -42,7 +42,7 @@ export class AdminService {
   }
 
   getCenter(id: number): Observable<Centro> {
-    return this._http.get<Centro>(this.baseUrl + '/centros/' + id);
+    return this._http.get<Centro>(this.baseUrlTami + '/centros/' + id);
   }
 
   getCentros(): Observable<Centro[]> {
