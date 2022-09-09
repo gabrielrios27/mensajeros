@@ -58,7 +58,7 @@ export class VariableUploadComponent implements OnInit {
     this.female = null;
     this.male = null;
     this.noBinary = null;
-    this.total = null;
+    this.total = 0;
     this.inputNumber = null;
     this.inputTextual = null;
     this.valueScaleSelected = null;
@@ -67,11 +67,11 @@ export class VariableUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('variableValue', this.variableValue);
     this.checkAxeNull();
     this.createValueScale();
     this.finalValue = Number(this.variableValue.valor_final);
     this.setVariableResponse();
+    this.checkGenreInputs();
   }
   setVariableResponse() {
     this.female = this.variableValue.respuesta.femenino;
@@ -90,7 +90,11 @@ export class VariableUploadComponent implements OnInit {
       };
     }
   }
-
+  checkGenreInputs() {
+    if (this.female || this.male || this.noBinary) {
+      this.onChangeInput();
+    }
+  }
   //para variable number-distinción de genero
   //con este metodo suma el valor total, pero si el input no fue completado no lo suma y deja que se vea el placeholder
   onChangeInput() {

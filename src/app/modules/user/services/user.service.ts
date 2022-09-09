@@ -8,6 +8,7 @@ export class UserService {
   private subject = new Subject<any>();
   private subjectSaveExit = new Subject<any>();
   private subjectGoBack = new Subject<any>();
+  private subjectGoBackLastAxe = new Subject<any>();
   baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com';
   baseUrlTami: string = 'https://mensajeros-back-tami.herokuapp.com';
   ePUserData: string = '/usuarios/datosUsuario';
@@ -32,8 +33,14 @@ export class UserService {
   sendClickGoBack() {
     this.subjectGoBack.next('');
   }
+  sendClickGoBackLastAxe() {
+    this.subjectGoBackLastAxe.next('');
+  }
   getClickGoBack(): Observable<any> {
     return this.subjectGoBack.asObservable();
+  }
+  getClickGoBackLastAxe(): Observable<any> {
+    return this.subjectGoBackLastAxe.asObservable();
   }
   //obtener datos del usuario logeado
   getUserData(): Observable<UserData> {
