@@ -9,6 +9,7 @@
         <mat-option [value]="item" *ngFor="let item of listOfVariablesShow">{{item.nombre}}</mat-option>
     </mat-select>
 </div>
+<mat-error *ngIf="!axe">Seleccione un eje y variables</mat-error>
 <div class="container-label-variables">
     <div>
         <div>
@@ -20,4 +21,6 @@
             </a>
         </label>
     </div>
+    
 </div>
+
