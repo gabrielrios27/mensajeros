@@ -207,23 +207,21 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   }
   //BUSCA EL EJE INCOMPLETO Y LO RENDERIZA EN PANTALLA CON SUS VARIABLES
   axeToShow() {
-    this.indexOfAxe = 1;
-    console.log('fuera de for: ', this.indexOfAxe);
+    this.indexOfAxe = 0;
     for (let item of this.reportToUploadComplete.ejesConVariables) {
       //si ese eje no esta completo entonces lo renderiza en pantalla
       if (!item.complete) {
         this.axeToUpload = item.axe;
         this.variablesReport = item.variables;
+        break;
       } else {
-        //si esta completo suma el index de eje, para usar en cuando se da click a btn atrás
         this.indexOfAxe++;
-        console.log('en for: ', this.indexOfAxe);
       }
     }
-    this.reportToUploadComplete.ejeActual = this.indexOfAxe;
+    this.reportToUploadComplete.ejeActual = this.indexOfAxe + 1;
     console.log('this.reportToUploadComplete ', this.reportToUploadComplete);
     //para mostrar o no mostrar el botón para ir atrás
-    if (this.indexOfAxe === 1) {
+    if (this.reportToUploadComplete.ejeActual === 1) {
       this.flagBtnGoBack.emit(false);
     } else {
       this.flagBtnGoBack.emit(true);
@@ -249,8 +247,6 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         this.variablesToUpload = [];
       } else {
         this.reportComplete.push(...this.variablesToUpload);
-        console.log('rep complete: ', this.reportComplete);
-        // this.reportToUploadComplete.respuestas.push(...this.variablesToUpload);
         this.variablesToUpload = [];
         this.confirmCompleteAxe();
         this.saveResponsesInReport(
@@ -258,8 +254,6 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
           this.reportComplete
         );
         this.reportComplete = [];
-        console.log('se guardan variables: ', this.reportToUploadComplete);
-
         if (!this.flagLastAxe) {
           this.axeToShow();
         }
@@ -334,22 +328,36 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
           this.reportPartial.push(item); // variables a guardar cuando se implemente endpoint de editar reporte
         }
       }
+      this.variablesToUpload = [];
       this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
     }
   }
   //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'ATRÁS' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
-  getVariablesToSaveGoBack($event: any) {
-    this.indexOfVariables++;
-    if (this.indexOfVariables === this.variablesReport.length) {
-      let i = 0;
-      for (let item of this.reportToUploadComplete.ejesConVariables) {
-        if (item.axe === this.axeToUpload && i > 0) {
-          this.report[i - 1].complete = false;
-          break;
-        }
-        i++;
-      }
-      this.axeToShow();
+  getVariablesToSaveGoBack($event: ReportResponse[]) {
+    console.log('go back: ', $event);
+    if ($event !== undefined) {
+      this.saveResponsesInReport(this.reportToUploadComplete, $event);
+    }
+    console.log('reporte cargado: ', this.reportToUploadComplete);
+    this.reportToUploadComplete.ejeActual--;
+    console.log('eje actual: ', this.reportToUploadComplete.ejeActual);
+    this.axeToUpload =
+      this.reportToUploadComplete.ejesConVariables[
+        this.reportToUploadComplete.ejeActual - 1
+      ].axe;
+    this.variablesReport =
+      this.reportToUploadComplete.ejesConVariables[
+        this.reportToUploadComplete.ejeActual - 1
+      ].variables;
+    this.reportToUploadComplete.ejesConVariables[
+      this.reportToUploadComplete.ejeActual - 1
+    ].complete = false;
+
+    //para mostrar o no mostrar el botón para ir atrás
+    if (this.reportToUploadComplete.ejeActual === 1) {
+      this.flagBtnGoBack.emit(false);
+    } else {
+      this.flagBtnGoBack.emit(true);
     }
   }
   //crea un indice de alfabeto doble
