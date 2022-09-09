@@ -78,6 +78,8 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   flagNoVariable: boolean = false;
   indexOfVariables: number = 0;
   indexOfAxe: number = 0;
+  goBackIndex: number = 0;
+  flagResponseGoBack: boolean = false;
   //para scroll to top en cada cambio de eje
   @ViewChild('scroll') scroll: ElementRef = {} as ElementRef;
   //para pop up success cuando eje fue completado
@@ -334,30 +336,45 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   }
   //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'ATRÁS' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
   getVariablesToSaveGoBack($event: ReportResponse[]) {
-    console.log('go back: ', $event);
+    this.goBackIndex++;
     if ($event !== undefined) {
-      this.saveResponsesInReport(this.reportToUploadComplete, $event);
+      this.variablesToUpload.push($event);
+      this.flagResponseGoBack = true;
     }
-    console.log('reporte cargado: ', this.reportToUploadComplete);
-    this.reportToUploadComplete.ejeActual--;
-    console.log('eje actual: ', this.reportToUploadComplete.ejeActual);
-    this.axeToUpload =
+    if (
+      this.goBackIndex === this.variablesReport.length &&
+      this.flagResponseGoBack
+    ) {
+      this.saveResponsesInReport(
+        this.reportToUploadComplete,
+        this.variablesToUpload
+      );
+    }
+    this.variablesToUpload = [];
+    if (this.goBackIndex === this.variablesReport.length) {
+      console.log('reporte cargado: ', this.reportToUploadComplete);
+      this.reportToUploadComplete.ejeActual--;
+      console.log('eje actual: ', this.reportToUploadComplete.ejeActual);
+      this.axeToUpload =
+        this.reportToUploadComplete.ejesConVariables[
+          this.reportToUploadComplete.ejeActual - 1
+        ].axe;
+      this.variablesReport =
+        this.reportToUploadComplete.ejesConVariables[
+          this.reportToUploadComplete.ejeActual - 1
+        ].variables;
       this.reportToUploadComplete.ejesConVariables[
         this.reportToUploadComplete.ejeActual - 1
-      ].axe;
-    this.variablesReport =
-      this.reportToUploadComplete.ejesConVariables[
-        this.reportToUploadComplete.ejeActual - 1
-      ].variables;
-    this.reportToUploadComplete.ejesConVariables[
-      this.reportToUploadComplete.ejeActual - 1
-    ].complete = false;
+      ].complete = false;
 
-    //para mostrar o no mostrar el botón para ir atrás
-    if (this.reportToUploadComplete.ejeActual === 1) {
-      this.flagBtnGoBack.emit(false);
-    } else {
-      this.flagBtnGoBack.emit(true);
+      //para mostrar o no mostrar el botón para ir atrás
+      if (this.reportToUploadComplete.ejeActual === 1) {
+        this.flagBtnGoBack.emit(false);
+      } else {
+        this.flagBtnGoBack.emit(true);
+      }
+      this.goBackIndex = 0;
+      this.flagResponseGoBack = false;
     }
   }
   //crea un indice de alfabeto doble
