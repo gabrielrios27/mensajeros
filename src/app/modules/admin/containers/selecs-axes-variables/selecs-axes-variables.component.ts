@@ -4,6 +4,7 @@ import { axes, variable } from '../../models';
 import { AdminService } from '../../services/admin.service';
 import { map } from 'rxjs/operators';
 import { element } from 'protractor';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-selecs-axes-variables',
@@ -13,6 +14,7 @@ import { element } from 'protractor';
 export class SelecsAxesVariablesComponent implements OnInit {
   @Output() axes = new EventEmitter<any>();
   @Output() variablesArray = new EventEmitter<any>();
+  @Output() flagDatos = new EventEmitter<boolean>();
   @Input() arrayAxes : any
   @Input() arrayVariables: Array<any> = []
   
@@ -31,19 +33,34 @@ export class SelecsAxesVariablesComponent implements OnInit {
     
   }
   capturarVariables(e: any) {
+    
     this.variables = e;
+    this.validatorsData()
     this.variablesArray.emit(this.variables)
   }
 
   capturarEje(e: any) {
     // this.axe = this.arrayAxes
+    
     this.axe = e
+    this.validatorsData()
     // filter variables per axe
     this.listOfVariablesShow = this.listOfVariables.filter((res:any)=>{
       return res.eje.id == this.axe.id
     })
     // 
     this.axes.emit(this.axe);
+  }
+
+  validatorsData(){
+    if(this.axe ==null || this.variablesArray==null ){
+      this.flagDatos.emit(true)
+      console.log(this.flagDatos)
+    }
+    else{
+      this.flagDatos.emit(false)
+      console.log(this.flagDatos)
+    }
   }
 
   removeVariable(variable: any) {
