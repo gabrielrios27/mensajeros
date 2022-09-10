@@ -109,7 +109,6 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
       this.flag1 = true;
       this.currentActive = this.circles.length;
     }
-    console.log('current', this.currentActive);
     this.update();
   }
 
@@ -118,18 +117,14 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     if (this.currentActive < 1) {
       this.currentActive = 1;
       this.flag1 = false;
-      console.log('current', this.currentActive);
     }
-    console.log('current', this.currentActive);
     this.update();
   }
 
   update() {
     let progress = document.getElementById('progress') || undefined;
 
-    console.log(this.circles.length);
     this.circles.forEach((circle: any, idx: any) => {
-      console.log(idx);
       if (idx < this.currentActive) {
         circle.classList.add('active');
       } else {
@@ -141,7 +136,6 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
       progress.style.width =
         ((actives.length - 1) / (this.circles.length - 1)) * 100 + '%';
     }
-    console.log(this.currentActive);
     switch (this.currentActive) {
       case 3: {
         this.flag1 = true;
