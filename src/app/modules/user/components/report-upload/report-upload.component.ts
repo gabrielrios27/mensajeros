@@ -61,6 +61,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   @Output() reportToUpload = new EventEmitter<ReportToUpload>();
   @Output() flagBtnGoBack = new EventEmitter<boolean>();
   @Output() flagLastAxeEmit = new EventEmitter<boolean>();
+  @Output() flagNextAxe = new EventEmitter<boolean>();
   @Output() flagEndReportEmit = new EventEmitter<boolean>();
   @Input('action') action: string = '';
   @Input('idReport') idReport: number = 0;

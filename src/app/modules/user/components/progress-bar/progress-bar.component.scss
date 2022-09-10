@@ -1,0 +1,76 @@
+@import "../../../../../styles/variables.scss";
+
+.container{
+    text-align: center;
+}
+
+.progress-container{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 30px;
+    max-width: 100%;
+    width: 700px;
+
+}
+
+.progress-container::before{
+    content: '';
+    background-color: #BCC2C8;
+    position: absolute;
+    top:50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 4px;
+    width: 100%;
+    z-index: -1;
+    transition: 0.4s ease;
+}
+
+.progress{
+    background-color: #1967D2;
+    position: absolute;
+    top:50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 4px;
+    width: 0%;
+    z-index: -1;
+    transition: 0.4s ease;
+}
+
+.circle{
+    background-color: #fff;
+    color: #999;
+    border-radius: 50%;
+    height: 28px;
+    width: 28px;
+    border: 3px solid #BCC2C8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .4s ease;
+
+}
+
+.circle.active{
+    border-color: #1967D2;
+}
+
+.btn{
+    background-color: #1967D2;
+    color: white;
+    border-radius: 5px;
+    border: 0;
+    cursor: pointer;
+    padding: 8px 30px;
+    margin: 5px;
+}
+
+.btn:focus{
+    outline: 0;
+}
+
+.btn:active{
+    transform: scale(0.97);
+}

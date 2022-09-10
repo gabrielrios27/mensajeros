@@ -1,4 +1,5 @@
 @import "../../../../../styles/variables.scss";
+
 .upload-report {
   position: fixed;
   top: 0;
@@ -14,6 +15,7 @@
     "progress"
     "conteiner"
     "footer";
+
   .upload-report__progress {
     width: 100%;
     display: flex;
@@ -21,6 +23,7 @@
     align-items: center;
     margin-top: 36px;
     grid-area: "progress";
+
     .upload-report__title {
       font-size: 36px;
       width: 11.888em;
@@ -38,12 +41,97 @@
       margin-bottom: 0;
       padding-left: 0.833em;
     }
+
     .progress-bar {
       width: auto;
-      .progress-bar__img {
-        padding-top: 15px;
+      @import "../../../../../styles/variables.scss";
+
+      .container {
+        text-align: center;
       }
+
+      .progress-container {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-bottom: 30px;
+        max-width: 100%;
+        width: 774px;
+
+      }
+
+      .progress-container::before {
+        content: '';
+        background-color: #BCC2C8;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        height: 4px;
+        width: 100%;
+        z-index: -1;
+
+        transition: 0.4s ease;
+      }
+
+      .progress {
+        background-color: #1967D2;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        height: 4px;
+        width: 0;
+        z-index: -1;
+        transition: 0.4s ease;
+      }
+
+      .circle {
+        background-color: #fff;
+        color: #999;
+        border-radius: 50%;
+        height: 28px;
+        width: 28px;
+        border: 3px solid #1967D2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: .4s ease;
+
+      }
+
+      .circle.active {
+        // background: white url('/assets/check-mark.png') no-repeat center;
+        background-size: contain;
+      }
+
+      span {
+        position: absolute;
+        padding-top: 50px;
+        color: black;
+      }
+
+
+      .btn {
+        background-color: #1967D2;
+        color: white;
+        border-radius: 5px;
+        border: 0;
+        cursor: pointer;
+        padding: 8px 30px;
+        margin: 5px;
+      }
+
+      .btn:focus {
+        outline: 0;
+      }
+
+      .btn:active {
+        transform: scale(0.97);
+      }
+
     }
+
     .upload-report__btn-close-save {
       font-size: 20px;
       height: 2.2em;
@@ -53,6 +141,7 @@
       margin: 0 2.95em;
     }
   }
+
   .upload-report__conteiner {
     grid-area: "conteiner";
     width: 90vw;
@@ -62,10 +151,12 @@
     border-radius: 10px;
   }
 }
+
 .header-container {
   grid-area: "header";
   width: 100%;
   font-size: 16px;
+
   .header {
     width: 100%;
     height: 8.75em;
@@ -73,15 +164,18 @@
     align-items: center;
     background-color: white;
     border-bottom: 0.1875em solid $color-bg-light-grey;
+
     .header__logo {
       width: 16.25em;
       padding: 0.5625em 0;
     }
   }
+
   .lines-container {
     width: 100%;
     background-color: white;
     padding-top: 0.5625em;
+
     .lines-container__line1 {
       width: 100%;
       height: 0.5625em;
@@ -90,6 +184,7 @@
         0em 0.0625em 0.75em rgba(0, 0, 0, 0.12),
         0em 0.1875em 0.1875em rgba(0, 0, 0, 0.2);
     }
+
     .lines-container__line2 {
       margin-top: 0.5625em;
       width: 100%;
@@ -99,6 +194,7 @@
     }
   }
 }
+
 .footer {
   grid-area: "footer";
   grid-template-columns: repeat(3, 1fr);
@@ -107,6 +203,7 @@
   margin: 0 94px;
   border-top: solid 5px #344d64;
   align-items: center;
+
   .footer__btn__back {
     justify-self: flex-end;
     width: 8.25em;
@@ -116,17 +213,20 @@
     border-radius: 1.75em;
     line-height: 1.2em;
   }
+
   .footer__logo {
     justify-self: center;
     grid-area: "footer-logo";
     width: 255px;
   }
+
   .footer__btn-conteiner {
     grid-area: "footer-btn";
     display: flex;
     justify-content: flex-end;
     -moz-column-gap: 20px;
     column-gap: 20px;
+
     .footer__btn-confirm-axe {
       justify-self: flex-end;
       width: 8.25em;
@@ -136,53 +236,67 @@
       border-radius: 1.75em;
       line-height: 1.2em;
     }
+
     .footer__btn-confirm-axe--end {
       width: 9.5em;
     }
   }
+
   .footer__direction {
     grid-area: "footer-direction";
   }
 }
+
 @media (max-width: 1400px) {
   .upload-report {
     grid-template-rows: 132px 84px auto 70px;
+
     .upload-report__progress {
       margin-top: 18px;
+
       .upload-report__title {
         font-size: 24px;
       }
+
       .upload-report__btn-close-save {
         font-size: 16px;
       }
     }
+
     .upload-report__conteiner {
       margin: 24px auto 0;
     }
   }
+
   .header-container {
     font-size: 12px; //hacemos responsive todo el componente para este viewport
   }
+
   .footer {
     .footer__btn__back {
       font-size: 16px;
     }
+
     .footer__btn-conteiner {
       .footer__btn-confirm-axe {
         font-size: 16px;
       }
     }
+
     .footer__logo {
       width: 145px;
     }
   }
 }
+
 @media (max-width: 768px) {
   .upload-report {
     grid-template-rows: 110px 119px auto 70px;
   }
+
   .header-container {
     font-size: 10px;
+
     .header {
       .header__logo {
         margin-left: 2.25rem;
