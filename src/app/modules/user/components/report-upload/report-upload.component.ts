@@ -72,6 +72,8 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   clickSaveExitSubscription: Subscription;
   //recibe el click de ir atras cuando esta en la ultima pantalla de envio de reporte
   clickGoBackLastAxeSubscription: Subscription;
+  //guarda el flag de comienzo de reporte para saber si empieza de cero el reporte o esta continuando con la carga
+  flagStartReport: boolean;
   nameReport: string | number = '';
   axesInReport: string[] = [];
   axeToUpload: string = '';
@@ -106,18 +108,27 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.onGoBackLastAxe();
       });
+    this.flagStartReport = false;
     this.allPendingReports = [];
     this.report = [];
     this.reportToUploadComplete = {} as ReportToUpload;
   }
 
   ngOnInit(): void {
-    if (this.action === 'iniciar-carga') {
+    this.getFlagStartReportSessionStorage();
+    if (this.flagStartReport) {
       this.postReportToUpload();
     } else {
       this.getReportToUpload();
     }
     this.createBiAlphabet();
+  }
+  getFlagStartReportSessionStorage() {
+    let flagStartReportStr = sessionStorage.getItem('flagStartReport');
+    if (flagStartReportStr) {
+      this.flagStartReport = JSON.parse(flagStartReportStr);
+      sessionStorage.removeItem('flagStartReport');
+    }
   }
   postReportToUpload() {
     this.userSvc
