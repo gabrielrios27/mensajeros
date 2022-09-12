@@ -333,6 +333,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       this.flagLastAxe = true;
       this.flagLastAxeEmit.next(this.flagLastAxe);
     }
+    console.log(this.reportToUploadComplete);
   }
   //guarda las respuestas en todo el reporte
   saveResponsesInReport(

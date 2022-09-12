@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { ReportInfo, ReportToUpload, UserData } from '../models/user.model';
+import {
+  AnswersUpload,
+  ReportInfo,
+  ReportToUpload,
+  UserData,
+} from '../models/user.model';
 
 @Injectable()
 export class UserService {
@@ -58,6 +63,18 @@ export class UserService {
   ): Observable<ReportToUpload> {
     return this._http.get<ReportToUpload>(
       this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter
+    );
+  }
+  putReportToUpload(
+    idReport: number,
+    idCenter: number,
+    body: ReportToUpload
+  ): Observable<ReportToUpload> {
+    let answers: AnswersUpload = {} as AnswersUpload;
+
+    return this._http.put<ReportToUpload>(
+      this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter,
+      body
     );
   }
   postReportToUpload(
