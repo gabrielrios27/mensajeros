@@ -135,8 +135,6 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
     }
   }
   postReportToUpload() {
-    console.log('entra en post');
-
     this.userSvc
       .postReportToUpload(this.idReport, this.idCenter)
       .pipe(takeUntil(this.onDestroy$))
@@ -162,9 +160,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       )
       .pipe(takeUntil(this.onDestroy$))
       .subscribe({
-        next: (data: ReportToUpload) => {
-          console.log('respuesta de put en reportUp: ', data);
-        },
+        next: (data: ReportToUpload) => {},
         error: (err) => {
           if (err.status === 401) {
             this.router.navigate(['/auth']);
@@ -283,6 +279,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   axeToShow() {
     this.indexOfAxe = 0;
     for (let item of this.reportToUploadComplete.ejesConVariables) {
+      console.log('eje con var: ', item);
       //si ese eje no esta completo entonces lo renderiza en pantalla
       if (item.variables.length === item.responses.length) {
         item.complete = true;
@@ -290,23 +287,35 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       if (!item.complete) {
         this.axeToUpload = item.axe;
         this.variablesReport = item.variables;
-        this.reportToUploadComplete.ejeActual = this.indexOfAxe + 1;
         break;
       } else {
         this.indexOfAxe++;
       }
     }
-    console.log('eje actual: ', this.reportToUploadComplete.ejeActual);
+
     if (
       this.indexOfAxe === this.reportToUploadComplete.ejesConVariables.length
     ) {
+      this.reportToUploadComplete.ejeActual = this.indexOfAxe;
+      this.axeToUpload =
+        this.reportToUploadComplete.ejesConVariables[this.indexOfAxe - 1].axe;
+      this.variablesReport =
+        this.reportToUploadComplete.ejesConVariables[
+          this.indexOfAxe - 1
+        ].variables;
       this.flagLastAxe = true;
       this.flagLastAxeEmit.next(this.flagLastAxe);
+      this.flagBtnGoBack.emit(false);
+    } else {
+      this.reportToUploadComplete.ejeActual = this.indexOfAxe + 1;
     }
-
+    console.log(
+      'eje actual fuera de for: ',
+      this.reportToUploadComplete.ejeActual
+    );
     this.reportToUpload.emit(this.reportToUploadComplete);
     //para mostrar o no mostrar el botón para ir atrás
-    if (this.reportToUploadComplete.ejeActual === 1) {
+    if (this.reportToUploadComplete.ejeActual === 1 || this.flagLastAxe) {
       this.flagBtnGoBack.emit(false);
     } else {
       this.flagBtnGoBack.emit(true);
@@ -458,6 +467,17 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       } else {
         this.flagBtnGoBack.emit(true);
       }
+      console.log(
+        'nuevo eje actual: ',
+        this.reportToUploadComplete.ejesConVariables[
+          this.reportToUploadComplete.ejeActual - 1
+        ]
+      );
+      console.log(
+        'reporte completo en nuevo eje actual: ',
+        this.reportToUploadComplete
+      );
+
       this.variablesToUpload = [];
       this.goBackIndex = 0;
       this.flagResponseGoBack = false;
@@ -467,6 +487,11 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
     this.reportToUploadComplete.ejesConVariables[
       this.reportToUploadComplete.ejeActual - 1
     ].complete = false;
+    console.log(
+      'onGoBackLastAxe() eje actual: ',
+      this.reportToUploadComplete.ejeActual
+    );
+
     this.reportToUpload.emit(this.reportToUploadComplete);
     //para mostrar o no mostrar el botón para ir atrás
     if (this.reportToUploadComplete.ejeActual === 1) {
