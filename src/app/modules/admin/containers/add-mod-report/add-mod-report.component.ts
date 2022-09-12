@@ -23,7 +23,6 @@ export class AddModReportComponent implements OnInit {
   variables: any;
   eje: any;
   today: any = new Date()
-  day=this.today.getDay()
   arrayc: Array<number> = [1];
   arrayAxes: Array<any> = [];
   arrayVaribles: Array<any> = [];
@@ -78,8 +77,9 @@ export class AddModReportComponent implements OnInit {
 
   validateDateDelivery(): any{
     let date = new Date(this.deliverdate)
-    let today = date.getDay()
-    if(today< this.day){
+    let deliverdate = date.getDay() + date.getMonth() + date.getFullYear()
+    let day = this.today.getDay() + this.today.getMonth() + this.today.getFullYear()
+    if(deliverdate< day){
       return true
     }
     else{
