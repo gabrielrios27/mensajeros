@@ -5,6 +5,7 @@ import { AdminService } from '../../services/admin.service';
 import { map } from 'rxjs/operators';
 import { element } from 'protractor';
 import { Validators } from '@angular/forms';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-selecs-axes-variables',
@@ -25,17 +26,23 @@ export class SelecsAxesVariablesComponent implements OnInit {
   listOfVariables: Array<variable> = []
   listOfVariablesShow: Array<variable> = []
 
-  constructor(private router: Router, private admin: AdminService, private cdr: ChangeDetectorRef) { }
+  constructor(private router: Router, private admin: AdminService, private cdr: ChangeDetectorRef, private data: DataService) { }
 
   ngOnInit(): void {
     this.getAxes()
+    if(!this.data.editar){
+      this.validatorsData()
+    }
+    else{
+      this.flagDatos.emit(false)
+    }
     // this.getVariables()
     
   }
   capturarVariables(e: any) {
     
     this.variables = e;
-    this.validatorsData()
+    
     this.variablesArray.emit(this.variables)
   }
 
@@ -43,7 +50,6 @@ export class SelecsAxesVariablesComponent implements OnInit {
     // this.axe = this.arrayAxes
     
     this.axe = e
-    this.validatorsData()
     // filter variables per axe
     this.listOfVariablesShow = this.listOfVariables.filter((res:any)=>{
       return res.eje.id == this.axe.id
