@@ -83,8 +83,9 @@ export class UserService {
     idReport: number,
     idCenter: number
   ): Observable<ReportToUpload> {
-    return this._http.get<ReportToUpload>(
-      this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter
+    return this._http.post<ReportToUpload>(
+      this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter,
+      {}
     );
   }
   getReportToUploadPerAxe(

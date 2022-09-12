@@ -32,7 +32,7 @@ export class VariableUploadComponent implements OnInit {
   //para variable textual
   inputTextual: string | null;
   //para escala de valor
-  valueScaleSelected: number | null;
+  valueScaleSelected: number | null | string;
   valueScale: number[];
   finalValue: number;
   //observaciones
@@ -79,7 +79,11 @@ export class VariableUploadComponent implements OnInit {
     this.noBinary = this.variableValue.respuesta.noBinario;
     this.inputNumber = this.variableValue.respuesta.numerico;
     this.inputTextual = this.variableValue.respuesta.textual;
-    this.valueScaleSelected = this.variableValue.respuesta.escala;
+    if (this.variableValue.respuesta.escala) {
+      this.valueScaleSelected = this.variableValue.respuesta.escala.toString();
+    } else {
+      this.valueScaleSelected = this.variableValue.respuesta.escala;
+    }
   }
   //si el valor de eje es null se agrega un eje por defecto, para que no se produzcan errores por valor null.
   checkAxeNull() {
@@ -210,7 +214,7 @@ export class VariableUploadComponent implements OnInit {
               description: this.variableValue.descripcion,
               axe: this.variableValue.eje.nombre,
               inputTextual: this.inputTextual,
-              valueScaleSelected: this.valueScaleSelected,
+              valueScaleSelected: Number(this.valueScaleSelected),
               observations: this.inputObservations,
             };
           }

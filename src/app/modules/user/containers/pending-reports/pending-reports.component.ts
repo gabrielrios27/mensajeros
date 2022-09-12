@@ -135,7 +135,9 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
   }
 
   onStartReport(action: string) {
-    this.saveStartReportSessionStorage();
+    if (action === 'iniciar-carga') {
+      this.saveStartReportSessionStorage();
+    }
     this.flagStartReport = true;
     this.timerId = setTimeout(() => {
       this.flagStartReport = false;

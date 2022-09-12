@@ -86,6 +86,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   indexOfAxe: number = 0;
   goBackIndex: number = 0;
   flagResponseGoBack: boolean = false;
+  flagStartUpload: boolean = true;
   //guarda Todos los reportes pendientes
   allPendingReports: ReportInfo[];
   //para scroll to top en cada cambio de eje
@@ -141,6 +142,8 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data: ReportToUpload) => {
           this.reportToUploadComplete = data;
+          console.log('en post: ', this.reportToUploadComplete);
+
           this.getPendingReports(data);
           this.listAxesOfReport(this.reportToUploadComplete);
         },
@@ -248,6 +251,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         }
       }
     });
+    console.log('comienza con report: ', report);
   }
   //chekea si la variable ya esta cargada y si lo esta la guarda en response y tambien dentro de la variable para iterar de manera mas sencilla en upload report
   checkVariableResponse(
@@ -279,9 +283,11 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   axeToShow() {
     this.indexOfAxe = 0;
     for (let item of this.reportToUploadComplete.ejesConVariables) {
-      console.log('eje con var: ', item);
       //si ese eje no esta completo entonces lo renderiza en pantalla
-      if (item.variables.length === item.responses.length) {
+      if (
+        item.variables.length === item.responses.length &&
+        this.flagStartUpload
+      ) {
         item.complete = true;
       }
       if (!item.complete) {
@@ -292,11 +298,11 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         this.indexOfAxe++;
       }
     }
-
+    this.flagStartUpload = false;
     if (
       this.indexOfAxe === this.reportToUploadComplete.ejesConVariables.length
     ) {
-      this.reportToUploadComplete.ejeActual = this.indexOfAxe;
+      this.reportToUploadComplete.ejeActual = this.indexOfAxe + 1;
       this.axeToUpload =
         this.reportToUploadComplete.ejesConVariables[this.indexOfAxe - 1].axe;
       this.variablesReport =
@@ -309,10 +315,6 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
     } else {
       this.reportToUploadComplete.ejeActual = this.indexOfAxe + 1;
     }
-    console.log(
-      'eje actual fuera de for: ',
-      this.reportToUploadComplete.ejeActual
-    );
     this.reportToUpload.emit(this.reportToUploadComplete);
     //para mostrar o no mostrar el botón para ir atrás
     if (this.reportToUploadComplete.ejeActual === 1 || this.flagLastAxe) {
@@ -412,6 +414,8 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         }
       });
     });
+    console.log('guarda report: ', report);
+
     this.putReportToUpload();
   }
   //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'GUARDAR Y SALIR' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
@@ -468,30 +472,27 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         this.flagBtnGoBack.emit(true);
       }
       console.log(
-        'nuevo eje actual: ',
-        this.reportToUploadComplete.ejesConVariables[
-          this.reportToUploadComplete.ejeActual - 1
-        ]
-      );
-      console.log(
         'reporte completo en nuevo eje actual: ',
         this.reportToUploadComplete
       );
-
       this.variablesToUpload = [];
       this.goBackIndex = 0;
       this.flagResponseGoBack = false;
     }
   }
   onGoBackLastAxe() {
+    this.reportToUploadComplete.ejeActual--;
+    this.axeToUpload =
+      this.reportToUploadComplete.ejesConVariables[
+        this.reportToUploadComplete.ejeActual - 1
+      ].axe;
+    this.variablesReport =
+      this.reportToUploadComplete.ejesConVariables[
+        this.reportToUploadComplete.ejeActual - 1
+      ].variables;
     this.reportToUploadComplete.ejesConVariables[
       this.reportToUploadComplete.ejeActual - 1
     ].complete = false;
-    console.log(
-      'onGoBackLastAxe() eje actual: ',
-      this.reportToUploadComplete.ejeActual
-    );
-
     this.reportToUpload.emit(this.reportToUploadComplete);
     //para mostrar o no mostrar el botón para ir atrás
     if (this.reportToUploadComplete.ejeActual === 1) {
@@ -517,9 +518,15 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       }
     }
   }
-  // click al btn FINALIZAR REPORTE
+  // click al btn guardar y salir
   onSaveExit() {
     if (this.flagLastAxe) {
+      this.putReportToUpload();
+      console.log(
+        'reporte antes de guardar y salir: ',
+        this.reportToUploadComplete
+      );
+
       this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
     }
   }
