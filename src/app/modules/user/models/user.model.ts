@@ -71,6 +71,6 @@ export interface AxeAndVariables {
 }
 export interface AnswersUpload {
   ejeActual: number;
-  fechaCompletado: string;
+  fechaCompletado: Date;
   respuestas: ReportResponse[];
 }

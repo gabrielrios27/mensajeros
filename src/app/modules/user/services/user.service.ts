@@ -68,10 +68,12 @@ export class UserService {
   putReportToUpload(
     idReport: number,
     idCenter: number,
-    body: ReportToUpload
+    report: ReportToUpload
   ): Observable<ReportToUpload> {
-    let answers: AnswersUpload = {} as AnswersUpload;
-
+    let body: AnswersUpload = {} as AnswersUpload;
+    body.ejeActual = report.ejeActual;
+    body.fechaCompletado = report.fechaCompletado;
+    body.respuestas = report.respuestas;
     return this._http.put<ReportToUpload>(
       this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter,
       body

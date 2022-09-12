@@ -95,6 +95,8 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   //para pop up error cuando falta completar un input
   flagAxeError: boolean = false;
   timerId: any;
+  //fecha actual en formato iso8601
+  today: any;
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(private router: Router, private userSvc: UserService) {
@@ -115,6 +117,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.today = new Date().toISOString();
     this.getFlagStartReportSessionStorage();
     if (this.flagStartReport) {
       this.postReportToUpload();
@@ -123,6 +126,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
     }
     this.createBiAlphabet();
   }
+
   getFlagStartReportSessionStorage() {
     let flagStartReportStr = sessionStorage.getItem('flagStartReport');
     if (flagStartReportStr) {
@@ -131,6 +135,8 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
     }
   }
   postReportToUpload() {
+    console.log('entra en post');
+
     this.userSvc
       .postReportToUpload(this.idReport, this.idCenter)
       .pipe(takeUntil(this.onDestroy$))
@@ -139,6 +145,25 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
           this.reportToUploadComplete = data;
           this.getPendingReports(data);
           this.listAxesOfReport(this.reportToUploadComplete);
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
+  }
+  putReportToUpload() {
+    this.userSvc
+      .putReportToUpload(
+        this.idReport,
+        this.idCenter,
+        this.reportToUploadComplete
+      )
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: ReportToUpload) => {
+          console.log('respuesta de put en reportUp: ', data);
         },
         error: (err) => {
           if (err.status === 401) {
@@ -259,15 +284,26 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
     this.indexOfAxe = 0;
     for (let item of this.reportToUploadComplete.ejesConVariables) {
       //si ese eje no esta completo entonces lo renderiza en pantalla
+      if (item.variables.length === item.responses.length) {
+        item.complete = true;
+      }
       if (!item.complete) {
         this.axeToUpload = item.axe;
         this.variablesReport = item.variables;
+        this.reportToUploadComplete.ejeActual = this.indexOfAxe + 1;
         break;
       } else {
         this.indexOfAxe++;
       }
     }
-    this.reportToUploadComplete.ejeActual = this.indexOfAxe + 1;
+    console.log('eje actual: ', this.reportToUploadComplete.ejeActual);
+    if (
+      this.indexOfAxe === this.reportToUploadComplete.ejesConVariables.length
+    ) {
+      this.flagLastAxe = true;
+      this.flagLastAxeEmit.next(this.flagLastAxe);
+    }
+
     this.reportToUpload.emit(this.reportToUploadComplete);
     //para mostrar o no mostrar el botón para ir atrás
     if (this.reportToUploadComplete.ejeActual === 1) {
@@ -333,7 +369,6 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       this.flagLastAxe = true;
       this.flagLastAxeEmit.next(this.flagLastAxe);
     }
-    console.log(this.reportToUploadComplete);
   }
   //guarda las respuestas en todo el reporte
   saveResponsesInReport(
@@ -368,6 +403,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         }
       });
     });
+    this.putReportToUpload();
   }
   //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'GUARDAR Y SALIR' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
   getVariablesToSaveExit($event: any) {
@@ -378,6 +414,10 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
           this.reportPartial.push(item); // variables a guardar cuando se implemente endpoint de editar reporte
         }
       }
+      this.saveResponsesInReport(
+        this.reportToUploadComplete,
+        this.reportPartial
+      );
       this.variablesToUpload = [];
       this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
     }
@@ -466,7 +506,8 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   }
   onConfirmEnd(value: boolean) {
     if (value) {
-      //Aquí enviar repote con endpoint
+      this.reportToUploadComplete.fechaCompletado = this.today;
+      this.putReportToUpload();
       this.router.navigate(['/user/dashboard/mis-reportes/pendientes']); //cambiar ruta a reportes enviados cuando se cree ese componente
     } else {
       this.flagEndReport = false;
