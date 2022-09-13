@@ -22,7 +22,7 @@ export class AddModReportComponent implements OnInit {
   id: any;
   variables: any;
   eje: any;
-  today: any = new Date()
+  today: any = new Date();
   arrayc: Array<number> = [1];
   arrayAxes: Array<any> = [];
   arrayVaribles: Array<any> = [];
@@ -32,7 +32,7 @@ export class AddModReportComponent implements OnInit {
   variablesSelects: Array<variable> = [];
   listOfAxes: Array<axes> = [];
   listOfVariables: Array<variable> = [];
-  flagAxeVariable : boolean = true
+  flagAxeVariable: boolean = true;
   // para modal de advertencia
   flagAddEdit: boolean = false;
   showDialog = false;
@@ -75,15 +75,15 @@ export class AddModReportComponent implements OnInit {
     this.getVariables();
   }
 
-  validateDateDelivery(): any{
-    let date = new Date(this.deliverdate)
-    let deliverdate = date.getDay() + date.getMonth() + date.getFullYear()
-    let day = this.today.getDay() + this.today.getMonth() + this.today.getFullYear()
-    if(deliverdate< day){
-      return true
-    }
-    else{
-      return false
+  validateDateDelivery(): any {
+    let date = new Date(this.deliverdate);
+    let deliverdate = date.getDay() + date.getMonth() + date.getFullYear();
+    let day =
+      this.today.getDay() + this.today.getMonth() + this.today.getFullYear();
+    if (deliverdate < day) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -102,15 +102,28 @@ export class AddModReportComponent implements OnInit {
   //  guarda axes de componente selects
   storageAxes(axes: any, idComponent: number) {
     this.arrayAxes[idComponent] = axes;
+    this.validatorsData();
   }
   // guarda array variables de componente selects
   storageVariables(variablesArray: any, idComponent: number) {
     this.arrayVaribles[idComponent] = variablesArray;
+    this.validatorsData();
   }
-  catchFlag(flag:any){
-    this.flagAxeVariable = flag
-    console.log(this.flagAxeVariable)
+
+  validatorsData() {
+    if (!this.data.editar) {
+      if (this.arrayAxes == null || this.arrayVaribles == null) {
+        this.flagAxeVariable = true;
+      } else {
+        this.flagAxeVariable = false;
+      }
+    } else {
+      this.flagAxeVariable = false;
+    }
   }
+  // catchFlag(flag:any){
+  //   this.flagAxeVariable = flag
+  // }
   //
   // agrega un elemento al arreglo de selects y tambien a axes y variables
   createEje() {
@@ -127,12 +140,11 @@ export class AddModReportComponent implements OnInit {
     this.variables = this.variables.filter((res: any) => res !== variable);
   }
 
-  validatorDate(): any{
-    if(this.formAdd.value.hasta < this.formAdd.value.desde){
-      return true
-    }
-    else{
-      return false
+  validatorDate(): any {
+    if (this.formAdd.value.hasta < this.formAdd.value.desde) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -204,16 +216,14 @@ export class AddModReportComponent implements OnInit {
   getDataFromRute() {
     this.routeActiva.paramMap.subscribe((params: ParamMap) => {
       this.id = params.get('report-id');
-      if(this.data.flagDuplicated){
-        this.data.editar = false;
-      }
-      else{
-        this.data.editar = true;
-      }
-      
     });
     if (this.id) {
       this.getReportByID();
+      if (this.data.flagDuplicated) {
+        this.data.editar = false;
+      } else {
+        this.data.editar = true;
+      }
     }
   }
 
@@ -222,12 +232,11 @@ export class AddModReportComponent implements OnInit {
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.report = data;
-        if(this.data.flagDuplicated){
-          this.changeReportName()
-        }
-        else{
+        if (this.data.flagDuplicated) {
+          this.changeReportName();
+        } else {
           this.nombre = this.report.nombre;
-        } 
+        }
         this.desde = this.report.periodoDesde;
         this.hasta = this.report.periodoHasta;
         this.deliverdate = this.report.fechaEntrega;
@@ -243,12 +252,12 @@ export class AddModReportComponent implements OnInit {
     });
   }
 
-  changeReportName(){
-    if(this.data.cantDuplicated >0 ){
-      this.nombre = this.report.nombre + " duplicado " + this.data.cantDuplicated+1;
-    }
-    else{
-      this.nombre = this.report.nombre + " duplicado "
+  changeReportName() {
+    if (this.data.cantDuplicated > 0) {
+      this.nombre =
+        this.report.nombre + ' duplicado ' + this.data.cantDuplicated + 1;
+    } else {
+      this.nombre = this.report.nombre + ' duplicado ';
     }
   }
 
@@ -290,14 +299,21 @@ export class AddModReportComponent implements OnInit {
   }
   //
 
-  // this function add elements in arrays for edit
-  axesSelect(): any {
+  pushAxes(){
+    let axe: Array<any> = [];
     for (let vari of this.report.variables) {
-      if (!this.arrayAxes.includes(vari.eje.id)) {
-        this.arrayAxes.push(vari.eje);
+      if (!axe.includes(vari.eje.id)) {
+        axe.push(vari.eje.id);
       }
     }
-    this.deleteDuplicate();
+    axe.forEach((element) => {
+      this.arrayAxes.push(this.listOfAxes.find((res) => res.id == element));
+    });
+  }
+
+  // this function add elements in arrays for edit
+  axesSelect(): any {
+    this.pushAxes()
     this.arrayc.pop();
     for (let c of this.arrayAxes) {
       this.arrayc.push(this.arrayc.length + 1);

@@ -74,7 +74,7 @@
                 <div *ngFor="let item of arrayc">
                     <app-selecs-axes-variables [arrayAxes] ="axreturn(item)"  [arrayVariables] ="variableReturn(item)" 
                     (axes)="storageAxes($event,arrayc.indexOf(item))"(variablesArray)="storageVariables($event,arrayc.indexOf(item))" 
-                    (flagDatos)="catchFlag($event)" 
+                    
                     >{{item}}</app-selecs-axes-variables>
                 </div>
             </section>
