@@ -163,7 +163,9 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       )
       .pipe(takeUntil(this.onDestroy$))
       .subscribe({
-        next: (data: ReportToUpload) => {},
+        next: (data: ReportToUpload) => {
+          console.log('se guardó: ', data);
+        },
         error: (err) => {
           if (err.status === 401) {
             this.router.navigate(['/auth']);
@@ -452,7 +454,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       );
     }
     if (this.goBackIndex === this.variablesReport.length) {
-      this.reportToUploadComplete.ejeActual--;
+      this.reportToUploadComplete.ejeActual++;
       this.axeToUpload =
         this.reportToUploadComplete.ejesConVariables[
           this.reportToUploadComplete.ejeActual - 1
