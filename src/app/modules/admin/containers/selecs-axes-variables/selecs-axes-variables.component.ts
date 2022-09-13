@@ -30,12 +30,6 @@ export class SelecsAxesVariablesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAxes()
-    if(!this.data.editar){
-      this.validatorsData()
-    }
-    else{
-      this.flagDatos.emit(false)
-    }
     // this.getVariables()
     
   }
@@ -56,17 +50,6 @@ export class SelecsAxesVariablesComponent implements OnInit {
     })
     // 
     this.axes.emit(this.axe);
-  }
-
-  validatorsData(){
-    if(this.axe ==null || this.variablesArray==null ){
-      this.flagDatos.emit(true)
-      console.log(this.flagDatos)
-    }
-    else{
-      this.flagDatos.emit(false)
-      console.log(this.flagDatos)
-    }
   }
 
   removeVariable(variable: any) {
