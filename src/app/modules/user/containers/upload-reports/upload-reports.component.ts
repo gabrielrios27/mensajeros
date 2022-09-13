@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ReportToUpload } from '../../models';
 import { UserService } from '../../services';
 
 @Component({
@@ -8,19 +9,22 @@ import { UserService } from '../../services';
   styleUrls: ['./upload-reports.component.scss'],
 })
 export class UploadReportsComponent implements OnInit, OnDestroy {
+  action: string;
   idReport: number;
   idCenter: number;
-  reportToUpload: any;
+  // Para obtener datos para barra de progreso
+  reportToUpload: ReportToUpload; //De reportToUpload obtener eje actual y cantidad de ejes
+  flagLastAxe: boolean = false; //cuando FlagLastAxe es true significa que el usuario esta en la ultima pantalla, la de envio de reporte
+  // --------------
   flagBtnGoBack: boolean = false;
-  flagLastAxe: boolean = false;
-  axeSucces: boolean = false
+  axeSucces: boolean = false;
   prev = document.getElementById('prev');
   next = document.getElementById('next');
   circles: any;
   flag1 = false;
   flag2 = false;
   flag3 = false;
-  items = [1,2,3]
+  items = [1, 2, 3];
   currentActive: number = 1;
   flagEndReport: boolean = false;
   constructor(
@@ -28,11 +32,21 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     private router: Router,
     private userSvc: UserService
   ) {
+    this.action = this.getActionFromRute('accion');
     this.idReport = this.getIdReportFromRute('idReporte');
     this.idCenter = this.getIdReportFromRute('idCentro');
+    this.reportToUpload = {} as ReportToUpload;
   }
 
   ngOnInit(): void {}
+  //OBTIENE LA ACCIÓN A REALIZAR DE LA RUTA
+  getActionFromRute(action: string): string {
+    let actionRoute: string | null = '';
+    this.rutaActiva.paramMap.subscribe((params: ParamMap) => {
+      actionRoute = params.get(action);
+    });
+    return actionRoute;
+  }
   //OBTIENE EL ID DE LA VARIABLE EN LA RUTA
   getIdReportFromRute(nameId: string): number {
     let idToShow;
@@ -46,39 +60,40 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   }
   onConfirmAxe() {
     this.userSvc.sendClickEvent();
-    if(this.axeSucces){
-      this.nextButton()
+    if (this.axeSucces) {
+      this.nextButton();
     }
-    this.axeSucces = false
+    this.axeSucces = false;
   }
   onGoBack() {
     this.userSvc.sendClickGoBack();
-    if(!this.axeSucces){
-      this.prevButton()
+    if (!this.axeSucces) {
+      this.prevButton();
     }
-    this.axeSucces = true
+    this.axeSucces = true;
   }
   onGoBackLastAxe() {
-    this.flagLastAxe = false;
+    this.flagLastAxe = false; //si el flagLastAxe está false entonces no está en la parte de envío de formulario
     this.flagBtnGoBack = true;
+    this.userSvc.sendClickGoBackLastAxe();
   }
   onEndReport() {
     this.flagEndReport = true;
   }
-  //Obtiene el reporte que se esta cargando en el componente report-upload
+  //Obtiene el reporte que se está cargando en el componente report-upload
   getReportToUpload($event: any) {
-    this.reportToUpload = $event;
+    this.reportToUpload = $event; //Aquí se devuelve el reporte que se esta cargando- con cantidad total de ejes y el eje actual-----------------------------------
   }
   getFlagBtnGoBack($event: boolean) {
     this.flagBtnGoBack = $event;
   }
   getFlagLastAxeEmit($event: boolean) {
-    this.flagLastAxe = $event;
+    this.flagLastAxe = $event; //si el flagLastAxe está true entonces está en la parte final de envío de formulario
     this.flagBtnGoBack = false;
   }
 
-  getFlagNextAxeEmit($event: boolean){
-    this.axeSucces = $event
+  getFlagNextAxeEmit($event: boolean) {
+    this.axeSucces = $event;
   }
   getFlagEndReportEmit($event: boolean) {
     this.flagEndReport = $event;
@@ -94,7 +109,6 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
       this.flag1 = true;
       this.currentActive = this.circles.length;
     }
-    console.log('current', this.currentActive);
     this.update();
   }
 
@@ -103,18 +117,14 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     if (this.currentActive < 1) {
       this.currentActive = 1;
       this.flag1 = false;
-      console.log('current', this.currentActive);
     }
-    console.log('current', this.currentActive);
     this.update();
   }
 
   update() {
     let progress = document.getElementById('progress') || undefined;
-    
-    console.log(this.circles.length);
+
     this.circles.forEach((circle: any, idx: any) => {
-      console.log(idx);
       if (idx < this.currentActive) {
         circle.classList.add('active');
       } else {
@@ -123,23 +133,23 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     });
     const actives = document.querySelectorAll('.active');
     if (progress?.style.width != undefined) {
-      progress.style.width = ((actives.length-1) / (this.circles.length - 1)) * 100 + '%';
+      progress.style.width =
+        ((actives.length - 1) / (this.circles.length - 1)) * 100 + '%';
     }
-    console.log(this.currentActive)
-    switch(this.currentActive){
-      case 3 :{
-        this.flag1 = true
+    switch (this.currentActive) {
+      case 3: {
+        this.flag1 = true;
         break;
       }
-      case 4:{
-        this.flag2 = true
+      case 4: {
+        this.flag2 = true;
         break;
       }
-      case 5:{
-        this.flag3 = true
+      case 5: {
+        this.flag3 = true;
         break;
       }
     }
   }
-  // 
+  //
 }

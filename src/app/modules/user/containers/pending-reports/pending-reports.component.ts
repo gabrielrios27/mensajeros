@@ -134,12 +134,14 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
     }
   }
 
-  onStartReport() {
+  onStartReport(action: string) {
     this.flagStartReport = true;
     this.timerId = setTimeout(() => {
       this.flagStartReport = false;
       this.router.navigate([
         'user/dashboard/mis-reportes/pendientes/carga-de-reporte/' +
+          action +
+          '/' +
           this.reportToShow.idReporte +
           '/' +
           this.reportToShow.idCentro,
@@ -152,6 +154,18 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
   }
   onDeleteReport(value: boolean) {
     this.flagDeleteReport = value;
+    if (this.flagDeleteReport) {
+      this.flagStartReport = true;
+      this.timerId = setTimeout(() => {
+        this.flagStartReport = false;
+        this.router.navigate([
+          'user/dashboard/mis-reportes/pendientes/carga-de-reporte/iniciar-carga/' +
+            this.reportToShow.idReporte +
+            '/' +
+            this.reportToShow.idCentro,
+        ]);
+      }, 6000);
+    }
   }
 
   ngOnDestroy(): void {

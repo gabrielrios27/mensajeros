@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { variable } from 'src/app/modules/admin/models';
+import { ReportResponse, VariableRep } from '../../models';
 import { UserService } from '../../services';
 
 @Component({
@@ -10,7 +10,7 @@ import { UserService } from '../../services';
   styleUrls: ['./variable-upload.component.scss'],
 })
 export class VariableUploadComponent implements OnInit {
-  @Input('variableValue') variableValue: variable = {} as variable;
+  @Input('variableValue') variableValue: VariableRep = {} as VariableRep;
   @Input('indexAlphabet') indexAlphabet: string;
   @Output() variableToUpload = new EventEmitter<any>();
   @Output() variableSaveExit = new EventEmitter<any>();
@@ -30,7 +30,7 @@ export class VariableUploadComponent implements OnInit {
   //para variable number
   inputNumber: number | null;
   //para variable textual
-  inputTextual: number | null;
+  inputTextual: string | null;
   //para escala de valor
   valueScaleSelected: number | null;
   valueScale: number[];
@@ -58,7 +58,7 @@ export class VariableUploadComponent implements OnInit {
     this.female = null;
     this.male = null;
     this.noBinary = null;
-    this.total = null;
+    this.total = 0;
     this.inputNumber = null;
     this.inputTextual = null;
     this.valueScaleSelected = null;
@@ -70,6 +70,16 @@ export class VariableUploadComponent implements OnInit {
     this.checkAxeNull();
     this.createValueScale();
     this.finalValue = Number(this.variableValue.valor_final);
+    this.setVariableResponse();
+    this.checkGenreInputs();
+  }
+  setVariableResponse() {
+    this.female = this.variableValue.respuesta.femenino;
+    this.male = this.variableValue.respuesta.masculino;
+    this.noBinary = this.variableValue.respuesta.noBinario;
+    this.inputNumber = this.variableValue.respuesta.numerico;
+    this.inputTextual = this.variableValue.respuesta.textual;
+    this.valueScaleSelected = this.variableValue.respuesta.escala;
   }
   //si el valor de eje es null se agrega un eje por defecto, para que no se produzcan errores por valor null.
   checkAxeNull() {
@@ -80,7 +90,11 @@ export class VariableUploadComponent implements OnInit {
       };
     }
   }
-
+  checkGenreInputs() {
+    if (this.female || this.male || this.noBinary) {
+      this.onChangeInput();
+    }
+  }
   //para variable number-distinción de genero
   //con este metodo suma el valor total, pero si el input no fue completado no lo suma y deja que se vea el placeholder
   onChangeInput() {
@@ -217,16 +231,36 @@ export class VariableUploadComponent implements OnInit {
   //al dar click en confirmar eje en upload report
   onConfirmAxe() {
     this.createVariableToUpload();
+    this.createResponse();
     this.variableToUpload.emit(this.variableComplete);
   }
+
   //al dar click en guardar y salir en upload report
   onSaveExit() {
     this.createVariableToUpload();
+    this.createResponse();
     this.variableSaveExit.emit(this.variableComplete);
   }
   //al dar click en Atrás en upload report
   onGoBack() {
     this.createVariableToUpload();
+    this.createResponse();
     this.variableGoBack.emit(this.variableComplete);
+  }
+  createResponse() {
+    if (this.variableComplete !== undefined) {
+      let response: ReportResponse = {} as ReportResponse;
+      response = {
+        escala: this.variableComplete.valueScaleSelected || null,
+        femenino: this.variableComplete.female || null,
+        idVariable: this.variableComplete.id || null,
+        masculino: this.variableComplete.male || null,
+        noBinario: this.variableComplete.noBinary || null,
+        numerico: this.variableComplete.inputNumber || null,
+        observaciones: this.variableComplete.observations || null,
+        textual: this.variableComplete.inputTextual || null,
+      };
+      this.variableComplete = response;
+    }
   }
 }
