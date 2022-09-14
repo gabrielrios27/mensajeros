@@ -58,6 +58,12 @@
                             formControlName="hasta">
                         <mat-datepicker #picker2></mat-datepicker>
                         <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <div style="margin-top: 10px;">
+                            <mat-error *ngIf="formAdd.controls['hasta'].invalid && formAdd.controls['hasta'].dirty ">
+                                <span>Campo Requerido</span>
+                            </mat-error>
+                            <mat-error *ngIf="validatorDate()">Fecha introducida incorrecta</mat-error>
+                        </div>
                     </div>
                     
                 </div>
@@ -68,6 +74,7 @@
                 <div *ngFor="let item of arrayc">
                     <app-selecs-axes-variables [arrayAxes] ="axreturn(item)"  [arrayVariables] ="variableReturn(item)" 
                     (axes)="storageAxes($event,arrayc.indexOf(item))"(variablesArray)="storageVariables($event,arrayc.indexOf(item))" 
+                    
                     >{{item}}</app-selecs-axes-variables>
                 </div>
             </section>
@@ -84,10 +91,11 @@
                     <mat-error *ngIf="formAdd.controls['deliverdate'].invalid && formAdd.controls['deliverdate'].dirty ">
                         <span>Campo Requerido</span>
                     </mat-error>
+                    <mat-error *ngIf="validateDateDelivery()">Fecha de entrega incorrecta</mat-error>
                 </div>
             </div>
             <div class="div-button ">
-                <button mat-stroked-button class="button-create" [disabled]="formAdd.invalid" (click)="confirm(formAdd.value)">Crear Reporte</button>
+                <button mat-stroked-button class="button-create" [disabled]="formAdd.invalid || flagAxeVariable" (click)="confirm(formAdd.value)">Crear Reporte</button>
             </div>
         </form>
     </div>

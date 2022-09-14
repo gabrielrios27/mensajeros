@@ -49,10 +49,9 @@ export class PreviewReportComponent implements OnInit {
 
   ngOnInit() {
     this.newname = this.oldname;
-    
+
     this.getCenters();
     this.getDataFromService();
-    
   }
 
   getCenters() {
@@ -62,7 +61,6 @@ export class PreviewReportComponent implements OnInit {
         this.centers = data;
         this.centerSelect();
         this.center2();
-        
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
@@ -104,9 +102,9 @@ export class PreviewReportComponent implements OnInit {
     this.until = this.data.report?.periodoHasta;
     this.since = this.data.report?.periodoDesde;
     this.deliverdate = this.data.report?.fechaEntrega;
-    this.deliverdate = new Date(this.deliverdate)
-    this.since = new Date(this.since)
-    this.until = new Date(this.until)
+    this.deliverdate = new Date(this.deliverdate);
+    this.since = new Date(this.since);
+    this.until = new Date(this.until);
   }
   //
 
@@ -118,9 +116,16 @@ export class PreviewReportComponent implements OnInit {
     this.close.emit(undefined);
   }
   backAddReport() {
-    this.router.navigate([
-      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
-    ]);
+    if (this.data.editar) {
+      this.router.navigate([
+        'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+        this.data.report?.id
+      ]);
+    } else {
+      this.router.navigate([
+        'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+      ]);
+    }
   }
 
   confirm() {
@@ -142,7 +147,7 @@ export class PreviewReportComponent implements OnInit {
 
     let report: Report = {
       nombre: this.name,
-      fechaCreacion:'',
+      fechaCreacion: '',
       fechaEntrega: this.deliverdate.toISOString(),
       periodoDesde: this.since.toISOString(),
       periodoHasta: this.until.toISOString(),
@@ -151,15 +156,14 @@ export class PreviewReportComponent implements OnInit {
       id: '',
     };
     this.setReportLocStg(this.name, false);
-    this.admin.editReport(this.data.report?.id,report).subscribe({
+    this.admin.editReport(this.data.report?.id, report).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.data.flag = false;
         this.data.editar = false;
         this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes']);
       },
-      error: (err) => {
-      },
+      error: (err) => {},
     });
   }
 
@@ -194,8 +198,7 @@ export class PreviewReportComponent implements OnInit {
         this.data.editar = false;
         this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes']);
       },
-      error: (err) => {
-      },
+      error: (err) => {},
     });
   }
 
