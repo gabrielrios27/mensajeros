@@ -15,25 +15,27 @@
   <section class="upload-report__progress">
     <h1 class="upload-report__title">CARGA DE REPORTE</h1>
     <div class="progress-bar">
-    <!-- barra de progreso -->
+      <!-- barra de progreso -->
       <div class="container" id="container">
         <div class="progress-container" id="progress-container">
-            <div class="progress" id="progress"></div>
-            <div class="circle active">
-                <mat-icon style="color: #1967d2">check</mat-icon>
-                <span>Inicio</span>
-            </div>
-            <div class="circle" *ngFor="let item of items">
-                <mat-icon *ngIf="item+1<currentActive" style="color: #1967d2">check</mat-icon>
-                <span>Eje {{item}}</span>
-            </div>
-            <div class="circle">
-                <mat-icon *ngIf="flag3" style="color: #1967d2">check</mat-icon>
-                <span>Envio</span>
-            </div>
+          <div class="progress" id="progress"></div>
+          <div class="circle active">
+            <mat-icon style="color: #1967d2">check</mat-icon>
+            <span>Inicio</span>
+          </div>
+          <div class="circle" *ngFor="let item of items">
+            <mat-icon *ngIf="item + 1 < currentActive" style="color: #1967d2"
+              >check</mat-icon
+            >
+            <span>Eje {{ item }}</span>
+          </div>
+          <div class="circle">
+            <mat-icon *ngIf="flag3" style="color: #1967d2">check</mat-icon>
+            <span>Envio</span>
+          </div>
         </div>
-    </div>
-    <!-- fin barra de progreso -->
+      </div>
+      <!-- fin barra de progreso -->
     </div>
     <button
       mat-raised-button
@@ -46,6 +48,7 @@
   </section>
   <section class="upload-report__conteiner">
     <app-report-upload
+      [action]="action"
       [idReport]="idReport"
       [idCenter]="idCenter"
       [flagLastAxe]="flagLastAxe"

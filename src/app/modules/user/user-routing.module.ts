@@ -37,8 +37,8 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'mis-reportes/pendientes/carga-de-reporte/:idReporte/:idCentro',
-    canActivate: [UserGuard],
+    path: 'mis-reportes/pendientes/carga-de-reporte/:accion/:idReporte/:idCentro',
+    canActivate: [],
     component: UploadReportsComponent,
     pathMatch: 'full',
   },

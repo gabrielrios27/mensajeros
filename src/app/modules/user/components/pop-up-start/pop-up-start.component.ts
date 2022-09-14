@@ -12,7 +12,7 @@ export class PopUpStartComponent implements OnInit {
   ngOnInit(): void {}
   initReport() {
     this.router.navigate([
-      'user/dashboard/mis-reportes/pendientes/carga-de-reporte/' +
+      'user/dashboard/mis-reportes/pendientes/carga-de-reporte/iniciar-carga/' +
         this.idReport +
         '/' +
         this.idCentro,

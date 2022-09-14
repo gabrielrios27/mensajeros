@@ -52,7 +52,7 @@
           class="report__btn-start"
           color="primary"
           type="submit"
-          (click)="onStartReport()"
+          (click)="onStartReport('iniciar-carga')"
           [disabled]="(reportToShow.reporteACargar.ejeActual - 1 || 0) !== 0"
         >
           Iniciar carga
@@ -64,7 +64,7 @@
           class="report__btn-continue"
           color="primary"
           type="submit"
-          (click)="onStartReport()"
+          (click)="onStartReport('reanudar-carga')"
           [disabled]="(reportToShow.reporteACargar.ejeActual - 1 || 0) === 0"
         >
           Reanudar Carga de Reporte
