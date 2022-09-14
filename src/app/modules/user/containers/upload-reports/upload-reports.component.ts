@@ -105,7 +105,6 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
         }
       }
     }
-    console.log(this.reportToUpload.ejeActual)
     // this.update()
   }
 
@@ -150,7 +149,6 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   update() {
     let progress = document.getElementById('progress') || undefined;
     this.circles.forEach((circle: any, idx: any) => {
-      console.log(circle)
       if (idx < this.currentActive) {
         circle.classList.add('active');
       } else {
