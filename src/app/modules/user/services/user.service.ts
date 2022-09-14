@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { ReportInfo, ReportToUpload, UserData } from '../models/user.model';
+import {
+  AnswersUpload,
+  ReportInfo,
+  ReportToUpload,
+  UserData,
+} from '../models/user.model';
 
 @Injectable()
 export class UserService {
@@ -60,12 +65,27 @@ export class UserService {
       this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter
     );
   }
+  putReportToUpload(
+    idReport: number,
+    idCenter: number,
+    report: ReportToUpload
+  ): Observable<ReportToUpload> {
+    let body: AnswersUpload = {} as AnswersUpload;
+    body.ejeActual = report.ejeActual;
+    body.fechaCompletado = report.fechaCompletado;
+    body.respuestas = report.respuestas;
+    return this._http.put<ReportToUpload>(
+      this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter,
+      body
+    );
+  }
   postReportToUpload(
     idReport: number,
     idCenter: number
   ): Observable<ReportToUpload> {
-    return this._http.get<ReportToUpload>(
-      this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter
+    return this._http.post<ReportToUpload>(
+      this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter,
+      {}
     );
   }
   getReportToUploadPerAxe(

@@ -135,6 +135,9 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
   }
 
   onStartReport(action: string) {
+    if (action === 'iniciar-carga') {
+      this.saveStartReportSessionStorage();
+    }
     this.flagStartReport = true;
     this.timerId = setTimeout(() => {
       this.flagStartReport = false;
@@ -152,8 +155,12 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
   onClickReport(item: any) {
     this.reportToShow = item;
   }
+  saveStartReportSessionStorage() {
+    sessionStorage.setItem('flagStartReport', JSON.stringify(true));
+  }
   onDeleteReport(value: boolean) {
     this.flagDeleteReport = value;
+    this.saveStartReportSessionStorage();
     if (this.flagDeleteReport) {
       this.flagStartReport = true;
       this.timerId = setTimeout(() => {

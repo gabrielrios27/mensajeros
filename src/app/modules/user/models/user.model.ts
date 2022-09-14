@@ -69,3 +69,8 @@ export interface AxeAndVariables {
   complete: boolean;
   idAxe: number;
 }
+export interface AnswersUpload {
+  ejeActual: number;
+  fechaCompletado: Date;
+  respuestas: ReportResponse[];
+}

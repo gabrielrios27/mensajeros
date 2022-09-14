@@ -18,6 +18,7 @@
   <app-pop-up-success
     [flagAxeSuccess]="flagAxeSuccess"
     [textSuccess]="'¡Eje guardado con éxito! Continuarás con el siguiente Eje'"
+    (closePopUpSuccess)="onCloseModal($event)"
   ></app-pop-up-success>
   <app-pop-up-error
     [flagAxeError]="flagAxeError"
