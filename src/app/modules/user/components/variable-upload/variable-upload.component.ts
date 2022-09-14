@@ -84,6 +84,7 @@ export class VariableUploadComponent implements OnInit {
     } else {
       this.valueScaleSelected = this.variableValue.respuesta.escala;
     }
+    this.inputObservations = this.variableValue.respuesta.observaciones;
   }
   //si el valor de eje es null se agrega un eje por defecto, para que no se produzcan errores por valor null.
   checkAxeNull() {
