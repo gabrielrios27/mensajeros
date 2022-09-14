@@ -53,7 +53,10 @@
           color="primary"
           type="submit"
           (click)="onStartReport('iniciar-carga')"
-          [disabled]="(reportToShow.reporteACargar.ejeActual - 1 || 0) !== 0"
+          [disabled]="
+            (reportToShow.reporteACargar.ejeActual - 1 || 0) !== 0 ||
+            reportToShow.reporteACargar.respuestas.length !== 0
+          "
         >
           Iniciar carga
         </button>
@@ -65,7 +68,10 @@
           color="primary"
           type="submit"
           (click)="onStartReport('reanudar-carga')"
-          [disabled]="(reportToShow.reporteACargar.ejeActual - 1 || 0) === 0"
+          [disabled]="
+            (reportToShow.reporteACargar.ejeActual - 1 || 0) === 0 &&
+            reportToShow.reporteACargar.respuestas.length === 0
+          "
         >
           Reanudar Carga de Reporte
         </button>
@@ -75,7 +81,10 @@
           color="primary"
           type="submit"
           (click)="onDeleteReport(true)"
-          [disabled]="(reportToShow.reporteACargar.ejeActual - 1 || 0) === 0"
+          [disabled]="
+            (reportToShow.reporteACargar.ejeActual - 1 || 0) === 0 &&
+            reportToShow.reporteACargar.respuestas.length === 0
+          "
         >
           Volver a empezar
         </button>
