@@ -72,6 +72,8 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   clickSaveExitSubscription: Subscription;
   //recibe el click de ir atras cuando esta en la ultima pantalla de envio de reporte
   clickGoBackLastAxeSubscription: Subscription;
+  //guarda el flag de comienzo de reporte para saber si empieza de cero el reporte o esta continuando con la carga
+  flagStartReport: boolean;
   nameReport: string | number = '';
   axesInReport: string[] = [];
   axeToUpload: string = '';
@@ -84,6 +86,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   indexOfAxe: number = 0;
   goBackIndex: number = 0;
   flagResponseGoBack: boolean = false;
+  flagStartUpload: boolean = true;
   //guarda Todos los reportes pendientes
   allPendingReports: ReportInfo[];
   //para scroll to top en cada cambio de eje
@@ -93,6 +96,8 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   //para pop up error cuando falta completar un input
   flagAxeError: boolean = false;
   timerId: any;
+  //fecha actual en formato iso8601
+  today: any;
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(private router: Router, private userSvc: UserService) {
@@ -106,18 +111,29 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.onGoBackLastAxe();
       });
+    this.flagStartReport = false;
     this.allPendingReports = [];
     this.report = [];
     this.reportToUploadComplete = {} as ReportToUpload;
   }
 
   ngOnInit(): void {
-    if (this.action === 'iniciar-carga') {
+    this.today = new Date().toISOString();
+    this.getFlagStartReportSessionStorage();
+    if (this.flagStartReport) {
       this.postReportToUpload();
     } else {
       this.getReportToUpload();
     }
     this.createBiAlphabet();
+  }
+
+  getFlagStartReportSessionStorage() {
+    let flagStartReportStr = sessionStorage.getItem('flagStartReport');
+    if (flagStartReportStr) {
+      this.flagStartReport = JSON.parse(flagStartReportStr);
+      sessionStorage.removeItem('flagStartReport');
+    }
   }
   postReportToUpload() {
     this.userSvc
@@ -129,6 +145,23 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
           this.getPendingReports(data);
           this.listAxesOfReport(this.reportToUploadComplete);
         },
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
+  }
+  putReportToUpload() {
+    this.userSvc
+      .putReportToUpload(
+        this.idReport,
+        this.idCenter,
+        this.reportToUploadComplete
+      )
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: ReportToUpload) => {},
         error: (err) => {
           if (err.status === 401) {
             this.router.navigate(['/auth']);
@@ -248,6 +281,13 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
     this.indexOfAxe = 0;
     for (let item of this.reportToUploadComplete.ejesConVariables) {
       //si ese eje no esta completo entonces lo renderiza en pantalla
+      if (
+        item.variables.length === item.responses.length &&
+        this.flagStartUpload &&
+        this.indexOfAxe < this.reportToUploadComplete.ejeActual - 1
+      ) {
+        item.complete = true;
+      }
       if (!item.complete) {
         this.axeToUpload = item.axe;
         this.variablesReport = item.variables;
@@ -256,10 +296,27 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         this.indexOfAxe++;
       }
     }
-    this.reportToUploadComplete.ejeActual = this.indexOfAxe + 1;
+    this.flagStartUpload = false;
+    //si estan todos los ejes completos---------
+    if (
+      this.indexOfAxe === this.reportToUploadComplete.ejesConVariables.length
+    ) {
+      // this.reportToUploadComplete.ejeActual = this.indexOfAxe + 1;
+      this.axeToUpload =
+        this.reportToUploadComplete.ejesConVariables[this.indexOfAxe - 1].axe;
+      this.variablesReport =
+        this.reportToUploadComplete.ejesConVariables[
+          this.indexOfAxe - 1
+        ].variables;
+      this.flagLastAxe = true;
+      this.flagLastAxeEmit.next(this.flagLastAxe);
+      this.flagBtnGoBack.emit(false);
+    } else {
+      // this.reportToUploadComplete.ejeActual = this.indexOfAxe + 1;
+    }
     this.reportToUpload.emit(this.reportToUploadComplete);
     //para mostrar o no mostrar el botón para ir atrás
-    if (this.reportToUploadComplete.ejeActual === 1) {
+    if (this.reportToUploadComplete.ejeActual === 1 || this.flagLastAxe) {
       this.flagBtnGoBack.emit(false);
     } else {
       this.flagBtnGoBack.emit(true);
@@ -267,11 +324,14 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   }
 
   //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'CONFIRMAR EJE' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
+  //una vez por cada variable
   getVariablesToUpload($event: any) {
     this.variablesToUpload.push($event);
     this.flagNoVariable = false;
     //Cuando se cargaron todas las respuestas de los componentes variables-upload recien chekea si todas estan completas
     if (this.variablesToUpload.length === this.variablesReport.length) {
+      //cuando se cargaron todas las variables
+      //chekea si alguna esta vacia y lanza modal de falta completar input
       for (let item of this.variablesToUpload) {
         if (item === undefined) {
           this.flagNoVariable = true;
@@ -284,9 +344,11 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       if (this.flagNoVariable) {
         this.variablesToUpload = [];
       } else {
+        //si estan todos los inputs completos entonces:
         this.reportComplete.push(...this.variablesToUpload);
         this.variablesToUpload = [];
         this.confirmCompleteAxe();
+        this.reportToUploadComplete.ejeActual++;
         this.saveResponsesInReport(
           this.reportToUploadComplete,
           this.reportComplete
@@ -303,7 +365,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
     //lanza modal de exito en la carga de eje
     this.flagAxeSuccess = true;
     this.flagNextAxe.emit(true)
-    setTimeout(() => {
+    this.timerId = setTimeout(() => {
       this.flagAxeSuccess = false;
     }, 3000);
     //scroll to top cada vez que se renderiza un nuevo eje
@@ -357,8 +419,10 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         }
       });
     });
+    this.putReportToUpload();
   }
   //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'GUARDAR Y SALIR' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
+  //cuando flagLastAxe es false
   getVariablesToSaveExit($event: any) {
     this.variablesToUpload.push($event);
     if (this.variablesToUpload.length === this.variablesReport.length) {
@@ -367,26 +431,24 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
           this.reportPartial.push(item); // variables a guardar cuando se implemente endpoint de editar reporte
         }
       }
+      this.saveResponsesInReport(
+        this.reportToUploadComplete,
+        this.reportPartial
+      );
       this.variablesToUpload = [];
       this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
     }
   }
   //ESTE METODO SE LANZA CUANDO SE DA CLICK AL BTN 'ATRÁS' EN 'UPLOAD-REPORT' PARA QUE DESDE 'VARIABLE-UPLOAD' ENVÍE POR OUTPUT LA VARIABLE CARGADA A ESTE COMPONENTE
+  //uno por cada respuesta
   getVariablesToSaveGoBack($event: ReportResponse[]) {
     this.goBackIndex++;
     if ($event !== undefined) {
+      //si esa variable fue completada se guarda la respuesta en variablesToUpload
       this.variablesToUpload.push($event);
       this.flagResponseGoBack = true;
     }
-    if (
-      this.goBackIndex === this.variablesReport.length &&
-      this.flagResponseGoBack
-    ) {
-      this.saveResponsesInReport(
-        this.reportToUploadComplete,
-        this.variablesToUpload
-      );
-    }
+    //luego de que se cargaron todas las respuestas:
     if (this.goBackIndex === this.variablesReport.length) {
       this.reportToUploadComplete.ejeActual--;
       this.axeToUpload =
@@ -401,6 +463,13 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         this.reportToUploadComplete.ejeActual - 1
       ].complete = false;
       this.reportToUpload.emit(this.reportToUploadComplete);
+      if (this.flagResponseGoBack) {
+        //si hay respuesta se guarda en el reporte y se sube al servidor
+        this.saveResponsesInReport(
+          this.reportToUploadComplete,
+          this.variablesToUpload
+        );
+      }
       //para mostrar o no mostrar el botón para ir atrás
       if (this.reportToUploadComplete.ejeActual === 1) {
         this.flagBtnGoBack.emit(false);
@@ -414,6 +483,17 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
     }
   }
   onGoBackLastAxe() {
+    this.flagLastAxe = false;
+    this.flagLastAxeEmit.next(this.flagLastAxe);
+    this.reportToUploadComplete.ejeActual--;
+    this.axeToUpload =
+      this.reportToUploadComplete.ejesConVariables[
+        this.reportToUploadComplete.ejeActual - 1
+      ].axe;
+    this.variablesReport =
+      this.reportToUploadComplete.ejesConVariables[
+        this.reportToUploadComplete.ejeActual - 1
+      ].variables;
     this.reportToUploadComplete.ejesConVariables[
       this.reportToUploadComplete.ejeActual - 1
     ].complete = false;
@@ -442,10 +522,27 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       }
     }
   }
-  // click al btn FINALIZAR REPORTE
+  // click al btn guardar y salir
+  //cuando flagLastAxe es true
   onSaveExit() {
     if (this.flagLastAxe) {
-      this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
+      this.userSvc
+        .putReportToUpload(
+          this.idReport,
+          this.idCenter,
+          this.reportToUploadComplete
+        )
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe({
+          next: (data: ReportToUpload) => {
+            this.router.navigate(['/user/dashboard/mis-reportes/pendientes']);
+          },
+          error: (err) => {
+            if (err.status === 401) {
+              this.router.navigate(['/auth']);
+            }
+          },
+        });
     }
   }
   onCloseModal($event: boolean) {
@@ -456,8 +553,24 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   }
   onConfirmEnd(value: boolean) {
     if (value) {
-      //Aquí enviar repote con endpoint
-      this.router.navigate(['/user/dashboard/mis-reportes/pendientes']); //cambiar ruta a reportes enviados cuando se cree ese componente
+      this.reportToUploadComplete.fechaCompletado = this.today;
+      this.userSvc
+        .putReportToUpload(
+          this.idReport,
+          this.idCenter,
+          this.reportToUploadComplete
+        )
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe({
+          next: (data: ReportToUpload) => {
+            this.router.navigate(['/user/dashboard/mis-reportes/pendientes']); //cambiar ruta a reportes enviados cuando se cree ese componente
+          },
+          error: (err) => {
+            if (err.status === 401) {
+              this.router.navigate(['/auth']);
+            }
+          },
+        });
     } else {
       this.flagEndReport = false;
       this.flagEndReportEmit.next(false);

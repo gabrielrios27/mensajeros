@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-pop-up-success',
@@ -8,10 +8,12 @@ import { Component, Input, OnInit } from '@angular/core';
 export class PopUpSuccessComponent implements OnInit {
   @Input('flagAxeSuccess') flagAxeSuccess: boolean = false;
   @Input('textSuccess') textSuccess: string = '';
+  @Output() closePopUpSuccess = new EventEmitter<boolean>();
   constructor() {}
 
   ngOnInit(): void {}
   close() {
     this.flagAxeSuccess = false;
+    this.closePopUpSuccess.emit(false);
   }
 }

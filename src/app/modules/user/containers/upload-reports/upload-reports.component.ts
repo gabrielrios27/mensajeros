@@ -96,9 +96,9 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
       }
       if (this.reportToUpload.ejeActual-1 >= 1) {
         let progress = document.getElementById('progress') || undefined;
-        this.currentActive = this.reportToUpload.ejeActual + 1;
+        this.currentActive = this.reportToUpload.ejeActual ;
         if (progress?.style.width != undefined) {
-          progress.style.width = (this.reportToUpload.ejeActual / this.reportToUpload.totalEjes) *100 +'%';
+          progress.style.width = ((this.reportToUpload.ejeActual-1) / this.reportToUpload.totalEjes) *100 +'%';
           if (progress.style.width == 100 + '%') {
             this.flag3 = true;
           }
@@ -131,25 +131,26 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     this.circles = document.querySelectorAll('.circle');
     this.currentActive += 1;
     if (this.currentActive > this.circles.length) {
-      this.flag1 = true;
       this.currentActive = this.circles.length;
     }
     this.update();
   }
 
   prevButton() {
+    this.circles = document.querySelectorAll('.circle');
     this.currentActive -= 1;
     if (this.currentActive < 1) {
       this.currentActive = 1;
-      this.flag1 = false;
+      
     }
+    this.flag3 = false;
     this.update();
   }
 
   update() {
     let progress = document.getElementById('progress') || undefined;
-
     this.circles.forEach((circle: any, idx: any) => {
+      console.log(circle)
       if (idx < this.currentActive) {
         circle.classList.add('active');
       } else {
