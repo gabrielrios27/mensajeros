@@ -73,14 +73,12 @@ export class AddModReportComponent implements OnInit {
     this.getDataFromRute();
     this.getAxes();
     this.getVariables();
+    this.validatorsData()
   }
 
   validateDateDelivery(): any {
     let date = new Date(this.deliverdate);
-    let deliverdate = date.getDay() + date.getMonth() + date.getFullYear();
-    let day =
-      this.today.getDay() + this.today.getMonth() + this.today.getFullYear();
-    if (deliverdate < day) {
+    if (date < this.today) {
       return true;
     } else {
       return false;
