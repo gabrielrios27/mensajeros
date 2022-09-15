@@ -42,7 +42,7 @@ export class AdminService {
   }
 
   getCenter(id: number): Observable<Centro> {
-    return this._http.get<Centro>(this.baseUrl + '/centros/' + id);
+    return this._http.get<Centro>(this.baseUrlTami + '/centros/' + id);
   }
 
   getCentros(): Observable<Centro[]> {
@@ -79,7 +79,7 @@ export class AdminService {
   // endpoints axes
 
   getAxes(): Observable<axes[]> {
-    return this._http.get<axes[]>(this.baseUrl + this.EPAxes);
+    return this._http.get<axes[]>(this.baseUrlTami + this.EPAxes);
   }
   getAxeWithId(id: string): Observable<axes> {
     return this._http.get<axes>(this.baseUrlTami + this.EPAxes + '/' + id);
@@ -147,11 +147,11 @@ export class AdminService {
   }
 
   getReportById(id:any): Observable<Report> {
-    return this._http.get<Report>(this.baseUrl + '/reportes/' + id);
+    return this._http.get<Report>(this.baseUrlTami + '/reportes/' + id);
   }
 
   editReport(id:any,report:Report): Observable<Report> {
-    return this._http.put<Report>(this.baseUrl + '/reportes/' + id , report);
+    return this._http.put<Report>(this.baseUrlTami + '/reportes/' + id , report);
   }
 
 }

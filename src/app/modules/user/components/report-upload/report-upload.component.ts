@@ -364,6 +364,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   confirmCompleteAxe() {
     //lanza modal de exito en la carga de eje
     this.flagAxeSuccess = true;
+    this.flagNextAxe.emit(true)
     this.timerId = setTimeout(() => {
       this.flagAxeSuccess = false;
     }, 3000);
@@ -474,6 +475,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         this.flagBtnGoBack.emit(false);
       } else {
         this.flagBtnGoBack.emit(true);
+        this.flagNextAxe.emit(false)
       }
       this.variablesToUpload = [];
       this.goBackIndex = 0;

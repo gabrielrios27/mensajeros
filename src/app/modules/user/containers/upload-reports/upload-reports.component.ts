@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ReportToUpload } from '../../models';
 import { UserService } from '../../services';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-upload-reports',
@@ -22,9 +23,8 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   next = document.getElementById('next');
   circles: any;
   flag1 = false;
-  flag2 = false;
   flag3 = false;
-  items = [1, 2, 3];
+  axes: Array<any> = [];
   currentActive: number = 1;
   flagEndReport: boolean = false;
   constructor(
@@ -76,6 +76,9 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     this.flagLastAxe = false; //si el flagLastAxe está false entonces no está en la parte de envío de formulario
     this.flagBtnGoBack = true;
     this.userSvc.sendClickGoBackLastAxe();
+    if (!this.axeSucces) {
+      this.prevButton();
+    }
   }
   onEndReport() {
     this.flagEndReport = true;
@@ -83,7 +86,28 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
   //Obtiene el reporte que se está cargando en el componente report-upload
   getReportToUpload($event: any) {
     this.reportToUpload = $event; //Aquí se devuelve el reporte que se esta cargando- con cantidad total de ejes y el eje actual-----------------------------------
+    this.getaxes();
   }
+  //obtiene el total de ejes y los carga en un arreglo para rederizarlo en la barra de progreso
+  getaxes() {
+    if (this.axes.length == 0) {
+      for (let i = 0; i < this.reportToUpload.totalEjes; i++) {
+        this.axes.push(i + 1);
+      }
+      if (this.reportToUpload.ejeActual-1 >= 1) {
+        let progress = document.getElementById('progress') || undefined;
+        this.currentActive = this.reportToUpload.ejeActual ;
+        if (progress?.style.width != undefined) {
+          progress.style.width = ((this.reportToUpload.ejeActual-1) / this.reportToUpload.totalEjes) *100 +'%';
+          if (progress.style.width == 100 + '%') {
+            this.flag3 = true;
+          }
+        }
+      }
+    }
+    // this.update()
+  }
+
   getFlagBtnGoBack($event: boolean) {
     this.flagBtnGoBack = $event;
   }
@@ -106,18 +130,19 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     this.circles = document.querySelectorAll('.circle');
     this.currentActive += 1;
     if (this.currentActive > this.circles.length) {
-      this.flag1 = true;
       this.currentActive = this.circles.length;
     }
     this.update();
   }
 
   prevButton() {
+    this.circles = document.querySelectorAll('.circle');
     this.currentActive -= 1;
     if (this.currentActive < 1) {
       this.currentActive = 1;
-      this.flag1 = false;
+      
     }
+    this.flag3 = false;
     this.update();
   }
 
@@ -134,19 +159,8 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     if (progress?.style.width != undefined) {
       progress.style.width =
         ((actives.length - 1) / (this.circles.length - 1)) * 100 + '%';
-    }
-    switch (this.currentActive) {
-      case 3: {
-        this.flag1 = true;
-        break;
-      }
-      case 4: {
-        this.flag2 = true;
-        break;
-      }
-      case 5: {
+      if (progress.style.width == 100 + '%') {
         this.flag3 = true;
-        break;
       }
     }
   }

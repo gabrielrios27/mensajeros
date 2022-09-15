@@ -66,6 +66,7 @@ export class ReportsComponent implements OnInit {
     this.getCenters();
     this.getAxes();
     this.getVariables();
+    this.data.flagDuplicated = false
   }
 
   busca(e: string) {
@@ -91,7 +92,6 @@ export class ReportsComponent implements OnInit {
     this.variablesSelect();
     this.axesSelect();
     this.showIt = true;
-    // console.log(element)
   }
 
   closeModal() {
@@ -102,7 +102,6 @@ export class ReportsComponent implements OnInit {
   centerSelect() {
     for (let item of this.centers) {
       for (let c of this.report.centros) {
-        // console.log(c)
         if (item.id == c) {
           this.centerSelects.push(item.nombre);
         }
@@ -118,23 +117,18 @@ export class ReportsComponent implements OnInit {
         }
       }
     }
-    // console.log(this.variablesSelects)
   }
 
   axesSelect() {
     for (let item of this.listOfAxes) {
-      // console.log(item.id)
       for (let c of this.variablesSelects) {
-        // console.log(c.eje)
         if (item.id == c.eje.id) {
-          // console.log(item)
           if (!this.axesSelects.includes(item.nombre)) {
             this.axesSelects.push(item.nombre);
           }
         }
       }
     }
-    // console.log(this.centerSelects)
   }
 
   //
@@ -144,11 +138,9 @@ export class ReportsComponent implements OnInit {
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.centers = data;
-        // console.log(data);
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        // console.log(err);
       },
     });
   }
@@ -174,16 +166,13 @@ export class ReportsComponent implements OnInit {
       next: (data: axes[]) => {
         this.listOfAxes = data;
         setTimeout(() => this.cdr.detectChanges());
-        // console.log(this.listOfAxes);
       },
       error: (err) => {
-        // console.log(err);
         if (err.status === 401) {
           this.router.navigate(['/auth']);
         }
       },
       complete: () => {
-        // console.log('Request get axes complete');
       },
     });
   }
@@ -193,16 +182,13 @@ export class ReportsComponent implements OnInit {
       next: (data: variable[]) => {
         this.listOfVariables = data;
         setTimeout(() => this.cdr.detectChanges());
-        // console.log(this.listOfVariables);
       },
       error: (err) => {
-        // console.log(err);
         if (err.status === 401) {
           this.router.navigate(['/auth']);
         }
       },
       complete: () => {
-        // console.log('Request get axes complete');
       },
     });
   }
@@ -226,6 +212,20 @@ export class ReportsComponent implements OnInit {
   edit(rep: any) {
     this.report = rep;
     this.data.editar = true
+    this.router.navigate([
+      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+      this.report.id
+    ]);
+  }
+
+  // esta funcion permite duplicar el reporte seleccionado
+
+  duplicated(rep: any) {
+    this.report = rep;
+    this.data.editar = true
+    this.data.flagDuplicated = true
+    let repD = this.reports.filter((res:any) => {return res.nombre === rep.nombre + " duplicado "})
+    this.data.cantDuplicated = repD.length
     this.router.navigate([
       'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
       this.report.id
