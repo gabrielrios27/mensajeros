@@ -20,6 +20,7 @@ import { AdminGuard } from './guards';
 import { AddModReportComponent } from './containers/add-mod-report/add-mod-report.component';
 import { ConfirmOutGuard } from './guards/confirm-out.guard';
 import { PreviewReportComponent } from './containers/preview-report/preview-report.component';
+import { ReceivedReportComponent } from './containers/received-report/received-report.component';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -115,6 +116,12 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'reportes/centro-de-reportes/reporte-recibido/:id-report/:id-center',
+    canActivate: [AdminGuard],
+    component: ReceivedReportComponent,
+    pathMatch: 'full',
+  },
+  {
     path: 'ayuda',
     canActivate: [AdminGuard],
     component: adminContainers.HelpComponent,
@@ -144,13 +151,13 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'reportes/creacion-de-reportes/add-mod-report/preview-report',  
+    path: 'reportes/creacion-de-reportes/add-mod-report/preview-report',
     component: PreviewReportComponent,
     canActivate: [AdminGuard],
     pathMatch: 'full',
   },
   {
-    path: 'reportes/creacion-de-reportes/add-mod-report/preview-report/:report',  
+    path: 'reportes/creacion-de-reportes/add-mod-report/preview-report/:report',
     component: PreviewReportComponent,
     canActivate: [AdminGuard],
     pathMatch: 'full',
