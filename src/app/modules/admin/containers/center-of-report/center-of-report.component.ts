@@ -1,15 +1,197 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { ReceivedReport } from '../../models';
 
 @Component({
   selector: 'app-center-of-report',
   templateUrl: './center-of-report.component.html',
-  styleUrls: ['./center-of-report.component.scss']
+  styleUrls: ['./center-of-report.component.scss'],
 })
 export class CenterOfReportComponent implements OnInit {
+  //Reportes recibidos hardcodeados
+  listOfReceivedReport: ReceivedReport[] = [
+    {
+      idReporte: 28,
+      idCentro: 14,
+      nom_centro: 'HOGAR CONVIVENCIAL COLIBRÍES',
+      fecha_completado: '2022-08-24T12:26:01',
+      nombreReporte: 'Reporte E',
+    },
+    {
+      idReporte: 38,
+      idCentro: 24,
+      nom_centro: 'HOGAR SAN JOSE',
+      fecha_completado: '2022-08-24T12:26:01',
+      nombreReporte: 'Reporte H',
+    },
+    {
+      idReporte: 48,
+      idCentro: 44,
+      nom_centro: 'CENTRO LA BALSA',
+      fecha_completado: '2022-08-24T12:26:01',
+      nombreReporte: 'Reporte U',
+    },
+  ];
+  //para buscador
+  itemSearch: string = '';
+  toSearch: string = '';
+  toSearchPrevius: string = '';
+  twoParts: Boolean = false;
 
-  constructor() { }
+  // pagination
+  listLenght: number = 0;
+  itemsPerPage: number = 10;
+  quantityOfPages: number = 1;
+  currentPage: number = 1;
+  listCurrentPage: ReceivedReport[] = {} as ReceivedReport[];
+  initialItem: number = 1;
+  finalItem: number = 10;
+
+  // lista de items a mostrar
+
+  // listOfReceivedReport: ReceivedReport[] = [];
+  listOfReceivedReport_toSearch: ReceivedReport[] = [];
+  listOfReceivedReport_toShow = new BehaviorSubject<ReceivedReport[]>([]);
+
+  // suscripciones
+  onDestroy$: Subject<boolean> = new Subject();
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
+    this.getVariablesList();
+  }
+  getVariablesList() {
+    this.currentPage = this.getPageLocalStorage();
+    //----------- muestra lista hardcodeada------
+    this.pageToShow(this.currentPage, this.listOfReceivedReport); //para paginación
+    //-------------------------------
+  }
+  //para paginación----
+  pageToShow(page: number, list: ReceivedReport[]) {
+    this.setPageLocalStorage(page);
+    this.listLenght = list.length;
+    this.quantityOfPages = Math.ceil(this.listLenght / this.itemsPerPage);
+    this.listCurrentPage = [];
+    if (page <= 1) {
+      this.listCurrentPage = list.slice(0, 10);
+      this.listOfReceivedReport_toShow.next(this.listCurrentPage);
+      this.initialItem = 1;
+      if (this.listLenght < this.itemsPerPage) {
+        this.finalItem = this.listLenght;
+      } else {
+        this.finalItem = 10;
+      }
+    } else if (page > 1 && page < this.quantityOfPages) {
+      this.listCurrentPage = list.slice(
+        page * this.itemsPerPage - this.itemsPerPage,
+        page * this.itemsPerPage
+      );
+      this.listOfReceivedReport_toShow.next(this.listCurrentPage);
+      this.initialItem = page * this.itemsPerPage - this.itemsPerPage + 1;
+      this.finalItem =
+        page * this.itemsPerPage -
+        this.itemsPerPage +
+        this.listCurrentPage.length;
+    } else if (page >= this.quantityOfPages) {
+      this.listCurrentPage = list.slice(
+        this.quantityOfPages * this.itemsPerPage - this.itemsPerPage
+      );
+      this.listOfReceivedReport_toShow.next(this.listCurrentPage);
+      this.initialItem =
+        this.quantityOfPages * this.itemsPerPage - this.itemsPerPage + 1;
+      this.finalItem =
+        this.quantityOfPages * this.itemsPerPage -
+        this.itemsPerPage +
+        this.listCurrentPage.length;
+    }
+  }
+  onClickBefore() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.pageToShow(this.currentPage, this.listOfReceivedReport);
+    } else {
+      this.currentPage = 1;
+      this.pageToShow(this.currentPage, this.listOfReceivedReport);
+    }
+  }
+  onClickAfter() {
+    if (this.currentPage < this.quantityOfPages) {
+      this.currentPage++;
+      this.pageToShow(this.currentPage, this.listOfReceivedReport);
+    } else {
+      this.currentPage = this.quantityOfPages;
+      this.pageToShow(this.currentPage, this.listOfReceivedReport);
+    }
+  }
+  setPageLocalStorage(page: number) {
+    localStorage.setItem('axeWithVariablesPage', JSON.stringify(page));
+  }
+  setNameAxeLocalStorage(name: string) {
+    localStorage.setItem('nameAxeGroup', JSON.stringify(name));
+  }
+  getPageLocalStorage(): number {
+    let pageLocalStorage: number = 1;
+    let pageLocalStorageJSON = localStorage.getItem('axeWithVariablesPage');
+    if (pageLocalStorageJSON) {
+      pageLocalStorage = JSON.parse(pageLocalStorageJSON);
+    }
+    return pageLocalStorage;
+  }
+  //--------------------------------------------
+
+  //buscador----------------------------
+  Search(e: string) {
+    /*informacion a buscar*/
+    this.toSearch = e.toUpperCase();
+    this.listOfReceivedReport_toSearch = [];
+
+    for (let item of this.listOfReceivedReport) {
+      if (item.nombreReporte.toUpperCase().includes(this.toSearch)) {
+        /*si el item incluye la cadena de texto a buscar entonces se guarda en el nuevo arreglo */
+        this.listOfReceivedReport_toSearch.push(item);
+        this.twoParts = false;
+      }
+    }
+    if (e !== '') {
+      /*si el input no esta vacio se muestra el arreglo de ejes que coinciden con la busqueda*/
+      this.TwoPartsSearch();
+    } else {
+      /*si el input esta vacio se muestra el arreglo de todos los ejes*/
+      this.pageToShow(this.currentPage, this.listOfReceivedReport); //para paginación
+    }
   }
 
+  /*TwoPartsSearch: cuando no hay coincidencias con lo escrito en el input entonces este valor(del input,toSearch) se divide en dos desde la ultima coincidencia y se buscan ambas partes en el arreglo de ejes */
+  TwoPartsSearch() {
+    if (this.listOfReceivedReport_toSearch.length == 0 || this.twoParts) {
+      this.twoParts = true;
+      let toSearchPreviusLength = this.toSearchPrevius.length;
+      let toSearchOne: string = this.toSearchPrevius;
+      let toSearchTwo: string = this.toSearch.substring(toSearchPreviusLength);
+
+      for (let item of this.listOfReceivedReport) {
+        if (
+          item.nombreReporte.toUpperCase().includes(toSearchOne) &&
+          item.nombreReporte.toUpperCase().includes(toSearchTwo)
+        ) {
+          /*si el eje incluye las cadenas de texto a buscar entonces se guarda en el arreglo */
+          this.listOfReceivedReport_toSearch.push(item);
+        }
+      }
+      this.listOfReceivedReport_toShow.next(this.listOfReceivedReport_toSearch);
+    } else {
+      this.twoParts = false;
+      this.listOfReceivedReport_toShow.next(this.listOfReceivedReport_toSearch);
+      this.toSearchPrevius =
+        this.toSearch; /*se guarda la ultima palabra buscada con la que hubo coincidencias */
+    }
+  }
+  //para cerrar modales------------------
+  close() {}
+
+  ngOnDestroy() {
+    this.onDestroy$.next(true);
+  }
 }
