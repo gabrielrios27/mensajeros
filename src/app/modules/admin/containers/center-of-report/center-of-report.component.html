@@ -33,8 +33,13 @@
         <div
           class="list-report__row list-report__row--click"
           *ngFor="let element of listOfReceivedReport_toShow | async"
-          (click)="setNameAxeLocalStorage(element.nombreReporte)"
-          [routerLink]="['home']"
+          (click)="setNameReceivedReportLocalStorage(element.nombreReporte)"
+          [routerLink]="[
+            'reporte-recibido/' +
+              element.idReporte.toString() +
+              '/' +
+              element.idCentro.toString()
+          ]"
         >
           <p class="list-report__cell">
             {{ element.nombreReporte }}
