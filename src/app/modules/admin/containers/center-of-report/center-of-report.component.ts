@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { ReceivedReport } from '../../models';
+import { Comments, ReceivedReport } from '../../models';
 import { AdminService } from '../../services';
 
 @Component({
@@ -30,6 +30,9 @@ export class CenterOfReportComponent implements OnInit {
   listOfReceivedReport: ReceivedReport[] = [];
   listOfReceivedReport_toSearch: ReceivedReport[] = [];
   listOfReceivedReport_toShow = new BehaviorSubject<ReceivedReport[]>([]);
+  //modal de comentarios y reseñas
+  flagPopUpComments: boolean = false;
+  commentsToShow: Comments[] = [];
 
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
@@ -178,7 +181,11 @@ export class CenterOfReportComponent implements OnInit {
   }
   //para cerrar modales------------------
   close() {}
-
+  //para activar modal de comentarios y reseñas
+  showComments(comments: Comments[]) {
+    this.commentsToShow = comments;
+    this.flagPopUpComments = true;
+  }
   ngOnDestroy() {
     this.onDestroy$.next(true);
   }

@@ -41,4 +41,9 @@ export interface ReceivedReport {
   nom_centro: string;
   fecha_completado: string;
   nombreReporte: string;
+  comentarios: Comments[];
+}
+export interface Comments {
+  id: number;
+  observacion: string;
 }
