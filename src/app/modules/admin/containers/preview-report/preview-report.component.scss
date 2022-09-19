@@ -228,6 +228,33 @@
         background: #FFFFFF;
         border: 1px solid #79747E;
 
+        .close {
+            height: 22px;
+            width: 26px;
+            left: 326px;
+            top: 13px;
+            border-radius: 10px;
+            border: 1.5px solid black;
+            background: #d9d9d9;
+            text-align: center;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            margin-left: 356px;
+            color: rgba(8, 61, 94, 1);
+            font-family: Futura Bk BT;
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 40px;
+            letter-spacing: 0.25px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .close:hover{
+            color:  rgb(20, 97, 145);
+            border: 1.5px solid  rgb(20, 97, 145);
+        }
+
         .label {
             display: flex;
             flex-direction: row;
