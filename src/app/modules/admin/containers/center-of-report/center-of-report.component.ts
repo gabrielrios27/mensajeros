@@ -119,8 +119,18 @@ export class CenterOfReportComponent implements OnInit {
   setPageLocalStorage(page: number) {
     localStorage.setItem('receivedReportPage', JSON.stringify(page));
   }
-  setNameReceivedReportLocalStorage(name: string) {
+  setNameReceivedReportLocalStorage(
+    name: string,
+    idReport: number,
+    idCenter: number
+  ) {
     localStorage.setItem('nameReceivedReport', JSON.stringify(name));
+    this.router.navigate([
+      'admin/dashboard/reportes/centro-de-reportes/reporte-recibido/' +
+        idReport.toString() +
+        '/' +
+        idCenter.toString(),
+    ]);
   }
   getPageLocalStorage(): number {
     let pageLocalStorage: number = 1;
@@ -182,9 +192,24 @@ export class CenterOfReportComponent implements OnInit {
   //para cerrar modales------------------
   close() {}
   //para activar modal de comentarios y reseñas
-  showComments(comments: Comments[]) {
-    this.commentsToShow = comments;
+  showComments($event: any, comments: Comments[]) {
+    // this.commentsToShow = comments;
+    $event.stopPropagation();
+    //comentarios hardcodeados hasta que se implemente endpoint
+    this.commentsToShow = [
+      {
+        id: 1,
+        observacion: 'comentario 1',
+      },
+      {
+        id: 2,
+        observacion: 'comentario 2',
+      },
+    ];
     this.flagPopUpComments = true;
+  }
+  closeComments() {
+    this.flagPopUpComments = false;
   }
   ngOnDestroy() {
     this.onDestroy$.next(true);
