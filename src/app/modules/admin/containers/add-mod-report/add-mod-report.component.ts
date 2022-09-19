@@ -78,12 +78,8 @@ export class AddModReportComponent implements OnInit {
 
   validateDateDelivery(): any {
     let date = new Date(this.deliverdate);
-<<<<<<< HEAD
     let deliverdate = date;
     if (deliverdate < this.today) {
-=======
-    if (date < this.today) {
->>>>>>> origin/MENS-184-Implementar-Dashboard-de-Reportes-Creados
       return true;
     } else {
       return false;
