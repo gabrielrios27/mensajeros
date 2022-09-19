@@ -12,8 +12,6 @@ export class AdminGuard implements CanActivate {
     if (isAdminLocalStorageJSON) {
       isAdminLocalStorage = JSON.parse(isAdminLocalStorageJSON);
       if (isAdminLocalStorage) {
-        console.log('guard con loc stg');
-
         return of(true);
       }
     }

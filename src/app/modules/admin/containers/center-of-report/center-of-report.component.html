@@ -1,1 +1,152 @@
-<p>center-of-report works!</p>
+<section class="container-report">
+  <div class="report">
+    <h1 class="report__title">Reportes Recibidos</h1>
+    <div class="report__container-search">
+      <label for="searchReport" class="lbl-search-report">
+        <input
+          class="lbl-search-report__input"
+          id="searchReport"
+          type="text"
+          [(ngModel)]="itemSearch"
+          (ngModelChange)="Search(itemSearch)"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <img
+          class="lbl-search-report__ico"
+          src="../../../../../assets/icons/Search.svg"
+          alt="Icono de lupa para busqueda"
+        />
+      </label>
+    </div>
+    <section class="list-report">
+      <div class="list-report__table">
+        <!-- Position Column -->
+        <div class="list-report__row">
+          <p class="list-report__header">Número de Reporte</p>
+
+          <p class="list-report__header">Centro emisor</p>
+          <p class="list-report__header">Fecha de Recepción</p>
+          <p class="list-report__header">Acciones</p>
+        </div>
+
+        <div
+          class="list-report__row list-report__row--click"
+          *ngFor="let element of listOfReceivedReport_toShow | async"
+          (click)="setNameReceivedReportLocalStorage(element.nombreReporte)"
+          [routerLink]="[
+            'reporte-recibido/' +
+              element.idReporte.toString() +
+              '/' +
+              element.idCentro.toString()
+          ]"
+        >
+          <p class="list-report__cell">
+            {{ element.nombreReporte }}
+          </p>
+          <p class="list-report__cell">
+            {{ element.nom_centro }}
+          </p>
+          <p class="list-report__cell">
+            {{ element.fecha_completado.substring(8, 10) }}/{{
+              element.fecha_completado.substring(5, 7)
+            }}/{{ element.fecha_completado.substring(0, 4) }}
+          </p>
+          <p class="list-report__cell list-report__cell--action">
+            <svg
+              class="list-report__action-ico"
+              matTooltip="Descargar"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 1.5H13.5V3H6C5.60218 3 5.22064 3.15804 4.93934 3.43934C4.65804 3.72064 4.5 4.10218 4.5 4.5V19.5C4.5 19.8978 4.65804 20.2794 4.93934 20.5607C5.22064 20.842 5.60218 21 6 21H18C18.3978 21 18.7794 20.842 19.0607 20.5607C19.342 20.2794 19.5 19.8978 19.5 19.5V9H21V19.5C21 20.2956 20.6839 21.0587 20.1213 21.6213C19.5587 22.1839 18.7956 22.5 18 22.5H6C5.20435 22.5 4.44129 22.1839 3.87868 21.6213C3.31607 21.0587 3 20.2956 3 19.5V4.5C3 3.70435 3.31607 2.94129 3.87868 2.37868C4.44129 1.81607 5.20435 1.5 6 1.5Z"
+                fill="black"
+              />
+              <path
+                d="M13.5 6.75V1.5L21 9H15.75C15.1533 9 14.581 8.76295 14.159 8.34099C13.7371 7.91903 13.5 7.34674 13.5 6.75Z"
+                fill="black"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M8.46839 13.7184C8.53806 13.6485 8.62082 13.5931 8.71194 13.5553C8.80305 13.5175 8.90074 13.498 8.99939 13.498C9.09804 13.498 9.19572 13.5175 9.28684 13.5553C9.37796 13.5931 9.46072 13.6485 9.53039 13.7184L11.9994 16.1889L14.4684 13.7184C14.6092 13.5776 14.8002 13.4984 14.9994 13.4984C15.1986 13.4984 15.3896 13.5776 15.5304 13.7184C15.6712 13.8592 15.7503 14.0502 15.7503 14.2494C15.7503 14.4486 15.6712 14.6396 15.5304 14.7804L12.5304 17.7804C12.4607 17.8502 12.378 17.9056 12.2868 17.9435C12.1957 17.9813 12.098 18.0007 11.9994 18.0007C11.9007 18.0007 11.8031 17.9813 11.7119 17.9435C11.6208 17.9056 11.5381 17.8502 11.4684 17.7804L8.46839 14.7804C8.39854 14.7107 8.34313 14.628 8.30532 14.5368C8.26751 14.4457 8.24805 14.348 8.24805 14.2494C8.24805 14.1507 8.26751 14.0531 8.30532 13.9619C8.34313 13.8708 8.39854 13.7881 8.46839 13.7184Z"
+                fill="black"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12 9C12.1989 9 12.3897 9.07902 12.5303 9.21967C12.671 9.36032 12.75 9.55109 12.75 9.75V15.75C12.75 15.9489 12.671 16.1397 12.5303 16.2803C12.3897 16.421 12.1989 16.5 12 16.5C11.8011 16.5 11.6103 16.421 11.4697 16.2803C11.329 16.1397 11.25 15.9489 11.25 15.75V9.75C11.25 9.55109 11.329 9.36032 11.4697 9.21967C11.6103 9.07902 11.8011 9 12 9Z"
+                fill="black"
+              />
+            </svg>
+            <svg
+              class="list-report__action-ico"
+              matTooltip="Observaciones"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M4.821 1.60832C7.2195 1.12832 10.374 1.06532 12.531 3.21932C12.6006 3.2891 12.6558 3.37191 12.6933 3.46303C12.7309 3.55414 12.7502 3.65176 12.75 3.75032V20.2503C12.7503 20.3989 12.7064 20.5441 12.624 20.6677C12.5416 20.7913 12.4244 20.8876 12.2872 20.9445C12.15 21.0014 11.999 21.0162 11.8533 20.9872C11.7077 20.9581 11.5739 20.8865 11.469 20.7813C10.2045 19.5153 8.2965 19.1928 6.264 19.4013C4.248 19.6113 2.274 20.3268 1.086 20.9208C0.971656 20.9781 0.84456 21.0052 0.716789 20.9996C0.589019 20.9939 0.464819 20.9557 0.355993 20.8885C0.247167 20.8213 0.157331 20.7274 0.0950232 20.6157C0.0327149 20.504 4.2917e-06 20.3782 0 20.2503L0 3.75032C4.67001e-06 3.61115 0.0387305 3.47473 0.111845 3.35632C0.18496 3.2379 0.289579 3.14217 0.414 3.07982L0.75 3.75032L0.414 3.07982L0.417 3.07832L0.423 3.07532L0.4425 3.06632C0.551237 3.01216 0.661269 2.96065 0.7725 2.91182C2.07074 2.33043 3.42887 1.89331 4.8225 1.60832H4.821ZM1.5 4.23032V19.0923C2.769 18.5778 4.416 18.0843 6.111 17.9103C7.8255 17.7333 9.6915 17.8758 11.25 18.7503V4.07732C9.6555 2.68382 7.3035 2.64332 5.115 3.08132C3.87278 3.33547 2.661 3.72063 1.5 4.23032Z"
+                fill="black"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M19.179 1.60832C16.782 1.12832 13.626 1.06532 11.469 3.21932C11.3994 3.2891 11.3442 3.37191 11.3067 3.46303C11.2691 3.55414 11.2498 3.65176 11.25 3.75032V20.2503C11.2497 20.3989 11.2936 20.5441 11.376 20.6677C11.4584 20.7913 11.5756 20.8876 11.7128 20.9445C11.85 21.0014 12.001 21.0162 12.1467 20.9872C12.2923 20.9581 12.4261 20.8865 12.531 20.7813C13.7955 19.5153 15.7035 19.1928 17.736 19.4013C19.752 19.6113 21.726 20.3268 22.914 20.9208C23.0283 20.9781 23.1554 21.0052 23.2832 20.9996C23.411 20.9939 23.5352 20.9557 23.644 20.8885C23.7528 20.8213 23.8427 20.7274 23.905 20.6157C23.9673 20.504 24 20.3782 24 20.2503V3.75032C24 3.61115 23.9613 3.47473 23.8882 3.35632C23.815 3.2379 23.7104 3.14217 23.586 3.07982L23.25 3.75032L23.586 3.07982L23.583 3.07832L23.577 3.07532L23.5575 3.06632L23.487 3.03182C23.0935 2.84808 22.6937 2.67798 22.2885 2.52182C21.2792 2.1313 20.2391 1.82574 19.179 1.60832ZM22.5 4.23032V19.0923C21.231 18.5778 19.584 18.0843 17.889 17.9103C16.1745 17.7333 14.3085 17.8758 12.75 18.7503V4.07732C14.3445 2.68382 16.6965 2.64332 18.885 3.08132C20.1272 3.33545 21.339 3.7206 22.5 4.23032Z"
+                fill="black"
+              />
+            </svg>
+          </p>
+        </div>
+      </div>
+      <div class="pagination">
+        <p class="pagination-text">
+          {{ initialItem }} - {{ finalItem }} de {{ listLenght }}
+        </p>
+        <svg
+          (click)="onClickBefore()"
+          class="pagination-arrow"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M14 7L9 12L14 17V7Z"
+            fill="black"
+            fill-opacity="0.87"
+          />
+        </svg>
+        <svg
+          (click)="onClickAfter()"
+          class="pagination-arrow"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M10 7L15 12L10 17V7Z"
+            fill="black"
+            fill-opacity="0.87"
+          />
+        </svg>
+      </div>
+    </section>
+  </div>
+</section>

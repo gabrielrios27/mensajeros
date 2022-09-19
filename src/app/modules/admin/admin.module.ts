@@ -47,6 +47,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { PreviewVariableComponent } from './components/preview-variable/preview-variable.component';
+import { ReceivedReportComponent } from './containers/received-report/received-report.component';
 
 @NgModule({
   imports: [
@@ -100,6 +101,7 @@ import { PreviewVariableComponent } from './components/preview-variable/preview-
     ConfirmOutModalComponent,
     PreviewVariableComponent,
     PreviewReportComponent,
+    ReceivedReportComponent,
   ],
   exports: [
     ...adminContainers.containers,
