@@ -73,14 +73,13 @@ export class AddModReportComponent implements OnInit {
     this.getDataFromRute();
     this.getAxes();
     this.getVariables();
+    this.validatorsData()
   }
 
   validateDateDelivery(): any {
     let date = new Date(this.deliverdate);
-    let deliverdate = date.getDay() + date.getMonth() + date.getFullYear();
-    let day =
-      this.today.getDay() + this.today.getMonth() + this.today.getFullYear();
-    if (deliverdate < day) {
+    let deliverdate = date;
+    if (deliverdate < this.today) {
       return true;
     } else {
       return false;
@@ -112,7 +111,7 @@ export class AddModReportComponent implements OnInit {
 
   validatorsData() {
     if (!this.data.editar) {
-      if (this.arrayAxes == null || this.arrayVaribles == null) {
+      if (this.arrayAxes.length == 0 || this.arrayVaribles.length == 0) {
         this.flagAxeVariable = true;
       } else {
         this.flagAxeVariable = false;
@@ -136,16 +135,13 @@ export class AddModReportComponent implements OnInit {
     this.center = e;
   }
 
-  removeVariable(variable: any) {
-    this.variables = this.variables.filter((res: any) => res !== variable);
-  }
-
   validatorDate(): any {
     if (this.formAdd.value.hasta < this.formAdd.value.desde) {
       return true;
     } else {
       return false;
     }
+    
   }
 
   // validatorAxeVariable(): any{
