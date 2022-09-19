@@ -96,8 +96,8 @@ p {
           min-height: 56px;
           padding-top: 8px;
           padding-left: 1.5em;
-          display: flex;
-          justify-content: space-between;
+          display: grid;
+          grid-template-columns: 1fr 1fr 153px;
           align-items: center;
           .list-variables__header {
             text-align: start;
@@ -112,11 +112,8 @@ p {
           .list-variables__header--variable {
             width: 153px;
           }
-          .list-variables__header--type {
-            padding-right: 24px;
-          }
           .list-variables__cell {
-            min-width: 300px;
+            min-width: 270px;
             font-family: "Inter" !important;
             font-size: 1em;
             line-height: 1.1875em;
@@ -127,7 +124,9 @@ p {
             }
           }
           .list-variables__cell--variable {
-            width: 300px;
+            min-width: 270px;
+            word-break: break-all;
+            padding-right: 20px;
           }
           .list-variables__cell--type {
             font-family: "Inter" !important;
@@ -137,13 +136,12 @@ p {
             height: 50px;
             display: flex;
             align-items: center;
+            padding-left: 20px;
             transition: all 0.1s linear;
-            padding-right: 175px;
-            text-align: center;
           }
           .list-variables__cell--action {
             padding-right: 20px;
-            min-width: 300px;
+            min-width: 270px;
             display: flex;
             justify-content: flex-end;
             transition: all 0.1s linear;
@@ -222,13 +220,16 @@ p {
       height: 120px;
     }
     .modal__text {
+      overflow: hidden;
+      width: 360px;
       font-size: 24px;
       text-align: center;
       letter-spacing: 0.25px;
       color: #154520;
-      padding-top: 40px;
+      padding-top: 25px;
       margin-bottom: 0;
       margin-left: 15px;
+      text-overflow: ellipsis;
     }
   }
 }
