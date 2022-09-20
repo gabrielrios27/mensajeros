@@ -8,6 +8,7 @@ import {
   axes,
   AxeWithquantity,
   Comments,
+  DownloadExcel,
   flag,
   ReceivedReport,
   user,
@@ -170,6 +171,14 @@ export class AdminService {
   getComment(idReport: number, idCenter: number): Observable<Comments[]> {
     return this._http.get<Comments[]>(
       this.baseUrlTami + '/comentarios/' + idReport + '/' + idCenter
+    );
+  }
+  getDownloadExcel(
+    idReport: number,
+    idCenter: number
+  ): Observable<DownloadExcel> {
+    return this._http.get<DownloadExcel>(
+      this.baseUrlTami + '/excel/descargaExcel/' + idReport + '/' + idCenter
     );
   }
 }
