@@ -51,7 +51,6 @@ export class CenterOfReportComponent implements OnInit {
         next: (data: ReceivedReport[]) => {
           this.listOfReceivedReport = data;
           this.getSetComments(this.listOfReceivedReport);
-          this.pageToShow(this.currentPage, this.listOfReceivedReport); //para paginación
         },
         error: (err) => {
           if (err.status === 401) {
@@ -72,7 +71,6 @@ export class CenterOfReportComponent implements OnInit {
             report.comentarios = data;
             indexReports++;
             if (indexReports === receivedReports.length || indexReports > 10) {
-              console.log('reports: ', receivedReports);
               this.pageToShow(this.currentPage, this.listOfReceivedReport); //para paginación
             }
           },
