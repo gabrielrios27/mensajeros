@@ -50,6 +50,7 @@ export class CenterOfReportComponent implements OnInit {
       .subscribe({
         next: (data: ReceivedReport[]) => {
           this.listOfReceivedReport = data;
+          this.getSetComments(this.listOfReceivedReport);
           this.pageToShow(this.currentPage, this.listOfReceivedReport); //para paginación
         },
         error: (err) => {
@@ -58,6 +59,30 @@ export class CenterOfReportComponent implements OnInit {
           }
         },
       });
+  }
+  //Obtiene comentarios de reporte y los guarda en cada reporte recibido
+  getSetComments(receivedReports: ReceivedReport[]) {
+    let indexReports: number = 0;
+    receivedReports.map((report) => {
+      this._adminSvc
+        .getComment(report.idReporte, report.idCentro)
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe({
+          next: (data: Comments[]) => {
+            report.comentarios = data;
+            indexReports++;
+            if (indexReports === receivedReports.length || indexReports > 10) {
+              console.log('reports: ', receivedReports);
+              this.pageToShow(this.currentPage, this.listOfReceivedReport); //para paginación
+            }
+          },
+          error: (err) => {
+            if (err.status === 401) {
+              this.router.navigate(['/auth']);
+            }
+          },
+        });
+    });
   }
   //para paginación----
   pageToShow(page: number, list: ReceivedReport[]) {
@@ -193,21 +218,18 @@ export class CenterOfReportComponent implements OnInit {
   close() {}
   //para activar modal de comentarios y reseñas
   showComments($event: any, comments: Comments[]) {
-    // this.commentsToShow = comments;
     $event.stopPropagation();
+    this.commentsToShow = comments;
     //comentarios hardcodeados hasta que se implemente endpoint
-    this.commentsToShow = [
-      {
-        id: 1,
-        observacion: 'comentario 1',
-      },
-      {
-        id: 2,
-        observacion: 'comentario 2',
-      },
-    ];
+    // this.commentsToShow = [
+    //   {
+    //     id: 1,
+    //     observacion: 'comentario 1',
+    //   },
+    // ];
     this.flagPopUpComments = true;
   }
+
   closeComments() {
     this.flagPopUpComments = false;
   }
