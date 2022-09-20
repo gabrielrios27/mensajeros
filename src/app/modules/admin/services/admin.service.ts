@@ -15,6 +15,7 @@ import {
   variable,
 } from '../models';
 import { report } from 'process';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 @Injectable({
   providedIn: 'root',
@@ -173,12 +174,13 @@ export class AdminService {
       this.baseUrlTami + '/comentarios/' + idReport + '/' + idCenter
     );
   }
-  getDownloadExcel(
-    idReport: number,
-    idCenter: number
-  ): Observable<DownloadExcel> {
-    return this._http.get<DownloadExcel>(
-      this.baseUrlTami + '/excel/descargaExcel/' + idReport + '/' + idCenter
+  getDownloadExcel(idReport: number, idCenter: number): Observable<any> {
+    console.log('svc dascarga');
+    return this._http.get(
+      this.baseUrlTami + '/excel/descargaExcel/' + idReport + '/' + idCenter,
+      {
+        responseType: 'blob',
+      }
     );
   }
 }

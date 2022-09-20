@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { Comments, ReceivedReport } from '../../models';
+import { Comments, DownloadExcel, ReceivedReport } from '../../models';
 import { AdminService } from '../../services';
 
 @Component({
@@ -218,16 +218,33 @@ export class CenterOfReportComponent implements OnInit {
   showComments($event: any, comments: Comments[]) {
     $event.stopPropagation();
     this.commentsToShow = comments;
-    //comentarios hardcodeados hasta que se implemente endpoint
-    // this.commentsToShow = [
-    //   {
-    //     id: 1,
-    //     observacion: 'comentario 1',
-    //   },
-    // ];
     this.flagPopUpComments = true;
   }
+  downloadExcel($event: any, element: ReceivedReport) {
+    $event.stopPropagation();
+    console.log('descarga');
 
+    this._adminSvc
+      .getDownloadExcel(element.idReporte, element.idCentro)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (downloaded) => {
+          console.log('File is Downloaded', downloaded);
+          const url = window.URL.createObjectURL(downloaded);
+          window.open(url);
+        },
+        error: (err) => {
+          console.log(err);
+
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+        complete: () => {
+          console.log('descarga completa');
+        },
+      });
+  }
   closeComments() {
     this.flagPopUpComments = false;
   }

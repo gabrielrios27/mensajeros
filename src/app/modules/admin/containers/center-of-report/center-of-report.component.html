@@ -55,6 +55,7 @@
           <p class="list-report__cell list-report__cell--action">
             <svg
               class="list-report__action-ico"
+              (click)="downloadExcel($event, element)"
               matTooltip="Descargar"
               width="24"
               height="24"
