@@ -166,4 +166,9 @@ export class AdminService {
       this.baseUrlTami + '/reportes/reportesRecibidos'
     );
   }
+  getComment(idReport: number, idCenter: number): Observable<Report> {
+    return this._http.get<Report>(
+      this.baseUrlTami + '/comentarios/' + idReport + '/' + idCenter
+    );
+  }
 }
