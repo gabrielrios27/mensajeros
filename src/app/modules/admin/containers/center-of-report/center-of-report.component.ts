@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { ReceivedReport } from '../../models';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { Comments, ReceivedReport } from '../../models';
+import { AdminService } from '../../services';
 
 @Component({
   selector: 'app-center-of-report',
@@ -9,30 +10,6 @@ import { ReceivedReport } from '../../models';
   styleUrls: ['./center-of-report.component.scss'],
 })
 export class CenterOfReportComponent implements OnInit {
-  //Reportes recibidos hardcodeados
-  listOfReceivedReport: ReceivedReport[] = [
-    {
-      idReporte: 28,
-      idCentro: 14,
-      nom_centro: 'HOGAR CONVIVENCIAL COLIBRÍES',
-      fecha_completado: '2022-08-24T12:26:01',
-      nombreReporte: 'Reporte E',
-    },
-    {
-      idReporte: 38,
-      idCentro: 24,
-      nom_centro: 'HOGAR SAN JOSE',
-      fecha_completado: '2022-08-24T12:26:01',
-      nombreReporte: 'Reporte H',
-    },
-    {
-      idReporte: 48,
-      idCentro: 44,
-      nom_centro: 'CENTRO LA BALSA',
-      fecha_completado: '2022-08-24T12:26:01',
-      nombreReporte: 'Reporte U',
-    },
-  ];
   //para buscador
   itemSearch: string = '';
   toSearch: string = '';
@@ -50,23 +27,37 @@ export class CenterOfReportComponent implements OnInit {
 
   // lista de items a mostrar
 
-  // listOfReceivedReport: ReceivedReport[] = [];
+  listOfReceivedReport: ReceivedReport[] = [];
   listOfReceivedReport_toSearch: ReceivedReport[] = [];
   listOfReceivedReport_toShow = new BehaviorSubject<ReceivedReport[]>([]);
+  //modal de comentarios y reseñas
+  flagPopUpComments: boolean = false;
+  commentsToShow: Comments[] = [];
 
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private _adminSvc: AdminService) {}
 
   ngOnInit(): void {
-    this.getVariablesList();
+    this.getReportList();
   }
-  getVariablesList() {
+  getReportList() {
     this.currentPage = this.getPageLocalStorage();
-    //----------- muestra lista hardcodeada------
-    this.pageToShow(this.currentPage, this.listOfReceivedReport); //para paginación
-    //-------------------------------
+    this._adminSvc
+      .getReceivedReport()
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: ReceivedReport[]) => {
+          this.listOfReceivedReport = data;
+          this.pageToShow(this.currentPage, this.listOfReceivedReport); //para paginación
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
   }
   //para paginación----
   pageToShow(page: number, list: ReceivedReport[]) {
@@ -126,14 +117,24 @@ export class CenterOfReportComponent implements OnInit {
     }
   }
   setPageLocalStorage(page: number) {
-    localStorage.setItem('axeWithVariablesPage', JSON.stringify(page));
+    localStorage.setItem('receivedReportPage', JSON.stringify(page));
   }
-  setNameAxeLocalStorage(name: string) {
-    localStorage.setItem('nameAxeGroup', JSON.stringify(name));
+  setNameReceivedReportLocalStorage(
+    name: string,
+    idReport: number,
+    idCenter: number
+  ) {
+    localStorage.setItem('nameReceivedReport', JSON.stringify(name));
+    this.router.navigate([
+      'admin/dashboard/reportes/centro-de-reportes/reporte-recibido/' +
+        idReport.toString() +
+        '/' +
+        idCenter.toString(),
+    ]);
   }
   getPageLocalStorage(): number {
     let pageLocalStorage: number = 1;
-    let pageLocalStorageJSON = localStorage.getItem('axeWithVariablesPage');
+    let pageLocalStorageJSON = localStorage.getItem('receivedReportPage');
     if (pageLocalStorageJSON) {
       pageLocalStorage = JSON.parse(pageLocalStorageJSON);
     }
@@ -190,7 +191,26 @@ export class CenterOfReportComponent implements OnInit {
   }
   //para cerrar modales------------------
   close() {}
-
+  //para activar modal de comentarios y reseñas
+  showComments($event: any, comments: Comments[]) {
+    // this.commentsToShow = comments;
+    $event.stopPropagation();
+    //comentarios hardcodeados hasta que se implemente endpoint
+    this.commentsToShow = [
+      {
+        id: 1,
+        observacion: 'comentario 1',
+      },
+      {
+        id: 2,
+        observacion: 'comentario 2',
+      },
+    ];
+    this.flagPopUpComments = true;
+  }
+  closeComments() {
+    this.flagPopUpComments = false;
+  }
   ngOnDestroy() {
     this.onDestroy$.next(true);
   }

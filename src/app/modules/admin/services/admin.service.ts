@@ -4,7 +4,14 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Centro } from '../models/centro';
 import { Users } from '../models/users';
 import { Report } from '../models/report';
-import { axes, AxeWithquantity, flag, user, variable } from '../models';
+import {
+  axes,
+  AxeWithquantity,
+  flag,
+  ReceivedReport,
+  user,
+  variable,
+} from '../models';
 import { report } from 'process';
 
 @Injectable({
@@ -146,12 +153,17 @@ export class AdminService {
     return this._http.post<Report>(this.baseUrlTami + '/reportes', report);
   }
 
-  getReportById(id:any): Observable<Report> {
+  getReportById(id: any): Observable<Report> {
     return this._http.get<Report>(this.baseUrlTami + '/reportes/' + id);
   }
 
-  editReport(id:any,report:Report): Observable<Report> {
-    return this._http.put<Report>(this.baseUrlTami + '/reportes/' + id , report);
+  editReport(id: any, report: Report): Observable<Report> {
+    return this._http.put<Report>(this.baseUrlTami + '/reportes/' + id, report);
   }
-
+  // Centro de reportes------------------
+  getReceivedReport(): Observable<ReceivedReport[]> {
+    return this._http.get<ReceivedReport[]>(
+      this.baseUrlTami + '/reportes/reportesRecibidos'
+    );
+  }
 }
