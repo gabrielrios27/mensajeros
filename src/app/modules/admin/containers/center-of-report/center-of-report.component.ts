@@ -234,7 +234,10 @@ export class CenterOfReportComponent implements OnInit {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
           });
           const url = window.URL.createObjectURL(blob);
-          window.open(url);
+          const anchor = document.createElement('a');
+          anchor.download = element.nombreReporte;
+          anchor.href = url;
+          anchor.click();
           this.idsDownload = this.idsDownload.filter(
             (item) => item !== idExcel
           );
