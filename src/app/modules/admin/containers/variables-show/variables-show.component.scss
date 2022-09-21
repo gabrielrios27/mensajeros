@@ -1,0 +1,97 @@
+.container-variablesShow {
+    font-family: 'Futura Bk BT';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    width: 772px;
+    height: 92px;
+
+    .nameVariable {
+        width: 196px;
+        height: 17px;
+        left: 621px;
+        top: 513px;
+        font-family: 'Futura Bk BT';
+        font-style: italic;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        /* identical to box height */
+        color: #083D5E;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .typeOfResponce {
+        width: 8px;
+        height: 14px;
+        left: 628px;
+        top: 546px;
+        font-family: 'Futura Bk BT';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #3D3B3F;
+        margin-left: 7px;
+    }
+
+    .container-escala {
+        width: 602.9px;
+        height: 54.44px;
+        align-items: center;
+        display: flex;
+        margin-left: 100px;
+
+        .value-scale__radio-group {
+            // padding: 0 30px;
+            margin: 10px;
+            flex-direction: column-reverse;
+
+            .value-scale__radio-btn {
+                margin: 0 20px 0 30px;
+                width: 10px;
+                height: 10px;
+
+                ::ng-deep .mat-radio-label {
+                    display: flex;
+                    flex-direction: column-reverse;
+
+                    .mat-radio-label-content {
+                        padding: 0;
+                        margin-bottom: 2px;
+                    }
+
+                    .mat-radio-inner-circle {
+                        width: 15px;
+                        height: 15px;
+                    }
+
+                    .mat-radio-outer-circle {
+                        width: 15px;
+                        height: 15px;
+                    }
+
+                }
+            }
+
+            .value-scale__radio-btn--larger {
+                margin: 0 20px;
+            }
+        }
+
+        ::ng-deep.mat-radio-button.mat-radio-disabled .mat-radio-inner-circle {
+            background-color: #1967d2;
+
+        }
+
+        ::ng-deep.mat-radio-button.mat-radio-disabled.mat-radio-checked .mat-radio-outer-circle,
+        .mat-radio-button.mat-radio-disabled .mat-radio-outer-circle {
+            border-color: #1967d2;
+        }
+
+    }
+}

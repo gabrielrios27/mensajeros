@@ -1,0 +1,21 @@
+<div class="container-variablesShow">
+    <div>
+        <p class="nameVariable">{{indexAlphabet}} {{variableValue.nombre}}</p>
+        <p *ngIf="variableValue.tipo === 'Numérico'" class="typeOfResponce">{{variableValue.valor_final}}</p>
+        <div style="margin-left: 5px;" *ngIf="variableValue.tipo === 'Textual' && variableValue.escala_valor">
+            <p>{{variableValue.descripcion}}</p>
+            <label style="position: absolute;">Escala de valor:</label>
+            <div class="container-escala">
+                <label>{{variableValue.etiqueta_inicial}}</label>
+                <mat-radio-group class="value-scale__radio-group">
+                    <mat-radio-button [checked]="item == variableValue.valor_final" class="value-scale__radio-btn"
+                        ngClass="item == variableValue.valor_final ? " *ngFor="let item of valueScale" disabled
+                        value="{{ item }}">
+                        {{ item }}
+                    </mat-radio-button>
+                </mat-radio-group>
+                <label>{{variableValue.etiqueta_final}}</label>
+            </div>
+        </div>
+    </div>
+</div>
