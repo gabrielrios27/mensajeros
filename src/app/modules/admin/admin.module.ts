@@ -48,6 +48,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { PreviewVariableComponent } from './components/preview-variable/preview-variable.component';
 import { ReceivedReportComponent } from './containers/received-report/received-report.component';
+import { VariablesShowComponent } from './containers/variables-show/variables-show.component';
 
 @NgModule({
   imports: [
@@ -102,6 +103,7 @@ import { ReceivedReportComponent } from './containers/received-report/received-r
     PreviewVariableComponent,
     PreviewReportComponent,
     ReceivedReportComponent,
+    VariablesShowComponent,
   ],
   exports: [
     ...adminContainers.containers,
