@@ -223,9 +223,8 @@ export class CenterOfReportComponent implements OnInit {
   }
   downloadExcel($event: any, element: ReceivedReport) {
     $event.stopPropagation();
-    this.idsDownload.push('' + element.idReporte + element.idCentro);
-    console.log('report: ', element);
-    console.log('this.idsDownload: ', this.idsDownload);
+    let idExcel: string = '' + element.idReporte + element.idCentro;
+    this.idsDownload.push(idExcel);
     this._adminSvc
       .getDownloadExcel(element.idReporte, element.idCentro)
       .pipe(takeUntil(this.onDestroy$))
@@ -236,6 +235,9 @@ export class CenterOfReportComponent implements OnInit {
           });
           const url = window.URL.createObjectURL(blob);
           window.open(url);
+          this.idsDownload = this.idsDownload.filter(
+            (item) => item !== idExcel
+          );
         },
         error: (err) => {
           if (err.status === 401) {

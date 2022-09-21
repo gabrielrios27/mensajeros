@@ -175,7 +175,6 @@ export class AdminService {
     );
   }
   getDownloadExcel(idReport: number, idCenter: number): Observable<any> {
-    console.log('svc dascarga');
     return this._http.get(
       this.baseUrlTami + '/excel/descargaExcel/' + idReport + '/' + idCenter,
       {
