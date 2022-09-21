@@ -48,7 +48,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { PreviewVariableComponent } from './components/preview-variable/preview-variable.component';
 import { ReceivedReportComponent } from './containers/received-report/received-report.component';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @NgModule({
   imports: [
     CommonModule,
@@ -69,6 +69,7 @@ import { ReceivedReportComponent } from './containers/received-report/received-r
     MatNativeDateModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatProgressSpinnerModule,
     // AppCommonModule,
     // NavigationModule,
   ],

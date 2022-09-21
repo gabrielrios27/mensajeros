@@ -33,7 +33,8 @@ export class CenterOfReportComponent implements OnInit {
   //modal de comentarios y reseñas
   flagPopUpComments: boolean = false;
   commentsToShow: Comments[] = [];
-
+  //para spinner de icono descarga de excel
+  idsDownload: string[] = [];
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
 
@@ -222,6 +223,9 @@ export class CenterOfReportComponent implements OnInit {
   }
   downloadExcel($event: any, element: ReceivedReport) {
     $event.stopPropagation();
+    this.idsDownload.push('' + element.idReporte + element.idCentro);
+    console.log('report: ', element);
+    console.log('this.idsDownload: ', this.idsDownload);
     this._adminSvc
       .getDownloadExcel(element.idReporte, element.idCentro)
       .pipe(takeUntil(this.onDestroy$))
