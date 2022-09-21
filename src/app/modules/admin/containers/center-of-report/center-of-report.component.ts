@@ -222,26 +222,21 @@ export class CenterOfReportComponent implements OnInit {
   }
   downloadExcel($event: any, element: ReceivedReport) {
     $event.stopPropagation();
-    console.log('descarga');
-
     this._adminSvc
       .getDownloadExcel(element.idReporte, element.idCentro)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe({
         next: (downloaded) => {
-          console.log('File is Downloaded', downloaded);
-          const url = window.URL.createObjectURL(downloaded);
+          const blob = new Blob([downloaded], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          });
+          const url = window.URL.createObjectURL(blob);
           window.open(url);
         },
         error: (err) => {
-          console.log(err);
-
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
-        },
-        complete: () => {
-          console.log('descarga completa');
         },
       });
   }
