@@ -35,3 +35,15 @@ export interface AxeWithquantity {
   id: number;
   cantidad: string;
 }
+export interface ReceivedReport {
+  idReporte: number;
+  idCentro: number;
+  nom_centro: string;
+  fecha_completado: string;
+  nombreReporte: string;
+  comentarios: Comments[];
+}
+export interface Comments {
+  id: number;
+  observacion: string;
+}
