@@ -61,4 +61,14 @@
         font-size: 20px;
     }
 }
+.mat-pseudo-checkbox-checke {
+    top: 2.4px;
+    left: 1px;
+    width: 8px;
+    height: 3px;
+    border-left: 2px solid currentColor;
+    transform: rotate(-45deg);
+    opacity: 1;
+    box-sizing: content-box;
+}
 
