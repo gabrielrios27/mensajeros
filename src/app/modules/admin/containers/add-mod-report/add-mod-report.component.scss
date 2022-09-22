@@ -68,6 +68,8 @@
                 margin: 13px 0px 12px 0px;
             }
 
+            
+
             .container-input-date {
                 display: flex;
                 flex-direction: row;
@@ -130,7 +132,15 @@
                 }
             }
 
-            
+            .iconCancel{
+                position: absolute;
+                cursor: pointer;
+                text-align: center;
+                margin-top: 3px;
+            }
+            .material-icons{
+                font-size: 15px;
+            }
 
             .button-ejes {
                 box-sizing: border-box;
