@@ -555,21 +555,25 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   }
   onConfirmEnd(value: boolean) {
     if (value) {
+      this.reportToUploadComplete.fechaCompletado = this.today;
       this.userSvc
-        .putCommentToUpload(this.idReport, this.idCenter, this.commentToUpload)
+        .putReportToUpload(
+          this.idReport,
+          this.idCenter,
+          this.reportToUploadComplete
+        )
         .pipe(takeUntil(this.onDestroy$))
         .subscribe({
-          next: (data: string) => {
-            this.reportToUploadComplete.fechaCompletado = this.today;
+          next: (data: ReportToUpload) => {
             this.userSvc
-              .putReportToUpload(
+              .putCommentToUpload(
                 this.idReport,
                 this.idCenter,
-                this.reportToUploadComplete
+                this.commentToUpload
               )
               .pipe(takeUntil(this.onDestroy$))
               .subscribe({
-                next: (data: ReportToUpload) => {
+                next: (data: string) => {
                   this.router.navigate([
                     '/user/dashboard/mis-reportes/pendientes',
                   ]); //cambiar ruta a reportes enviados cuando se cree ese componente
