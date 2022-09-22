@@ -110,11 +110,9 @@ export class UserService {
     idCenter: number,
     comment: string
   ): Observable<string> {
-    let body = {};
-    body = { obser: comment };
     return this._http.put(
       this.baseUrlTami + this.ePCommentToUpload + idReport + '/' + idCenter,
-      body,
+      { obser: comment },
       {
         responseType: 'text',
       }
