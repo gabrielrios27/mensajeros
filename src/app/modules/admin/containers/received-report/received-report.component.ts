@@ -74,8 +74,7 @@ export class ReceivedReportComponent implements OnInit {
   biAlphabet: string[] = [];
   
   centerSelects = ["la balsa", "Hogar Geraige"]
-  axes = ["Seguridas Nutricional", "Educación"]
-  v = ["1", "2", "#", "4", "5", "6", "7", "8", "*"]
+  axes:any = []
   since = '01/07/2022'
   until = '31/12/2022'
   receptionDate = '03/01/2023'
@@ -85,6 +84,7 @@ export class ReceivedReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.createBiAlphabet();
+    this.pushAxe()
   }
 
   storageChange() {
@@ -93,6 +93,21 @@ export class ReceivedReportComponent implements OnInit {
 
   backToReports() {
     this.router.navigate(['admin/dashboard/reportes/centro-de-reportes'])
+  }
+
+  pushAxe(){
+    for (let vari of this.variables) {
+      if(this.axes.length === 0){
+        this.axes.push(vari.eje);
+      }
+      else if(!this.axes.find(vari.eje.id)){
+        this.axes.push(vari.eje);
+      }
+    }
+    console.log(this.axes)
+  }
+  variablesShow(axe: any){
+    return this.variables.filter(res=> {return axe.id == res.eje.id})
   }
 
   createBiAlphabet() {

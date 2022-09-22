@@ -30,7 +30,7 @@
         </section>
         <section class="section-ejes-variables">
             <div class="container-ejes-variables" *ngFor="let item of axes; let i = index">
-                <label class="ejes-report-received">Eje {{i + 1}}: {{item}}</label>
+                <label class="ejes-report-received">Eje {{i + 1}}: {{item.nombre}}</label>
                 <div class="variables-report-received" >
                     <!-- <p class="p-variables" *ngFor="let variable of v">{{variable}}</p> -->
                     <app-variables-show  *ngFor="let v of variables; let j = index" [indexAlphabet]="biAlphabet[j]" [variableValue]="v"></app-variables-show>
