@@ -19,6 +19,7 @@ export class UserService {
   ePUserData: string = '/usuarios/datosUsuario';
   ePPendingReports: string = '/reportes/reportesPendientes';
   ePReportToUpload: string = '/carga/';
+  ePCommentToUpload: string = '/carga/add/';
   constructor(private _http: HttpClient) {}
   //envia click cuando se da click al btn confirmar eje en el upload-report.ts
   sendClickEvent() {
@@ -101,6 +102,22 @@ export class UserService {
         idCenter +
         '/' +
         idAxe
+    );
+  }
+  //agregar observación final a reporte /carga/add/{idReporte}/{idCentro}
+  putCommentToUpload(
+    idReport: number,
+    idCenter: number,
+    comment: string
+  ): Observable<string> {
+    let body = {};
+    body = { obser: comment };
+    return this._http.put(
+      this.baseUrlTami + this.ePCommentToUpload + idReport + '/' + idCenter,
+      body,
+      {
+        responseType: 'text',
+      }
     );
   }
 }
