@@ -98,6 +98,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   timerId: any;
   //fecha actual en formato iso8601
   today: any;
+  commentToUpload: string;
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(private router: Router, private userSvc: UserService) {
@@ -115,6 +116,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
     this.allPendingReports = [];
     this.report = [];
     this.reportToUploadComplete = {} as ReportToUpload;
+    this.commentToUpload = '';
   }
 
   ngOnInit(): void {
@@ -553,17 +555,31 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   }
   onConfirmEnd(value: boolean) {
     if (value) {
-      this.reportToUploadComplete.fechaCompletado = this.today;
       this.userSvc
-        .putReportToUpload(
-          this.idReport,
-          this.idCenter,
-          this.reportToUploadComplete
-        )
+        .putCommentToUpload(this.idReport, this.idCenter, this.commentToUpload)
         .pipe(takeUntil(this.onDestroy$))
         .subscribe({
-          next: (data: ReportToUpload) => {
-            this.router.navigate(['/user/dashboard/mis-reportes/pendientes']); //cambiar ruta a reportes enviados cuando se cree ese componente
+          next: (data: string) => {
+            this.reportToUploadComplete.fechaCompletado = this.today;
+            this.userSvc
+              .putReportToUpload(
+                this.idReport,
+                this.idCenter,
+                this.reportToUploadComplete
+              )
+              .pipe(takeUntil(this.onDestroy$))
+              .subscribe({
+                next: (data: ReportToUpload) => {
+                  this.router.navigate([
+                    '/user/dashboard/mis-reportes/pendientes',
+                  ]); //cambiar ruta a reportes enviados cuando se cree ese componente
+                },
+                error: (err) => {
+                  if (err.status === 401) {
+                    this.router.navigate(['/auth']);
+                  }
+                },
+              });
           },
           error: (err) => {
             if (err.status === 401) {
