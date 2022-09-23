@@ -34,6 +34,45 @@ export class CentersComponent implements OnInit {
   listCurrentPage: Array<Centro> = new Array();
   initialItem: number = 1;
   finalItem: number = 10;
+  //centros hardcodeados
+  centrosListCompleteCode: Array<Centro> = [
+    {
+      id: 2,
+      nombre: 'centro 2',
+      usuario: {
+        contrasena: 'string',
+        email: 'string',
+        id: 5,
+        nombre: 'string',
+        rolNombre: 'string',
+      },
+      zona: 'Zona Sur',
+    },
+    {
+      id: 2,
+      nombre: 'centro 3',
+      usuario: {
+        contrasena: 'string',
+        email: 'string',
+        id: 5,
+        nombre: 'string',
+        rolNombre: 'string',
+      },
+      zona: 'Zona Sur',
+    },
+    {
+      id: 2,
+      nombre: 'centro 4',
+      usuario: {
+        contrasena: 'string',
+        email: 'string',
+        id: 5,
+        nombre: 'string',
+        rolNombre: 'string',
+      },
+      zona: 'Zona Sur',
+    },
+  ];
   constructor(
     private router: Router,
     public data: DataService,
@@ -88,18 +127,22 @@ export class CentersComponent implements OnInit {
 
   getCenters() {
     this.currentPage = this.getPageLocalStorage();
-    this.admin.getCentros().subscribe({
-      next: (data) => {
-        setTimeout(() => this.cdr.detectChanges());
-        this.centrosListComplete = data;
-        this.pageToShow(this.currentPage, this.centrosListComplete); //para paginación
-        console.log(data);
-      },
-      error: (err) => {
-        setTimeout(() => this.cdr.detectChanges());
-        console.log(err);
-      },
-    });
+    //hardcodeado----
+    this.centrosListComplete = this.centrosListCompleteCode;
+    this.pageToShow(this.currentPage, this.centrosListComplete); //para paginación
+    // --------------------
+    // this.admin.getCentros().subscribe({
+    //   next: (data) => {
+    //     setTimeout(() => this.cdr.detectChanges());
+    //     this.centrosListComplete = data;
+    //     this.pageToShow(this.currentPage, this.centrosListComplete); //para paginación
+    //     console.log(data);
+    //   },
+    //   error: (err) => {
+    //     setTimeout(() => this.cdr.detectChanges());
+    //     console.log(err);
+    //   },
+    // });
   }
   //para paginación----
   pageToShow(page: number, list: Centro[]) {
