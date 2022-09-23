@@ -98,6 +98,7 @@
             </section>
         </div>
         <div *ngIf="flag" class="modal-2">
+            <div class="close" (click)="closeModal()"><span style="margin-bottom: 5px;">x</span></div>
             <label>Confirmar envio</label>
             <div *ngFor="let item of centerSelects">
                 <p>{{item.nombre}}</p>

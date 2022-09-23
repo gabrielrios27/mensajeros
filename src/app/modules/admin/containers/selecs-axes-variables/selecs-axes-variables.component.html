@@ -3,15 +3,18 @@
         name="eje" (selectionChange)="capturarEje($event.value)">
         <mat-option [value]="item" *ngFor="let item of listOfAxes">{{item.nombre}}</mat-option>
     </mat-select>
-    <mat-select  class="mat-select-ejes" placeholder="Selecciona una o más."
+    <mat-select  #mySelCategory class="mat-select-ejes" placeholder="Selecciona una o más."
         multiple="" [(value)]="variables" name="variables"
         (selectionChange)="capturarVariables($event.value)">
+        <mat-option [value]="0" (click)="selectAll()"  ngClass="'mat-pseudo-checkbox-checked':flag == true  " >Seleccionar todas</mat-option>
         <mat-option [value]="item" *ngFor="let item of listOfVariablesShow">{{item.nombre}}</mat-option>
     </mat-select>
 </div>
 <mat-error *ngIf="!axe">Seleccione un eje y variables</mat-error>
+
 <div class="container-label-variables">
     <div>
+        <mat-error *ngIf="variablesArray.length==0">Seleccione variables</mat-error>
         <div>
             <label>Variables Seleccionadas </label>
         </div>

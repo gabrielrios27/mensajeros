@@ -78,7 +78,8 @@ export class AddModReportComponent implements OnInit {
 
   validateDateDelivery(): any {
     let date = new Date(this.deliverdate);
-    if (date < this.today) {
+    let deliverdate = date;
+    if (deliverdate < this.today) {
       return true;
     } else {
       return false;
@@ -110,7 +111,7 @@ export class AddModReportComponent implements OnInit {
 
   validatorsData() {
     if (!this.data.editar) {
-      if (this.arrayAxes == null || this.arrayVaribles == null) {
+      if (this.arrayAxes.length == 0 || this.arrayVaribles.length == 0) {
         this.flagAxeVariable = true;
       } else {
         this.flagAxeVariable = false;
@@ -130,12 +131,14 @@ export class AddModReportComponent implements OnInit {
     this.arrayVaribles.push(1);
   }
 
-  catchCenter(e: any) {
-    this.center = e;
+  deleteAxe(index:number){
+    this.arrayc.splice(index, 1)
+    this.arrayAxes.splice(index, 1);
+    this.arrayVaribles.splice(index, 1);
   }
 
-  removeVariable(variable: any) {
-    this.variables = this.variables.filter((res: any) => res !== variable);
+  catchCenter(e: any) {
+    this.center = e;
   }
 
   validatorDate(): any {
@@ -144,6 +147,7 @@ export class AddModReportComponent implements OnInit {
     } else {
       return false;
     }
+    
   }
 
   // validatorAxeVariable(): any{
