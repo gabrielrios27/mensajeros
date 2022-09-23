@@ -25,25 +25,25 @@ import { ReceivedReportComponent } from './containers/received-report/received-r
 export const ROUTES: Routes = [
   {
     path: '',
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     redirectTo: 'home',
   },
   {
     path: 'home',
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     component: adminContainers.HomeComponent,
     pathMatch: 'full',
   },
   {
     path: 'usuarios',
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     component: UsersComponent,
     pathMatch: 'full',
   },
 
   {
     path: 'centros',
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     component: adminContainers.CentersComponent,
     pathMatch: 'full',
   },
