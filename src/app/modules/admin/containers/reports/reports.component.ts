@@ -11,6 +11,7 @@ import { axes, variable } from '../../models/admin.model';
 import { Centro } from '../../models/centro';
 import { report } from 'process';
 import { DataService } from '../../services/data.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-reports',
@@ -27,7 +28,7 @@ export class ReportsComponent implements OnInit {
   idToDelete: number = 0;
 
   // pagination
-  userListComplete: Array<Report> = new Array();
+  listOfReport_toShow = new BehaviorSubject<axes[]>([]);
   listLenght: number = 0;
   itemsPerPage: number = 10;
   quantityOfPages: number = 1;
@@ -58,7 +59,7 @@ export class ReportsComponent implements OnInit {
     private admin: AdminService,
     private cdr: ChangeDetectorRef,
     private data: DataService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getReports();
@@ -66,7 +67,7 @@ export class ReportsComponent implements OnInit {
     this.getCenters();
     this.getAxes();
     this.getVariables();
-    this.data.flagDuplicated = false
+    this.data.flagDuplicated = false;
   }
 
   busca(e: string) {
@@ -151,12 +152,11 @@ export class ReportsComponent implements OnInit {
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.reports = data;
+        console.log(this.reports);
         this.pageToShow(this.currentPage, this.reports); //para paginación
-        
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        
       },
     });
   }
@@ -172,8 +172,7 @@ export class ReportsComponent implements OnInit {
           this.router.navigate(['/auth']);
         }
       },
-      complete: () => {
-      },
+      complete: () => { },
     });
   }
 
@@ -188,8 +187,7 @@ export class ReportsComponent implements OnInit {
           this.router.navigate(['/auth']);
         }
       },
-      complete: () => {
-      },
+      complete: () => { },
     });
   }
 
@@ -200,21 +198,19 @@ export class ReportsComponent implements OnInit {
         this.pageToShow(this.currentPage, this.reports); //para paginación
         this.getReports();
         this.close();
-        
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        
       },
     });
   }
 
   edit(rep: any) {
     this.report = rep;
-    this.data.editar = true
+    this.data.editar = true;
     this.router.navigate([
       'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
-      this.report.id
+      this.report.id,
     ]);
   }
 
@@ -222,18 +218,20 @@ export class ReportsComponent implements OnInit {
 
   duplicated(rep: any) {
     this.report = rep;
-    this.data.editar = true
-    this.data.flagDuplicated = true
-    let repD = this.reports.filter((res:any) => {return res.nombre === rep.nombre + " duplicado "})
-    this.data.cantDuplicated = repD.length
+    this.data.editar = true;
+    this.data.flagDuplicated = true;
+    let repD = this.reports.filter((res: any) => {
+      return res.nombre === rep.nombre + ' duplicado ';
+    });
+    this.data.cantDuplicated = repD.length;
     this.router.navigate([
       'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
-      this.report.id
+      this.report.id,
     ]);
   }
 
   create() {
-    this.data.editar = false
+    this.data.editar = false;
     this.router.navigate([
       'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
     ]);
@@ -241,13 +239,13 @@ export class ReportsComponent implements OnInit {
 
   //para paginación----
   pageToShow(page: number, list: Report[]) {
-    // this.setPageLocalStorage(page);
+    this.setPageLocalStorage(page);
     this.listLenght = list.length;
     this.quantityOfPages = Math.ceil(this.listLenght / this.itemsPerPage);
     this.listCurrentPage = [];
     if (page <= 1) {
       this.listCurrentPage = list.slice(0, 10);
-      this.reports = this.listCurrentPage;
+      this.listOfReport_toShow.next(this.listCurrentPage);
       this.initialItem = 1;
       if (this.listLenght < this.itemsPerPage) {
         this.finalItem = this.listLenght;
@@ -259,7 +257,7 @@ export class ReportsComponent implements OnInit {
         page * this.itemsPerPage - this.itemsPerPage,
         page * this.itemsPerPage
       );
-      this.reports = this.listCurrentPage;
+      this.listOfReport_toShow.next(this.listCurrentPage);
       this.initialItem = page * this.itemsPerPage - this.itemsPerPage + 1;
       this.finalItem =
         page * this.itemsPerPage -
@@ -269,7 +267,7 @@ export class ReportsComponent implements OnInit {
       this.listCurrentPage = list.slice(
         this.quantityOfPages * this.itemsPerPage - this.itemsPerPage
       );
-      this.reports = this.listCurrentPage;
+      this.listOfReport_toShow.next(this.listCurrentPage);
       this.initialItem =
         this.quantityOfPages * this.itemsPerPage - this.itemsPerPage + 1;
       this.finalItem =
@@ -281,22 +279,33 @@ export class ReportsComponent implements OnInit {
   onClickBefore() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.pageToShow(this.currentPage, this.userListComplete);
+      this.pageToShow(this.currentPage, this.reports);
     } else {
       this.currentPage = 1;
-      this.pageToShow(this.currentPage, this.userListComplete);
+      this.pageToShow(this.currentPage, this.reports);
     }
   }
   onClickAfter() {
     if (this.currentPage < this.quantityOfPages) {
       this.currentPage++;
-      this.pageToShow(this.currentPage, this.userListComplete);
+      this.pageToShow(this.currentPage, this.reports);
     } else {
       this.currentPage = this.quantityOfPages;
-      this.pageToShow(this.currentPage, this.userListComplete);
+      this.pageToShow(this.currentPage, this.reports);
     }
   }
-
+  setPageLocalStorage(page: number) {
+    localStorage.setItem('reportPage', JSON.stringify(page));
+  }
+  getPageLocalStorage(): number {
+    let pageLocalStorage: number = 1;
+    let pageLocalStorageJSON = localStorage.getItem('reportPage');
+    if (pageLocalStorageJSON) {
+      pageLocalStorage = JSON.parse(pageLocalStorageJSON);
+    }
+    return pageLocalStorage;
+  }
+  // 
   onClickDelete(id: number) {
     this.flagDelete = true;
     this.idToDelete = id;

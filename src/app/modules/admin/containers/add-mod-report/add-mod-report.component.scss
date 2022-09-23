@@ -1,296 +1,298 @@
 @import "../../../../../styles/variables.scss";
 
 .container-create-report {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-left: 123px;
+
+  .add-mod-report {
+    font-size: 16px;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    padding-left: 123px;
+    max-width: 71.0625em;
+    margin: 0 7.9375em;
+    font-family: "Futura Bk BT";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
 
-    .add-mod-report {
-        font-size: 16px;
-        width: 100%;
-        max-width: 71.0625em;
-        margin: 0 7.9375em;
-        font-family: 'Futura Bk BT';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 19px;
-
-
-        .container-button-expand {
-            display: flex;
-            align-items: flex-end;
-            flex-direction: column;
-            .button-expand {
-                margin-right: 70px;
-                position: absolute;
-                box-sizing: border-box;
-                width: 84px;
-                top: 170px;
-                height: 66px;
-                background: #B0DBF3;
-                border: 1px solid #B0DBF3;
-                border-radius: 80px;
-                align-items: center;
-                text-align: center;
-                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            }
-        }
-
-        .title {
-            font-size: 1.875rem;
-            line-height: 1.2em;
-            text-align: center;
-            color: $color-text-primary;
-            margin-top: 12px;
-            margin-bottom: 51px;
-        }
-
-        .form-create-report {
-            margin-left: 200px;
-
-            .input-create-report {
-                box-sizing: border-box;
-                border: 1px solid #979797;
-                border-radius: 4px;
-                width: 277px;
-                height: 35px;
-                font-family: "Futura Bk BT";
-                font-style: normal;
-                font-weight: 600;
-                font-size: 16px;
-                line-height: 24px;
-                padding: 10px;
-                letter-spacing: 0.5px;
-                outline-color: $color-primary-border;
-                color: #1c1b1f;
-                margin: 13px 0px 12px 0px;
-            }
-
-            .container-input-date {
-                display: flex;
-                flex-direction: row;
-
-                .input-wrapper {
-                    position: relative;
-                    width: 131px;
-                    height: 40px;
-                    margin-right: 15px;
-                    margin-top: 13px;
-
-                    .input-fecha {
-                        width: 131px;
-                        height: 40px;
-                        box-sizing: border-box;
-                        border: 1px solid #79747E;
-                        border-radius: 5px;
-                        font-family: "Futura Bk BT";
-                        font-style: normal;
-                        font-weight: 400;
-                        font-size: 16px;
-                        line-height: 19px;
-                        display: flex;
-                        align-items: center;
-                        padding: 10px;
-                        outline-color: $color-primary-border;
-                        letter-spacing: 0.5px;
-                        color: #1c1b1f;
-                        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-                        background: rgba(217, 217, 217, 0.2);
-                    }
-
-                    .input-fecha-alerta {
-                        box-sizing: border-box;
-                        border: 1px solid #79747E;
-                        border-radius: 5px;
-                        font-family: "Futura Bk BT";
-                        font-style: normal;
-                        font-weight: 400;
-                        font-size: 16px;
-                        line-height: 19px;
-                        display: flex;
-                        align-items: center;
-                        padding: 10px;
-                        outline-color: $color-primary-border;
-                        letter-spacing: 0.5px;
-                        color: #1c1b1f;
-                        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-                        background: rgba(217, 217, 217, 0.2);
-                        width: 264.03px;
-                        height: 32.79px;
-                    }
-
-                    .input-icon {
-                        position: absolute;
-                        left: 90px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                    }
-                }
-            }
-
-            
-
-            .button-ejes {
-                box-sizing: border-box;
-                width: 116px;
-                height: 67px;
-                background: #B0DBF3;
-                border: 1px solid #B0DBF3;
-                border-radius: 80px;
-                font-family: 'Futura Bk BT';
-                font-style: normal;
-                font-weight: 600;
-                font-size: 20px;
-                line-height: 24px;
-                margin-left: 208px;
-                color: #000000;
-                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            }
-
-            .div-button {
-                display: flex;
-                flex-direction: column;
-                align-items: end;
-            }
-
-            .button-create {
-                display: flex;
-                padding: 21px 35px;
-                gap: 10px;
-                width: 193px;
-                height: 66px;
-                background: #56B5EC;
-                border: 1px solid #56B5EC;
-                border-radius: 35px;
-                font-family: 'Futura Bk BT';
-                font-style: normal;
-                font-weight: 600;
-                font-size: 20px;
-                line-height: 24px;
-                color: #000000;
-                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            }
-        }
-
-        .container-alert {
-            width: 264.03px;
-            height: 32.79px;
-            margin-top: 10px;
-            padding-top: 15px;
-
-            .input-wrapper {
-                position: relative;
-                width: 131px;
-                height: 40px;
-                margin-right: 15px;
-                margin-top: 13px;
-
-                .input-fecha-alerta {
-                    box-sizing: border-box;
-                    border: 1px solid #C75757;
-                    border-radius: 5px;
-                    font-family: "Futura Bk BT";
-                    font-style: normal;
-                    font-weight: 400;
-                    font-size: 16px;
-                    line-height: 19px;
-                    display: flex;
-                    align-items: center;
-                    padding: 10px;
-                    outline-color: $color-primary-border;
-                    letter-spacing: 0.5px;
-                    color: #1c1b1f;
-                    background: rgba(217, 217, 217, 0.2);
-                    width: 264.03px;
-                    height: 32.79px;
-                }
-
-                .input-icon {
-                    position: absolute;
-                    left: 150px;
-                    top: 40%;
-                    transform: translateY(-50%);
-                }
-            }
-        }
+    .container-button-expand {
+      display: flex;
+      align-items: flex-end;
+      flex-direction: column;
+      .button-expand {
+        margin-right: 70px;
+        position: absolute;
+        box-sizing: border-box;
+        width: 84px;
+        top: 170px;
+        height: 66px;
+        background: #b0dbf3;
+        border: 1px solid #b0dbf3;
+        border-radius: 80px;
+        align-items: center;
+        text-align: center;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      }
     }
 
-}
+    .title {
+      font-size: 1.875rem;
+      line-height: 1.2em;
+      text-align: center;
+      color: $color-text-primary;
+      margin-top: 12px;
+      margin-bottom: 51px;
+    }
 
+    .form-create-report {
+      margin-left: 200px;
+
+      .input-create-report {
+        box-sizing: border-box;
+        border: 1px solid #979797;
+        border-radius: 4px;
+        width: 277px;
+        height: 35px;
+        font-family: "Futura Bk BT";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        padding: 10px;
+        letter-spacing: 0.5px;
+        outline-color: $color-primary-border;
+        color: #1c1b1f;
+        margin: 13px 0px 12px 0px;
+      }
+
+      .container-input-date {
+        display: flex;
+        flex-direction: row;
+
+        .input-wrapper {
+          position: relative;
+          width: 131px;
+          height: 40px;
+          margin-right: 15px;
+          margin-top: 13px;
+
+          .input-fecha {
+            width: 131px;
+            height: 40px;
+            box-sizing: border-box;
+            border: 1px solid #79747e;
+            border-radius: 5px;
+            font-family: "Futura Bk BT";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 19px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            outline-color: $color-primary-border;
+            letter-spacing: 0.5px;
+            color: #1c1b1f;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            background: rgba(217, 217, 217, 0.2);
+          }
+
+          .input-fecha-alerta {
+            box-sizing: border-box;
+            border: 1px solid #79747e;
+            border-radius: 5px;
+            font-family: "Futura Bk BT";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 19px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            outline-color: $color-primary-border;
+            letter-spacing: 0.5px;
+            color: #1c1b1f;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            background: rgba(217, 217, 217, 0.2);
+            width: 264.03px;
+            height: 32.79px;
+          }
+
+          .input-icon {
+            position: absolute;
+            left: 90px;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+        }
+      }
+
+      .iconCancel {
+        position: absolute;
+        cursor: pointer;
+        text-align: center;
+        margin-top: 3px;
+      }
+      .material-icons {
+        font-size: 15px;
+      }
+
+      .button-ejes {
+        box-sizing: border-box;
+        width: 116px;
+        height: 67px;
+        background: #b0dbf3;
+        border: 1px solid #b0dbf3;
+        border-radius: 80px;
+        font-family: "Futura Bk BT";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+        margin-left: 208px;
+        color: #000000;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      }
+
+      .div-button {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+      }
+
+      .button-create {
+        display: flex;
+        padding: 21px 35px;
+        gap: 10px;
+        width: 193px;
+        height: 66px;
+        background: #56b5ec;
+        border: 1px solid #56b5ec;
+        border-radius: 35px;
+        font-family: "Futura Bk BT";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+        color: #000000;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      }
+    }
+
+    .container-alert {
+      width: 264.03px;
+      height: 32.79px;
+      margin-top: 10px;
+      padding-top: 15px;
+
+      .input-wrapper {
+        position: relative;
+        width: 131px;
+        height: 40px;
+        margin-right: 15px;
+        margin-top: 13px;
+
+        .input-fecha-alerta {
+          box-sizing: border-box;
+          border: 1px solid #c75757;
+          border-radius: 5px;
+          font-family: "Futura Bk BT";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 19px;
+          display: flex;
+          align-items: center;
+          padding: 10px;
+          outline-color: $color-primary-border;
+          letter-spacing: 0.5px;
+          color: #1c1b1f;
+          background: rgba(217, 217, 217, 0.2);
+          width: 264.03px;
+          height: 32.79px;
+        }
+
+        .input-icon {
+          position: absolute;
+          left: 150px;
+          top: 40%;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+}
+::ng-deep .cdk-overlay-container .mat-option-text {
+  max-width: 280px;
+}
 //css select
 
 .mat-select {
-    box-sizing: border-box;
-    border: 1px solid #979797;
-    border-radius: 4px;
-    width: 277px;
-    height: 35px;
-    font-family: "Futura Bk BT";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    letter-spacing: 0.5px;
-    color: #1c1b1f;
-    outline-color: $color-primary-border;
-    margin: 13px 0px 12px 0px;
+  box-sizing: border-box;
+  border: 1px solid #979797;
+  border-radius: 4px;
+  width: 277px;
+  height: 35px;
+  font-family: "Futura Bk BT";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  letter-spacing: 0.5px;
+  color: #1c1b1f;
+  outline-color: $color-primary-border;
+  margin: 13px 0px 12px 0px;
 }
 
 ::ng-deep .mat-select:focus {
-    border: 2px solid #1967D2;
+  border: 2px solid #1967d2;
 }
 
-
-
 mat-option {
-    border-bottom: 1px solid #1967D2;
+  border-bottom: 1px solid #1967d2;
 }
 
 ::ng-deep .mat-option-text {
-    position: absolute;
+  position: absolute;
 }
 
 ::ng-deep .mat-select-panel {
-    background: #95B7EA;
-    margin-top: 40px;
-
+  background: #95b7ea;
+  margin-top: 40px;
 }
 
 ::ng-deep .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
-    background: white;
+  background: white;
 }
 
 ::ng-deep {
-
-    .mat-option:hover {
-        background: #a8c2eb !important;
-        border-bottom: #1967D2;
-        ;
-    }
+  .mat-option:hover {
+    background: #a8c2eb !important;
+    border-bottom: #1967d2;
+  }
 }
 
 ::ng-deep .mat-pseudo-checkbox {
-    background: white !important;
-    margin-left: 280px;
+  background: white !important;
+  margin-left: 280px;
 }
 
 ::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
-    color: unset;
-
+  color: unset;
 }
 
 ::ng-deep .mat-option-pseudo-checkbox.mat-pseudo-checkbox-checked {
-    background: white;
-    color: white;
+  background: white;
+  color: white;
 }
 
 ::ng-deep .mat-pseudo-checkbox-checked::after {
-    color: #000000;
+  color: #000000;
 }
 
 // fin css select

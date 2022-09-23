@@ -29,7 +29,7 @@ export class PreviewReportComponent implements OnInit {
   since: any;
   deliverdate: any;
   reportsd: any;
-
+  creationDate: any;
   variables2: Array<number> = [];
   variables: Array<number> = [];
   flag: boolean = false;
@@ -102,6 +102,8 @@ export class PreviewReportComponent implements OnInit {
     this.until = this.data.report?.periodoHasta;
     this.since = this.data.report?.periodoDesde;
     this.deliverdate = this.data.report?.fechaEntrega;
+    this.creationDate = this.data.report?.fechaCreacion
+    this.creationDate = new Date(this.creationDate)
     this.deliverdate = new Date(this.deliverdate);
     this.since = new Date(this.since);
     this.until = new Date(this.until);
@@ -128,6 +130,10 @@ export class PreviewReportComponent implements OnInit {
     }
   }
 
+  closeModal(){
+    this.flag = false;
+  }
+
   confirm() {
     this.flag = true;
   }
@@ -142,12 +148,12 @@ export class PreviewReportComponent implements OnInit {
         this.variables.push(vari.id);
       }
     }
-
+    
     let today = new Date();
 
     let report: Report = {
       nombre: this.name,
-      fechaCreacion: '',
+      fechaCreacion: today.toISOString(),
       fechaEntrega: this.deliverdate.toISOString(),
       periodoDesde: this.since.toISOString(),
       periodoHasta: this.until.toISOString(),
@@ -156,6 +162,7 @@ export class PreviewReportComponent implements OnInit {
       id: '',
     };
     this.setReportLocStg(this.name, false);
+    console.log(report)
     this.admin.editReport(this.data.report?.id, report).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
@@ -182,7 +189,7 @@ export class PreviewReportComponent implements OnInit {
 
     let report: Report = {
       nombre: this.name,
-      fechaCreacion: today.toISOString(),
+      fechaCreacion: this.creationDate.toISOString(),
       fechaEntrega: this.deliverdate.toISOString(),
       periodoDesde: this.since.toISOString(),
       periodoHasta: this.until.toISOString(),
