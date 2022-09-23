@@ -84,6 +84,7 @@
               />
             </svg>
             <svg
+              *ngIf="element.comentarios.length > 0"
               (click)="showComments($event, element.comentarios)"
               class="list-report__action-ico"
               matTooltip="Observaciones"

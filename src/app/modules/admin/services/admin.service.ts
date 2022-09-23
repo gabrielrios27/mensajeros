@@ -7,6 +7,7 @@ import { Report } from '../models/report';
 import {
   axes,
   AxeWithquantity,
+  Comments,
   flag,
   ReceivedReport,
   user,
@@ -164,6 +165,11 @@ export class AdminService {
   getReceivedReport(): Observable<ReceivedReport[]> {
     return this._http.get<ReceivedReport[]>(
       this.baseUrlTami + '/reportes/reportesRecibidos'
+    );
+  }
+  getComment(idReport: number, idCenter: number): Observable<Comments[]> {
+    return this._http.get<Comments[]>(
+      this.baseUrlTami + '/comentarios/' + idReport + '/' + idCenter
     );
   }
 }
