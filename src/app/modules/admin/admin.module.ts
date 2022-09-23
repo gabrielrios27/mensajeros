@@ -49,6 +49,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { PreviewVariableComponent } from './components/preview-variable/preview-variable.component';
 import { ReceivedReportComponent } from './containers/received-report/received-report.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CompareReportsComponent } from './containers/compare-reports/compare-reports.component';
+import { CreateComparativeReportsComponent } from './containers/create-comparative-reports/create-comparative-reports.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -103,6 +105,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     PreviewVariableComponent,
     PreviewReportComponent,
     ReceivedReportComponent,
+    CompareReportsComponent,
+    CreateComparativeReportsComponent,
   ],
   exports: [
     ...adminContainers.containers,

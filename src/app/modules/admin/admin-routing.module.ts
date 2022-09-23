@@ -27,37 +27,37 @@ import { CompareReportsComponent } from './containers/compare-reports/compare-re
 export const ROUTES: Routes = [
   {
     path: '',
-    // canActivate: [AdminGuard],
+    canActivate: [AdminGuard],
     redirectTo: 'home',
   },
   {
     path: 'home',
-    // canActivate: [AdminGuard],
+    canActivate: [AdminGuard],
     component: adminContainers.HomeComponent,
     pathMatch: 'full',
   },
   {
     path: 'usuarios',
-    // canActivate: [AdminGuard],
+    canActivate: [AdminGuard],
     component: UsersComponent,
     pathMatch: 'full',
   },
 
   {
     path: 'centros',
-    // canActivate: [AdminGuard],
+    canActivate: [AdminGuard],
     component: adminContainers.CentersComponent,
     pathMatch: 'full',
   },
   {
     path: 'centros/crear-informe-comparativo/:id-centro',
-    // canActivate: [AdminGuard],
+    canActivate: [AdminGuard],
     component: CreateComparativeReportsComponent,
     pathMatch: 'full',
   },
   {
     path: 'centros/ver-informe-comparativo/:id-comparative-report',
-    // canActivate: [AdminGuard],
+    canActivate: [AdminGuard],
     component: CompareReportsComponent,
     pathMatch: 'full',
   },
