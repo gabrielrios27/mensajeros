@@ -52,9 +52,24 @@
               element.fecha_completado.substring(5, 7)
             }}/{{ element.fecha_completado.substring(0, 4) }}
           </p>
-          <p class="list-report__cell list-report__cell--action">
+          <p
+            class="list-report__cell list-report__cell--action"
+            id="{{ element.idReporte }}{{ element.idCentro }}"
+          >
+            <span
+              class="list-report__action-ico list-report__action-ico-spinner"
+              *ngIf="
+                idsDownload.includes('' + element.idReporte + element.idCentro)
+              "
+            >
+              <mat-spinner [diameter]="23"></mat-spinner>
+            </span>
             <svg
+              *ngIf="
+                !idsDownload.includes('' + element.idReporte + element.idCentro)
+              "
               class="list-report__action-ico"
+              (click)="downloadExcel($event, element)"
               matTooltip="Descargar"
               width="24"
               height="24"

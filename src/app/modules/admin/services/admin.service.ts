@@ -8,12 +8,14 @@ import {
   axes,
   AxeWithquantity,
   Comments,
+  DownloadExcel,
   flag,
   ReceivedReport,
   user,
   variable,
 } from '../models';
 import { report } from 'process';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 @Injectable({
   providedIn: 'root',
@@ -170,6 +172,14 @@ export class AdminService {
   getComment(idReport: number, idCenter: number): Observable<Comments[]> {
     return this._http.get<Comments[]>(
       this.baseUrlTami + '/comentarios/' + idReport + '/' + idCenter
+    );
+  }
+  getDownloadExcel(idReport: number, idCenter: number): Observable<any> {
+    return this._http.get(
+      this.baseUrlTami + '/excel/descargaExcel/' + idReport + '/' + idCenter,
+      {
+        responseType: 'blob',
+      }
     );
   }
 }

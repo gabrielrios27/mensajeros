@@ -47,3 +47,12 @@ export interface Comments {
   id: number;
   observacion: string;
 }
+export interface DownloadExcel {
+  description: string;
+  filename: string;
+  inputStream: {};
+  open: boolean;
+  readable: boolean;
+  uri: string;
+  url: string;
+}

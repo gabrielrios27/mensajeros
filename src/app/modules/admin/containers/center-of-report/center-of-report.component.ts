@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { Comments, ReceivedReport } from '../../models';
+import { Comments, DownloadExcel, ReceivedReport } from '../../models';
 import { AdminService } from '../../services';
 
 @Component({
@@ -33,7 +33,8 @@ export class CenterOfReportComponent implements OnInit {
   //modal de comentarios y reseñas
   flagPopUpComments: boolean = false;
   commentsToShow: Comments[] = [];
-
+  //para spinner de icono descarga de excel
+  idsDownload: string[] = [];
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
 
@@ -218,16 +219,36 @@ export class CenterOfReportComponent implements OnInit {
   showComments($event: any, comments: Comments[]) {
     $event.stopPropagation();
     this.commentsToShow = comments;
-    //comentarios hardcodeados hasta que se implemente endpoint
-    // this.commentsToShow = [
-    //   {
-    //     id: 1,
-    //     observacion: 'comentario 1',
-    //   },
-    // ];
     this.flagPopUpComments = true;
   }
-
+  downloadExcel($event: any, element: ReceivedReport) {
+    $event.stopPropagation();
+    let idExcel: string = '' + element.idReporte + element.idCentro;
+    this.idsDownload.push(idExcel);
+    this._adminSvc
+      .getDownloadExcel(element.idReporte, element.idCentro)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (downloaded) => {
+          const blob = new Blob([downloaded], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          });
+          const url = window.URL.createObjectURL(blob);
+          const anchor = document.createElement('a');
+          anchor.download = element.nombreReporte;
+          anchor.href = url;
+          anchor.click();
+          this.idsDownload = this.idsDownload.filter(
+            (item) => item !== idExcel
+          );
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
+  }
   closeComments() {
     this.flagPopUpComments = false;
   }
