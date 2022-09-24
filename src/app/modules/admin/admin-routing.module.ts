@@ -27,12 +27,12 @@ import { CompareReportsComponent } from './containers/compare-reports/compare-re
 export const ROUTES: Routes = [
   {
     path: '',
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     redirectTo: 'home',
   },
   {
     path: 'home',
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     component: adminContainers.HomeComponent,
     pathMatch: 'full',
   },
@@ -45,13 +45,13 @@ export const ROUTES: Routes = [
 
   {
     path: 'centros',
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     component: adminContainers.CentersComponent,
     pathMatch: 'full',
   },
   {
     path: 'centros/crear-informe-comparativo/:id-centro',
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     component: CreateComparativeReportsComponent,
     pathMatch: 'full',
   },
