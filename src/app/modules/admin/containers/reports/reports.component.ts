@@ -59,7 +59,7 @@ export class ReportsComponent implements OnInit {
     private admin: AdminService,
     private cdr: ChangeDetectorRef,
     private data: DataService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.getReports();
@@ -147,7 +147,7 @@ export class ReportsComponent implements OnInit {
   }
 
   getReports() {
-    //this.currentPage = this.getPageLocalStorage();
+    this.currentPage = this.getPageLocalStorage();
     this.admin.getResports().subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
@@ -172,7 +172,7 @@ export class ReportsComponent implements OnInit {
           this.router.navigate(['/auth']);
         }
       },
-      complete: () => { },
+      complete: () => {},
     });
   }
 
@@ -187,7 +187,7 @@ export class ReportsComponent implements OnInit {
           this.router.navigate(['/auth']);
         }
       },
-      complete: () => { },
+      complete: () => {},
     });
   }
 
@@ -305,7 +305,7 @@ export class ReportsComponent implements OnInit {
     }
     return pageLocalStorage;
   }
-  // 
+  //
   onClickDelete(id: number) {
     this.flagDelete = true;
     this.idToDelete = id;
