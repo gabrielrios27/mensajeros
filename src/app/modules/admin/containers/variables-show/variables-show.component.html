@@ -1,11 +1,11 @@
 <div style="border-bottom: 1px solid #979797; " >
     <div class="container-variablesShow">
         <p class="nameVariable">{{indexAlphabet}} {{variableValue.nombre}}</p>
-        <p *ngIf="variableValue.tipo === 'Numérico'" class="typeOfResponce">{{variableValue.valor_final}}</p>
+        <p *ngIf="variableValue.tipo === 'Numérico' && variableValue.genero === 'false'" class="typeOfResponce">{{variableValue.valor_final}}</p>
         <div style="margin-left: 5px;" *ngIf="variableValue.tipo === 'Textual'">
-            <p>{{variableValue.descripcion}}</p>
-            <label style="position: absolute;">Escala de valor:</label>
-            <div class="container-escala" *ngIf="variableValue.escala_valor">
+            <p>{{responseToShow.textual}}</p>
+            <label *ngIf="variableValue.escala_valor == 'true'" style="position: absolute;">Escala de valor:</label>
+            <div class="container-escala" *ngIf="variableValue.escala_valor == 'true'">
                 <label>{{variableValue.etiqueta_inicial}}</label>
                 <mat-radio-group class="value-scale__radio-group">
                     <mat-radio-button [checked]="item == variableValue.valor_final" class="value-scale__radio-btn"
@@ -17,5 +17,12 @@
                 <label>{{variableValue.etiqueta_final}}</label>
             </div>
         </div>
+        <div *ngIf="variableValue.genero == 'true'">
+            <span style="margin-right: 36px;">Femenino: {{responseToShow.femenino}}</span>
+            <span style="margin-right: 36px;">Masculino: {{responseToShow.masculino}}</span>
+            <span style="margin-right: 36px;">No Binario: {{responseToShow.noBinario}}</span>
+            <span style="margin-right: 36px;">Total: {{total()}}</span>
+        </div>
+        <span *ngIf="responseToShow.observaciones">Observaciones: {{responseToShow.observaciones}}</span>
     </div>
 </div>
