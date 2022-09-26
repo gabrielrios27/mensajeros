@@ -237,17 +237,12 @@ export class ReportsComponent implements OnInit {
 
   //para paginación----
   pageToShow(page: number, list: Report[]) {
-    console.log('inicia page: ', page);
-
     this.setPageLocalStorage(page);
     this.listLenght = list.length;
     this.quantityOfPages = Math.ceil(this.listLenght / this.itemsPerPage);
     this.listCurrentPage = [];
-    console.log('this.quantityOfPages ', this.quantityOfPages);
-
     if (page <= 1) {
       this.listCurrentPage = list.slice(0, 10);
-      console.log('1-this.listCurrentPage ', this.listCurrentPage);
       this.listOfReport_toShow.next(this.listCurrentPage);
       this.initialItem = 1;
       if (this.listLenght < this.itemsPerPage) {
@@ -256,14 +251,10 @@ export class ReportsComponent implements OnInit {
         this.finalItem = 10;
       }
     } else if (page > 1 && page < this.quantityOfPages) {
-      console.log('page > 1 && page < this.quantityOfPages', page);
-      console.log('this.quantityOfPages:', this.quantityOfPages);
-
       this.listCurrentPage = list.slice(
         page * this.itemsPerPage - this.itemsPerPage,
         page * this.itemsPerPage
       );
-      console.log('2-this.listCurrentPage ', this.listCurrentPage);
       this.listOfReport_toShow.next(this.listCurrentPage);
       this.initialItem = page * this.itemsPerPage - this.itemsPerPage + 1;
       this.finalItem =
@@ -271,11 +262,9 @@ export class ReportsComponent implements OnInit {
         this.itemsPerPage +
         this.listCurrentPage.length;
     } else if (page >= this.quantityOfPages) {
-      console.log('page > 1 && page < this.quantityOfPages', page);
       this.listCurrentPage = list.slice(
         this.quantityOfPages * this.itemsPerPage - this.itemsPerPage
       );
-      console.log('3-this.listCurrentPage ', this.listCurrentPage);
       this.listOfReport_toShow.next(this.listCurrentPage);
       this.initialItem =
         this.quantityOfPages * this.itemsPerPage - this.itemsPerPage + 1;
