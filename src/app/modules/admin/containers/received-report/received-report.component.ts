@@ -2,38 +2,112 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 
-const Listvariables : any =[
+const Listvariables : any = [
   {
-      id: 5,
-      nombre: "Cantidad de Voluntarios",
-      descripcion: "descripción",
-      tipo: "Numérico",
-      genero: "false",
-      escala_valor: "false",
-      valor_inicial: "null",
-      valor_final: "null",
-      etiqueta_inicial: "null",
-      etiqueta_final: "null",
-      eje: {
-          id: 3,
-          nombre: "Acompañamiento en Salud"
+      "id": 20,
+      "nombre": "cant. talleres",
+      "descripcion": "desc",
+      "tipo": "Textual",
+      "genero": "false",
+      "escala_valor": "true",
+      "valor_inicial": "0",
+      "valor_final": "5",
+      "etiqueta_inicial": "aa",
+      "etiqueta_final": "zz",
+      "eje": {
+          "id": 5,
+          "nombre": "Acompañamiento Educativo"
       }
   },
   {
-      id: 21,
-      nombre: "Nivel de mejoría",
-      descripcion: "desc",
-      tipo: "Textual",
-      genero: "false",
-      escala_valor: "true",
-      valor_inicial: "0",
-      valor_final: "6",
-      etiqueta_inicial: "Malo",
-      etiqueta_final: "Muy Bueno",
-      eje: {
-          id: 3,
-          nombre: "Acompañamiento en Salud"
+      "id": 32,
+      "nombre": "Cantidad de participantes en taller1",
+      "descripcion": "desc.222",
+      "tipo": "Textual",
+      "genero": "false",
+      "escala_valor": "false",
+      "valor_inicial": "null",
+      "valor_final": "null",
+      "etiqueta_inicial": "null",
+      "etiqueta_final": "null",
+      "eje": {
+          "id": 5,
+          "nombre": "Acompañamiento Educativo"
       }
+  },
+  {
+      "id": 34,
+      "nombre": "Cantidad de Voluntarios",
+      "descripcion": "desc",
+      "tipo": "Numérico",
+      "genero": "true",
+      "escala_valor": "false",
+      "valor_inicial": null,
+      "valor_final": null,
+      "etiqueta_inicial": null,
+      "etiqueta_final": null,
+      "eje": {
+          "id": 4,
+          "nombre": "Seguridad Nutricional"
+      }
+  },
+  {
+      "id": 35,
+      "nombre": "Observaciones",
+      "descripcion": "desc",
+      "tipo": "Textual",
+      "genero": "false",
+      "escala_valor": "false",
+      "valor_inicial": null,
+      "valor_final": null,
+      "etiqueta_inicial": null,
+      "etiqueta_final": null,
+      "eje": {
+          "id": 4,
+          "nombre": "Seguridad Nutricional"
+      }
+  }
+]
+const listResponse :any = [
+  {
+      "idVariable": 20,
+      "textual": "vczvc",
+      "numerico": null,
+      "femenino": null,
+      "masculino": null,
+      "noBinario": null,
+      "escala": 4,
+      "observaciones": null
+  },
+  {
+      "idVariable": 32,
+      "textual": "vcb xcvbccx",
+      "numerico": null,
+      "femenino": null,
+      "masculino": null,
+      "noBinario": null,
+      "escala": null,
+      "observaciones": null
+  },
+  {
+      "idVariable": 34,
+      "textual": null,
+      "numerico": null,
+      "femenino": 25,
+      "masculino": 5,
+      "noBinario": 5,
+      "escala": null,
+      "observaciones": null
+  },
+  {
+      "idVariable": 35,
+      "textual": "ghdgh",
+      "numerico": null,
+      "femenino": null,
+      "masculino": null,
+      "noBinario": null,
+      "escala": null,
+      "observaciones": null
   }
 ]
 @Component({
@@ -73,13 +147,14 @@ export class ReceivedReportComponent implements OnInit {
   ];
   biAlphabet: string[] = [];
   
-  centerSelects = ["la balsa", "Hogar Geraige"]
+  centerSelects = ["Hogar Geraige"]
   axes:any = []
   since = '01/07/2022'
   until = '31/12/2022'
   receptionDate = '03/01/2023'
   observ = ''
   variables: Array<any> = Listvariables
+  response: Array<any> = listResponse
   constructor(private router: Router) { }
 
   ngOnInit(): void {
@@ -104,10 +179,11 @@ export class ReceivedReportComponent implements OnInit {
         this.axes.push(vari.eje);
       }
     }
-    console.log(this.axes)
+    console.log("axe",this.axes)
   }
   variablesShow(axe: any){
-    return this.variables.filter(res=> {return axe.id == res.eje.id})
+    console.log(this.variables.filter(res=> {return axe.id == res.eje.id}))
+    return  this.variables.filter(res=> {return axe.id == res.eje.id})
   }
 
   createBiAlphabet() {
