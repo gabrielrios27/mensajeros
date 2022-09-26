@@ -12,7 +12,7 @@ import { Response } from '../models/response';
 export class AuthService {
   url: string = 'https://mensajeros-back-tami.herokuapp.com/';
   baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com/';
-  baseUrlTami: string = 'https://mensajeros-back-tami.herokuapp.com/';
+  baseUrlTami: string = 'https://mensajeros-demo-back.herokuapp.com/';
 
   EPAuthority: string = 'usuarios/role';
   loggedIn = new BehaviorSubject<boolean>(false);
