@@ -19,6 +19,7 @@ import { report } from 'process';
 })
 export class AdminService {
   api_key: string = '';
+  url: string= 'https://mensajeros-demo-back.herokuapp.com'
   baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com';
   baseUrlTami: string = 'https://mensajeros-back-tami.herokuapp.com';
   headers = new HttpHeaders();
@@ -163,7 +164,7 @@ export class AdminService {
   // Centro de reportes------------------
   getReceivedReport(): Observable<ReceivedReport[]> {
     return this._http.get<ReceivedReport[]>(
-      this.baseUrlTami + '/reportes/reportesRecibidos'
+      this.url + '/reportes/reportesRecibidos'
     );
   }
 }
