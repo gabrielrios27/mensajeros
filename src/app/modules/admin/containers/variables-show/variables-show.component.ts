@@ -12,15 +12,29 @@ import { variable } from '../../models/admin.model';
 export class VariablesShowComponent implements OnInit {
   @Input('indexAlphabet') indexAlphabet: string;
   @Input('variableValue') variableValue: VariableRep = {} as VariableRep;
-
+  @Input('response') response: Array<any> = [];
   valueScale: Array<any> = []
+  responseToShow: any = {} as any
   constructor() {
     this.indexAlphabet = 'A';
   }
 
   ngOnInit(): void {
-    console.log(this.variableValue)
     this.createValueScale()
+    this.responseShow()
+  }
+
+  responseShow(){
+    for(let r of this.response){
+      if(r.idVariable == this.variableValue.id){
+        this.responseToShow = r
+      }
+    }
+    console.log(this.responseToShow)
+  }
+
+  total(){
+    return this.responseToShow.femenino + this.responseToShow.masculino + this.responseToShow.noBinario
   }
 
   createValueScale() {
