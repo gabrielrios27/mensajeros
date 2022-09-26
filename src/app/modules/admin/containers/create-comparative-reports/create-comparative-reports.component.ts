@@ -16,6 +16,8 @@ export class CreateComparativeReportsComponent implements OnInit {
   report2: any;
   selectedVariables: any;
   flagSelectAll: boolean;
+  selected1: number = -1;
+  selected2: number = -1;
   constructor(private route: Router, private rutaActiva: ActivatedRoute) {
     this.idCentro = this.getIdFromRute();
     this.reportsList = [];
@@ -68,7 +70,7 @@ export class CreateComparativeReportsComponent implements OnInit {
     this.report1 = value;
   }
   getReport2(value: any) {
-    this.report1 = value;
+    this.report2 = value;
   }
   selectAll() {
     if (!this.flagSelectAll) {
@@ -79,19 +81,13 @@ export class CreateComparativeReportsComponent implements OnInit {
       this.flagSelectAll = false;
     }
   }
-  toppingList: string[] = [
-    'Extra cheese',
-    'Mushroom',
-    'Onion',
-    'Pepperoni',
-    'Sausage',
-  ];
-  selected: number = -1;
 
   /*checkbox change event*/
-  onChange(i: number) {
-    this.selected = i;
-    console.log('this.selected : ', this.selected);
+  onChange1(i: number) {
+    this.selected1 = i;
+  }
+  onChange2(i: number) {
+    this.selected2 = i;
   }
   onCheckbox($event: any) {
     $event.preventDefault();

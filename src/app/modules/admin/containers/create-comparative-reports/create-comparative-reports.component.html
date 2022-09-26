@@ -20,33 +20,20 @@
               <mat-option
                 *ngFor="let item of reportsList; let i = index"
                 [value]="item"
-                (click)="onChange(i)"
+                (click)="onChange1(i)"
+                [disabled]="item === report2"
                 >{{ item.name }}
                 <div class="select-item__checkbox">
-                  <mat-checkbox
+                  <input
+                    class="select-item__input-checkbox"
+                    type="checkbox"
                     (click)="onCheckbox($event)"
-                    [checked]="selected === i"
-                  >
-                  </mat-checkbox></div
+                    [checked]="selected1 === i"
+                    [disabled]="item === report2"
+                  />
+                  <div class="select-item__input-cover"></div></div
               ></mat-option>
             </mat-select>
-            <mat-form-field>
-              <mat-select placeholder="Toppings">
-                <mat-option
-                  *ngFor="let topping of toppingList; let i = index"
-                  [value]="topping"
-                  (click)="onChange(i)"
-                  >{{ topping }}
-                  <div class="select-item__checkbox">
-                    <mat-checkbox
-                      (click)="onCheckbox($event)"
-                      [checked]="selected === i"
-                    >
-                    </mat-checkbox>
-                  </div>
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
           </div>
           <div class="select-item">
             <p class="select-item__title">Reporte 2</p>
@@ -57,12 +44,24 @@
               class="select-item__input"
               placeholder="Reportes"
               [(value)]="report2"
-              name="report1"
+              name="report2"
               (selectionChange)="getReport2($event.value)"
             >
-              <mat-option *ngFor="let item of reportsList" [value]="item">{{
-                item.name
-              }}</mat-option>
+              <mat-option
+                *ngFor="let item of reportsList; let i = index"
+                [value]="item"
+                (click)="onChange2(i)"
+                [disabled]="item === report1"
+                >{{ item.name }}
+                <div class="select-item__checkbox">
+                  <input
+                    class="select-item__input-checkbox"
+                    type="checkbox"
+                    (click)="onCheckbox($event)"
+                    [checked]="selected2 === i"
+                    [disabled]="item === report1"
+                  /></div
+              ></mat-option>
             </mat-select>
           </div>
         </div>
@@ -81,14 +80,18 @@
             name="selectedVariables"
           >
             <mat-option
+              class="select-item__option"
               [value]="0"
               (click)="selectAll()"
-              ngClass="'mat-pseudo-checkbox-checked':flag == true  "
+              [selected]="flagSelectAll"
               >Seleccionar todas</mat-option
             >
-            <mat-option *ngFor="let item of variablesList" [value]="item">{{
-              item.name
-            }}</mat-option>
+            <mat-option
+              class="select-item__option"
+              *ngFor="let item of variablesList"
+              [value]="item"
+              >{{ item.name }}</mat-option
+            >
           </mat-select>
         </div>
       </div>
