@@ -17,10 +17,36 @@
               name="report1"
               (selectionChange)="getReport1($event.value)"
             >
-              <mat-option *ngFor="let item of reportsList" [value]="item">{{
-                item.name
-              }}</mat-option>
+              <mat-option
+                *ngFor="let item of reportsList; let i = index"
+                [value]="item"
+                (click)="onChange(i)"
+                >{{ item.name }}
+                <div class="select-item__checkbox">
+                  <mat-checkbox
+                    (click)="onCheckbox($event)"
+                    [checked]="selected === i"
+                  >
+                  </mat-checkbox></div
+              ></mat-option>
             </mat-select>
+            <mat-form-field>
+              <mat-select placeholder="Toppings">
+                <mat-option
+                  *ngFor="let topping of toppingList; let i = index"
+                  [value]="topping"
+                  (click)="onChange(i)"
+                  >{{ topping }}
+                  <div class="select-item__checkbox">
+                    <mat-checkbox
+                      (click)="onCheckbox($event)"
+                      [checked]="selected === i"
+                    >
+                    </mat-checkbox>
+                  </div>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
           <div class="select-item">
             <p class="select-item__title">Reporte 2</p>
@@ -41,7 +67,9 @@
           </div>
         </div>
         <div class="select-item select-item--variables">
-          <label class="select-item__label" for=""
+          <label
+            class="select-item__label select-item__label--variables"
+            for="selectedVariables"
             >Selecciona las variables que quieras</label
           >
           <mat-select
@@ -49,9 +77,8 @@
             class="select-item__input"
             placeholder="Reportes"
             multiple=""
-            [(value)]="report1"
-            name="report1"
-            (selectionChange)="getReport1($event.value)"
+            [(value)]="selectedVariables"
+            name="selectedVariables"
           >
             <mat-option
               [value]="0"
@@ -66,6 +93,6 @@
         </div>
       </div>
     </div>
-    <button class="createReport__btn">Siguiente</button>
+    <button class="createReport__btn" mat-raised-button>Siguiente</button>
   </div>
 </section>

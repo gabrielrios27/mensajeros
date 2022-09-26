@@ -43,6 +43,18 @@ export class CreateComparativeReportsComponent implements OnInit {
       { name: 'Variable2', id: 2 },
       { name: 'Variable3', id: 3 },
       { name: 'Variable4', id: 4 },
+      { name: 'Variable1', id: 1 },
+      { name: 'Variable2', id: 2 },
+      { name: 'Variable3', id: 3 },
+      { name: 'Variable4', id: 4 },
+      { name: 'Variable1', id: 1 },
+      { name: 'Variable2', id: 2 },
+      { name: 'Variable3', id: 3 },
+      { name: 'Variable4', id: 4 },
+      { name: 'Variable1', id: 1 },
+      { name: 'Variable2', id: 2 },
+      { name: 'Variable3', id: 3 },
+      { name: 'Variable4', id: 4 },
     ];
   }
   getIdFromRute(): number {
@@ -66,5 +78,22 @@ export class CreateComparativeReportsComponent implements OnInit {
       this.selectedVariables = [];
       this.flagSelectAll = false;
     }
+  }
+  toppingList: string[] = [
+    'Extra cheese',
+    'Mushroom',
+    'Onion',
+    'Pepperoni',
+    'Sausage',
+  ];
+  selected: number = -1;
+
+  /*checkbox change event*/
+  onChange(i: number) {
+    this.selected = i;
+    console.log('this.selected : ', this.selected);
+  }
+  onCheckbox($event: any) {
+    $event.preventDefault();
   }
 }

@@ -82,26 +82,33 @@
     font-size: 12px;
     letter-spacing: 0.25px;
     color: #79747e;
-    padding-right: 168px;
+    padding-right: 99px;
+  }
+  .select-item__label--variables {
+    padding-right: 15px;
   }
   .select-item__input {
     box-sizing: border-box;
     border: 1px solid #979797;
-    border-radius: 4px;
-    width: 299px;
-    height: 56px;
-    font-family: "Futura Bk BT";
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
     display: flex;
     align-items: center;
     padding: 10px;
-    letter-spacing: 0.5px;
     color: #1c1b1f;
     outline-color: $color-primary-border;
+    width: 229px;
+    height: 48px;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-family: "Roboto";
+    font-size: 14px;
+    letter-spacing: 0.25px;
   }
+}
+.select-item__checkbox {
+  position: relative;
+  float: right;
 }
 ::ng-deep .mat-select-ejes:focus {
   border: 2px solid #1967d2;
