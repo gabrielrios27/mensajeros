@@ -24,7 +24,7 @@ export class AdminService {
   api_key: string = '';
   url: string= 'https://mensajeros-demo-back.herokuapp.com'
   baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com';
-  baseUrlTami: string = 'https://mensajeros-back-tami.herokuapp.com';
+  baseUrlTami: string = 'https://mensajeros-demo-back.herokuapp.com';
   headers = new HttpHeaders();
   token: string = '';
   EPAxes: string = '/ejes';

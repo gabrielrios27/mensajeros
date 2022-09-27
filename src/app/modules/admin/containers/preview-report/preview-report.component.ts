@@ -153,7 +153,7 @@ export class PreviewReportComponent implements OnInit {
 
     let report: Report = {
       nombre: this.name,
-      fechaCreacion: today.toISOString(),
+      fechaCreacion: this.creationDate.toISOString(),
       fechaEntrega: this.deliverdate.toISOString(),
       periodoDesde: this.since.toISOString(),
       periodoHasta: this.until.toISOString(),
@@ -168,6 +168,7 @@ export class PreviewReportComponent implements OnInit {
         setTimeout(() => this.cdr.detectChanges());
         this.data.flag = false;
         this.data.editar = false;
+        this.data.report = undefined
         this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes']);
       },
       error: (err) => {},
@@ -189,7 +190,7 @@ export class PreviewReportComponent implements OnInit {
 
     let report: Report = {
       nombre: this.name,
-      fechaCreacion: this.creationDate.toISOString(),
+      fechaCreacion: today.toISOString(),
       fechaEntrega: this.deliverdate.toISOString(),
       periodoDesde: this.since.toISOString(),
       periodoHasta: this.until.toISOString(),
@@ -203,6 +204,7 @@ export class PreviewReportComponent implements OnInit {
         setTimeout(() => this.cdr.detectChanges());
         this.data.flag = false;
         this.data.editar = false;
+        this.data.report = undefined
         this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes']);
       },
       error: (err) => {},
