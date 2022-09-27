@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import { element } from 'protractor';
 import { Validators } from '@angular/forms';
 import { DataService } from '../../services/data.service';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
 
 @Component({
   selector: 'app-selecs-axes-variables',
@@ -25,6 +27,7 @@ export class SelecsAxesVariablesComponent implements OnInit {
   listOfAxes: Array<axes> = []
   listOfVariables: Array<variable> = []
   listOfVariablesShow: Array<variable> = []
+  flag = false
 
   constructor(private router: Router, private admin: AdminService, private cdr: ChangeDetectorRef, private data: DataService) { }
 
@@ -39,6 +42,33 @@ export class SelecsAxesVariablesComponent implements OnInit {
     
     this.variablesArray.emit(this.variables)
   }
+  selectAll(){
+    if(!this.flag){
+      this.variables = this.listOfVariablesShow;
+      this.flag = true
+    }
+    else{
+      this.variables = []
+      this.flag = false
+    }
+    this.variablesArray.emit(this.variables)
+  }
+
+  // toggleAllSelection(matSelect: MatSelect) {
+  //   const isSelected: boolean = matSelect.options
+  //     // The "Select All" item has the value 0
+  //     .filter((item: MatOption) => item.value === 0)
+  //     // Get the selected property (this tells us whether Select All is selected or not)
+  //     .map((item: MatOption) => item.selected)[0];
+  //   // Get the first element (there should only be 1 option with the value 0 in the select)
+
+  //   if (isSelected) {
+  //     matSelect.options.forEach((item: MatOption) => item.select());
+  //   } else {
+  //     matSelect.options.forEach((item: MatOption) => item.deselect());
+  //   }
+  //   this.variablesArray.emit(this.variables)
+  // }
 
   capturarEje(e: any) {
     // this.axe = this.arrayAxes

@@ -41,4 +41,18 @@ export interface ReceivedReport {
   nom_centro: string;
   fecha_completado: string;
   nombreReporte: string;
+  comentarios: Comments[];
+}
+export interface Comments {
+  id: number;
+  observacion: string;
+}
+export interface DownloadExcel {
+  description: string;
+  filename: string;
+  inputStream: {};
+  open: boolean;
+  readable: boolean;
+  uri: string;
+  url: string;
 }

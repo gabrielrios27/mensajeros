@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { ReceivedReport } from '../../models';
+import { Comments, DownloadExcel, ReceivedReport } from '../../models';
 import { AdminService } from '../../services';
 
 @Component({
@@ -30,7 +30,11 @@ export class CenterOfReportComponent implements OnInit {
   listOfReceivedReport: ReceivedReport[] = [];
   listOfReceivedReport_toSearch: ReceivedReport[] = [];
   listOfReceivedReport_toShow = new BehaviorSubject<ReceivedReport[]>([]);
-
+  //modal de comentarios y reseñas
+  flagPopUpComments: boolean = false;
+  commentsToShow: Comments[] = [];
+  //para spinner de icono descarga de excel
+  idsDownload: string[] = [];
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
 
@@ -47,7 +51,7 @@ export class CenterOfReportComponent implements OnInit {
       .subscribe({
         next: (data: ReceivedReport[]) => {
           this.listOfReceivedReport = data;
-          this.pageToShow(this.currentPage, this.listOfReceivedReport); //para paginación
+          this.getSetComments(this.listOfReceivedReport);
         },
         error: (err) => {
           if (err.status === 401) {
@@ -55,6 +59,29 @@ export class CenterOfReportComponent implements OnInit {
           }
         },
       });
+  }
+  //Obtiene comentarios de reporte y los guarda en cada reporte recibido
+  getSetComments(receivedReports: ReceivedReport[]) {
+    let indexReports: number = 0;
+    receivedReports.map((report) => {
+      this._adminSvc
+        .getComment(report.idReporte, report.idCentro)
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe({
+          next: (data: Comments[]) => {
+            report.comentarios = data;
+            indexReports++;
+            if (indexReports === receivedReports.length || indexReports > 10) {
+              this.pageToShow(this.currentPage, this.listOfReceivedReport); //para paginación
+            }
+          },
+          error: (err) => {
+            if (err.status === 401) {
+              this.router.navigate(['/auth']);
+            }
+          },
+        });
+    });
   }
   //para paginación----
   pageToShow(page: number, list: ReceivedReport[]) {
@@ -116,8 +143,18 @@ export class CenterOfReportComponent implements OnInit {
   setPageLocalStorage(page: number) {
     localStorage.setItem('receivedReportPage', JSON.stringify(page));
   }
-  setNameReceivedReportLocalStorage(name: string) {
+  setNameReceivedReportLocalStorage(
+    name: string,
+    idReport: number,
+    idCenter: number
+  ) {
     localStorage.setItem('nameReceivedReport', JSON.stringify(name));
+    this.router.navigate([
+      'admin/dashboard/reportes/centro-de-reportes/reporte-recibido/' +
+        idReport.toString() +
+        '/' +
+        idCenter.toString(),
+    ]);
   }
   getPageLocalStorage(): number {
     let pageLocalStorage: number = 1;
@@ -178,7 +215,43 @@ export class CenterOfReportComponent implements OnInit {
   }
   //para cerrar modales------------------
   close() {}
-
+  //para activar modal de comentarios y reseñas
+  showComments($event: any, comments: Comments[]) {
+    $event.stopPropagation();
+    this.commentsToShow = comments;
+    this.flagPopUpComments = true;
+  }
+  downloadExcel($event: any, element: ReceivedReport) {
+    $event.stopPropagation();
+    let idExcel: string = '' + element.idReporte + element.idCentro;
+    this.idsDownload.push(idExcel);
+    this._adminSvc
+      .getDownloadExcel(element.idReporte, element.idCentro)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (downloaded) => {
+          const blob = new Blob([downloaded], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          });
+          const url = window.URL.createObjectURL(blob);
+          const anchor = document.createElement('a');
+          anchor.download = element.nombreReporte;
+          anchor.href = url;
+          anchor.click();
+          this.idsDownload = this.idsDownload.filter(
+            (item) => item !== idExcel
+          );
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
+  }
+  closeComments() {
+    this.flagPopUpComments = false;
+  }
   ngOnDestroy() {
     this.onDestroy$.next(true);
   }

@@ -131,6 +131,12 @@ export class AddModReportComponent implements OnInit {
     this.arrayVaribles.push(1);
   }
 
+  deleteAxe(index:number){
+    this.arrayc.splice(index, 1)
+    this.arrayAxes.splice(index, 1);
+    this.arrayVaribles.splice(index, 1);
+  }
+
   catchCenter(e: any) {
     this.center = e;
   }
