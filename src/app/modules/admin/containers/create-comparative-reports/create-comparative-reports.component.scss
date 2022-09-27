@@ -133,6 +133,9 @@
 ::ng-deep .mat-select-panel .mat-option.mat-selected {
   background: white;
 }
+::ng-deep .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
+  background: white;
+}
 ::ng-deep .mat-select-panel {
   background: #95b7ea;
   margin-top: 40px;
