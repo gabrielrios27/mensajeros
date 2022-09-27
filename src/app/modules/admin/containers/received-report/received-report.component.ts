@@ -50,6 +50,7 @@ export class ReceivedReportComponent implements OnInit {
   report: ReportRecived = {} as ReportRecived
   center: Centro = {} as Centro
   listOfAxes: any
+  comments: any = []
   constructor(private router: Router,
     private admin: AdminService,
     private cdr: ChangeDetectorRef,
@@ -63,7 +64,20 @@ export class ReceivedReportComponent implements OnInit {
   }
 
   storageChange() {
-    this.router.navigate(['admin/dashboard/reportes/centro-de-reportes'])
+    let obs: string = this.observ
+    console.log(this.observ)
+    this.admin.addComment(obs).subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(data);
+        this.router.navigate(['admin/dashboard/reportes/centro-de-reportes'])
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+        console.log(err);
+      },
+    });
+    
   }
 
   backToReports() {
@@ -114,6 +128,7 @@ export class ReceivedReportComponent implements OnInit {
       next: (data: axes[]) => {
         this.listOfAxes = data;
         this.pushAxe()
+        this.getComment()
         setTimeout(() => this.cdr.detectChanges());
       },
       error: (err) => {
@@ -125,6 +140,18 @@ export class ReceivedReportComponent implements OnInit {
     });
   }
 
+  getComment(){
+    this.admin.getComment(this.id, this.centerId).subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.comments = data
+        console.log("algo",this.comments)
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+      },
+    });
+  }
 
   pushAxe() {
     let axe: any = []
@@ -143,6 +170,8 @@ export class ReceivedReportComponent implements OnInit {
     this.leng = vari.length
     return this.report.variables.filter(res => { return axe.id == res.eje.id })
   }
+
+  
 
   createBiAlphabet() {
     let i;
