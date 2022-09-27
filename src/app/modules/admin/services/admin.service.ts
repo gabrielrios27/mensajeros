@@ -22,7 +22,7 @@ import { text } from '@fortawesome/fontawesome-svg-core';
 })
 export class AdminService {
   api_key: string = '';
-  url: string= 'https://mensajeros-demo-back.herokuapp.com'
+  url: string = 'https://mensajeros-demo-back.herokuapp.com'
   baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com';
   baseUrlTami: string = 'https://mensajeros-demo-back.herokuapp.com';
   headers = new HttpHeaders();
@@ -32,7 +32,7 @@ export class AdminService {
   EPVariablesQuantityPerAxe: string = '/variables/eje';
   // https://mensajeros-back-tami.herokuapp.com/variables/eje/2
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
   // endpoints centros
   editCenter(center: Centro, id: any): Observable<Centro> {
     return this._http.put<Centro>(this.baseUrlTami + '/centros/' + id, center, {
@@ -167,7 +167,7 @@ export class AdminService {
   // Centro de reportes------------------
   getReceivedReport(): Observable<ReceivedReport[]> {
     return this._http.get<ReceivedReport[]>(
-      this.url + '/reportes/reportesRecibidos'
+      this.baseUrlTami + '/reportes/reportesRecibidos'
     );
   }
   getComment(idReport: number, idCenter: number): Observable<Comments[]> {
@@ -181,6 +181,11 @@ export class AdminService {
       {
         responseType: 'blob',
       }
+    );
+  }
+  getReportPerCenter(idReport: number, idCenter: number): Observable<any> {
+    return this._http.get(
+      this.baseUrlTami + '/carga/reporteCreado/' + idReport + '/' + idCenter
     );
   }
 }
