@@ -15,7 +15,6 @@ import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-reports',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './reports.component.html',
   styleUrls: ['reports.component.scss'],
 })
@@ -28,7 +27,7 @@ export class ReportsComponent implements OnInit {
   idToDelete: number = 0;
 
   // pagination
-  listOfReport_toShow = new BehaviorSubject<axes[]>([]);
+  listOfReport_toShow = new BehaviorSubject<any[]>([]);
   listLenght: number = 0;
   itemsPerPage: number = 10;
   quantityOfPages: number = 1;
@@ -59,7 +58,7 @@ export class ReportsComponent implements OnInit {
     private admin: AdminService,
     private cdr: ChangeDetectorRef,
     private data: DataService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.getReports();
@@ -147,12 +146,11 @@ export class ReportsComponent implements OnInit {
   }
 
   getReports() {
-    //this.currentPage = this.getPageLocalStorage();
+    this.currentPage = this.getPageLocalStorage();
     this.admin.getResports().subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.reports = data;
-        console.log(this.reports);
         this.pageToShow(this.currentPage, this.reports); //para paginación
       },
       error: (err) => {
@@ -172,7 +170,7 @@ export class ReportsComponent implements OnInit {
           this.router.navigate(['/auth']);
         }
       },
-      complete: () => { },
+      complete: () => {},
     });
   }
 
@@ -187,7 +185,7 @@ export class ReportsComponent implements OnInit {
           this.router.navigate(['/auth']);
         }
       },
-      complete: () => { },
+      complete: () => {},
     });
   }
 
@@ -305,7 +303,7 @@ export class ReportsComponent implements OnInit {
     }
     return pageLocalStorage;
   }
-  // 
+  //
   onClickDelete(id: number) {
     this.flagDelete = true;
     this.idToDelete = id;
