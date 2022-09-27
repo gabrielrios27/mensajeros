@@ -13,6 +13,8 @@ export class VariablesShowComponent implements OnInit {
   @Input('indexAlphabet') indexAlphabet: string;
   @Input('variableValue') variableValue: VariableRep = {} as VariableRep;
   @Input('response') response: Array<any> = [];
+  @Input('index') index: any
+  @Input('leng') leng: any
   valueScale: Array<any> = []
   responseToShow: any = {} as any
   constructor() {
@@ -30,7 +32,6 @@ export class VariablesShowComponent implements OnInit {
         this.responseToShow = r
       }
     }
-    console.log(this.responseToShow)
   }
 
   total(){
