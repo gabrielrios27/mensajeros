@@ -74,10 +74,9 @@ export class ReportsComponent implements OnInit {
       this.ngOnInit();
     } else {
       this.reports = this.reports.filter((res) => {
-        return res.nombre
-          .toLocaleLowerCase()
-          .match(this.nombre.toLocaleLowerCase());
+        return res.nombre.toLowerCase().match(this.nombre.toLowerCase());
       });
+      this.pageToShow(this.currentPage ,this.reports)
     }
   }
 
