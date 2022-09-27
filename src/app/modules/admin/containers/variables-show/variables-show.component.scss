@@ -1,8 +1,12 @@
+.border{
+    border-bottom: 1px solid grey;
+}
+
 .container-variablesShow {
     font-family: 'Futura Bk BT';
     font-style: normal;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 14px;
     width: 772px;
     height: fit-content;
@@ -77,6 +81,9 @@
                     .mat-radio-outer-circle {
                         width: 15px;
                         height: 15px;
+                    }
+                    .mat-radio-container{
+                        margin-left: 4px;
                     }
 
                 }
