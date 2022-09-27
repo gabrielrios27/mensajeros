@@ -33,7 +33,7 @@
                 <label class="ejes-report-received">Eje {{i + 1}}: {{item.nombre}}</label>
                 <div class="variables-report-received" >
                     <!-- <p class="p-variables" *ngFor="let variable of v">{{variable}}</p> -->
-                    <app-variables-show  *ngFor="let v of variables; let j = index" [indexAlphabet]="biAlphabet[j]" [variableValue]="v" [response]="response"></app-variables-show>
+                    <app-variables-show  *ngFor="let v of variablesShow(item); let j = index" [indexAlphabet]="biAlphabet[j]" [leng]="leng" [index]="j" [variableValue]="v" [response]="response"></app-variables-show>
                 </div>
             </div>
         </section>
