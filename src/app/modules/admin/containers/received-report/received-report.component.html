@@ -21,19 +21,18 @@
         <section class="container-centros-received ">
             <div class="centros-Alcanzados">
                 <p>Reporte recibido de centro:</p>
-                <p class="label-centros" *ngFor="let item of centerSelects">{{item}}</p>
+                <p class="label-centros">{{center.nombre}}</p>
             </div>
             <div class="fecha-entrega">
                 <label style="display: flex; margin-top: 4px;">Fecha de recepcion: <span
-                        style="color: #083D5E; margin-left: 5px;"> {{receptionDate}}</span></label>
+                        style="color: #083D5E; margin-left: 5px;"> {{dateComplete()}}</span></label>
             </div>
         </section>
         <section class="section-ejes-variables">
             <div class="container-ejes-variables" *ngFor="let item of axes; let i = index">
                 <label class="ejes-report-received">Eje {{i + 1}}: {{item.nombre}}</label>
                 <div class="variables-report-received" >
-                    <!-- <p class="p-variables" *ngFor="let variable of v">{{variable}}</p> -->
-                    <app-variables-show  *ngFor="let v of variablesShow(item); let j = index" [indexAlphabet]="biAlphabet[j]" [leng]="leng" [index]="j" [variableValue]="v" [response]="response"></app-variables-show>
+                    <app-variables-show  *ngFor="let v of variablesShow(item); let j = index" [indexAlphabet]="biAlphabet[j]" [leng]="leng" [index]="j" [variableValue]="v" [response]="report.respuestas"></app-variables-show>
                 </div>
             </div>
         </section>
