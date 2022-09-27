@@ -188,4 +188,9 @@ export class AdminService {
       this.baseUrlTami + '/carga/reporteCreado/' + idReport + '/' + idCenter
     );
   }
+  addComment(comment:string): Observable<any> {
+    return this._http.post(this.baseUrlTami + '/comentarios/',comment, {
+      responseType: 'text',
+    });
+  }
 }
