@@ -1,115 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
-
-const Listvariables: any = [
-  {
-    id: 20,
-    nombre: "cant. talleres",
-    descripcion: "desc",
-    tipo: "Textual",
-    genero: "false",
-    escala_valor: "true",
-    valor_inicial: "0",
-    valor_final: "5",
-    "etiqueta_inicial": "muy malo",
-    "etiqueta_final": "muy bueno",
-    eje: {
-      id: 5,
-      nombre: "Acompañamiento Educativo"
-    }
-  },
-  {
-    "id": 32,
-    "nombre": "Cantidad de participantes en taller1",
-    "descripcion": "desc.222",
-    "tipo": "Textual",
-    "genero": "false",
-    "escala_valor": "false",
-    "valor_inicial": "null",
-    "valor_final": "null",
-    "etiqueta_inicial": "null",
-    "etiqueta_final": "null",
-    eje: {
-      id: 5,
-      nombre: "Acompañamiento Educativo"
-    }
-  },
-  {
-    "id": 34,
-    "nombre": "Cantidad de Voluntarios",
-    "descripcion": "desc",
-    "tipo": "Numérico",
-    "genero": "true",
-    "escala_valor": "false",
-    "valor_inicial": null,
-    "valor_final": null,
-    "etiqueta_inicial": null,
-    "etiqueta_final": null,
-    eje: {
-      id: 4,
-      nombre: "Seguridad Nutricional"
-    }
-  },
-  {
-    "id": 35,
-    "nombre": "Observaciones",
-    "descripcion": "desc",
-    "tipo": "Textual",
-    "genero": "false",
-    "escala_valor": "false",
-    "valor_inicial": null,
-    "valor_final": null,
-    "etiqueta_inicial": null,
-    "etiqueta_final": null,
-    eje: {
-      id: 4,
-      nombre: "Seguridad Nutricional"
-    }
-  }
-]
-const listResponse: any = [
-  {
-    "idVariable": 20,
-    "textual": "La calidad no fue excelente porque........",
-    "numerico": null,
-    "femenino": null,
-    "masculino": null,
-    "noBinario": null,
-    "escala": 4,
-    "observaciones": null
-  },
-  {
-    "idVariable": 32,
-    "textual": "vcb xcvbccx",
-    "numerico": null,
-    "femenino": null,
-    "masculino": null,
-    "noBinario": null,
-    "escala": null,
-    "observaciones": null
-  },
-  {
-    "idVariable": 34,
-    "textual": null,
-    "numerico": null,
-    "femenino": 25,
-    "masculino": 5,
-    "noBinario": 5,
-    "escala": null,
-    "observaciones": null
-  },
-  {
-    "idVariable": 35,
-    "textual": "En el mes de Junio se  brindo una harla con la Lic. en nutricion  xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "numerico": null,
-    "femenino": null,
-    "masculino": null,
-    "noBinario": null,
-    "escala": null,
-    "observaciones": null
-  }
-]
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ReportRecived } from '../../models/reportRecived';
+import { AdminService } from '../../services';
+import { Centro } from '../../models/centro';
+import { axes } from '../../models';
 @Component({
   selector: 'app-received-report',
   templateUrl: './received-report.component.html',
@@ -146,30 +40,26 @@ export class ReceivedReportComponent implements OnInit {
     'Z',
   ];
   biAlphabet: string[] = [];
+  id: any
+  centerId: any
   leng: any
-  centerSelects = ["Hogar Geraige"]
   axes: any = []
-  since = '01/07/2022'
-  until = '31/12/2022'
-  receptionDate = '03/01/2023'
+  since: any
+  until: any
   observ = ''
-  variables: Array<any> = Listvariables
-  response: Array<any> = listResponse
-  listOfAxes: any = [
-    {
-      id: 5,
-      nombre: "Acompañamiento Educativo"
-    },
-    {
-      id: 4,
-      nombre: "Seguridad Nutricional"
-    }
-  ]
-  constructor(private router: Router) { }
+  report: ReportRecived = {} as ReportRecived
+  center: Centro = {} as Centro
+  listOfAxes: any
+  constructor(private router: Router,
+    private admin: AdminService,
+    private cdr: ChangeDetectorRef,
+    private routeActive: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.createBiAlphabet();
-    this.pushAxe()
+    this.getDataFromRute()
+    this.getReport()
   }
 
   storageChange() {
@@ -179,23 +69,79 @@ export class ReceivedReportComponent implements OnInit {
   backToReports() {
     this.router.navigate(['admin/dashboard/reportes/centro-de-reportes'])
   }
+  getDataFromRute() {
+    this.routeActive.paramMap.subscribe((params: ParamMap) => {
+      this.id = params.get('id-report');
+      this.centerId = params.get('id-center');
+    });
+  }
+
+  dates(): any {
+    this.since = new Date(this.report.periodoDesde).toLocaleDateString()
+    this.until = new Date(this.report.periodoHasta).toLocaleDateString()
+    let date = new Date(this.report.fechaCompletado)
+    return date.toLocaleDateString()
+  }
+
+  getCenter(id: number) {
+    this.admin.getCenter(id).subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.center = data;
+        this.getAxes()
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+      },
+    });
+  }
+
+  getReport() {
+    this.admin.getReportPerCenter(this.id, this.centerId).subscribe({
+      next: (data) => {
+        setTimeout(() => this.cdr.detectChanges());
+        this.report = data;
+        this.getCenter(data.idCentro)
+      },
+      error: (err) => {
+        setTimeout(() => this.cdr.detectChanges());
+      },
+    });
+  }
+
+  getAxes() {
+    this.admin.getAxes().subscribe({
+      next: (data: axes[]) => {
+        this.listOfAxes = data;
+        this.pushAxe()
+        setTimeout(() => this.cdr.detectChanges());
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
+      },
+      complete: () => { },
+    });
+  }
 
 
   pushAxe() {
     let axe: any = []
-    for (let vari of this.variables) {
+    for (let vari of this.report.variables) {
       if (!axe.includes(vari.eje.id)) {
         axe.push(vari.eje.id);
       }
     }
-    axe.forEach((element:any) => {
-      this.axes.push(this.listOfAxes.find((res:any) => res.id == element));
+    axe.forEach((element: any) => {
+      this.axes.push(this.listOfAxes.find((res: any) => res.id == element));
     });
   }
+
   variablesShow(axe: any): any {
-    let vari = this.variables.filter(res => { return axe.id == res.eje.id })
+    let vari = this.report.variables.filter(res => { return axe.id == res.eje.id })
     this.leng = vari.length
-    return this.variables.filter(res => { return axe.id == res.eje.id })
+    return this.report.variables.filter(res => { return axe.id == res.eje.id })
   }
 
   createBiAlphabet() {
