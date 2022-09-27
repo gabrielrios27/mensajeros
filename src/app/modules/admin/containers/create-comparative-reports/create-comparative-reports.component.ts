@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-create-comparative-reports',
@@ -18,13 +19,25 @@ export class CreateComparativeReportsComponent implements OnInit {
   flagSelectAll: boolean;
   selected1: number = -1;
   selected2: number = -1;
-  constructor(private route: Router, private rutaActiva: ActivatedRoute) {
+  // select variables
+  @ViewChild('allSelected') private allSelected: MatOption = {} as MatOption;
+  @ViewChild('allSelectedVariables') private allSelectedVariables: MatOption =
+    {} as MatOption;
+  searchUserForm: FormGroup;
+  constructor(
+    private route: Router,
+    private rutaActiva: ActivatedRoute,
+    private fb: FormBuilder
+  ) {
     this.idCentro = this.getIdFromRute();
     this.reportsList = [];
     this.variablesList = [];
     this.report1 = {};
     this.report2 = {};
     this.flagSelectAll = false;
+    this.searchUserForm = this.fb.group({
+      userType: new FormControl(''),
+    });
   }
 
   ngOnInit(): void {
@@ -45,18 +58,12 @@ export class CreateComparativeReportsComponent implements OnInit {
       { name: 'Variable2', id: 2 },
       { name: 'Variable3', id: 3 },
       { name: 'Variable4', id: 4 },
-      { name: 'Variable1', id: 1 },
-      { name: 'Variable2', id: 2 },
-      { name: 'Variable3', id: 3 },
-      { name: 'Variable4', id: 4 },
-      { name: 'Variable1', id: 1 },
-      { name: 'Variable2', id: 2 },
-      { name: 'Variable3', id: 3 },
-      { name: 'Variable4', id: 4 },
-      { name: 'Variable1', id: 1 },
-      { name: 'Variable2', id: 2 },
-      { name: 'Variable3', id: 3 },
-      { name: 'Variable4', id: 4 },
+      { name: 'Variable1', id: 5 },
+      { name: 'Variable2', id: 6 },
+      { name: 'Variable3', id: 7 },
+      { name: 'Variable4', id: 8 },
+      { name: 'Variable1', id: 9 },
+      { name: 'Variable2', id: 10 },
     ];
   }
   getIdFromRute(): number {
@@ -76,12 +83,20 @@ export class CreateComparativeReportsComponent implements OnInit {
     if (!this.flagSelectAll) {
       this.selectedVariables = this.variablesList;
       this.flagSelectAll = true;
+      console.log('this.selectedVariables:', this.selectedVariables);
     } else {
       this.selectedVariables = [];
       this.flagSelectAll = false;
+      console.log('this.selectedVariables:', this.selectedVariables);
     }
   }
-
+  selectOne() {
+    if (this.flagSelectAll) {
+      this.flagSelectAll = false;
+    }
+    if (this.selectedVariables.length === this.variablesList.length)
+      this.flagSelectAll = true;
+  }
   /*checkbox change event*/
   onChange1(i: number) {
     this.selected1 = i;

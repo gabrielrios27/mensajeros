@@ -80,16 +80,20 @@
             name="selectedVariables"
           >
             <mat-option
-              class="select-item__option"
+              #allSelectedVariables
+              class="select-item__option select-item__option--all"
+              [ngClass]="
+                flagSelectAll ? 'select-item__option--all-selected' : ''
+              "
               [value]="0"
               (click)="selectAll()"
-              [selected]="flagSelectAll"
               >Seleccionar todas</mat-option
             >
             <mat-option
               class="select-item__option"
               *ngFor="let item of variablesList"
               [value]="item"
+              (click)="selectOne()"
               >{{ item.name }}</mat-option
             >
           </mat-select>
