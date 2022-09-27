@@ -96,6 +96,7 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
       this.userPendingReports.push(...pendingReporsCenter);
       if (this.userPendingReports.length !== 0) {
         this.reportToShow = this.userPendingReports[0];
+        this.flagNoPendingReport = false;
       } else {
         this.flagNoPendingReport = true;
       }
