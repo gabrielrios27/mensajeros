@@ -1,4 +1,4 @@
-<div style="border-bottom: 1px solid #979797; " >
+<div >
     <div class="container-variablesShow">
         <p class="nameVariable">{{indexAlphabet}} {{variableValue.nombre}}</p>
         <p *ngIf="variableValue.tipo === 'Numérico' && variableValue.genero === 'false'" class="typeOfResponce">{{variableValue.valor_final}}</p>
@@ -17,7 +17,7 @@
                 <label>{{variableValue.etiqueta_final}}</label>
             </div>
         </div>
-        <div *ngIf="variableValue.genero == 'true'">
+        <div *ngIf="variableValue.genero == 'true' && variableValue.id == responseToShow.idVariable">
             <span style="margin-right: 36px;">Femenino: {{responseToShow.femenino}}</span>
             <span style="margin-right: 36px;">Masculino: {{responseToShow.masculino}}</span>
             <span style="margin-right: 36px;">No Binario: {{responseToShow.noBinario}}</span>
@@ -25,4 +25,5 @@
         </div>
         <span *ngIf="responseToShow.observaciones">Observaciones: {{responseToShow.observaciones}}</span>
     </div>
+    <div class="border" *ngIf="index< leng-1" ></div>
 </div>
