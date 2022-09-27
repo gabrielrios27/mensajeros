@@ -2,112 +2,112 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 
-const Listvariables : any = [
+const Listvariables: any = [
   {
-      "id": 20,
-      "nombre": "cant. talleres",
-      "descripcion": "desc",
-      "tipo": "Textual",
-      "genero": "false",
-      "escala_valor": "true",
-      "valor_inicial": "0",
-      "valor_final": "5",
-      "etiqueta_inicial": "aa",
-      "etiqueta_final": "zz",
-      "eje": {
-          "id": 5,
-          "nombre": "Acompañamiento Educativo"
-      }
+    id: 20,
+    nombre: "cant. talleres",
+    descripcion: "desc",
+    tipo: "Textual",
+    genero: "false",
+    escala_valor: "true",
+    valor_inicial: "0",
+    valor_final: "5",
+    "etiqueta_inicial": "muy malo",
+    "etiqueta_final": "muy bueno",
+    eje: {
+      id: 5,
+      nombre: "Acompañamiento Educativo"
+    }
   },
   {
-      "id": 32,
-      "nombre": "Cantidad de participantes en taller1",
-      "descripcion": "desc.222",
-      "tipo": "Textual",
-      "genero": "false",
-      "escala_valor": "false",
-      "valor_inicial": "null",
-      "valor_final": "null",
-      "etiqueta_inicial": "null",
-      "etiqueta_final": "null",
-      "eje": {
-          "id": 5,
-          "nombre": "Acompañamiento Educativo"
-      }
+    "id": 32,
+    "nombre": "Cantidad de participantes en taller1",
+    "descripcion": "desc.222",
+    "tipo": "Textual",
+    "genero": "false",
+    "escala_valor": "false",
+    "valor_inicial": "null",
+    "valor_final": "null",
+    "etiqueta_inicial": "null",
+    "etiqueta_final": "null",
+    eje: {
+      id: 5,
+      nombre: "Acompañamiento Educativo"
+    }
   },
   {
-      "id": 34,
-      "nombre": "Cantidad de Voluntarios",
-      "descripcion": "desc",
-      "tipo": "Numérico",
-      "genero": "true",
-      "escala_valor": "false",
-      "valor_inicial": null,
-      "valor_final": null,
-      "etiqueta_inicial": null,
-      "etiqueta_final": null,
-      "eje": {
-          "id": 4,
-          "nombre": "Seguridad Nutricional"
-      }
+    "id": 34,
+    "nombre": "Cantidad de Voluntarios",
+    "descripcion": "desc",
+    "tipo": "Numérico",
+    "genero": "true",
+    "escala_valor": "false",
+    "valor_inicial": null,
+    "valor_final": null,
+    "etiqueta_inicial": null,
+    "etiqueta_final": null,
+    eje: {
+      id: 4,
+      nombre: "Seguridad Nutricional"
+    }
   },
   {
-      "id": 35,
-      "nombre": "Observaciones",
-      "descripcion": "desc",
-      "tipo": "Textual",
-      "genero": "false",
-      "escala_valor": "false",
-      "valor_inicial": null,
-      "valor_final": null,
-      "etiqueta_inicial": null,
-      "etiqueta_final": null,
-      "eje": {
-          "id": 4,
-          "nombre": "Seguridad Nutricional"
-      }
+    "id": 35,
+    "nombre": "Observaciones",
+    "descripcion": "desc",
+    "tipo": "Textual",
+    "genero": "false",
+    "escala_valor": "false",
+    "valor_inicial": null,
+    "valor_final": null,
+    "etiqueta_inicial": null,
+    "etiqueta_final": null,
+    eje: {
+      id: 4,
+      nombre: "Seguridad Nutricional"
+    }
   }
 ]
-const listResponse :any = [
+const listResponse: any = [
   {
-      "idVariable": 20,
-      "textual": "vczvc",
-      "numerico": null,
-      "femenino": null,
-      "masculino": null,
-      "noBinario": null,
-      "escala": 4,
-      "observaciones": null
+    "idVariable": 20,
+    "textual": "La calidad no fue excelente porque........",
+    "numerico": null,
+    "femenino": null,
+    "masculino": null,
+    "noBinario": null,
+    "escala": 4,
+    "observaciones": null
   },
   {
-      "idVariable": 32,
-      "textual": "vcb xcvbccx",
-      "numerico": null,
-      "femenino": null,
-      "masculino": null,
-      "noBinario": null,
-      "escala": null,
-      "observaciones": null
+    "idVariable": 32,
+    "textual": "vcb xcvbccx",
+    "numerico": null,
+    "femenino": null,
+    "masculino": null,
+    "noBinario": null,
+    "escala": null,
+    "observaciones": null
   },
   {
-      "idVariable": 34,
-      "textual": null,
-      "numerico": null,
-      "femenino": 25,
-      "masculino": 5,
-      "noBinario": 5,
-      "escala": null,
-      "observaciones": null
+    "idVariable": 34,
+    "textual": null,
+    "numerico": null,
+    "femenino": 25,
+    "masculino": 5,
+    "noBinario": 5,
+    "escala": null,
+    "observaciones": null
   },
   {
-      "idVariable": 35,
-      "textual": "ghdgh",
-      "numerico": null,
-      "femenino": null,
-      "masculino": null,
-      "noBinario": null,
-      "escala": null,
-      "observaciones": null
+    "idVariable": 35,
+    "textual": "En el mes de Junio se  brindo una harla con la Lic. en nutricion  xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "numerico": null,
+    "femenino": null,
+    "masculino": null,
+    "noBinario": null,
+    "escala": null,
+    "observaciones": null
   }
 ]
 @Component({
@@ -146,15 +146,25 @@ export class ReceivedReportComponent implements OnInit {
     'Z',
   ];
   biAlphabet: string[] = [];
-  
+  leng: any
   centerSelects = ["Hogar Geraige"]
-  axes:any = []
+  axes: any = []
   since = '01/07/2022'
   until = '31/12/2022'
   receptionDate = '03/01/2023'
   observ = ''
   variables: Array<any> = Listvariables
   response: Array<any> = listResponse
+  listOfAxes: any = [
+    {
+      id: 5,
+      nombre: "Acompañamiento Educativo"
+    },
+    {
+      id: 4,
+      nombre: "Seguridad Nutricional"
+    }
+  ]
   constructor(private router: Router) { }
 
   ngOnInit(): void {
@@ -170,20 +180,22 @@ export class ReceivedReportComponent implements OnInit {
     this.router.navigate(['admin/dashboard/reportes/centro-de-reportes'])
   }
 
-  pushAxe(){
+
+  pushAxe() {
+    let axe: any = []
     for (let vari of this.variables) {
-      if(this.axes.length === 0){
-        this.axes.push(vari.eje);
-      }
-      else if(!this.axes.find(vari.eje.id)){
-        this.axes.push(vari.eje);
+      if (!axe.includes(vari.eje.id)) {
+        axe.push(vari.eje.id);
       }
     }
-    console.log("axe",this.axes)
+    axe.forEach((element:any) => {
+      this.axes.push(this.listOfAxes.find((res:any) => res.id == element));
+    });
   }
-  variablesShow(axe: any){
-    console.log(this.variables.filter(res=> {return axe.id == res.eje.id}))
-    return  this.variables.filter(res=> {return axe.id == res.eje.id})
+  variablesShow(axe: any): any {
+    let vari = this.variables.filter(res => { return axe.id == res.eje.id })
+    this.leng = vari.length
+    return this.variables.filter(res => { return axe.id == res.eje.id })
   }
 
   createBiAlphabet() {
