@@ -41,6 +41,7 @@ export class ReceivedReportComponent implements OnInit {
     'Z',
   ];
   biAlphabet: string[] = [];
+  
   id: any
   centerId: any
   leng: any
@@ -78,19 +79,18 @@ export class ReceivedReportComponent implements OnInit {
     this.admin.addComment(comment).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
-
         this.router.navigate(['admin/dashboard/reportes/centro-de-reportes'])
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
       },
     });
-
   }
 
   backToReports() {
     this.router.navigate(['admin/dashboard/reportes/centro-de-reportes'])
   }
+
   getDataFromRute() {
     this.routeActive.paramMap.subscribe((params: ParamMap) => {
       this.id = params.get('id-report');
@@ -127,6 +127,9 @@ export class ReceivedReportComponent implements OnInit {
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
       },
     });
   }
@@ -177,8 +180,6 @@ export class ReceivedReportComponent implements OnInit {
     this.leng = vari.length
     return this.report.variables.filter(res => { return axe.id == res.eje.id })
   }
-
-
 
   createBiAlphabet() {
     let i;
