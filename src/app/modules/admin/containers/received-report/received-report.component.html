@@ -24,7 +24,7 @@
                 <p class="label-centros">{{center.nombre}}</p>
             </div>
             <div class="fecha-entrega">
-                <label style="display: flex; margin-top: 4px;">Fecha de recepcion: <span
+                <label style="display: flex; margin-top: 4px;">Fecha de recepción: <span
                         style="color: #083D5E; margin-left: 5px;"> {{dates()}}</span></label>
             </div>
         </section>
@@ -40,9 +40,7 @@
             <div class="container-observ">
                 <p class="span-observ" style="font-weight: 600; margin-top: 52px;">Observaciones, comentarios sobre el
                     reporte recibido {{report.nombre}}</p>
-                <span class="span-text"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error aspernatur unde
-                    voluptate sed, corporis delectus eligendi ipsa in, temporibus sunt porro ratione, molestiae eos
-                    vero? Corrupti neque assumenda nobis asperiores. </span>
+                <span class="span-text" *ngFor="let item of comments"> {{item.observacion}} </span>
             </div>
             <div class="container-observ">
                 <p class="span-observ" style="font-weight: 600; margin-top: 52px;">Observaciones, comentarios sobre el
@@ -52,7 +50,7 @@
         </section>
         <section>
             <div class="buttons">
-                <button class="button" mat-button [disabled]="!observ" (click)="storageChange()">Guardar Cambios</button>
+                <button class="button" mat-button [disabled]="!observ" (click)="addComment()">Guardar Cambios</button>
             </div>
         </section>
     </div>
