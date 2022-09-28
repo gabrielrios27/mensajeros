@@ -9,4 +9,5 @@ export interface ReportRecived {
     periodoDesde : string
     periodoHasta : string
     respuestas: Array<Answers>
+    observacion: string
 }
