@@ -76,7 +76,7 @@ export class ReportsComponent implements OnInit {
       this.reports = this.reports.filter((res) => {
         return res.nombre.toLowerCase().match(this.nombre.toLowerCase());
       });
-      this.pageToShow(this.currentPage ,this.reports)
+      this.pageToShow(this.currentPage, this.reports);
     }
   }
 
@@ -206,7 +206,7 @@ export class ReportsComponent implements OnInit {
     this.report = rep;
     this.data.editar = true;
     this.router.navigate([
-      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+      'admin/dashboard/reportes/creación-de-reportes/add-mod-report',
       this.report.id,
     ]);
   }
@@ -222,7 +222,7 @@ export class ReportsComponent implements OnInit {
     });
     this.data.cantDuplicated = repD.length;
     this.router.navigate([
-      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+      'admin/dashboard/reportes/creación-de-reportes/add-mod-report',
       this.report.id,
     ]);
   }
@@ -230,7 +230,7 @@ export class ReportsComponent implements OnInit {
   create() {
     this.data.editar = false;
     this.router.navigate([
-      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+      'admin/dashboard/reportes/creación-de-reportes/add-mod-report',
     ]);
   }
 
