@@ -4,6 +4,7 @@ import { ReportRecived } from '../../models/reportRecived';
 import { AdminService } from '../../services';
 import { Centro } from '../../models/centro';
 import { axes } from '../../models';
+import { comment } from '../../models/comment';
 @Component({
   selector: 'app-received-report',
   templateUrl: './received-report.component.html',
@@ -63,21 +64,28 @@ export class ReceivedReportComponent implements OnInit {
     this.getReport()
   }
 
-  storageChange() {
-    let obs: string = this.observ
-    console.log(this.observ)
-    this.admin.addComment(obs).subscribe({
+  addComment() {
+    let comment: comment
+    comment = {
+      observacion: this.observ,
+      idReporte: {
+        id: this.id
+      },
+      idCentro: {
+        id: this.centerId
+      },
+    }
+    this.admin.addComment(comment).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(data);
+
         this.router.navigate(['admin/dashboard/reportes/centro-de-reportes'])
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(err);
       },
     });
-    
+
   }
 
   backToReports() {
@@ -140,12 +148,11 @@ export class ReceivedReportComponent implements OnInit {
     });
   }
 
-  getComment(){
+  getComment() {
     this.admin.getComment(this.id, this.centerId).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.comments = data
-        console.log("algo",this.comments)
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
@@ -171,7 +178,7 @@ export class ReceivedReportComponent implements OnInit {
     return this.report.variables.filter(res => { return axe.id == res.eje.id })
   }
 
-  
+
 
   createBiAlphabet() {
     let i;
