@@ -14,6 +14,7 @@ import {
   user,
   variable,
 } from '../models';
+import { comment } from '../models/comment';
 import { report } from 'process';
 import { text } from '@fortawesome/fontawesome-svg-core';
 
@@ -188,9 +189,10 @@ export class AdminService {
       this.baseUrlTami + '/carga/reporteCreado/' + idReport + '/' + idCenter
     );
   }
-  addComment(comment:string): Observable<any> {
-    return this._http.post(this.baseUrlTami + '/comentarios/',comment, {
+  addComment(comment:comment): Observable<any> {
+    return this._http.post(this.baseUrlTami + '/comentarios',comment, {
       responseType: 'text',
     });
   }
+
 }
