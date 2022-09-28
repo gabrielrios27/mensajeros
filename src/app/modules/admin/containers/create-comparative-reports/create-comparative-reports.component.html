@@ -36,6 +36,42 @@
             </mat-select>
           </div>
           <div class="select-item">
+            <p class="select-item__title select-item__title--variables">
+              Variables Comunes
+            </p>
+            <label
+              class="select-item__label select-item__label--variables"
+              for="selectedVariables"
+              >Selecciona las variables que quieras</label
+            >
+            <mat-select
+              #mySelCategory
+              class="select-item__input"
+              placeholder="Variables"
+              multiple=""
+              [(value)]="selectedVariables"
+              name="selectedVariables"
+            >
+              <mat-option
+                #allSelectedVariables
+                class="select-item__option select-item__option--all"
+                [ngClass]="
+                  flagSelectAll ? 'select-item__option--all-selected' : ''
+                "
+                [value]="0"
+                (click)="selectAll()"
+                >Seleccionar todas</mat-option
+              >
+              <mat-option
+                class="select-item__option"
+                *ngFor="let item of variablesList"
+                [value]="item"
+                (click)="selectOne()"
+                >{{ item.name }}</mat-option
+              >
+            </mat-select>
+          </div>
+          <div class="select-item">
             <p class="select-item__title">Reporte 2</p>
             <label class="select-item__label" for=""
               >Selecciona un reporte</label
@@ -64,39 +100,6 @@
               ></mat-option>
             </mat-select>
           </div>
-        </div>
-        <div class="select-item select-item--variables">
-          <label
-            class="select-item__label select-item__label--variables"
-            for="selectedVariables"
-            >Selecciona las variables que quieras</label
-          >
-          <mat-select
-            #mySelCategory
-            class="select-item__input"
-            placeholder="Reportes"
-            multiple=""
-            [(value)]="selectedVariables"
-            name="selectedVariables"
-          >
-            <mat-option
-              #allSelectedVariables
-              class="select-item__option select-item__option--all"
-              [ngClass]="
-                flagSelectAll ? 'select-item__option--all-selected' : ''
-              "
-              [value]="0"
-              (click)="selectAll()"
-              >Seleccionar todas</mat-option
-            >
-            <mat-option
-              class="select-item__option"
-              *ngFor="let item of variablesList"
-              [value]="item"
-              (click)="selectOne()"
-              >{{ item.name }}</mat-option
-            >
-          </mat-select>
         </div>
       </div>
     </div>

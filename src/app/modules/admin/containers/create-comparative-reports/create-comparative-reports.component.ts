@@ -19,11 +19,6 @@ export class CreateComparativeReportsComponent implements OnInit {
   flagSelectAll: boolean;
   selected1: number = -1;
   selected2: number = -1;
-  // select variables
-  @ViewChild('allSelected') private allSelected: MatOption = {} as MatOption;
-  @ViewChild('allSelectedVariables') private allSelectedVariables: MatOption =
-    {} as MatOption;
-  searchUserForm: FormGroup;
   constructor(
     private route: Router,
     private rutaActiva: ActivatedRoute,
@@ -35,9 +30,6 @@ export class CreateComparativeReportsComponent implements OnInit {
     this.report1 = {};
     this.report2 = {};
     this.flagSelectAll = false;
-    this.searchUserForm = this.fb.group({
-      userType: new FormControl(''),
-    });
   }
 
   ngOnInit(): void {

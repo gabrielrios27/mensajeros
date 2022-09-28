@@ -61,12 +61,11 @@
   }
 }
 .select-item {
-  width: 390px;
   display: flex;
   flex-direction: column;
   align-items: center;
   .select-item__title {
-    width: 100%;
+    width: 190px;
     height: 45px;
     background: #92cdef;
     border-radius: 5px;
@@ -75,7 +74,13 @@
     padding-left: 18px;
     display: flex;
     align-items: center;
+    justify-content: center;
     margin-bottom: 29px;
+  }
+  .select-item__title--variables {
+    width: 210px;
+    background: #083d5e;
+    color: white;
   }
   .select-item__label {
     font-family: "Roboto";
@@ -104,6 +109,7 @@
     font-family: "Roboto";
     font-size: 14px;
     letter-spacing: 0.25px;
+    margin-bottom: 190px;
   }
 }
 .select-item__option {
@@ -141,10 +147,6 @@
   max-height: 223px;
 }
 
-.select-item--variables {
-  margin-top: 200px;
-  margin-bottom: 180px;
-}
 .select-item__option--all {
   ::ng-deep mat-pseudo-checkbox {
     display: none;
@@ -153,19 +155,25 @@
 .select-item__option--all-selected {
   background: white;
 }
-// .select-item__option--selected {
-//   background: white;
-//   ::ng-deep .mat-option-pseudo-checkbox {
-//     background-color: #1967d2;
-//   }
-//   ::ng-deep .mat-pseudo-checkbox::after {
-//     position: absolute;
-//     opacity: 0;
-//     content: "";
-//     border-bottom: 2px solid currentColor;
-//     transition: opacity 90ms cubic-bezier(0, 0, 0.2, 0.1);
-//   }
-//   ::ng-deep .mat-pseudo-checkbox {
-//     color: #0000008a;
-//   }
-// }
+@media (max-width: 1400px) {
+  .createReport {
+    .createReport__container {
+      margin-top: 25px;
+      max-width: 900px;
+      .createReport__title {
+        margin-bottom: 25px;
+      }
+    }
+  }
+}
+@media (max-width: 1024px) {
+  .createReport {
+    .createReport__container {
+      margin-top: 15px;
+      max-width: 800px;
+      .createReport__title {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
