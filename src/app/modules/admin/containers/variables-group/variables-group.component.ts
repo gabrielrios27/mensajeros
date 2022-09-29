@@ -67,17 +67,14 @@ export class VariablesGroupComponent implements OnInit {
         next: (data: variable[]) => {
           this.listOfVariables = data;
           setTimeout(() => this._cdr.detectChanges());
-          console.log(this.listOfVariables);
           this.pageToShow(this.currentPage, this.listOfVariables); //para paginación
         },
         error: (err) => {
-          console.log(err);
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
         },
         complete: () => {
-          console.log('Request get Variables complete');
         },
       });
   }
@@ -178,16 +175,13 @@ export class VariablesGroupComponent implements OnInit {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe({
         next: (data: variable[]) => {
-          console.log(data);
         },
         error: (err) => {
-          console.log(err);
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
         },
         complete: () => {
-          console.log('Request delete complete');
           this.getVariablesList();
         },
       });
