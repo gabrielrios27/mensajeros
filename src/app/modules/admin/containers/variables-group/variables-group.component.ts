@@ -18,7 +18,7 @@ export class VariablesGroupComponent implements OnInit {
   flagDelete: boolean = false;
   flagSelectCenter: boolean = false
   idToDelete: number = 0;
-  centers: Array<any> = ['Colibries', 'La balsa', 'Club dia','1','2','3','3','4','4','5','6','7','8']
+  centers: Array<any> = ['Colibries', 'La balsa', 'Club dia']
   center: any
 
   listOfVariables: variable[] = [];
