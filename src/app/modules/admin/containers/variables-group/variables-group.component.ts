@@ -16,7 +16,10 @@ export class VariablesGroupComponent implements OnInit {
   flagEdited: boolean = false;
   flagNew: boolean = false;
   flagDelete: boolean = false;
+  flagSelectCenter: boolean = false
   idToDelete: number = 0;
+  centers: Array<any> = ['Colibries', 'La balsa', 'Club dia','1','2','3','3','4','4','5','6','7','8']
+  center: any
 
   listOfVariables: variable[] = [];
   listOfVariables_toSearch: variable[] = [];
@@ -257,10 +260,15 @@ export class VariablesGroupComponent implements OnInit {
     }
   }
 
+  selectCenter(element:variable){
+    this.flagSelectCenter = true
+  }
+
   close() {
     this.flagNew = false;
     this.flagEdited = false;
     this.flagDelete = false;
+    this.flagSelectCenter = false
   }
   ngOnDestroy() {
     this.onDestroy$.next(true);
