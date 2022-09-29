@@ -15,7 +15,7 @@ export class CreateComparativeReportsComponent implements OnInit {
   variablesList: any;
   report1: any;
   report2: any;
-  selectedVariables: any;
+  selectedVariables: any = [];
   flagSelectAll: boolean;
   selected1: number = -1;
   selected2: number = -1;
@@ -98,5 +98,14 @@ export class CreateComparativeReportsComponent implements OnInit {
   }
   onCheckbox($event: any) {
     $event.preventDefault();
+  }
+  onNextBtn() {
+    if (this.report1 && this.report2 && this.selectedVariables.length !== 0) {
+      this.route.navigate([
+        'admin/dashboard/centros/crear-informe-comparativo/' +
+          this.idCentro +
+          '/tabla-comparativa',
+      ]);
+    }
   }
 }
