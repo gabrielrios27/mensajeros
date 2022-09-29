@@ -102,8 +102,8 @@ export class PreviewReportComponent implements OnInit {
     this.until = this.data.report?.periodoHasta;
     this.since = this.data.report?.periodoDesde;
     this.deliverdate = this.data.report?.fechaEntrega;
-    this.creationDate = this.data.report?.fechaCreacion
-    this.creationDate = new Date(this.creationDate)
+    this.creationDate = this.data.report?.fechaCreacion;
+    this.creationDate = new Date(this.creationDate);
     this.deliverdate = new Date(this.deliverdate);
     this.since = new Date(this.since);
     this.until = new Date(this.until);
@@ -120,17 +120,17 @@ export class PreviewReportComponent implements OnInit {
   backAddReport() {
     if (this.data.editar) {
       this.router.navigate([
-        'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
-        this.data.report?.id
+        'admin/dashboard/reportes/creación-de-reportes/add-mod-report',
+        this.data.report?.id,
       ]);
     } else {
       this.router.navigate([
-        'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+        'admin/dashboard/reportes/creación-de-reportes/add-mod-report',
       ]);
     }
   }
 
-  closeModal(){
+  closeModal() {
     this.flag = false;
   }
 
@@ -141,14 +141,14 @@ export class PreviewReportComponent implements OnInit {
   editar() {
     // this.setUserLocStg("algo", true)
     this.flag = false;
-    // this.router.navigate(['/admin/dashboard/reportes/creacion-de-reportes']);
+    // this.router.navigate(['/admin/dashboard/reportes/creación-de-reportes']);
 
     for (let varia of this.data.arrayVariables) {
       for (let vari of varia) {
         this.variables.push(vari.id);
       }
     }
-    
+
     let today = new Date();
 
     let report: Report = {
@@ -162,14 +162,14 @@ export class PreviewReportComponent implements OnInit {
       id: '',
     };
     this.setReportLocStg(this.name, false);
-    console.log(report)
+    console.log(report);
     this.admin.editReport(this.data.report?.id, report).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
         this.data.flag = false;
         this.data.editar = false;
-        this.data.report = undefined
-        this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes']);
+        this.data.report = undefined;
+        this.router.navigate(['admin/dashboard/reportes/creación-de-reportes']);
       },
       error: (err) => {},
     });
@@ -178,7 +178,7 @@ export class PreviewReportComponent implements OnInit {
   enviar() {
     // this.setUserLocStg("algo", true)
     this.flag = false;
-    // this.router.navigate(['/admin/dashboard/reportes/creacion-de-reportes']);
+    // this.router.navigate(['/admin/dashboard/reportes/creación-de-reportes']);
 
     for (let varia of this.data.arrayVariables) {
       for (let vari of varia) {
@@ -204,8 +204,8 @@ export class PreviewReportComponent implements OnInit {
         setTimeout(() => this.cdr.detectChanges());
         this.data.flag = false;
         this.data.editar = false;
-        this.data.report = undefined
-        this.router.navigate(['admin/dashboard/reportes/creacion-de-reportes']);
+        this.data.report = undefined;
+        this.router.navigate(['admin/dashboard/reportes/creación-de-reportes']);
       },
       error: (err) => {},
     });

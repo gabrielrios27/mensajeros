@@ -1,107 +1,213 @@
 <div class="container-create-report">
-    <div class="add-mod-report">
-        <h1 *ngIf="!data.editar" class="title">Crear Nuevo Reporte</h1>
-        <h1 *ngIf="data.editar" class="title">Editar Reporte</h1>
-        <form class="form-create-report" [formGroup]="formAdd">
-
-            <section>
-                <label>Nombre/Numero</label>
-                <br>
-                <input class="input-create-report" type="text" placeholder="XXXXXXXXXX" formControlName="nombre"
-                    [(ngModel)]="nombre">
-                <div>
-                    <mat-error *ngIf="formAdd.controls['nombre'].invalid && formAdd.controls['nombre'].dirty ">
-                        <span>Campo Requerido</span>
-                    </mat-error>
-                </div>
-
-            </section>
-            <section>
-                <label>Centros alcanzados</label>
-                <mat-select placeholder="Selecciona al menos un Centro" checkboxPosition="after"
-                    formControlName="centros" panelClass="example-panel-red" multiple="" [(value)]="center"
-                    (selectionChange)="catchCenter($event.value)">
-                    <mat-option class="mat-option" [value]="item.id" *ngFor="let item of listCenters">{{item.nombre}}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="formAdd.controls['centros'].invalid && formAdd.controls['centros'].dirty ">
-                    <span>Campo requerido</span>
-                </mat-error>
-                <div class="container-button-expand">
-                    <a style="cursor: pointer;" class="button-expand" (click)="showModal()" matTooltip="Vizualizar">
-                        <img style="margin-top: 20px;" src="../../../../../assets/icons/arrows-angle-expand.svg" />
-                    </a>
-                </div>
-            </section>
-            <section>
-                <label>Periodo a reportar</label>
-                <br>
-                <br>
-                <label style="margin-right: 102px;">Desde</label>
-                <label>Hasta</label>
-                <div class="container-input-date ">
-                    <br>
-                    <div class="input-wrapper">
-                        <input class="input-fecha " [(ngModel)]="desde" matInput [matDatepicker]="picker"
-                            placeholder="Fecha" formControlName="desde">
-                        <mat-datepicker #picker></mat-datepicker>
-                        <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <div style="margin-top: 10px;">
-                            <mat-error *ngIf="formAdd.controls['desde'].invalid && formAdd.controls['desde'].dirty ">
-                                <span>Campo Requerido</span>
-                            </mat-error>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="input-wrapper">
-                        <input class="input-fecha " [(ngModel)]="hasta" matInput [matDatepicker]="picker2"
-                            placeholder="Fecha" formControlName="hasta">
-                        <mat-datepicker #picker2></mat-datepicker>
-                        <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker2"></mat-datepicker-toggle>
-                        <div style="margin-top: 10px;">
-                            <mat-error *ngIf="formAdd.controls['hasta'].invalid && formAdd.controls['hasta'].dirty ">
-                                <span>Campo Requerido</span>
-                            </mat-error>
-                            <mat-error *ngIf="validatorDate()">Fecha introducida incorrecta</mat-error>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-            <section style="margin-top:49px;" id="select">
-                <div *ngFor="let item of arrayc">
-                    <label style="margin-right: 420px;">Eje <mat-icon (click)="deleteAxe(arrayc.indexOf(item))"
-                            class="iconCancel" matTooltip="Eliminar Eje">cancel</mat-icon></label>
-                    <app-selecs-axes-variables [arrayAxes]="axreturn(item)" [arrayVariables]="variableReturn(item)"
-                        (axes)="storageAxes($event,arrayc.indexOf(item))"
-                        (variablesArray)="storageVariables($event,arrayc.indexOf(item))">{{item}}
-                    </app-selecs-axes-variables>
-                </div>
-            </section>
-            <button mat-button class="button-ejes" (click)="createEje()">+ Eje</button>
-            <div class="container-alert">
-                <Label>Fecha de Entrega(Alerta)</Label>
-                <div class="input-wrapper">
-                    <input class="input-fecha-alerta" [(ngModel)]="deliverdate" type="" formControlName="deliverdate"
-                        autocomplete="off" matInput [matDatepicker]="picker3" placeholder="Dia, Mes, Año">
-                    <mat-datepicker #picker3></mat-datepicker>
-                    <mat-datepicker-toggle class="input-icon" matSuffix [for]="picker3"></mat-datepicker-toggle>
-                </div>
-                <div>
-                    <mat-error
-                        *ngIf="formAdd.controls['deliverdate'].invalid && formAdd.controls['deliverdate'].dirty ">
-                        <span>Campo Requerido</span>
-                    </mat-error>
-                    <mat-error *ngIf="validateDateDelivery()">Fecha de entrega incorrecta</mat-error>
-                </div>
+  <div class="add-mod-report">
+    <h1 *ngIf="!data.editar" class="title">Crear Nuevo Reporte</h1>
+    <h1 *ngIf="data.editar" class="title">Editar Reporte</h1>
+    <form class="form-create-report" [formGroup]="formAdd">
+      <section>
+        <label>Nombre/Número</label>
+        <br />
+        <input
+          class="input-create-report"
+          type="text"
+          placeholder="XXXXXXXXXX"
+          formControlName="nombre"
+          [(ngModel)]="nombre"
+        />
+        <div>
+          <mat-error
+            *ngIf="
+              formAdd.controls['nombre'].invalid &&
+              formAdd.controls['nombre'].dirty
+            "
+          >
+            <span>Campo Requerido</span>
+          </mat-error>
+        </div>
+      </section>
+      <section>
+        <label>Centros alcanzados</label>
+        <mat-select
+          placeholder="Selecciona al menos un Centro"
+          checkboxPosition="after"
+          formControlName="centros"
+          panelClass="example-panel-red"
+          multiple=""
+          [(value)]="center"
+          (selectionChange)="catchCenter($event.value)"
+        >
+          <mat-option
+            class="mat-option"
+            [value]="item.id"
+            *ngFor="let item of listCenters"
+            >{{ item.nombre }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            formAdd.controls['centros'].invalid &&
+            formAdd.controls['centros'].dirty
+          "
+        >
+          <span>Campo requerido</span>
+        </mat-error>
+        <div class="container-button-expand">
+          <a
+            style="cursor: pointer"
+            class="button-expand"
+            (click)="showModal()"
+            matTooltip="Vizualizar"
+          >
+            <img
+              style="margin-top: 20px"
+              src="../../../../../assets/icons/arrows-angle-expand.svg"
+            />
+          </a>
+        </div>
+      </section>
+      <section>
+        <label>Periodo a reportar</label>
+        <br />
+        <br />
+        <label style="margin-right: 102px">Desde</label>
+        <label>Hasta</label>
+        <div class="container-input-date">
+          <br />
+          <div class="input-wrapper">
+            <input
+              class="input-fecha"
+              [(ngModel)]="desde"
+              matInput
+              [matDatepicker]="picker"
+              placeholder="Fecha"
+              formControlName="desde"
+            />
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker-toggle
+              class="input-icon"
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <div style="margin-top: 10px">
+              <mat-error
+                *ngIf="
+                  formAdd.controls['desde'].invalid &&
+                  formAdd.controls['desde'].dirty
+                "
+              >
+                <span>Campo Requerido</span>
+              </mat-error>
             </div>
-            <div class="div-button ">
-                <button mat-stroked-button class="button-create" [disabled]="formAdd.invalid || flagAxeVariable"
-                    (click)="confirm(formAdd.value)">Crear Reporte</button>
+          </div>
+          <br />
+          <div class="input-wrapper">
+            <input
+              class="input-fecha"
+              [(ngModel)]="hasta"
+              matInput
+              [matDatepicker]="picker2"
+              placeholder="Fecha"
+              formControlName="hasta"
+            />
+            <mat-datepicker #picker2></mat-datepicker>
+            <mat-datepicker-toggle
+              class="input-icon"
+              matSuffix
+              [for]="picker2"
+            ></mat-datepicker-toggle>
+            <div style="margin-top: 10px">
+              <mat-error
+                *ngIf="
+                  formAdd.controls['hasta'].invalid &&
+                  formAdd.controls['hasta'].dirty
+                "
+              >
+                <span>Campo Requerido</span>
+              </mat-error>
+              <mat-error *ngIf="validatorDate()"
+                >Fecha introducida incorrecta</mat-error
+              >
             </div>
-        </form>
-    </div>
-    <app-confirm-out-modal [show]="showDialog" (selection)="onSelection($event)"></app-confirm-out-modal>
-    <app-preview-report *ngIf="showIt" [oldname]="name" [report]="formAdd.value" (close)="closeModal($event)">
-    </app-preview-report>
+          </div>
+        </div>
+      </section>
+      <section style="margin-top: 49px" id="select">
+        <div *ngFor="let item of arrayc">
+          <label style="margin-right: 420px"
+            >Eje
+            <mat-icon
+              (click)="deleteAxe(arrayc.indexOf(item))"
+              class="iconCancel"
+              matTooltip="Eliminar Eje"
+              >cancel</mat-icon
+            ></label
+          >
+          <app-selecs-axes-variables
+            [arrayAxes]="axreturn(item)"
+            [arrayVariables]="variableReturn(item)"
+            (axes)="storageAxes($event, arrayc.indexOf(item))"
+            (variablesArray)="storageVariables($event, arrayc.indexOf(item))"
+            >{{ item }}
+          </app-selecs-axes-variables>
+        </div>
+      </section>
+      <button mat-button class="button-ejes" (click)="createEje()">
+        + Eje
+      </button>
+      <div class="container-alert">
+        <Label>Fecha de Entrega(Alerta)</Label>
+        <div class="input-wrapper">
+          <input
+            class="input-fecha-alerta"
+            [(ngModel)]="deliverdate"
+            type=""
+            formControlName="deliverdate"
+            autocomplete="off"
+            matInput
+            [matDatepicker]="picker3"
+            placeholder="Dia, Mes, Año"
+          />
+          <mat-datepicker #picker3></mat-datepicker>
+          <mat-datepicker-toggle
+            class="input-icon"
+            matSuffix
+            [for]="picker3"
+          ></mat-datepicker-toggle>
+        </div>
+        <div>
+          <mat-error
+            *ngIf="
+              formAdd.controls['deliverdate'].invalid &&
+              formAdd.controls['deliverdate'].dirty
+            "
+          >
+            <span>Campo Requerido</span>
+          </mat-error>
+          <mat-error *ngIf="validateDateDelivery()"
+            >Fecha de entrega incorrecta</mat-error
+          >
+        </div>
+      </div>
+      <div class="div-button">
+        <button
+          mat-stroked-button
+          class="button-create"
+          [disabled]="formAdd.invalid || flagAxeVariable"
+          (click)="confirm(formAdd.value)"
+        >
+          Crear Reporte
+        </button>
+      </div>
+    </form>
+  </div>
+  <app-confirm-out-modal
+    [show]="showDialog"
+    (selection)="onSelection($event)"
+  ></app-confirm-out-modal>
+  <app-preview-report
+    *ngIf="showIt"
+    [oldname]="name"
+    [report]="formAdd.value"
+    (close)="closeModal($event)"
+  >
+  </app-preview-report>
 </div>
