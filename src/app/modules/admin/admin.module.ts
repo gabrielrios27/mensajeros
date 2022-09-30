@@ -52,6 +52,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CompareReportsComponent } from './containers/compare-reports/compare-reports.component';
 import { CreateComparativeReportsComponent } from './containers/create-comparative-reports/create-comparative-reports.component';
 import { ComparativeTableComponent } from './containers/comparative-table/comparative-table.component';
+import { CompareVariableComponent } from './components/compare-variable/compare-variable.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -109,6 +110,7 @@ import { ComparativeTableComponent } from './containers/comparative-table/compar
     CompareReportsComponent,
     CreateComparativeReportsComponent,
     ComparativeTableComponent,
+    CompareVariableComponent,
   ],
   exports: [
     ...adminContainers.containers,

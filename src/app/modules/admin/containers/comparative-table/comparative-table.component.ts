@@ -3,13 +3,168 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-comparative-table',
   templateUrl: './comparative-table.component.html',
-  styleUrls: ['./comparative-table.component.scss']
+  styleUrls: ['./comparative-table.component.scss'],
 })
 export class ComparativeTableComponent implements OnInit {
+  axesList: any[] = [
+    {
+      id: 1,
+      nombre: 'Acompañamiento educativo',
+      variablesList: [
+        {
+          descripcion: '',
+          eje: {
+            id: 0,
+            nombre: 'string',
+          },
+          escala_valor: 'string',
+          etiqueta_final: 'string',
+          etiqueta_inicial: 'string',
+          genero: 'string',
+          id: 0,
+          nombre: 'Cantidad de comidas servidas',
+          tipo: 'Numérico',
+          valor_final: 'string',
+          valor_inicial: 'string',
+          report1: 4,
+          report2: 5,
+        },
+        {
+          descripcion: '',
+          eje: {
+            id: 0,
+            nombre: 'string',
+          },
+          escala_valor: 'true',
+          etiqueta_final: 'string',
+          etiqueta_inicial: 'string',
+          genero: 'string',
+          id: 0,
+          nombre: 'Utilidad de la asesoría nutricional',
+          tipo: 'Textual',
+          valor_final: 'Muy Útil',
+          valor_inicial: 'Nada Útil',
+          report1: 5,
+          report2: 1,
+        },
+        {
+          descripcion: 'de manera directa e indirecta',
+          eje: {
+            id: 0,
+            nombre: 'string',
+          },
+          escala_valor: 'false',
+          etiqueta_final: 'string',
+          etiqueta_inicial: 'string',
+          genero: 'true',
+          id: 0,
+          nombre: 'Cantidad total de participantes',
+          tipo: 'Numérico',
+          valor_final: 'Muy Útil',
+          valor_inicial: 'Nada Útil',
+          report1: 23,
+          report2: 27,
+        },
+        {
+          descripcion: '',
+          eje: {
+            id: 0,
+            nombre: 'string',
+          },
+          escala_valor: 'true',
+          etiqueta_final: 'string',
+          etiqueta_inicial: 'string',
+          genero: 'string',
+          id: 0,
+          nombre: 'Calidad de mejoría nutricional',
+          tipo: 'Textual',
+          valor_final: 'Muy Útil',
+          valor_inicial: 'Nada Útil',
+          report1: 7,
+          report2: 1,
+        },
+      ],
+    },
+    {
+      id: 2,
+      nombre: 'Seguridad nutricional',
+      variablesList: [
+        {
+          descripcion: '',
+          eje: {
+            id: 0,
+            nombre: 'string',
+          },
+          escala_valor: 'string',
+          etiqueta_final: 'string',
+          etiqueta_inicial: 'string',
+          genero: 'string',
+          id: 0,
+          nombre: 'Cantidad de comidas servidas',
+          tipo: 'Numérico',
+          valor_final: 'string',
+          valor_inicial: 'string',
+          report1: 4,
+          report2: 5,
+        },
+        {
+          descripcion: '',
+          eje: {
+            id: 0,
+            nombre: 'string',
+          },
+          escala_valor: 'true',
+          etiqueta_final: 'string',
+          etiqueta_inicial: 'string',
+          genero: 'string',
+          id: 0,
+          nombre: 'Utilidad de la asesoría nutricional',
+          tipo: 'Textual',
+          valor_final: 'Muy Útil',
+          valor_inicial: 'Nada Útil',
+          report1: 5,
+          report2: 1,
+        },
+        {
+          descripcion: 'de manera directa e indirecta',
+          eje: {
+            id: 0,
+            nombre: 'string',
+          },
+          escala_valor: 'false',
+          etiqueta_final: 'string',
+          etiqueta_inicial: 'string',
+          genero: 'true',
+          id: 0,
+          nombre: 'Cantidad total de participantes',
+          tipo: 'Numérico',
+          valor_final: 'Muy Útil',
+          valor_inicial: 'Nada Útil',
+          report1: 23,
+          report2: 27,
+        },
+        {
+          descripcion: '',
+          eje: {
+            id: 0,
+            nombre: 'string',
+          },
+          escala_valor: 'true',
+          etiqueta_final: 'string',
+          etiqueta_inicial: 'string',
+          genero: 'string',
+          id: 0,
+          nombre: 'Calidad de mejoría nutricional',
+          tipo: 'Textual',
+          valor_final: 'Muy Útil',
+          valor_inicial: 'Nada Útil',
+          report1: 7,
+          report2: 1,
+        },
+      ],
+    },
+  ];
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
