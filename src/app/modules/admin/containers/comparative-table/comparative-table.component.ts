@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 @Component({
   selector: 'app-comparative-table',
@@ -193,10 +194,21 @@ export class ComparativeTableComponent implements OnInit {
     'Z',
   ];
   biAlphabet: string[] = [];
-  constructor() {}
+  idCentro: number;
+
+  constructor(private router: Router, private activeRoute: ActivatedRoute) {
+    this.idCentro = this.getIdFromRute();
+  }
 
   ngOnInit(): void {
     this.createBiAlphabet();
+  }
+  getIdFromRute(): number {
+    let idToShow;
+    this.activeRoute.paramMap.subscribe((params: ParamMap) => {
+      idToShow = params.get('id');
+    });
+    return Number(idToShow);
   }
   //crea un indice de alfabeto doble
   createBiAlphabet() {
@@ -214,5 +226,13 @@ export class ComparativeTableComponent implements OnInit {
         }
       }
     }
+  }
+  onGoBack() {
+    this.router.navigate([
+      'admin/dashboard/centros/crear-informe-comparativo/' + this.idCentro,
+    ]);
+  }
+  onCreateReport() {
+    this.router.navigate(['admin/dashboard/centros']);
   }
 }
