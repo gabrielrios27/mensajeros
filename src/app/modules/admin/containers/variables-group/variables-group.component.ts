@@ -277,6 +277,10 @@ export class VariablesGroupComponent implements OnInit {
       },
     });
   }
+  goTocharts(){
+    this.flagSelectCenter = false
+    this.router.navigate(['/admin/dashboard/variables/evolucion-de-variable']);
+  }
 
   close() {
     this.flagNew = false;
