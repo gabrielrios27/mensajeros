@@ -1,10 +1,12 @@
 @import "../../../../../styles/variables.scss";
-
+p {
+  margin: 0;
+}
 .compare {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 113.5px;
+  margin: 15px 113.5px;
   .compare__value {
     width: 93px;
     min-height: 37px;
@@ -23,7 +25,31 @@
     margin: 0;
     font-style: italic;
     font-size: 14px;
+    text-align: center;
     color: #083d5e;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.value-scale {
+  display: flex;
+  align-items: flex-end;
+  .value-scale__tag {
+    font-size: 10px;
+    margin: 0 10px;
+    color: #3d3b3f;
+    line-height: 10px;
+  }
+  .value-scale__container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px;
+    .value-scale__number {
+      font-size: 10px;
+      color: #3d3b3f;
+    }
+    .value-scale__circle {
+      width: 9px;
+    }
   }
 }
