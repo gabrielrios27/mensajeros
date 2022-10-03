@@ -21,6 +21,7 @@ import { AddModReportComponent } from './containers/add-mod-report/add-mod-repor
 import { ConfirmOutGuard } from './guards/confirm-out.guard';
 import { PreviewReportComponent } from './containers/preview-report/preview-report.component';
 import { ReceivedReportComponent } from './containers/received-report/received-report.component';
+import { EvolutionOfVariableComponent } from './containers/evolution-of-variable/evolution-of-variable.component';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -88,6 +89,13 @@ export const ROUTES: Routes = [
     canActivate: [AdminGuard],
     canDeactivate: [ConfirmOutGuard],
     component: adminContainers.AddVariablesComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'variables/evolucion-de-variable',
+    canActivate: [AdminGuard],
+    canDeactivate: [],
+    component: EvolutionOfVariableComponent,
     pathMatch: 'full',
   },
   {
