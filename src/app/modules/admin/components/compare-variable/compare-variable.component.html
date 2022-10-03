@@ -1,6 +1,11 @@
-<p>compare-variable works!</p>
-<div class="compare">
-  <p class="compare__value"></p>
-  <p class="compare__variable"></p>
-  <p class="compare__value"></p>
+<div class="compare" *ngIf="variable.tipo === 'Numérico'">
+  <p class="compare__value">
+    <span *ngIf="variable.genero === 'true'">Total: </span
+    >{{ variable.report1 }}
+  </p>
+  <p class="compare__variable">{{ index }} {{ variable.nombre }}</p>
+  <p class="compare__value">
+    <span *ngIf="variable.genero === 'true'">Total: </span
+    >{{ variable.report2 }}
+  </p>
 </div>

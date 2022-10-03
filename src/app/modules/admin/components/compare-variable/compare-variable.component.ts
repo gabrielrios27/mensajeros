@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-compare-variable',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./compare-variable.component.scss'],
 })
 export class CompareVariableComponent implements OnInit {
+  @Input('variable') variable: any = {};
+  @Input('index') index: string = 'A';
   constructor() {}
 
   ngOnInit(): void {}

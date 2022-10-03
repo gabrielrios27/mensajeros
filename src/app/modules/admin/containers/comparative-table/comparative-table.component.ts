@@ -164,7 +164,55 @@ export class ComparativeTableComponent implements OnInit {
       ],
     },
   ];
+  alphabet: string[] = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
+  ];
+  biAlphabet: string[] = [];
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.createBiAlphabet();
+  }
+  //crea un indice de alfabeto doble
+  createBiAlphabet() {
+    let i;
+    this.biAlphabet = [];
+    for (i = 0; i < 26; i++) {
+      this.biAlphabet.push(this.alphabet[i]);
+    }
+    i++;
+    for (let character1 of this.alphabet) {
+      for (let character2 of this.alphabet) {
+        if (i < 677) {
+          this.biAlphabet.push(character1 + character2);
+          i++;
+        }
+      }
+    }
+  }
 }

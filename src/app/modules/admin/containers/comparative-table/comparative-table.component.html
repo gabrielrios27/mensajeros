@@ -16,10 +16,14 @@
         </p>
       </div>
     </header>
-    <div class="axe">
-      <h5 class="axe__title">Eje 1</h5>
+    <div class="axe" *ngFor="let axe of axesList">
+      <h5 class="axe__title">{{ axe.nombre }}</h5>
       <div class="axe__variables-container">
-        <app-compare-variable></app-compare-variable>
+        <app-compare-variable
+          *ngFor="let variable of axe.variablesList; let i = index"
+          [index]="biAlphabet[i]"
+          [variable]="variable"
+        ></app-compare-variable>
       </div>
     </div>
   </div>
