@@ -50,6 +50,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EvolutionOfVariableComponent } from './containers/evolution-of-variable/evolution-of-variable.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -105,6 +106,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     PreviewReportComponent,
     ReceivedReportComponent,
     VariablesShowComponent,
+    EvolutionOfVariableComponent,
   ],
   exports: [
     ...adminContainers.containers,
