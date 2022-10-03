@@ -56,3 +56,7 @@ export interface DownloadExcel {
   uri: string;
   url: string;
 }
+export interface ReportByCenter {
+  idReporte: number;
+  nombreReporte: string;
+}

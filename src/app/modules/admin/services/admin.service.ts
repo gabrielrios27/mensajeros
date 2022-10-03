@@ -11,6 +11,7 @@ import {
   DownloadExcel,
   flag,
   ReceivedReport,
+  ReportByCenter,
   user,
   variable,
 } from '../models';
@@ -58,7 +59,13 @@ export class AdminService {
   getCentros(): Observable<Centro[]> {
     return this._http.get<Centro[]>(this.baseUrlTami + '/centros');
   }
-  //
+  //reportes comparativos
+  getReportByIdCenter(id: number) {
+    return this._http.get<ReportByCenter>(
+      this.baseUrlTami + '/reportes/reporteSegunCentro/' + id
+    );
+  }
+
   // endpoints user
 
   getUsers(): Observable<Users[]> {

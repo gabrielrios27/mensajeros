@@ -1,15 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AdminService } from '../../services';
+import { Subject, takeUntil } from 'rxjs';
+import { ReportByCenter } from '../../models';
 
 @Component({
   selector: 'app-create-comparative-reports',
   templateUrl: './create-comparative-reports.component.html',
   styleUrls: ['./create-comparative-reports.component.scss'],
 })
-export class CreateComparativeReportsComponent implements OnInit {
+export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
   idCentro: number;
   reportsList: any;
   variablesList: any;
@@ -19,10 +22,13 @@ export class CreateComparativeReportsComponent implements OnInit {
   flagSelectAll: boolean;
   selected1: number = -1;
   selected2: number = -1;
+  // suscripciones
+  onDestroy$: Subject<boolean> = new Subject();
   constructor(
     private route: Router,
     private rutaActiva: ActivatedRoute,
-    private fb: FormBuilder
+
+    private _adminSvc: AdminService
   ) {
     this.idCentro = this.getIdFromRute();
     this.reportsList = [];
@@ -37,12 +43,28 @@ export class CreateComparativeReportsComponent implements OnInit {
     this.getVariablesInCommon(2, 3);
   }
   getReportsList() {
-    this.reportsList = [
-      { name: 'Reporte1', id: 1 },
-      { name: 'Reporte2', id: 2 },
-      { name: 'Reporte3', id: 3 },
-      { name: 'Reporte4', id: 4 },
-    ];
+    // this.reportsList = [
+    //   { name: 'Reporte1', id: 1 },
+    //   { name: 'Reporte2', id: 2 },
+    //   { name: 'Reporte3', id: 3 },
+    //   { name: 'Reporte4', id: 4 },
+    // ];
+    this._adminSvc
+      .getReportByIdCenter(this.idCentro)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: ReportByCenter) => {
+          this.reportsList = data;
+          console.log('reportes: ', this.reportsList);
+        },
+        error: (err) => {
+          console.log(err);
+
+          if (err.status === 401) {
+            this.route.navigate(['/auth']);
+          }
+        },
+      });
   }
   getVariablesInCommon(idReport1: number, idReport2: number) {
     this.variablesList = [
@@ -65,6 +87,7 @@ export class CreateComparativeReportsComponent implements OnInit {
     });
     return Number(idToShow);
   }
+
   getReport1(value: any) {
     this.report1 = value;
   }
@@ -107,5 +130,8 @@ export class CreateComparativeReportsComponent implements OnInit {
           '/tabla-comparativa',
       ]);
     }
+  }
+  ngOnDestroy() {
+    this.onDestroy$.next(true);
   }
 }
