@@ -57,12 +57,11 @@
         margin-bottom: 30px;
         max-width: 100%;
         width: 774px;
-
       }
 
       .progress-container::before {
-        content: '';
-        background-color: #BCC2C8;
+        content: "";
+        background-color: #bcc2c8;
         position: absolute;
         top: 50%;
         left: 0;
@@ -75,7 +74,7 @@
       }
 
       .progress {
-        background-color: #1967D2;
+        background-color: #1967d2;
         position: absolute;
         top: 50%;
         left: 0;
@@ -92,12 +91,11 @@
         border-radius: 50%;
         height: 28px;
         width: 28px;
-        border: 3px solid #1967D2;
+        border: 3px solid #1967d2;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: .4s ease;
-
+        transition: 0.4s ease;
       }
 
       .circle.active {
@@ -111,9 +109,8 @@
         color: black;
       }
 
-
       .btn {
-        background-color: #1967D2;
+        background-color: #1967d2;
         color: white;
         border-radius: 5px;
         border: 0;
@@ -129,7 +126,6 @@
       .btn:active {
         transform: scale(0.97);
       }
-
     }
 
     .upload-report__btn-close-save {
@@ -257,14 +253,18 @@
       .upload-report__title {
         font-size: 24px;
       }
-
+      .progress-bar {
+        .progress-container {
+          max-width: 700px;
+        }
+      }
       .upload-report__btn-close-save {
         font-size: 16px;
       }
     }
 
     .upload-report__conteiner {
-      margin: 24px auto 0;
+      margin: 10px auto 0;
     }
   }
 
@@ -288,7 +288,24 @@
     }
   }
 }
-
+@media (max-width: 1280px) {
+  .upload-report {
+    .upload-report__progress {
+      align-items: flex-start;
+      .upload-report__title {
+        font-size: 22px;
+      }
+      .progress-bar {
+        .progress-container {
+          max-width: 660px;
+        }
+      }
+      .upload-report__btn-close-save {
+        margin-top: 5px;
+      }
+    }
+  }
+}
 @media (max-width: 768px) {
   .upload-report {
     grid-template-rows: 110px 119px auto 70px;
