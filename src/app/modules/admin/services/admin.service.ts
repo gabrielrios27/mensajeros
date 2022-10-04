@@ -14,6 +14,7 @@ import {
   ReportByCenter,
   user,
   variable,
+  VariableInCommon,
 } from '../models';
 import { report } from 'process';
 import { text } from '@fortawesome/fontawesome-svg-core';
@@ -65,7 +66,18 @@ export class AdminService {
       this.baseUrlTami + '/reportes/reporteSegunCentro/' + id
     );
   }
-
+  getVariablesInCommon(
+    idReport1: number,
+    idReport2: number
+  ): Observable<VariableInCommon[]> {
+    return this._http.get<VariableInCommon[]>(
+      this.baseUrlTami +
+        '/variables/variablesEnComun/' +
+        idReport1 +
+        '/' +
+        idReport2
+    );
+  }
   // endpoints user
 
   getUsers(): Observable<Users[]> {
