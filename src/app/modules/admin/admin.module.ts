@@ -50,6 +50,8 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CompareReportsComponent } from './containers/compare-reports/compare-reports.component';
+import { CreateComparativeReportsComponent } from './containers/create-comparative-reports/create-comparative-reports.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -104,6 +106,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     PreviewVariableComponent,
     PreviewReportComponent,
     ReceivedReportComponent,
+    CompareReportsComponent,
+    CreateComparativeReportsComponent,
     VariablesShowComponent,
   ],
   exports: [

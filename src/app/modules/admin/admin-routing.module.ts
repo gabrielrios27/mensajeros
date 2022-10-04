@@ -21,6 +21,8 @@ import { AddModReportComponent } from './containers/add-mod-report/add-mod-repor
 import { ConfirmOutGuard } from './guards/confirm-out.guard';
 import { PreviewReportComponent } from './containers/preview-report/preview-report.component';
 import { ReceivedReportComponent } from './containers/received-report/received-report.component';
+import { CreateComparativeReportsComponent } from './containers/create-comparative-reports/create-comparative-reports.component';
+import { CompareReportsComponent } from './containers/compare-reports/compare-reports.component';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -45,6 +47,18 @@ export const ROUTES: Routes = [
     path: 'centros',
     canActivate: [AdminGuard],
     component: adminContainers.CentersComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'centros/crear-informe-comparativo/:id-centro',
+    canActivate: [AdminGuard],
+    component: CreateComparativeReportsComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'centros/ver-informe-comparativo/:id-comparative-report',
+    canActivate: [AdminGuard],
+    component: CompareReportsComponent,
     pathMatch: 'full',
   },
   {
@@ -100,11 +114,11 @@ export const ROUTES: Routes = [
   {
     path: 'reportes',
     canActivate: [AdminGuard],
-    redirectTo: 'reportes/creacion-de-reportes',
+    redirectTo: 'reportes/creación-de-reportes',
     pathMatch: 'full',
   },
   {
-    path: 'reportes/creacion-de-reportes',
+    path: 'reportes/creación-de-reportes',
     canActivate: [AdminGuard],
     component: adminContainers.ReportsComponent,
     pathMatch: 'full',
@@ -139,31 +153,31 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'reportes/creacion-de-reportes/add-mod-report',
+    path: 'reportes/creación-de-reportes/add-mod-report',
     component: AddModReportComponent,
     canDeactivate: [ConfirmOutGuard],
     pathMatch: 'full',
   },
   {
-    path: 'reportes/creacion-de-reportes/add-mod-report/:report-id',
+    path: 'reportes/creación-de-reportes/add-mod-report/:report-id',
     component: AddModReportComponent,
     canDeactivate: [ConfirmOutGuard],
     pathMatch: 'full',
   },
   {
-    path: 'reportes/creacion-de-reportes/add-mod-report/preview-report',
+    path: 'reportes/creación-de-reportes/add-mod-report/preview-report',
     component: PreviewReportComponent,
     canActivate: [AdminGuard],
     pathMatch: 'full',
   },
   {
-    path: 'reportes/creacion-de-reportes/add-mod-report/preview-report/:report',
+    path: 'reportes/creación-de-reportes/add-mod-report/preview-report/:report',
     component: PreviewReportComponent,
     canActivate: [AdminGuard],
     pathMatch: 'full',
   },
   {
-    path: 'reportes/creacion-de-reportes/add-mod-report/:report-id/preview-report/:report',
+    path: 'reportes/creación-de-reportes/add-mod-report/:report-id/preview-report/:report',
     component: PreviewReportComponent,
     canActivate: [AdminGuard],
     pathMatch: 'full',

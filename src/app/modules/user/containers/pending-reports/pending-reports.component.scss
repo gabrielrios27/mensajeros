@@ -7,8 +7,8 @@
   .pending-reports__conteiner {
     min-width: 900px;
     .pending-reports__title {
-      width: 428px;
-      height: 80px;
+      width: 11.888em;
+      height: 2.222em;
       font-weight: 600;
       display: flex;
       align-items: center;
@@ -16,11 +16,11 @@
       font-size: 36px;
       text-align: center;
       color: #083d5e;
-      border-radius: 5px 50px 10px 0px;
-      text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      margin-top: 99px;
+      border-radius: 0.138em 1.38em 0.277em 0px;
+      text-shadow: 0px 0.111em 0.111em rgba(0, 0, 0, 0.25);
+      margin-top: 2.75em;
       // margin-left: 240px;
-      padding-left: 20px;
+      padding-left: 0.55em;
     }
   }
 }
@@ -191,11 +191,29 @@
     margin-left: 190px;
   }
 }
+@media (max-width: 1280px) {
+  .pending-reports {
+    .pending-reports__conteiner {
+      .pending-reports__title {
+        font-size: 30px;
+        margin-top: 20px;
+        margin-left: 90px;
+      }
+    }
+  }
+  .list {
+    margin-top: 30px;
+    margin-left: 90px;
+  }
+  .report {
+    margin-left: 90px;
+  }
+}
 @media (max-width: 1024px) {
   .pending-reports {
     .pending-reports__conteiner {
       .pending-reports__title {
-        margin-top: 50px;
+        margin-top: 30px;
         margin-left: 70px;
       }
     }
