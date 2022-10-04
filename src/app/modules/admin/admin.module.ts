@@ -51,6 +51,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EvolutionOfVariableComponent } from './containers/evolution-of-variable/evolution-of-variable.component';
+
+import {NgApexchartsModule} from 'ng-apexcharts'
+
 @NgModule({
   imports: [
     CommonModule,
@@ -72,6 +75,7 @@ import { EvolutionOfVariableComponent } from './containers/evolution-of-variable
     MatCheckboxModule,
     MatRadioModule,
     MatProgressSpinnerModule,
+    NgApexchartsModule,
     // AppCommonModule,
     // NavigationModule,
   ],
