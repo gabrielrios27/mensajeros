@@ -20,13 +20,13 @@
     .createReport__btn {
       font-size: 20px;
       align-self: flex-end;
-      width: 150px;
-      height: 66px;
+      width: 7.5em;
+      height: 3.3em;
       background: #56b5ec;
       border: 1px solid #56b5ec;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      border-radius: 35px;
-      margin-top: 24px;
+      box-shadow: 0 0.2em 0.2em rgba(0, 0, 0, 0.25);
+      border-radius: 1.75em;
+      margin-top: 1.2em;
     }
   }
 }
@@ -162,6 +162,9 @@
       max-width: 900px;
       .createReport__title {
         margin-bottom: 25px;
+      }
+      .createReport__btn {
+        font-size: 15px;
       }
     }
   }
