@@ -14,10 +14,10 @@ import { ReportByCenter } from '../../models';
 })
 export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
   idCentro: number;
-  reportsList: any;
+  reportsList: ReportByCenter[];
   variablesList: any;
-  report1: any;
-  report2: any;
+  report1: ReportByCenter;
+  report2: ReportByCenter;
   selectedVariables: any = [];
   flagSelectAll: boolean;
   selected1: number = -1;
@@ -33,8 +33,8 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
     this.idCentro = this.getIdFromRute();
     this.reportsList = [];
     this.variablesList = [];
-    this.report1 = {};
-    this.report2 = {};
+    this.report1 = {} as ReportByCenter;
+    this.report2 = {} as ReportByCenter;
     this.flagSelectAll = false;
   }
 
@@ -43,23 +43,14 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
     this.getVariablesInCommon(2, 3);
   }
   getReportsList() {
-    // this.reportsList = [
-    //   { name: 'Reporte1', id: 1 },
-    //   { name: 'Reporte2', id: 2 },
-    //   { name: 'Reporte3', id: 3 },
-    //   { name: 'Reporte4', id: 4 },
-    // ];
     this._adminSvc
       .getReportByIdCenter(this.idCentro)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe({
-        next: (data: ReportByCenter) => {
+        next: (data: ReportByCenter[]) => {
           this.reportsList = data;
-          console.log('reportes: ', this.reportsList);
         },
         error: (err) => {
-          console.log(err);
-
           if (err.status === 401) {
             this.route.navigate(['/auth']);
           }
@@ -83,7 +74,7 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
   getIdFromRute(): number {
     let idToShow;
     this.rutaActiva.paramMap.subscribe((params: ParamMap) => {
-      idToShow = params.get('id');
+      idToShow = params.get('id-centro');
     });
     return Number(idToShow);
   }
@@ -98,11 +89,9 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
     if (!this.flagSelectAll) {
       this.selectedVariables = this.variablesList;
       this.flagSelectAll = true;
-      console.log('this.selectedVariables:', this.selectedVariables);
     } else {
       this.selectedVariables = [];
       this.flagSelectAll = false;
-      console.log('this.selectedVariables:', this.selectedVariables);
     }
   }
   selectOne() {

@@ -60,8 +60,8 @@ export class AdminService {
     return this._http.get<Centro[]>(this.baseUrlTami + '/centros');
   }
   //reportes comparativos
-  getReportByIdCenter(id: number) {
-    return this._http.get<ReportByCenter>(
+  getReportByIdCenter(id: number): Observable<ReportByCenter[]> {
+    return this._http.get<ReportByCenter[]>(
       this.baseUrlTami + '/reportes/reporteSegunCentro/' + id
     );
   }
