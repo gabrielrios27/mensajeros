@@ -5,7 +5,7 @@ import { MatOption } from '@angular/material/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AdminService } from '../../services';
 import { Subject, takeUntil } from 'rxjs';
-import { ReportByCenter } from '../../models';
+import { ReportByCenter, VariableInCommon } from '../../models';
 
 @Component({
   selector: 'app-create-comparative-reports',
@@ -40,7 +40,6 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getReportsList();
-    this.getVariablesInCommon(2, 3);
   }
   getReportsList() {
     this._adminSvc
@@ -58,18 +57,32 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
       });
   }
   getVariablesInCommon(idReport1: number, idReport2: number) {
-    this.variablesList = [
-      { name: 'Variable1', id: 1 },
-      { name: 'Variable2', id: 2 },
-      { name: 'Variable3', id: 3 },
-      { name: 'Variable4', id: 4 },
-      { name: 'Variable1', id: 5 },
-      { name: 'Variable2', id: 6 },
-      { name: 'Variable3', id: 7 },
-      { name: 'Variable4', id: 8 },
-      { name: 'Variable1', id: 9 },
-      { name: 'Variable2', id: 10 },
-    ];
+    // this.variablesList = [
+    //   { name: 'Variable1', id: 1 },
+    //   { name: 'Variable2', id: 2 },
+    //   { name: 'Variable3', id: 3 },
+    //   { name: 'Variable4', id: 4 },
+    //   { name: 'Variable1', id: 5 },
+    //   { name: 'Variable2', id: 6 },
+    //   { name: 'Variable3', id: 7 },
+    //   { name: 'Variable4', id: 8 },
+    //   { name: 'Variable1', id: 9 },
+    //   { name: 'Variable2', id: 10 },
+    // ];
+    this._adminSvc
+      .getVariablesInCommon(idReport1, idReport2)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: VariableInCommon[]) => {
+          this.variablesList = data;
+          console.log('this.variablesList: ', this.variablesList);
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.route.navigate(['/auth']);
+          }
+        },
+      });
   }
   getIdFromRute(): number {
     let idToShow;
@@ -81,9 +94,15 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
 
   getReport1(value: any) {
     this.report1 = value;
+    if (this.report2.idReporte) {
+      this.getVariablesInCommon(this.report1.idReporte, this.report2.idReporte);
+    }
   }
   getReport2(value: any) {
     this.report2 = value;
+    if (this.report1.idReporte) {
+      this.getVariablesInCommon(this.report1.idReporte, this.report2.idReporte);
+    }
   }
   selectAll() {
     if (!this.flagSelectAll) {
