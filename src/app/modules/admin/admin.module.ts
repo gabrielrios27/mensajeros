@@ -21,6 +21,10 @@ import { AddModReportComponent } from './containers/add-mod-report/add-mod-repor
 import { ConfirmOutModalComponent } from './components/confirm-out-modal/confirm-out-modal.component';
 import { SelecsAxesVariablesComponent } from './containers/selecs-axes-variables/selecs-axes-variables.component';
 import { PreviewReportComponent } from './containers/preview-report/preview-report.component';
+import { PreviewVariableComponent } from './components/preview-variable/preview-variable.component';
+import { ReceivedReportComponent } from './containers/received-report/received-report.component';
+import { VariablesShowComponent } from './containers/variables-show/variables-show.component';
+import { AddModCenterComponent } from './containers/add-mod-center/add-mod-center.component';
 /* Containers */
 import * as adminContainers from './containers';
 
@@ -36,7 +40,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { AddModCenterComponent } from './containers/add-mod-center/add-mod-center.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -46,8 +49,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
-import { PreviewVariableComponent } from './components/preview-variable/preview-variable.component';
-import { ReceivedReportComponent } from './containers/received-report/received-report.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CompareReportsComponent } from './containers/compare-reports/compare-reports.component';
 import { CreateComparativeReportsComponent } from './containers/create-comparative-reports/create-comparative-reports.component';
@@ -111,6 +112,7 @@ import { CompareVariableComponent } from './components/compare-variable/compare-
     CreateComparativeReportsComponent,
     ComparativeTableComponent,
     CompareVariableComponent,
+    VariablesShowComponent,
   ],
   exports: [
     ...adminContainers.containers,

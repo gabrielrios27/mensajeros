@@ -53,17 +53,14 @@ export class VariablesComponent implements OnInit {
         next: (data: AxeWithquantity[]) => {
           this.listOfVariables = data;
           setTimeout(() => this._cdr.detectChanges());
-          console.log(this.listOfVariables);
           this.pageToShow(this.currentPage, this.listOfVariables); //para paginación
         },
         error: (err) => {
-          console.log(err);
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
         },
         complete: () => {
-          console.log('Request get Variables complete');
         },
       });
   }

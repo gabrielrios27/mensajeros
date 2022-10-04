@@ -6,7 +6,7 @@
     <mat-select  #mySelCategory class="mat-select-ejes" placeholder="Selecciona una o más."
         multiple="" [(value)]="variables" name="variables"
         (selectionChange)="capturarVariables($event.value)">
-        <mat-option [value]="0" (click)="selectAll()"  ngClass="'mat-pseudo-checkbox-checked':flag == true  " >Seleccionar todas</mat-option>
+        <mat-checkbox (click)="selectAll()"  ngClass="'mat-pseudo-checkbox-checked':flag == true  " >Seleccionar todas</mat-checkbox>
         <mat-option [value]="item" *ngFor="let item of listOfVariablesShow">{{item.nombre}}</mat-option>
     </mat-select>
 </div>
