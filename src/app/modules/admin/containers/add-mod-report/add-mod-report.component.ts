@@ -74,7 +74,7 @@ export class AddModReportComponent implements OnInit {
     this.getDataFromRute();
     this.getAxes();
     this.getVariables();
-    this.validatorsData()
+    this.validatorsData() 
   }
 
   validateDateDelivery(): any {
@@ -102,12 +102,17 @@ export class AddModReportComponent implements OnInit {
   //  guarda axes de componente selects
   storageAxes(axes: any, idComponent: number) {
     this.arrayAxes[idComponent] = axes;
-    this.validatorsData();
+    if(!this.data.flagDuplicated){
+      this.validatorsData();
+    }
   }
   // guarda array variables de componente selects
   storageVariables(variablesArray: any, idComponent: number) {
     this.arrayVaribles[idComponent] = variablesArray;
-    this.validatorsData();
+    if(!this.data.flagDuplicated){
+      this.validatorsData();
+    }
+    
   }
 
   validatorsData() {
@@ -118,6 +123,10 @@ export class AddModReportComponent implements OnInit {
         this.flagAxeVariable = false;
       }
     } else {
+      this.flagAxeVariable = false;
+    }
+    console.log(this.data.flagDuplicated)
+    if(this.data.flagDuplicated){
       this.flagAxeVariable = false;
     }
   }
@@ -238,6 +247,7 @@ export class AddModReportComponent implements OnInit {
     if (this.id) {
       this.getReportByID();
       if (this.data.flagDuplicated) {
+        this.flagAxeVariable = true;
         this.data.editar = false;
       } else {
         this.data.editar = true;

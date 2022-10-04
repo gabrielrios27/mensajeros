@@ -19,13 +19,13 @@
     display: flex;
     align-items: center;
     font-size: 25px;
-    width: 821px;
-    height: 52px;
+    width: 22.8em;
+    height: 2.08em;
     color: white;
     background: #446787;
-    border-radius: 5px 50px 10px 0px;
+    border-radius: 0.2em 2em 0.4em 0px;
     margin-bottom: 0;
-    padding-left: 20px;
+    padding-left: 0.8em;
   }
 }
 .report-complete {
@@ -163,6 +163,9 @@
 @media (max-width: 1400px) {
   .report {
     font-size: 10px;
+    .report__title {
+      font-size: 18px;
+    }
   }
   .report-complete {
     margin: 3em 1.625em;

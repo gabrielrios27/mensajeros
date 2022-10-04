@@ -14,6 +14,7 @@ import {
   user,
   variable,
 } from '../models';
+import { comment } from '../models/comment';
 import { report } from 'process';
 import { text } from '@fortawesome/fontawesome-svg-core';
 
@@ -22,6 +23,7 @@ import { text } from '@fortawesome/fontawesome-svg-core';
 })
 export class AdminService {
   api_key: string = '';
+  url: string = 'https://mensajeros-demo-back.herokuapp.com'
   baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com';
   baseUrlTami: string = 'https://mensajeros-demo-back.herokuapp.com';
   headers = new HttpHeaders();
@@ -31,7 +33,7 @@ export class AdminService {
   EPVariablesQuantityPerAxe: string = '/variables/eje';
   // https://mensajeros-back-tami.herokuapp.com/variables/eje/2
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
   // endpoints centros
   editCenter(center: Centro, id: any): Observable<Centro> {
     return this._http.put<Centro>(this.baseUrlTami + '/centros/' + id, center, {
@@ -182,4 +184,15 @@ export class AdminService {
       }
     );
   }
+  getReportPerCenter(idReport: number, idCenter: number): Observable<any> {
+    return this._http.get(
+      this.baseUrlTami + '/carga/reporteCreado/' + idReport + '/' + idCenter
+    );
+  }
+  addComment(comment:comment): Observable<any> {
+    return this._http.post(this.baseUrlTami + '/comentarios',comment, {
+      responseType: 'text',
+    });
+  }
+
 }

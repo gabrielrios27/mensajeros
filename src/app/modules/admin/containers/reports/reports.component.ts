@@ -66,7 +66,7 @@ export class ReportsComponent implements OnInit {
     this.getCenters();
     this.getAxes();
     this.getVariables();
-    this.data.flagDuplicated = false;
+    
   }
 
   busca(e: string) {
@@ -74,10 +74,9 @@ export class ReportsComponent implements OnInit {
       this.ngOnInit();
     } else {
       this.reports = this.reports.filter((res) => {
-        return res.nombre
-          .toLocaleLowerCase()
-          .match(this.nombre.toLocaleLowerCase());
+        return res.nombre.toLowerCase().match(this.nombre.toLowerCase());
       });
+      this.pageToShow(this.currentPage, this.reports);
     }
   }
 
@@ -205,9 +204,10 @@ export class ReportsComponent implements OnInit {
 
   edit(rep: any) {
     this.report = rep;
+    this.data.flagDuplicated = false;
     this.data.editar = true;
     this.router.navigate([
-      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+      'admin/dashboard/reportes/creación-de-reportes/add-mod-report',
       this.report.id,
     ]);
   }
@@ -223,15 +223,16 @@ export class ReportsComponent implements OnInit {
     });
     this.data.cantDuplicated = repD.length;
     this.router.navigate([
-      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+      'admin/dashboard/reportes/creación-de-reportes/add-mod-report',
       this.report.id,
     ]);
   }
 
   create() {
+    this.data.flagDuplicated = false;
     this.data.editar = false;
     this.router.navigate([
-      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report',
+      'admin/dashboard/reportes/creación-de-reportes/add-mod-report',
     ]);
   }
 
