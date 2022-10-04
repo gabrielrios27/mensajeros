@@ -21,6 +21,8 @@ import { AddModReportComponent } from './containers/add-mod-report/add-mod-repor
 import { ConfirmOutGuard } from './guards/confirm-out.guard';
 import { PreviewReportComponent } from './containers/preview-report/preview-report.component';
 import { ReceivedReportComponent } from './containers/received-report/received-report.component';
+import { CreateComparativeReportsComponent } from './containers/create-comparative-reports/create-comparative-reports.component';
+import { CompareReportsComponent } from './containers/compare-reports/compare-reports.component';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -45,6 +47,18 @@ export const ROUTES: Routes = [
     path: 'centros',
     canActivate: [AdminGuard],
     component: adminContainers.CentersComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'centros/crear-informe-comparativo/:id-centro',
+    canActivate: [AdminGuard],
+    component: CreateComparativeReportsComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'centros/ver-informe-comparativo/:id-comparative-report',
+    canActivate: [AdminGuard],
+    component: CompareReportsComponent,
     pathMatch: 'full',
   },
   {

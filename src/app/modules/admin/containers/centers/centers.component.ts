@@ -45,25 +45,6 @@ export class CentersComponent implements OnInit {
     this.getCenterLocalStorage();
   }
 
-  // getAxeLocalStorage() {
-  //   if (this.data.editar) {
-  //     setTimeout(() => {
-  //       this.close();
-  //     }, 3000);
-  //   }
-  //   if (this.data.flag) {
-  //     setTimeout(() => {
-  //       this.close();
-  //     }, 3000);
-  //   }
-  //   if (this.data.flagDelete) {
-  //     setTimeout(() => {
-  //       this.close();
-  //     }, 2000);
-  //   }
-
-  // }
-
   busca(e: string) {
     if (e.toLocaleLowerCase() == '') {
       this.ngOnInit();
@@ -207,6 +188,16 @@ export class CentersComponent implements OnInit {
     this.flagDelete = true;
   }
 
+  createCompareReports(idCentro: number) {
+    this.router.navigate([
+      'admin/dashboard/centros/crear-informe-comparativo/' + idCentro,
+    ]);
+  }
+  viewComparisonReport(idComparativeReport: number) {
+    this.router.navigate([
+      'admin/dashboard/centros/ver-informe-comparativo/' + idComparativeReport,
+    ]);
+  }
   getCenterLocalStorage() {
     let newOrEditedCenter = localStorage.getItem('newOrEditedCenter');
     if (newOrEditedCenter) {
