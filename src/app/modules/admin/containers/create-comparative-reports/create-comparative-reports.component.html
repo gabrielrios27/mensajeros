@@ -46,11 +46,12 @@
             >
             <mat-select
               #mySelCategory
-              class="select-item__input"
+              class="select-item__input select-item__input--variables"
               placeholder="Variables"
               multiple=""
               [(value)]="selectedVariables"
               name="selectedVariables"
+              [disabled]="!flagTwoReportsSelected"
             >
               <mat-option
                 #allSelectedVariables
@@ -70,6 +71,16 @@
                 >{{ item.nombre }}</mat-option
               >
             </mat-select>
+            <p
+              class="
+                select-item__label
+                select-item__label--variables
+                select-item__label--noVariables
+              "
+              *ngIf="flagNoVariables"
+            >
+              Estos reportes no tienen variables en común
+            </p>
           </div>
           <div class="select-item">
             <p class="select-item__title">Reporte 2</p>

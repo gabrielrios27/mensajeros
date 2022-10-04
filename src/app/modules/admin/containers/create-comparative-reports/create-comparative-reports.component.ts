@@ -22,6 +22,8 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
   flagSelectAll: boolean;
   selected1: number = -1;
   selected2: number = -1;
+  flagTwoReportsSelected: boolean;
+  flagNoVariables: boolean;
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(
@@ -36,6 +38,8 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
     this.report1 = {} as ReportByCenter;
     this.report2 = {} as ReportByCenter;
     this.flagSelectAll = false;
+    this.flagTwoReportsSelected = false;
+    this.flagNoVariables = false;
   }
 
   ngOnInit(): void {
@@ -57,24 +61,19 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
       });
   }
   getVariablesInCommon(idReport1: number, idReport2: number) {
-    // this.variablesList = [
-    //   { name: 'Variable1', id: 1 },
-    //   { name: 'Variable2', id: 2 },
-    //   { name: 'Variable3', id: 3 },
-    //   { name: 'Variable4', id: 4 },
-    //   { name: 'Variable1', id: 5 },
-    //   { name: 'Variable2', id: 6 },
-    //   { name: 'Variable3', id: 7 },
-    //   { name: 'Variable4', id: 8 },
-    //   { name: 'Variable1', id: 9 },
-    //   { name: 'Variable2', id: 10 },
-    // ];
     this._adminSvc
       .getVariablesInCommon(idReport1, idReport2)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe({
         next: (data: VariableInCommon[]) => {
           this.variablesList = data;
+          if (this.variablesList.length !== 0) {
+            this.flagTwoReportsSelected = true;
+            this.flagNoVariables = false;
+          } else {
+            this.flagNoVariables = true;
+            this.flagTwoReportsSelected = false;
+          }
           console.log('this.variablesList: ', this.variablesList);
         },
         error: (err) => {

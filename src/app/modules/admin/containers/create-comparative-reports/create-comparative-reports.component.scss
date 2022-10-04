@@ -82,6 +82,7 @@
     background: #083d5e;
     color: white;
   }
+
   .select-item__label {
     font-family: "Roboto";
     font-size: 12px;
@@ -91,6 +92,10 @@
   }
   .select-item__label--variables {
     padding-right: 15px;
+  }
+  .select-item__label--noVariables {
+    color: $alert-text;
+    padding-right: 0;
   }
   .select-item__input {
     box-sizing: border-box;
@@ -110,6 +115,9 @@
     font-size: 14px;
     letter-spacing: 0.25px;
     margin-bottom: 190px;
+  }
+  .select-item__input--variables {
+    margin-bottom: 0;
   }
 }
 .select-item__option {
