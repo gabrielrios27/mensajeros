@@ -24,6 +24,62 @@
     letter-spacing: 0.5px;
     color: #1c1b1f;
     outline-color: $color-primary-border;
+
+
+}
+
+::ng-deep .mat-checkbox {
+    display: flex;
+    margin-left: 16px;
+    height: 30px;
+}
+
+::ng-deep .mat-checkbox-inner-container {
+    display: inline-block;
+    height: 17px !important;
+    line-height: 0;
+    margin-right: 8px;
+    order: 0;
+    position: relative;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 17px !important;
+    flex-shrink: 0;
+    margin-left: 158px !important;
+}
+::ng-deep .mat-checkbox:hover{
+    background: #a8c2eb !important;
+}
+
+:ng-deep .mat-checkbox-layout:hover {
+    background: #a8c2eb !important;
+}
+
+::ng-deep .mat-checkbox-background {
+    background-color: white;
+    border: 1px solid gray !important;
+}
+
+::ng-deep.mat-checkbox-checked {
+    ::ng-deep .mat-checkbox-checkmark {
+        border: 1px solid rgba(0, 0, 0, 0);
+        background: white;
+
+        ::ng-deep .mat-checkbox-checkmark-path {
+            stroke: black !important;
+        }
+    }
+}
+
+::ng-deep .mat-checkbox-layout {
+    user-select: none;
+    cursor: inherit;
+    flex-direction: row-reverse;
+    align-items: center;
+    text-align: center;
+    vertical-align: middle;
+    display: flex;
+    white-space: nowrap;
 }
 
 ::ng-deep .mat-select-ejes:focus {
@@ -60,7 +116,11 @@
         margin-left: 9px;
         font-size: 20px;
     }
+
 }
+
+
+
 .mat-pseudo-checkbox-checke {
     top: 2.4px;
     left: 1px;
@@ -71,4 +131,3 @@
     opacity: 1;
     box-sizing: content-box;
 }
-

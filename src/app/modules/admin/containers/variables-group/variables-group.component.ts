@@ -16,7 +16,10 @@ export class VariablesGroupComponent implements OnInit {
   flagEdited: boolean = false;
   flagNew: boolean = false;
   flagDelete: boolean = false;
+  flagSelectCenter: boolean = false
   idToDelete: number = 0;
+  centers: Array<any> = ['Colibries', 'La balsa', 'Club dia']
+  center: any
 
   listOfVariables: variable[] = [];
   listOfVariables_toSearch: variable[] = [];
@@ -67,17 +70,14 @@ export class VariablesGroupComponent implements OnInit {
         next: (data: variable[]) => {
           this.listOfVariables = data;
           setTimeout(() => this._cdr.detectChanges());
-          console.log(this.listOfVariables);
           this.pageToShow(this.currentPage, this.listOfVariables); //para paginación
         },
         error: (err) => {
-          console.log(err);
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
         },
         complete: () => {
-          console.log('Request get Variables complete');
         },
       });
   }
@@ -178,16 +178,13 @@ export class VariablesGroupComponent implements OnInit {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe({
         next: (data: variable[]) => {
-          console.log(data);
         },
         error: (err) => {
-          console.log(err);
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
         },
         complete: () => {
-          console.log('Request delete complete');
           this.getVariablesList();
         },
       });
@@ -263,10 +260,15 @@ export class VariablesGroupComponent implements OnInit {
     }
   }
 
+  selectCenter(element:variable){
+    this.flagSelectCenter = true
+  }
+
   close() {
     this.flagNew = false;
     this.flagEdited = false;
     this.flagDelete = false;
+    this.flagSelectCenter = false
   }
   ngOnDestroy() {
     this.onDestroy$.next(true);

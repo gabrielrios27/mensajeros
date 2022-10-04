@@ -66,7 +66,7 @@ export class ReportsComponent implements OnInit {
     this.getCenters();
     this.getAxes();
     this.getVariables();
-    this.data.flagDuplicated = false;
+    
   }
 
   busca(e: string) {
@@ -204,6 +204,7 @@ export class ReportsComponent implements OnInit {
 
   edit(rep: any) {
     this.report = rep;
+    this.data.flagDuplicated = false;
     this.data.editar = true;
     this.router.navigate([
       'admin/dashboard/reportes/creación-de-reportes/add-mod-report',
@@ -228,6 +229,7 @@ export class ReportsComponent implements OnInit {
   }
 
   create() {
+    this.data.flagDuplicated = false;
     this.data.editar = false;
     this.router.navigate([
       'admin/dashboard/reportes/creación-de-reportes/add-mod-report',
