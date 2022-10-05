@@ -23,6 +23,7 @@ import { PreviewReportComponent } from './containers/preview-report/preview-repo
 import { ReceivedReportComponent } from './containers/received-report/received-report.component';
 import { CreateComparativeReportsComponent } from './containers/create-comparative-reports/create-comparative-reports.component';
 import { CompareReportsComponent } from './containers/compare-reports/compare-reports.component';
+import { ComparativeTableComponent } from './containers/comparative-table/comparative-table.component';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -53,6 +54,12 @@ export const ROUTES: Routes = [
     path: 'centros/crear-informe-comparativo/:id-centro',
     canActivate: [AdminGuard],
     component: CreateComparativeReportsComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'centros/crear-informe-comparativo/:id-centro/tabla-comparativa',
+    canActivate: [AdminGuard],
+    component: ComparativeTableComponent,
     pathMatch: 'full',
   },
   {

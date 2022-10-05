@@ -1,0 +1,194 @@
+@import "../../../../../styles/variables.scss";
+.createReport {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-left: 123px;
+  .createReport__container {
+    width: 100%;
+    max-width: 1225px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    .createReport__title {
+      font-weight: 700;
+      font-size: 22px;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+    .createReport__btn {
+      font-size: 20px;
+      align-self: flex-end;
+      width: 7.5em;
+      height: 3.3em;
+      background: #56b5ec;
+      border: 1px solid #56b5ec;
+      box-shadow: 0 0.2em 0.2em rgba(0, 0, 0, 0.25);
+      border-radius: 1.75em;
+      margin-top: 1.2em;
+    }
+  }
+}
+.selects {
+  width: 100%;
+  max-width: 999px;
+  .selects__title {
+    width: 434px;
+    height: 36px;
+    background: #083d5e;
+    border-radius: 30px 30px 0px 0px;
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+    margin-left: 37px;
+    margin-bottom: 0;
+  }
+  .selects__container {
+    width: 100%;
+    border: 1px solid #79747e;
+    border-radius: 20px 20px 10px 10px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .selects__container-reports {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}
+.select-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .select-item__title {
+    width: 190px;
+    height: 45px;
+    background: #92cdef;
+    border-radius: 5px;
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    padding-left: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 29px;
+  }
+  .select-item__title--variables {
+    width: 210px;
+    background: #083d5e;
+    color: white;
+  }
+
+  .select-item__label {
+    font-family: "Roboto";
+    font-size: 12px;
+    letter-spacing: 0.25px;
+    color: #79747e;
+    padding-right: 99px;
+  }
+  .select-item__label--variables {
+    padding-right: 15px;
+  }
+  .select-item__label--noVariables {
+    color: $alert-text;
+    padding-right: 0;
+  }
+  .select-item__input {
+    box-sizing: border-box;
+    border: 1px solid #979797;
+    font-style: normal;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: #1c1b1f;
+    outline-color: $color-primary-border;
+    width: 229px;
+    height: 48px;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-family: "Roboto";
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    margin-bottom: 190px;
+  }
+  .select-item__input--variables {
+    margin-bottom: 0;
+  }
+}
+.select-item__option {
+  flex-direction: row-reverse;
+  overflow-x: hidden;
+  ::ng-deep .mat-option-text {
+    text-overflow: ellipsis;
+  }
+}
+.select-item__checkbox {
+  position: relative;
+  float: right;
+  .select-item__input-checkbox {
+    position: relative;
+    z-index: 2;
+  }
+  .select-item__input-cover {
+    width: 20px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+  }
+}
+
+::ng-deep .mat-option-text {
+  width: 87%;
+  position: relative;
+}
+::ng-deep .mat-select-panel .mat-option.mat-selected {
+  background: white;
+}
+::ng-deep .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
+  background: white;
+}
+::ng-deep .mat-select-panel {
+  background: #95b7ea;
+  max-height: 223px;
+}
+
+.select-item__option--all {
+  ::ng-deep mat-pseudo-checkbox {
+    display: none;
+  }
+}
+.select-item__option--all-selected {
+  background: white;
+}
+@media (max-width: 1400px) {
+  .createReport {
+    .createReport__container {
+      margin-top: 25px;
+      max-width: 900px;
+      .createReport__title {
+        margin-bottom: 25px;
+      }
+      .createReport__btn {
+        font-size: 15px;
+      }
+    }
+  }
+}
+@media (max-width: 1024px) {
+  .createReport {
+    .createReport__container {
+      margin-top: 15px;
+      max-width: 800px;
+      .createReport__title {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}

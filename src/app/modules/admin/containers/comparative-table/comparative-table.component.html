@@ -1,0 +1,46 @@
+<section class="container-comparative-table">
+  <div class="table">
+    <h1 class="table__title">Cuadro Comparativo Centro la Balsa</h1>
+    <header class="header">
+      <div class="header__container">
+        <h4 class="header__report">Reporte L00005</h4>
+        <p class="header__period">
+          Periodo <span class="header__period-span">01/2022 a 06/2022</span>
+        </p>
+      </div>
+      <h4 class="header__variables">Variables</h4>
+      <div class="header__container">
+        <h4 class="header__report">Reporte C00005</h4>
+        <p class="header__period">
+          Periodo <span class="header__period-span">07/2022 a 12/2022</span>
+        </p>
+      </div>
+    </header>
+    <div class="axe" *ngFor="let axe of axesList">
+      <h5 class="axe__title">{{ axe.nombre }}</h5>
+      <div class="axe__variables-container">
+        <app-compare-variable
+          *ngFor="let variable of axe.variablesList; let i = index"
+          [index]="biAlphabet[i]"
+          [variable]="variable"
+        ></app-compare-variable>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <button class="footer__btn-back" (click)="onGoBack()" mat-raised-button>
+      Atrás
+    </button>
+    <div class="comment">
+      <h5 class="comment__title">Informe</h5>
+      <textarea class="comment__textarea" name="" id=""></textarea>
+    </div>
+    <button
+      class="footer__btn-create"
+      (click)="onCreateReport()"
+      mat-raised-button
+    >
+      Crear informe
+    </button>
+  </footer>
+</section>
