@@ -66,7 +66,7 @@ export interface VariableInCommon {
   nombre: string;
 }
 export interface BodyComparativeReport {
-  descripcion: string;
+  descripcion?: string;
   idCentro: number;
   idReporte1: number;
   idReporte2: number;

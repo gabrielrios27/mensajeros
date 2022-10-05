@@ -5,7 +5,11 @@ import { MatOption } from '@angular/material/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AdminService } from '../../services';
 import { Subject, takeUntil } from 'rxjs';
-import { ReportByCenter, VariableInCommon } from '../../models';
+import {
+  BodyComparativeReport,
+  ReportByCenter,
+  VariableInCommon,
+} from '../../models';
 
 @Component({
   selector: 'app-create-comparative-reports',
@@ -24,6 +28,7 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
   selected2: number = -1;
   flagTwoReportsSelected: boolean;
   flagNoVariables: boolean;
+  bodyComparativeReport: BodyComparativeReport;
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(
@@ -40,6 +45,7 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
     this.flagSelectAll = false;
     this.flagTwoReportsSelected = false;
     this.flagNoVariables = false;
+    this.bodyComparativeReport = {} as BodyComparativeReport;
   }
 
   ngOnInit(): void {
@@ -52,7 +58,6 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data: ReportByCenter[]) => {
           this.reportsList = data;
-          console.log('this.reportsList', this.reportsList);
         },
         error: (err) => {
           if (err.status === 401) {
@@ -68,7 +73,6 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data: VariableInCommon[]) => {
           this.variablesList = data;
-          console.log('this.variablesList', this.variablesList);
           if (this.variablesList.length !== 0) {
             this.flagTwoReportsSelected = true;
             this.flagNoVariables = false;
@@ -76,7 +80,6 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
             this.flagNoVariables = true;
             this.flagTwoReportsSelected = false;
           }
-          console.log('this.variablesList: ', this.variablesList);
         },
         error: (err) => {
           if (err.status === 401) {
@@ -133,12 +136,27 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
   }
   onNextBtn() {
     if (this.report1 && this.report2 && this.selectedVariables.length !== 0) {
+      this.bodyComparativeReport = this.createBodyComparativeReport();
+      this.setBodySessionStg(this.bodyComparativeReport);
       this.route.navigate([
         'admin/dashboard/centros/crear-informe-comparativo/' +
           this.idCentro +
           '/tabla-comparativa',
       ]);
     }
+  }
+  createBodyComparativeReport(): BodyComparativeReport {
+    let body: BodyComparativeReport;
+    body = {
+      idCentro: this.idCentro,
+      idReporte1: this.report1.idReporte,
+      idReporte2: this.report2.idReporte,
+      variables: this.selectedVariables.map((variable: any) => variable.id),
+    };
+    return body;
+  }
+  setBodySessionStg(body: BodyComparativeReport) {
+    sessionStorage.setItem('bodyComparativeReport', JSON.stringify(body));
   }
   ngOnDestroy() {
     this.onDestroy$.next(true);
