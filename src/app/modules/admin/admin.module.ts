@@ -25,6 +25,10 @@ import { PreviewVariableComponent } from './components/preview-variable/preview-
 import { ReceivedReportComponent } from './containers/received-report/received-report.component';
 import { VariablesShowComponent } from './containers/variables-show/variables-show.component';
 import { AddModCenterComponent } from './containers/add-mod-center/add-mod-center.component';
+import { EvolutionOfVariableComponent } from './containers/evolution-of-variable/evolution-of-variable.component';
+import { CompareReportsComponent } from './containers/compare-reports/compare-reports.component';
+import { CreateComparativeReportsComponent } from './containers/create-comparative-reports/create-comparative-reports.component';
+
 /* Containers */
 import * as adminContainers from './containers';
 
@@ -50,8 +54,8 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { EvolutionOfVariableComponent } from './containers/evolution-of-variable/evolution-of-variable.component';
 
+// apex chart
 import {NgApexchartsModule} from 'ng-apexcharts'
 
 @NgModule({
@@ -109,6 +113,8 @@ import {NgApexchartsModule} from 'ng-apexcharts'
     PreviewVariableComponent,
     PreviewReportComponent,
     ReceivedReportComponent,
+    CompareReportsComponent,
+    CreateComparativeReportsComponent,
     VariablesShowComponent,
     EvolutionOfVariableComponent,
   ],
