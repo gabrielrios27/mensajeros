@@ -7,17 +7,27 @@
         <div class="variables-preview"></div>
         <apx-chart [series]="series" [chart]="chart" [title]="title" [xaxis]="xaxis" [markers]="markers"
             [colors]="colors" [stroke]="stroke" [grid]="grid"></apx-chart>
-        <div class="icon"><svg *ngFor="let item of items" width="12px" height="12px" viewBox="0 0 16 16" style="margin-right: 57px;"
-                xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-caret-down">
-                <path
-                    d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z" />
-            </svg>
-        </div>
+        <!-- <div class="icon">
+            <span *ngFor="let item of items" [ngStyle]="flagMon?{'margin-right': '60px'} : {'margin-right': '200px'}">
+                <svg width="10px" height="10px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+                    [ngStyle]="flagMon?{'margin-right': '0px'} : {'margin-right': '35px'}"
+                    fill="currentColor" class="bi bi-caret-down">
+                    <path
+                        d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z" />
+                </svg>
+            </span>
+        </div> -->
     </div>
     <div class="button-group">
-        <button mat-button (click)="monthly()" [ngStyle]="flagMon?{'background-color': '#1967D2'} : {'background-color': '#083D5E'}">Evolución mensual</button>
-        <button mat-button (click)="semi()" [ngStyle]="flagSemi?{'background-color': '#1967D2'} : {'background-color': '#083D5E'}">Evolución semestral</button>
-        <button mat-button (click)="annual()" [ngStyle]="flagAnnual?{'background-color': '#1967D2'} : {'background-color': '#083D5E'}">Evolución anual</button>
+        <button mat-button (click)="monthly()"
+            [ngStyle]="flagMon?{'background-color': '#1967D2'} : {'background-color': '#083D5E'}">Evolución
+            mensual</button>
+        <button mat-button (click)="semi()"
+            [ngStyle]="flagSemi?{'background-color': '#1967D2'} : {'background-color': '#083D5E'}">Evolución
+            semestral</button>
+        <button mat-button (click)="annual()"
+            [ngStyle]="flagAnnual?{'background-color': '#1967D2'} : {'background-color': '#083D5E'}">Evolución
+            anual</button>
     </div>
 
 
