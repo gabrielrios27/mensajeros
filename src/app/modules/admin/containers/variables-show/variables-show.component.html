@@ -1,7 +1,7 @@
 <div>
     <div class="container-variablesShow">
         <p class="nameVariable">{{indexAlphabet}} {{variableValue.nombre}}</p>
-        <p *ngIf="variableValue.tipo === 'Numérico' && variableValue.genero === 'false'" class="typeOfResponce">{{variableValue.valor_final}}</p>
+        <p *ngIf="variableValue.tipo === 'Numérico' && variableValue.genero === 'false'" class="typeOfResponce">{{responseToShow.numerico}}</p>
         <div style="margin-left: 10px;" *ngIf="variableValue.tipo === 'Textual'">
             <p>{{responseToShow.textual}}</p>
             <label *ngIf="variableValue.escala_valor == 'true'" style="position: absolute;">Escala de valor:</label>
