@@ -5,6 +5,7 @@
     margin-top: 20px;
     flex-direction: column;
     text-align: center;
+    width: 100%;
 
     h1 {
         font-family: 'Futura Bk BT';
@@ -13,6 +14,7 @@
         font-size: 32px;
         line-height: 38px;
         text-align: center;
+        margin-top: 43px;
     }
 
     .container-ejes-variables {
@@ -43,7 +45,7 @@
             height: 495px;
             margin-left: 36px;
             position: absolute;
-            margin-bottom: 15px;
+            margin-bottom: 13px;
             border: 1px solid #1967D2;
             border-radius: 20px 20px 10px 10px;
 
@@ -89,5 +91,18 @@
         button:visited {
             background: #1967D2;
         }
+    }
+}
+
+@media (max-width: 1170px) {
+    .container{
+        width: 80%;
+        float: right;
+    }
+}
+@media (max-width: 1000px) {
+    .container{
+        width: 65%;
+        float: right;
     }
 }
