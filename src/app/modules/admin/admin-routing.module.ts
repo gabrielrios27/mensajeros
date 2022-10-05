@@ -92,7 +92,7 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'variables/evolucion-de-variable',
+    path: 'variables/evolucion-de-variable/:idCenter/:idVariable',
     canActivate: [AdminGuard],
     canDeactivate: [],
     component: EvolutionOfVariableComponent,
