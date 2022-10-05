@@ -65,3 +65,41 @@ export interface VariableInCommon {
   id: number;
   nombre: string;
 }
+export interface BodyComparativeReport {
+  descripcion: string;
+  idCentro: number;
+  idReporte1: number;
+  idReporte2: number;
+  variables: number[];
+}
+export interface ComparativeReports {
+  carga1: Charge;
+  carga2: Charge;
+  descripcion: string;
+  id: number;
+}
+
+export interface Charge {
+  ejeActual: number;
+  fechaCompletado: Date;
+  idCentro: number;
+  idReporte: number;
+  nombre: string;
+  observacion: string;
+  periodoDesde: Date;
+  periodoHasta: Date;
+  respuestas: ResponseReport[];
+  totalEjes: number;
+  variables: variable[];
+}
+
+export interface ResponseReport {
+  escala: number;
+  femenino: number;
+  idVariable: number;
+  masculino: number;
+  noBinario: number;
+  numerico: number;
+  observaciones: string;
+  textual: string;
+}

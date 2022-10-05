@@ -52,6 +52,7 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data: ReportByCenter[]) => {
           this.reportsList = data;
+          console.log('this.reportsList', this.reportsList);
         },
         error: (err) => {
           if (err.status === 401) {
@@ -67,6 +68,7 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data: VariableInCommon[]) => {
           this.variablesList = data;
+          console.log('this.variablesList', this.variablesList);
           if (this.variablesList.length !== 0) {
             this.flagTwoReportsSelected = true;
             this.flagNoVariables = false;
