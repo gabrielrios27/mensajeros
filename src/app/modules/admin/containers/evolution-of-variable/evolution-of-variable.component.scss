@@ -6,6 +6,15 @@
     flex-direction: column;
     text-align: center;
 
+    h1 {
+        font-family: 'Futura Bk BT';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 32px;
+        line-height: 38px;
+        text-align: center;
+    }
+
     .container-ejes-variables {
         display: flex;
         flex-direction: column;
@@ -30,19 +39,20 @@
         }
 
         .variables-preview {
-            width: 812px;
-            height: 492px;
-            margin-left: 41px;
+            width: 785px;
+            height: 495px;
+            margin-left: 36px;
             position: absolute;
             margin-bottom: 15px;
-            border: 2px solid #1967D2;
+            border: 1px solid #1967D2;
             border-radius: 20px 20px 10px 10px;
+
         }
 
         .icon {
             position: absolute;
-            margin-top: 490px;
-            margin-left: 41px;
+            margin-top: 485px;
+            margin-left: 39px;
         }
 
     }
@@ -57,18 +67,26 @@
 
         button {
             margin-top: 13px;
-            width: 146px;
+            width: 153px;
             height: 32px;
             background: #083D5E;
             border-radius: 10px;
-            color: white;
+            color: #fff;
             display: flex;
+            font-family: Futura Bk BT;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 15px;
+            /* line-height: 20px; */
+            letter-spacing: .25px;
+            text-align: center;
         }
 
-        button:hover{
+        button:hover {
             background: #1967D2;
         }
-        button:visited{
+
+        button:visited {
             background: #1967D2;
         }
     }

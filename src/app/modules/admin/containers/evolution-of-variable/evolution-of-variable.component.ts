@@ -54,7 +54,8 @@ export class EvolutionOfVariableComponent implements OnInit {
   flagSemi = false
   flagAnnual = false
   items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-  
+  offsetY = 0
+
   constructor() {
     this.init()
   }
@@ -71,13 +72,15 @@ export class EvolutionOfVariableComponent implements OnInit {
       }
     ],
       this.grid = {
-
         borderColor: "black"
       },
 
       this.chart = {
         type: 'line',
         width: 850,
+        toolbar: {
+          show: false
+        }
 
       },
       this.xaxis = {
@@ -88,7 +91,22 @@ export class EvolutionOfVariableComponent implements OnInit {
         categories: this.categories,
         axisBorder: {
           show: false,
+          color: '#1967D2',
+          offsetY: 4,
         },
+        axisTicks: {
+          show: true,
+          borderType: 'solid',
+          color: 'black',
+          height: 6,
+          offsetY: 4,
+        },
+        labels: {
+          offsetX: this.offsetY,
+        },
+        crosshairs: {
+          show: false,
+        }
       },
       this.markers = {
         size: 5,
@@ -100,13 +118,10 @@ export class EvolutionOfVariableComponent implements OnInit {
     this.colors = ["#1967D2"],
       this.stroke = {
         width: 3
-
       },
       this.yaxis = {
         min: this.min,
         labels: {
-          offsetX: 0,
-          offsetY: 0,
           formatter: function (val) {
             return "Mas de " + val;
           }
@@ -143,6 +158,8 @@ export class EvolutionOfVariableComponent implements OnInit {
       this.rango = 11
       this.max = 12
       this.datas = [10, 41, 35, 51, 49, 62, 69, 91, 148]
+      this.items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+      this.offsetY = 0
       this.init()
     }
 
@@ -163,6 +180,7 @@ export class EvolutionOfVariableComponent implements OnInit {
       this.max = 4
       this.datas = [10, 41, 35, 51]
       this.items = [1, 2, 3, 4]
+      this.offsetY = 2
       this.init()
     }
   }
@@ -172,6 +190,19 @@ export class EvolutionOfVariableComponent implements OnInit {
       this.flagAnnual = true
       this.flagSemi = false
       this.flagMon = false
+      this.categories = [
+        "Año 2020",
+        "Año 2021",
+        "Año 2022",
+        "Año 2023",
+      ]
+      this.rango = 3
+      this.min = 0
+      this.max = 4
+      this.datas = [1, 15, 35, 51]
+      this.items = [1, 2, 3, 4]
+      this.offsetY = 2
+      this.init()
     }
 
   }
