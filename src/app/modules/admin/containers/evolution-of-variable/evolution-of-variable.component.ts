@@ -92,14 +92,13 @@ export class EvolutionOfVariableComponent implements OnInit {
         axisBorder: {
           show: false,
           color: '#1967D2',
-          offsetY: 4,
+          offsetY: 3,
         },
         axisTicks: {
           show: true,
           borderType: 'solid',
           color: 'black',
           height: 6,
-          offsetY: 4,
         },
         labels: {
           offsetX: this.offsetY,
@@ -109,9 +108,9 @@ export class EvolutionOfVariableComponent implements OnInit {
         }
       },
       this.markers = {
-        size: 5,
+        size: 4,
         shape: "square",
-        radius: 0,
+        radius: 1,
         colors: ['#1967D2'],
         strokeColors: '#1967D2',
       }
@@ -122,8 +121,8 @@ export class EvolutionOfVariableComponent implements OnInit {
       this.yaxis = {
         min: this.min,
         labels: {
-          formatter: function (val) {
-            return "Mas de " + val;
+          formatter: function (value) {
+            return ("Mas de " + value);
           }
         }
       }
