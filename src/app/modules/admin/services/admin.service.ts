@@ -145,9 +145,9 @@ export class AdminService {
     );
   }
 
-  getCenterPerVariables(idVariable:number):Observable<Centro[]>{
+  getCenterPerVariables(idVariable: number): Observable<Centro[]> {
     return this._http.get<Centro[]>(
-      this.baseUrlTami + '/centros/segunVariable/'+ idVariable
+      this.baseUrlTami + '/centros/segunVariable/' + idVariable
     );
   }
 
@@ -229,9 +229,4 @@ export class AdminService {
       responseType: 'text',
     });
   }
-<<<<<<< HEAD
-=======
-  
-
->>>>>>> development
 }
