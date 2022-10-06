@@ -90,6 +90,14 @@ export class AdminService {
       body
     );
   }
+  createComparativeReport(
+    body: BodyComparativeReport
+  ): Observable<ComparativeReports> {
+    return this._http.post<ComparativeReports>(
+      this.baseUrlTami + '/informes',
+      body
+    );
+  }
   // endpoints user
 
   getUsers(): Observable<Users[]> {
