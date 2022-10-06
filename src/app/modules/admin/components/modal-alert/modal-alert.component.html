@@ -1,0 +1,20 @@
+<section class="modal" *ngIf="flag" (click)="close()">
+  <div [ngClass]="type === 'success' ? 'modal-success' : ''">
+    <img
+      *ngIf="type === 'success'"
+      class="modal__btnClose"
+      (click)="close()"
+      src="../../../../../assets/icons/X.svg"
+      alt="icono de cerrar"
+    />
+    <div class="modal__conteiner">
+      <img
+        *ngIf="type === 'success'"
+        class="modal__ico"
+        src="../../../../../assets/icons/Check.svg"
+        alt="icon check"
+      />
+      <p class="modal__text" [innerHtml]="modalText"></p>
+    </div>
+  </div>
+</section>

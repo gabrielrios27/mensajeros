@@ -34,12 +34,17 @@ export class CentersComponent implements OnInit {
   listCurrentPage: Array<Centro> = new Array();
   initialItem: number = 1;
   finalItem: number = 10;
+  flagCreatedReport: boolean;
+  modalText: string =
+    '¡Informe creado con éxito!<br>Podrás encontrar el Centro de Informes Comparativos en la sección Centros.';
   constructor(
     private router: Router,
     public data: DataService,
     private admin: AdminService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    this.flagCreatedReport = true;
+  }
   ngOnInit() {
     this.getCenters();
     this.getCenterLocalStorage();
