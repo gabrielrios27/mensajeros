@@ -78,7 +78,8 @@
               matTooltip="Borrar"
               (click)="onClickDelete(element.id)"
             />
-            <a class="list-variables__ico-action" matTooltip="Evolución de Variable" *ngIf="element.tipo  == 'Numerico'" (click)="selectCenter(element)">
+            <a class="list-variables__ico-action" matTooltip="Evolución de Variable" *ngIf="element.tipo  == 'Numerico' ||element.tipo  == 'Numérico' " 
+            (click)="selectCenter(element)">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_71_692)">
                 <path d="M0 0H1.5V24H0V0ZM1.5 22.5H24V24H1.5V22.5Z" fill="black"/>
@@ -208,11 +209,11 @@
     <p class="text-modal">Seleccione un centro</p>
     <div class="container-select">
       <mat-select placeholder="Centro" [(value)]="center">
-        <mat-option [value]="item" *ngFor="let item of centers">{{item}}</mat-option>
+        <mat-option [value]="item" *ngFor="let item of centers">{{item.nombre}}</mat-option>
       </mat-select>
     </div>
     <div class="container-button">
-      <button class="modal-button" mat-button>Aceptar</button>
+      <button class="modal-button" [disabled]="!center" mat-button>Aceptar</button>
     </div>
   </div>
    <div *ngIf="flagSelectCenter" class="overlay"></div>

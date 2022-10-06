@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { variable } from '../../models';
+import { Centro } from '../../models/centro';
 import { AdminService } from '../../services';
 
 @Component({
@@ -18,7 +19,7 @@ export class VariablesGroupComponent implements OnInit {
   flagDelete: boolean = false;
   flagSelectCenter: boolean = false
   idToDelete: number = 0;
-  centers: Array<any> = ['Colibries', 'La balsa', 'Club dia']
+  centers: Array<Centro> = []
   center: any
 
   listOfVariables: variable[] = [];
@@ -262,6 +263,19 @@ export class VariablesGroupComponent implements OnInit {
 
   selectCenter(element:variable){
     this.flagSelectCenter = true
+    this._adminSvc.getCenterPerVariables(element.id).subscribe({
+      next: (data: Centro[]) => {
+        this.centers = data
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
+      },
+      complete: () => {
+        this.getVariablesList();
+      },
+    });
   }
 
   close() {

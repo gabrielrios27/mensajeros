@@ -401,6 +401,9 @@ p {
 ::ng-deep .mat-select:focus {
   border: 2px solid #1967d2;
 }
+::ng-deep .mat-option-text {
+  width: 222px !important ;
+}
 
 mat-option {
   border-bottom: 0.3px solid #79747E;
