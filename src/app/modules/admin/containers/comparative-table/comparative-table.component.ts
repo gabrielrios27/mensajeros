@@ -214,20 +214,21 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
     private activeRoute: ActivatedRoute,
     private _adminSvc: AdminService
   ) {
-    this.idCentro = this.getIdFromRute();
+    this.idCentro = 0;
     this.bodyComparativeReport = {} as BodyComparativeReport;
     this.comparativeReports = {} as ComparativeReports;
     this.axesList = [];
   }
 
   ngOnInit(): void {
+    this.idCentro = this.getIdFromRute();
     this.getBodySessionStg();
     this.createBiAlphabet();
   }
   getIdFromRute(): number {
     let idToShow;
     this.activeRoute.paramMap.subscribe((params: ParamMap) => {
-      idToShow = params.get('id');
+      idToShow = params.get('id-centro');
     });
     return Number(idToShow);
   }
@@ -259,7 +260,6 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
       );
     });
     this.createAxesList(report.carga1.variables);
-    console.log('report: ', report);
   }
   createAxesList(variables: variable[]) {
     for (let variableItem of variables) {
@@ -279,7 +279,6 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
         this.axesList.push(newAxe);
       }
     }
-    console.log('this.axesList: ', this.axesList);
   }
   //crea un indice de alfabeto doble
   createBiAlphabet() {
