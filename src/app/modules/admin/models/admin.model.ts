@@ -28,6 +28,8 @@ export interface variable {
   valor_inicial?: string;
   etiqueta_final?: string;
   etiqueta_inicial?: string;
+  report1?: ResponseReport;
+  report2?: ResponseReport;
 }
 
 export interface AxeWithquantity {
@@ -102,4 +104,9 @@ export interface ResponseReport {
   numerico: number;
   observaciones: string;
   textual: string;
+}
+export interface AxeWithVariables {
+  id: number;
+  nombre: string;
+  variablesList: variable[];
 }
