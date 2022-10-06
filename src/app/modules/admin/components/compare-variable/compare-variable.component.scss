@@ -20,6 +20,9 @@ p {
     align-items: center;
     justify-content: center;
     word-break: break-all;
+    span {
+      padding-right: 5px;
+    }
   }
   .compare__variable {
     margin: 0;
@@ -35,7 +38,7 @@ p {
   display: flex;
   align-items: flex-end;
   .value-scale__tag {
-    font-size: 10px;
+    font-size: 12px;
     margin: 0 10px;
     color: #3d3b3f;
     line-height: 10px;
