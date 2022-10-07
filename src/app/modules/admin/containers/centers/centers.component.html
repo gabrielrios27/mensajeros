@@ -80,11 +80,12 @@
               (click)="createCompareReports(element.id)"
             />
             <img
+              *ngIf="element.informe"
               class="list-center__ico-action list-center__ico-action--report"
               src="../../../../../assets/icons/Book.svg"
               alt="icono de Mostrar informes"
               matTooltip="Informes Comparativos"
-              (click)="viewComparisonReport(7)"
+              (click)="viewComparisonReport(element.id)"
             />
           </div>
         </div>
