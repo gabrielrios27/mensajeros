@@ -100,6 +100,7 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe({
         next: (data: ComparativeReports) => {
+          this.setFlagSessionStg(true);
           sessionStorage.removeItem('bodyComparativeReport');
           this.router.navigate(['admin/dashboard/centros']);
         },
@@ -160,6 +161,9 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
   onCreateReport() {
     this.bodyComparativeReport.descripcion = this.comment;
     this.createComparativeReport(this.bodyComparativeReport);
+  }
+  setFlagSessionStg(flag: boolean) {
+    sessionStorage.setItem('createdComparativeReport', JSON.stringify(flag));
   }
   ngOnDestroy(): void {
     this.onDestroy$.next(true);

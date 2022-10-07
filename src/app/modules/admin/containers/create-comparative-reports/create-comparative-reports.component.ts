@@ -29,7 +29,11 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
   flagTwoReportsSelected: boolean;
   flagNoVariables: boolean;
   flagBody: boolean;
+  flagNoReports: boolean;
   bodyComparativeReport: BodyComparativeReport;
+  modalText: string =
+    'Este centro aún no tiene suficientes reportes para comparar.<br><br>Cerrá para regresar a Centros';
+
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(
@@ -47,6 +51,7 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
     this.flagTwoReportsSelected = false;
     this.flagNoVariables = false;
     this.flagBody = false;
+    this.flagNoReports = false;
     this.bodyComparativeReport = {} as BodyComparativeReport;
   }
 
@@ -60,6 +65,9 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data: ReportByCenter[]) => {
           this.reportsList = data;
+          if (this.reportsList.length < 2) {
+            this.flagNoReports = true;
+          }
           this.getBodySessionStg();
         },
         error: (err) => {
@@ -198,6 +206,11 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
       });
     }
     this.selectOne();
+  }
+  closeModal(flag: boolean) {
+    if (!flag) {
+      this.route.navigate(['admin/dashboard/centros']);
+    }
   }
   ngOnDestroy() {
     this.onDestroy$.next(true);

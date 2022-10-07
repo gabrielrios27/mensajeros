@@ -56,3 +56,12 @@
     }
   }
 }
+.modal {
+  .modal-alert {
+    background-color: #def2d6;
+    padding: 40px;
+    .modal__conteiner {
+      justify-content: center;
+    }
+  }
+}

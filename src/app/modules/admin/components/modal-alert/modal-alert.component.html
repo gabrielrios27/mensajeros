@@ -1,7 +1,12 @@
 <section class="modal" *ngIf="flag" (click)="close()">
-  <div [ngClass]="type === 'success' ? 'modal-success' : ''">
+  <div
+    [ngClass]="{
+      'modal-success': type === 'success' || type === 'alert',
+      'modal-alert': type === 'alert'
+    }"
+  >
     <img
-      *ngIf="type === 'success'"
+      *ngIf="type === 'success' || type === 'alert'"
       class="modal__btnClose"
       (click)="close()"
       src="../../../../../assets/icons/X.svg"

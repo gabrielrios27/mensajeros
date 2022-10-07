@@ -11,7 +11,6 @@ import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-centers',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './centers.component.html',
   styleUrls: ['centers.component.scss'],
 })
@@ -47,10 +46,20 @@ export class CentersComponent implements OnInit {
     this.flagCreatedReport = false;
   }
   ngOnInit() {
+    this.getFlagCreatedComparativeReport();
     this.getCenters();
     this.getCenterLocalStorage();
   }
-
+  getFlagCreatedComparativeReport() {
+    let flagStr = sessionStorage.getItem('createdComparativeReport');
+    if (flagStr) {
+      this.flagCreatedReport = JSON.parse(flagStr);
+      setTimeout(() => {
+        this.close();
+      }, 3000);
+    }
+    sessionStorage.removeItem('createdComparativeReport');
+  }
   busca(e: string) {
     if (e.toLocaleLowerCase() == '') {
       this.ngOnInit();
@@ -233,5 +242,6 @@ export class CentersComponent implements OnInit {
     this.flagNew = false;
     this.flagEdited = false;
     this.flagDelete = false;
+    this.flagCreatedReport = false;
   }
 }
