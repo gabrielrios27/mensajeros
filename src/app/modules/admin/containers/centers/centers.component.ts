@@ -204,14 +204,14 @@ export class CentersComponent implements OnInit {
     this.flagDelete = true;
   }
 
-  createCompareReports(idCentro: number) {
+  createCompareReports(idCenter: number) {
     this.router.navigate([
-      'admin/dashboard/centros/crear-informe-comparativo/' + idCentro,
+      'admin/dashboard/centros/crear-informe-comparativo/' + idCenter,
     ]);
   }
-  viewComparisonReport(idComparativeReport: number) {
+  viewComparisonReport(idCenter: number) {
     this.router.navigate([
-      'admin/dashboard/centros/ver-informe-comparativo/' + idComparativeReport,
+      'admin/dashboard/centros/ver-informes-comparativo/' + idCenter,
     ]);
   }
   getCenterLocalStorage() {

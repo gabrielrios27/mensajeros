@@ -63,7 +63,7 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'centros/ver-informe-comparativo/:id-comparative-report',
+    path: 'centros/ver-informes-comparativo/:id-comparative-report',
     canActivate: [AdminGuard],
     component: CompareReportsComponent,
     pathMatch: 'full',
