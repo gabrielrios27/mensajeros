@@ -22,8 +22,8 @@ import { ConfirmOutGuard } from './guards/confirm-out.guard';
 import { PreviewReportComponent } from './containers/preview-report/preview-report.component';
 import { ReceivedReportComponent } from './containers/received-report/received-report.component';
 import { CreateComparativeReportsComponent } from './containers/create-comparative-reports/create-comparative-reports.component';
-import { CompareReportsComponent } from './containers/compare-reports/compare-reports.component';
 import { ComparativeTableComponent } from './containers/comparative-table/comparative-table.component';
+import { ListComparativeReportsComponent } from './containers/list-comparative-reports/list-comparative-reports.component';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -63,9 +63,9 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'centros/ver-informes-comparativo/:id-comparative-report',
+    path: 'centros/ver-informes-comparativo/:id-centro',
     canActivate: [AdminGuard],
-    component: CompareReportsComponent,
+    component: ListComparativeReportsComponent,
     pathMatch: 'full',
   },
   {

@@ -50,11 +50,11 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { CompareReportsComponent } from './containers/compare-reports/compare-reports.component';
 import { CreateComparativeReportsComponent } from './containers/create-comparative-reports/create-comparative-reports.component';
 import { ComparativeTableComponent } from './containers/comparative-table/comparative-table.component';
 import { CompareVariableComponent } from './components/compare-variable/compare-variable.component';
 import { ModalAlertComponent } from './components/modal-alert/modal-alert.component';
+import { ListComparativeReportsComponent } from './containers/list-comparative-reports/list-comparative-reports.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -109,12 +109,12 @@ import { ModalAlertComponent } from './components/modal-alert/modal-alert.compon
     PreviewVariableComponent,
     PreviewReportComponent,
     ReceivedReportComponent,
-    CompareReportsComponent,
     CreateComparativeReportsComponent,
     ComparativeTableComponent,
     CompareVariableComponent,
     VariablesShowComponent,
     ModalAlertComponent,
+    ListComparativeReportsComponent,
   ],
   exports: [
     ...adminContainers.containers,
