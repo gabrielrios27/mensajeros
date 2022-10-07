@@ -6,7 +6,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./modal-alert.component.scss'],
 })
 export class ModalAlertComponent implements OnInit {
+  //este flag abre o cierra el modal
   @Input('flag') flag: boolean;
+  //Tipo de modal: success / warning / alert / error
   @Input('type') type: string = 'success';
   @Input('modalText') modalText: string = '';
   @Output() closeModal = new EventEmitter<boolean>();

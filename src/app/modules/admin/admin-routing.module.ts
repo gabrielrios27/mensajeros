@@ -28,12 +28,12 @@ import { ComparativeTableComponent } from './containers/comparative-table/compar
 export const ROUTES: Routes = [
   {
     path: '',
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     redirectTo: 'home',
   },
   {
     path: 'home',
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     component: adminContainers.HomeComponent,
     pathMatch: 'full',
   },
@@ -46,7 +46,7 @@ export const ROUTES: Routes = [
 
   {
     path: 'centros',
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     component: adminContainers.CentersComponent,
     pathMatch: 'full',
   },

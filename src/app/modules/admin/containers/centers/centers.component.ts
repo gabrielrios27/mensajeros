@@ -35,8 +35,13 @@ export class CentersComponent implements OnInit {
   initialItem: number = 1;
   finalItem: number = 10;
   flagCreatedReport: boolean;
-  modalText: string =
-    '¡Informe creado con éxito!<br>Podrás encontrar el Centro de Informes Comparativos en la sección Centros.';
+  // modalText: string =
+  //   '¡Informe creado con éxito!<br>Podrás encontrar el Centro de Informes Comparativos en la sección Centros.';
+  // modalText: string =
+  //   '¡Reporte Creado con éxito y enviado correctamente a los Centros Asignados!<br><br>Cierra para regresar al Home';
+  variableToShow: string =
+    'Cantidad de participantessssssssssssssssssssssssssssssss';
+  modalText: string = `¡Variable ${this.variableToShow} agregada con éxito al Eje “General”!`;
   constructor(
     private router: Router,
     public data: DataService,
@@ -81,7 +86,7 @@ export class CentersComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401) {
-          this.router.navigate(['/auth']);
+          // this.router.navigate(['/auth']);
         }
       },
     });
@@ -163,7 +168,7 @@ export class CentersComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401) {
-          this.router.navigate(['/auth']);
+          // this.router.navigate(['/auth']);
         }
       },
     });
