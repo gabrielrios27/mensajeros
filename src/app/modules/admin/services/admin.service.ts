@@ -99,7 +99,14 @@ export class AdminService {
       body
     );
   }
-
+  //ver informes comparativos
+  getComparativeReportsByIdCenter(
+    id: number
+  ): Observable<CreatedComparativeReport[]> {
+    return this._http.get<CreatedComparativeReport[]>(
+      this.baseUrlTami + '/informes/centro/' + id
+    );
+  }
   // endpoints user
 
   getUsers(): Observable<Users[]> {
