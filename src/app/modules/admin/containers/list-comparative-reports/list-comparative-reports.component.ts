@@ -83,8 +83,20 @@ export class ListComparativeReportsComponent implements OnInit {
   }
   getReportsList() {
     this.currentPage = this.getPageLocalStorage();
-    this.listOfReports = this.mockReports;
-    this.pageToShow(this.currentPage, this.listOfReports); //para paginación
+    this._adminSvc
+      .getComparativeReportsByIdCenter(this.idCenter)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: CreatedComparativeReport[]) => {
+          this.listOfReports = data;
+          this.pageToShow(this.currentPage, this.listOfReports); //para paginación
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
   }
   //para paginación----
   pageToShow(page: number, list: CreatedComparativeReport[]) {
