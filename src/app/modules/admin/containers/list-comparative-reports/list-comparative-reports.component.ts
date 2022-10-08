@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { AxeWithquantity } from '../../models';
+import { AxeWithquantity, CreatedComparativeReport } from '../../models';
 import { AdminService } from '../../services';
 
 @Component({
