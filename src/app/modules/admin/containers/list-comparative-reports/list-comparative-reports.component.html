@@ -2,31 +2,14 @@
   <div class="reports">
     <h1 class="reports__title">Informes Comparativos</h1>
     <h2 class="reports__subtitle">Centro La Balsa</h2>
-    <div class="reports__container-search">
-      <label for="searchreports" class="lbl-search-reports">
-        <input
-          class="lbl-search-reports__input"
-          id="searchreports"
-          type="text"
-          [(ngModel)]="itemSearch"
-          (ngModelChange)="Search(itemSearch)"
-          autocomplete="off"
-          spellcheck="false"
-        />
-        <img
-          class="lbl-search-reports__ico"
-          src="../../../../../assets/icons/Search.svg"
-          alt="Icono de lupa para busqueda"
-        />
-      </label>
-    </div>
+
     <section class="list-reports">
       <div class="list-reports__table">
         <!-- Position Column -->
         <div class="list-reports__row">
           <p class="list-reports__header">Informes</p>
 
-          <p class="list-reports__header list-reports__header--quantity">
+          <p class="list-reports__header list-reports__header--reports">
             Reportes Comparados
           </p>
           <p class="list-reports__header list-reports__header--date">
@@ -36,17 +19,26 @@
 
         <div
           class="list-reports__row list-reports__row--click"
-          *ngFor="let element of listOfVariables_toShow | async"
-          (click)="setNameAxeLocalStorage(element.nombre)"
-          [routerLink]="['variables-agrupadas/', element.id.toString()]"
+          *ngFor="let element of listOfReports_toShow | async"
+          (click)="setNameAxeLocalStorage(element.idInforme)"
+          [routerLink]="['variables-agrupadas/', element.idInforme.toString()]"
         >
           <p class="list-reports__cell list-reports__cell--axe">
-            {{ element.nombre }}
+            Informe
+            {{ element.idInforme }}
           </p>
-          <p class="list-reports__cell--quantity">
-            {{ element.cantidad }}
+          <p class="list-reports__cell list-reports__cell--report1">
+            {{ element.nombreReporte1 }}
           </p>
-          <div class="list-reports__cell--action"></div>
+          <p class="list-reports__cell">-</p>
+          <p class="list-reports__cell list-reports__cell--report2">
+            {{ element.nombreReporte2 }}
+          </p>
+          <div class="list-reports__cell--action">
+            {{ element.fechaCreacion.substring(5, 7) }}/{{
+              element.fechaCreacion.substring(0, 4)
+            }}
+          </div>
         </div>
       </div>
       <div class="pagination">
@@ -89,43 +81,5 @@
         </svg>
       </div>
     </section>
-  </div>
-
-  <div *ngIf="flagNew" class="modal">
-    <img
-      class="modal__btnClose"
-      (click)="close()"
-      src="../../../../../assets/icons/X.svg"
-      alt="icono de cerrar"
-    />
-    <div class="modal__container">
-      <img
-        class="modal__ico"
-        src="../../../../../assets/icons/Check.svg"
-        alt="icon check"
-      />
-      <p class="modal__text">
-        ¡El Eje {{ newOrEditedVariable.nombre }} fue creado con éxito!
-      </p>
-    </div>
-  </div>
-
-  <div *ngIf="flagEdited" class="modal">
-    <img
-      class="modal__btnClose"
-      (click)="close()"
-      src="../../../../../assets/icons/X.svg"
-      alt="icono de cerrar"
-    />
-    <div class="modal__container">
-      <img
-        class="modal__ico"
-        src="../../../../../assets/icons/Check.svg"
-        alt="icon check"
-      />
-      <p class="modal__text">
-        ¡El Eje {{ newOrEditedVariable.nombre }} fue editado con éxito!
-      </p>
-    </div>
   </div>
 </section>
