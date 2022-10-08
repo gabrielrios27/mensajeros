@@ -10,6 +10,7 @@ import {
   BodyComparativeReport,
   Comments,
   ComparativeReports,
+  CreatedComparativeReport,
   DownloadExcel,
   flag,
   ReceivedReport,
@@ -98,6 +99,7 @@ export class AdminService {
       body
     );
   }
+
   // endpoints user
 
   getUsers(): Observable<Users[]> {

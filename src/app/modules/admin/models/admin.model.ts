@@ -112,7 +112,7 @@ export interface AxeWithVariables {
 }
 
 export interface CreatedComparativeReport {
-  fechaCreacion: Date;
+  fechaCreacion: string;
   idCentro: number;
   idInforme: number;
   idReporte1: number;
