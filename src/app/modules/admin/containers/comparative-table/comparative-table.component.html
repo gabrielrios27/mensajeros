@@ -33,7 +33,12 @@
     </button>
     <div class="comment">
       <h5 class="comment__title">Informe</h5>
-      <textarea class="comment__textarea" name="" id=""></textarea>
+      <textarea
+        class="comment__textarea"
+        name="comment"
+        id="comment"
+        [(ngModel)]="comment"
+      ></textarea>
     </div>
     <button
       class="footer__btn-create"
