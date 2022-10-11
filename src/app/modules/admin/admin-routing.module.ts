@@ -24,6 +24,7 @@ import { ReceivedReportComponent } from './containers/received-report/received-r
 import { CreateComparativeReportsComponent } from './containers/create-comparative-reports/create-comparative-reports.component';
 import { ComparativeTableComponent } from './containers/comparative-table/comparative-table.component';
 import { ListComparativeReportsComponent } from './containers/list-comparative-reports/list-comparative-reports.component';
+import { ActivityLogComponent } from './containers/activity-log/activity-log.component';
 /* Routes */
 export const ROUTES: Routes = [
   {
@@ -43,7 +44,12 @@ export const ROUTES: Routes = [
     component: UsersComponent,
     pathMatch: 'full',
   },
-
+  {
+    path: 'usuarios/log-de-actividades',
+    canActivate: [AdminGuard],
+    component: ActivityLogComponent,
+    pathMatch: 'full',
+  },
   {
     path: 'centros',
     canActivate: [AdminGuard],
