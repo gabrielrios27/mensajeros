@@ -22,7 +22,6 @@ export class VariablesGroupComponent implements OnInit {
   centers: Array<Centro> = []
   center: any
   idVariable = 0
-  nameVariable: string = ''
 
   listOfVariables: variable[] = [];
   listOfVariables_toSearch: variable[] = [];
@@ -265,7 +264,6 @@ export class VariablesGroupComponent implements OnInit {
 
   selectCenter(element: variable) {
     this.idVariable = element.id
-    this.nameVariable = element.nombre
     this.flagSelectCenter = true
     this._adminSvc.getCenterPerVariables(element.id).subscribe({
       next: (data: Centro[]) => {
@@ -281,10 +279,9 @@ export class VariablesGroupComponent implements OnInit {
       },
     });
   }
-
   goTocharts() {
     this.flagSelectCenter = false
-    this.router.navigate(['/admin/dashboard/variables/evolucion-de-variable/'+ this.nameVariable + '/' + this.center.id + '/' + this.idVariable]);
+    this.router.navigate(['/admin/dashboard/variables/evolucion-de-variable/' + this.center.id + '/' + this.idVariable]);
   }
 
   close() {
