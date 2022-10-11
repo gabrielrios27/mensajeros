@@ -44,6 +44,7 @@
         <div class="list-center__row">
           <div class="list-center__header">Nombre</div>
           <div class="list-center__header">Zona</div>
+          <div class="list-center__header">Director Asignado</div>
           <div class="list-center__header list-center__header--action">
             Acciones
           </div>
@@ -53,8 +54,11 @@
           <div class="list-center__cell list-center__cell--center">
             {{ element.nombre }}
           </div>
-          <div class="list-center__cell list-center__cell--middle">
+          <div class="list-center__cell">
             {{ element.zona }}
+          </div>
+          <div class="list-center__cell">
+            {{ element.usuario.nombre }}
           </div>
           <div class="list-center__cell list-center__cell--acction">
             <a (click)="edit(element)">
