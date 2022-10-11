@@ -19,6 +19,11 @@
         >
           <p class="list-activity__cell">
             {{ element.actividad }}
+            <span class="list-activity__span" *ngIf="element.nombreReporte">
+              "{{ element.nombreReporte }}" de centro "{{
+                element.nombreCentro
+              }}"</span
+            >
           </p>
 
           <div class="list-activity__cell--date">
