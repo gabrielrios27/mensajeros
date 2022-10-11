@@ -97,25 +97,21 @@ export class ActivityLogComponent implements OnInit {
   }
   getReportsList() {
     this.currentPage = this.getPageLocalStorage();
-    this.listOfActivity = this.mockActivity;
-    this.orderReportsLastCreatedGoFirst(this.listOfActivity);
-    this.pageToShow(this.currentPage, this.listOfActivity); //para paginación
-
-    // this._adminSvc
-    //   .getActivityLogByIdUser(this.idUser)
-    //   .pipe(takeUntil(this.onDestroy$))
-    //   .subscribe({
-    //     next: (data: Activity[]) => {
-    //       this.listOfActivity = data;
-    //       this.orderReportsLastCreatedGoFirst(this.listOfActivity);
-    //       this.pageToShow(this.currentPage, this.listOfActivity); //para paginación
-    //     },
-    //     error: (err) => {
-    //       if (err.status === 401) {
-    //         this.router.navigate(['/auth']);
-    //       }
-    //     },
-    //   });
+    this._adminSvc
+      .getActivityLogByIdUser(this.idUser)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: Activity[]) => {
+          this.listOfActivity = data;
+          this.orderReportsLastCreatedGoFirst(this.listOfActivity);
+          this.pageToShow(this.currentPage, this.listOfActivity); //para paginación
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
   }
   orderReportsLastCreatedGoFirst(list: Activity[]) {
     list.sort(
