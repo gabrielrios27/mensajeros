@@ -162,7 +162,6 @@ export class EvolutionOfVariableComponent implements OnInit {
       .subscribe({
         next: (data: evolutionVariable[]) => {
           this.variable = data;
-          console.log(data)
           this.getDataMon()
           setTimeout(() => this._cdr.detectChanges());
         },
