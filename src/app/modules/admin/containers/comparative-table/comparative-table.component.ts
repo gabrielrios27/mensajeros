@@ -121,6 +121,8 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
           let dataComp = data;
           this.setFlagSessionStg(true);
           sessionStorage.removeItem('bodyComparativeReport');
+        },
+        complete: () => {
           this.router.navigate(['admin/dashboard/centros']);
         },
       });
