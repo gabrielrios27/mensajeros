@@ -33,7 +33,7 @@ export class AddModReportComponent implements OnInit {
   listOfAxes: Array<axes> = [];
   listOfVariables: Array<variable> = [];
   flagAxeVariable: boolean = true;
-  creationDate: any
+  creationDate: any;
   // para modal de advertencia
   flagAddEdit: boolean = false;
   showDialog = false;
@@ -74,7 +74,7 @@ export class AddModReportComponent implements OnInit {
     this.getDataFromRute();
     this.getAxes();
     this.getVariables();
-    this.validatorsData() 
+    this.validatorsData();
   }
 
   validateDateDelivery(): any {
@@ -102,17 +102,16 @@ export class AddModReportComponent implements OnInit {
   //  guarda axes de componente selects
   storageAxes(axes: any, idComponent: number) {
     this.arrayAxes[idComponent] = axes;
-    if(!this.data.flagDuplicated){
+    if (!this.data.flagDuplicated) {
       this.validatorsData();
     }
   }
   // guarda array variables de componente selects
   storageVariables(variablesArray: any, idComponent: number) {
     this.arrayVaribles[idComponent] = variablesArray;
-    if(!this.data.flagDuplicated){
+    if (!this.data.flagDuplicated) {
       this.validatorsData();
     }
-    
   }
 
   validatorsData() {
@@ -125,8 +124,7 @@ export class AddModReportComponent implements OnInit {
     } else {
       this.flagAxeVariable = false;
     }
-    console.log(this.data.flagDuplicated)
-    if(this.data.flagDuplicated){
+    if (this.data.flagDuplicated) {
       this.flagAxeVariable = false;
     }
   }
@@ -142,7 +140,7 @@ export class AddModReportComponent implements OnInit {
   }
 
   deleteAxe(index: number) {
-    this.arrayc.splice(index, 1)
+    this.arrayc.splice(index, 1);
     this.arrayAxes.splice(index, 1);
     this.arrayVaribles.splice(index, 1);
   }
@@ -157,7 +155,6 @@ export class AddModReportComponent implements OnInit {
     } else {
       return false;
     }
-
   }
 
   // validatorAxeVariable(): any{
@@ -173,7 +170,7 @@ export class AddModReportComponent implements OnInit {
     this.data.arrayAxes = this.arrayAxes;
     this.data.arrayVariables = this.arrayVaribles;
     this.data.arrayCenters = this.center;
-    if (this.data.editar == true ) {
+    if (this.data.editar == true) {
       this.data.report = {
         centros: [],
         fechaCreacion: this.creationDate,
@@ -184,8 +181,7 @@ export class AddModReportComponent implements OnInit {
         periodoDesde: this.formAdd.value.desde,
         periodoHasta: this.formAdd.value.hasta,
       };
-    }
-    else {
+    } else {
       this.data.report = {
         centros: [],
         fechaCreacion: Date(),
@@ -197,14 +193,13 @@ export class AddModReportComponent implements OnInit {
         periodoHasta: this.formAdd.value.hasta,
       };
     }
-
-
     this.setFlagAddEdit(true);
+
     this.router.navigate([
-      'admin/dashboard/reportes/creacion-de-reportes/add-mod-report/preview-report/' +
-      datos.nombre +
-      datos.fechaCreacion +
-      datos.fechaEntrega,
+      'admin/dashboard/reportes/creación-de-reportes/add-mod-report/preview-report/' +
+        datos.nombre +
+        datos.fechaCreacion +
+        datos.fechaEntrega,
     ]);
   }
 
@@ -268,7 +263,7 @@ export class AddModReportComponent implements OnInit {
         this.desde = this.report.periodoDesde;
         this.hasta = this.report.periodoHasta;
         this.deliverdate = this.report.fechaEntrega;
-        this.creationDate = this.report.fechaCreacion
+        this.creationDate = this.report.fechaCreacion;
         this.getAxes();
         this.getCenters();
         this.centerSelect();
@@ -342,7 +337,7 @@ export class AddModReportComponent implements OnInit {
 
   // this function add elements in arrays for edit
   axesSelect(): any {
-    this.pushAxes()
+    this.pushAxes();
     this.arrayc.pop();
     for (let c of this.arrayAxes) {
       this.arrayc.push(this.arrayc.length + 1);
@@ -377,7 +372,7 @@ export class AddModReportComponent implements OnInit {
           this.router.navigate(['/auth']);
         }
       },
-      complete: () => { },
+      complete: () => {},
     });
   }
 
@@ -392,7 +387,7 @@ export class AddModReportComponent implements OnInit {
           this.router.navigate(['/auth']);
         }
       },
-      complete: () => { },
+      complete: () => {},
     });
   }
 }

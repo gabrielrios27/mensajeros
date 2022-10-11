@@ -1,17 +1,34 @@
-<div class="compare" *ngIf="variable.tipo === 'Numérico'">
-  <p class="compare__value">
-    <span *ngIf="variable.genero === 'true'">Total: </span
-    >{{ variable.report1 }}
+<div
+  class="compare"
+  *ngIf="variable.tipo === 'Numérico' || variable.tipo === 'Numerico'"
+>
+  <p class="compare__value" *ngIf="variable.genero === 'true'">
+    <span>Total: </span>
+    {{
+      variable.report1.masculino +
+        variable.report1.femenino +
+        variable.report1.noBinario
+    }}
+  </p>
+  <p class="compare__value" *ngIf="variable.genero !== 'true'">
+    {{ variable.report1.numerico }}
   </p>
   <p class="compare__variable">{{ index }} - {{ variable.nombre }}</p>
-  <p class="compare__value">
-    <span *ngIf="variable.genero === 'true'">Total: </span
-    >{{ variable.report2 }}
+  <p class="compare__value" *ngIf="variable.genero === 'true'">
+    <span>Total: </span>
+    {{
+      variable.report2.masculino +
+        variable.report2.femenino +
+        variable.report2.noBinario
+    }}
+  </p>
+  <p class="compare__value" *ngIf="variable.genero !== 'true'">
+    {{ variable.report2.numerico }}
   </p>
 </div>
-<div class="compare" *ngIf="variable.tipo === 'Textual'">
+<div class="compare" *ngIf="variable.escala_valor === 'true'">
   <p class="compare__value">
-    {{ variable.report1 }}
+    {{ variable.report1.escala }}
   </p>
   <div class="compare__container">
     <p class="compare__variable">{{ index }} - {{ variable.nombre }}</p>
@@ -29,6 +46,6 @@
     </div>
   </div>
   <p class="compare__value">
-    {{ variable.report2 }}
+    {{ variable.report2.escala }}
   </p>
 </div>
