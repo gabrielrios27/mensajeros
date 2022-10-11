@@ -58,8 +58,6 @@ export class UsersComponent implements OnInit {
           .toLocaleLowerCase()
           .match(this.usuario.toLocaleLowerCase());
       });
-      // console.log(this.usuario);
-      // console.log(this.user);
     }
   }
 
@@ -107,14 +105,13 @@ export class UsersComponent implements OnInit {
     this.admin.getUsers().subscribe({
       next: (res: Users[]) => {
         this.userListComplete = res;
-        console.log('userlistcomplete', this.userListComplete);
-
         this.pageToShow(this.currentPage, this.userListComplete); //para paginación
         setTimeout(() => this.cdr.detectChanges());
-        // console.log(this.user);
       },
       error: (err) => {
-        // console.log(err);
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
       },
     });
   }
@@ -200,7 +197,9 @@ export class UsersComponent implements OnInit {
         this.getUsers();
       },
       error: (err) => {
-        // console.log(err);
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
       },
     });
   }
@@ -255,14 +254,14 @@ export class UsersComponent implements OnInit {
   editCentros(centro: Centro) {
     if (this.userAsig) {
       centro.usuario = this.userAsig;
-      // console.log(centro.usuario)
       this.admin.editCenter(centro, centro.id).subscribe({
         next: (data: any) => {
           setTimeout(() => this.cdr.detectChanges());
         },
         error: (err) => {
-          setTimeout(() => this.cdr.detectChanges());
-          // console.log(err)
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
         },
       });
     }
