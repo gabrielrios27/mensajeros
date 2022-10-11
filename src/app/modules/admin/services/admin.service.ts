@@ -134,10 +134,10 @@ export class AdminService {
     return this._http.get<Users>(this.baseUrlTami + '/usuarios/' + id);
   }
   //obtener log de actividades
-  // getActivityLogByIdUser(id: number): Observable<Activity[]> {
-  //   return this._http.get<Activity[]>(this.baseUrlTami + '/logs/' + id);
-  // }
-  //
+  getActivityLogByIdUser(id: number): Observable<Activity[]> {
+    return this._http.get<Activity[]>(this.baseUrlTami + '/logs/' + id);
+  }
+
   // endpoints axes
 
   getAxes(): Observable<axes[]> {
