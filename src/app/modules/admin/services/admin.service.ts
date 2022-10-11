@@ -11,8 +11,10 @@ import {
   DownloadExcel,
   flag,
   ReceivedReport,
+  ReportByCenter,
   user,
   variable,
+  VariableInCommon,
 } from '../models';
 import { comment } from '../models/comment';
 import { report } from 'process';
@@ -61,7 +63,24 @@ export class AdminService {
   getCentros(): Observable<Centro[]> {
     return this._http.get<Centro[]>(this.baseUrlTami + '/centros');
   }
-  //
+  //reportes comparativos
+  getReportByIdCenter(id: number): Observable<ReportByCenter[]> {
+    return this._http.get<ReportByCenter[]>(
+      this.baseUrlTami + '/reportes/reporteSegunCentro/' + id
+    );
+  }
+  getVariablesInCommon(
+    idReport1: number,
+    idReport2: number
+  ): Observable<VariableInCommon[]> {
+    return this._http.get<VariableInCommon[]>(
+      this.baseUrlTami +
+        '/variables/variablesEnComun/' +
+        idReport1 +
+        '/' +
+        idReport2
+    );
+  }
   // endpoints user
 
   getUsers(): Observable<Users[]> {

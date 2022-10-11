@@ -56,6 +56,8 @@ import {NgApexchartsModule} from 'ng-apexcharts'
 
 import { CompareReportsComponent } from './containers/compare-reports/compare-reports.component';
 import { CreateComparativeReportsComponent } from './containers/create-comparative-reports/create-comparative-reports.component';
+import { ComparativeTableComponent } from './containers/comparative-table/comparative-table.component';
+import { CompareVariableComponent } from './components/compare-variable/compare-variable.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -113,6 +115,8 @@ import { CreateComparativeReportsComponent } from './containers/create-comparati
     ReceivedReportComponent,
     CompareReportsComponent,
     CreateComparativeReportsComponent,
+    ComparativeTableComponent,
+    CompareVariableComponent,
     VariablesShowComponent,
     EvolutionOfVariableComponent,
   ],

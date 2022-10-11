@@ -52,7 +52,6 @@ export class CentersComponent implements OnInit {
       this.centros = this.centros.filter((res) => {
         return res.nombre.toLowerCase().match(this.Centro.toLowerCase());
       });
-      console.log(this.centros);
     }
   }
 
@@ -74,11 +73,11 @@ export class CentersComponent implements OnInit {
         setTimeout(() => this.cdr.detectChanges());
         this.centrosListComplete = data;
         this.pageToShow(this.currentPage, this.centrosListComplete); //para paginación
-        console.log(data);
       },
       error: (err) => {
-        setTimeout(() => this.cdr.detectChanges());
-        console.log(err);
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
       },
     });
   }
@@ -156,10 +155,11 @@ export class CentersComponent implements OnInit {
       next: (res: any) => {
         this.centro = res;
         setTimeout(() => this.cdr.detectChanges());
-        console.log(this.centro);
       },
       error: (err) => {
-        console.log(err);
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
       },
     });
   }
@@ -173,12 +173,13 @@ export class CentersComponent implements OnInit {
     this.admin.deleteCenter(this.idToDelete).subscribe({
       next: (data: any) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(data);
         this.getCenters();
         this.close();
       },
       error: (err) => {
-        console.log(err);
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
       },
     });
   }
