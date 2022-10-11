@@ -89,6 +89,7 @@ export class ListComparativeReportsComponent implements OnInit {
       .subscribe({
         next: (data: CreatedComparativeReport[]) => {
           this.listOfReports = data;
+          this.orderReportsLastCreatedGoFirst(this.listOfReports);
           this.pageToShow(this.currentPage, this.listOfReports); //para paginación
         },
         error: (err) => {
@@ -97,6 +98,12 @@ export class ListComparativeReportsComponent implements OnInit {
           }
         },
       });
+  }
+  orderReportsLastCreatedGoFirst(list: CreatedComparativeReport[]) {
+    list.sort(
+      (a: CreatedComparativeReport, b: CreatedComparativeReport) =>
+        Date.parse(b.fechaCreacion) - Date.parse(a.fechaCreacion)
+    );
   }
   //para paginación----
   pageToShow(page: number, list: CreatedComparativeReport[]) {
@@ -136,6 +143,7 @@ export class ListComparativeReportsComponent implements OnInit {
         this.itemsPerPage +
         this.listCurrentPage.length;
     }
+    console.log('this.listCurrentPage: ', this.listCurrentPage);
   }
   onClickBefore() {
     if (this.currentPage > 1) {
