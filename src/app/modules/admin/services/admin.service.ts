@@ -11,24 +11,21 @@ import {
   DownloadExcel,
   flag,
   ReceivedReport,
-  ReportByCenter,
   user,
   variable,
-  VariableInCommon,
 } from '../models';
 import { comment } from '../models/comment';
 import { report } from 'process';
 import { text } from '@fortawesome/fontawesome-svg-core';
-import { evolutionVariable } from '../models/evolutionVariable';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
   api_key: string = '';
-  url: string = 'https://mensajeros-back-martin.herokuapp.com'
+  url: string = 'https://mensajeros-demo-back.herokuapp.com'
   baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com';
-  baseUrlTami: string = 'https://mensajeros-back-martin.herokuapp.com';
+  baseUrlTami: string = 'https://mensajeros-demo-back.herokuapp.com';
   headers = new HttpHeaders();
   token: string = '';
   EPAxes: string = '/ejes';
@@ -63,24 +60,7 @@ export class AdminService {
   getCentros(): Observable<Centro[]> {
     return this._http.get<Centro[]>(this.baseUrlTami + '/centros');
   }
-  //reportes comparativos
-  getReportByIdCenter(id: number): Observable<ReportByCenter[]> {
-    return this._http.get<ReportByCenter[]>(
-      this.baseUrlTami + '/reportes/reporteSegunCentro/' + id
-    );
-  }
-  getVariablesInCommon(
-    idReport1: number,
-    idReport2: number
-  ): Observable<VariableInCommon[]> {
-    return this._http.get<VariableInCommon[]>(
-      this.baseUrlTami +
-        '/variables/variablesEnComun/' +
-        idReport1 +
-        '/' +
-        idReport2
-    );
-  }
+  //
   // endpoints user
 
   getUsers(): Observable<Users[]> {
@@ -136,9 +116,9 @@ export class AdminService {
     );
   }
 
-  getCenterPerVariables(idVariable: number): Observable<Centro[]> {
+  getCenterPerVariables(idVariable:number):Observable<Centro[]>{
     return this._http.get<Centro[]>(
-      this.baseUrlTami + '/centros/segunVariable/' + idVariable
+      this.baseUrlTami + '/centros/segunVariable/'+ idVariable
     );
   }
 
@@ -168,12 +148,6 @@ export class AdminService {
   deleteVariableWithId(id: string): Observable<any> {
     return this._http.delete<variable>(
       this.baseUrlTami + this.EPVariables + '/' + id
-    );
-  }
-
-  getEvolutionOfVariable(idCenter: number, idVariable: number): Observable<evolutionVariable[]> {
-    return this._http.get<evolutionVariable[]>(
-      this.baseUrlTami + '/variables/evolucionVariable/' + idCenter + '/' + idVariable
     );
   }
   // enpoints reports
@@ -221,11 +195,11 @@ export class AdminService {
       this.baseUrlTami + '/carga/reporteCreado/' + idReport + '/' + idCenter
     );
   }
-  addComment(comment: comment): Observable<any> {
-    return this._http.post(this.baseUrlTami + '/comentarios', comment, {
+  addComment(comment:comment): Observable<any> {
+    return this._http.post(this.baseUrlTami + '/comentarios',comment, {
       responseType: 'text',
     });
   }
-
+  
 
 }
