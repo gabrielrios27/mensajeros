@@ -47,6 +47,7 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
   ];
   biAlphabet: string[] = [];
   idCentro: number;
+  idReport: number | undefined;
   bodyComparativeReport: BodyComparativeReport;
   comparativeReports: ComparativeReports;
   comment: string;
@@ -62,17 +63,23 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
     this.comparativeReports = {} as ComparativeReports;
     this.axesList = [];
     this.comment = '';
+    this.idReport = undefined;
   }
 
   ngOnInit(): void {
-    this.idCentro = this.getIdFromRute();
-    this.getBodySessionStg();
+    this.idCentro = this.getIdFromRute('id-centro');
+    this.idReport = this.getIdFromRute('id-informe');
+    if (this.idReport === 0) {
+      this.getBodySessionStg();
+    } else {
+      this.getReport(this.idReport);
+    }
     this.createBiAlphabet();
   }
-  getIdFromRute(): number {
+  getIdFromRute(id: string): number {
     let idToShow;
     this.activeRoute.paramMap.subscribe((params: ParamMap) => {
-      idToShow = params.get('id-centro');
+      idToShow = params.get(id);
     });
     return Number(idToShow);
   }
@@ -82,6 +89,17 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
       this.bodyComparativeReport = JSON.parse(bodyStr);
       this.getComparativeReport();
     }
+  }
+  getReport(id: number) {
+    this._adminSvc
+      .getComparativeReportByIdReport(id)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: ComparativeReports) => {
+          this.comparativeReports = data;
+          this.setResponseReports(this.comparativeReports);
+        },
+      });
   }
   getComparativeReport() {
     this._adminSvc
@@ -100,6 +118,7 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe({
         next: (data: ComparativeReports) => {
+          let dataComp = data;
           this.setFlagSessionStg(true);
           sessionStorage.removeItem('bodyComparativeReport');
           this.router.navigate(['admin/dashboard/centros']);
