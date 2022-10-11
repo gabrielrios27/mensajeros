@@ -10,38 +10,6 @@ import { AdminService } from '../../services';
   styleUrls: ['./list-comparative-reports.component.scss'],
 })
 export class ListComparativeReportsComponent implements OnInit {
-  mockReports: CreatedComparativeReport[] = [
-    {
-      fechaCreacion: '2022-10-08T14:12:50.352Z',
-      idCentro: 0,
-      idInforme: 1,
-      idReporte1: 0,
-      idReporte2: 0,
-      nombreCentro: 'Club de Día',
-      nombreReporte1: 'reporte Aasasasa',
-      nombreReporte2: 'reporte B',
-    },
-    {
-      fechaCreacion: '2022-09-11T14:12:50.352Z',
-      idCentro: 0,
-      idInforme: 2,
-      idReporte1: 0,
-      idReporte2: 0,
-      nombreCentro: 'Club de Día',
-      nombreReporte1: 'reporte 11',
-      nombreReporte2: 'reporte 22',
-    },
-    {
-      fechaCreacion: '2022-11-27T14:12:50.352Z',
-      idCentro: 0,
-      idInforme: 3,
-      idReporte1: 0,
-      idReporte2: 0,
-      nombreCentro: 'Club de Día',
-      nombreReporte1: 'reporte 33',
-      nombreReporte2: 'reporte CC',
-    },
-  ];
   listOfReports: CreatedComparativeReport[] = [];
   listOfReports_toSearch: CreatedComparativeReport[] = [];
   listOfReports_toShow = new BehaviorSubject<CreatedComparativeReport[]>([]);
@@ -143,7 +111,6 @@ export class ListComparativeReportsComponent implements OnInit {
         this.itemsPerPage +
         this.listCurrentPage.length;
     }
-    console.log('this.listCurrentPage: ', this.listCurrentPage);
   }
   onClickBefore() {
     if (this.currentPage > 1) {

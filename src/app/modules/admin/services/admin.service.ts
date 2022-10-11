@@ -5,6 +5,7 @@ import { Centro } from '../models/centro';
 import { Users } from '../models/users';
 import { Report } from '../models/report';
 import {
+  Activity,
   axes,
   AxeWithquantity,
   BodyComparativeReport,
@@ -132,7 +133,10 @@ export class AdminService {
   getUser(id: number): Observable<Users> {
     return this._http.get<Users>(this.baseUrlTami + '/usuarios/' + id);
   }
-
+  //obtener log de actividades
+  // getActivityLogByIdUser(id: number): Observable<Activity[]> {
+  //   return this._http.get<Activity[]>(this.baseUrlTami + '/logs/' + id);
+  // }
   //
   // endpoints axes
 
