@@ -45,7 +45,7 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'usuarios/log-de-actividades',
+    path: 'usuarios/log-de-actividades/:id-usuario',
     canActivate: [AdminGuard],
     component: ActivityLogComponent,
     pathMatch: 'full',
