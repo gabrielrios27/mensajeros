@@ -3,20 +3,10 @@
         <h1>Evolución de Variable</h1>
     </div>
     <div class="container-ejes-variables">
-        <label class="ejes-preview">Cantidad de participantes</label>
+        <label class="ejes-preview">{{name}}</label>
         <div class="variables-preview"></div>
         <apx-chart [series]="series" [chart]="chart" [title]="title" [xaxis]="xaxis" [markers]="markers"
             [colors]="colors" [stroke]="stroke" [grid]="grid"></apx-chart>
-        <!-- <div class="icon">
-            <span *ngFor="let item of items" [ngStyle]="flagMon?{'margin-right': '60px'} : {'margin-right': '200px'}">
-                <svg width="10px" height="10px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
-                    [ngStyle]="flagMon?{'margin-right': '0px'} : {'margin-right': '35px'}"
-                    fill="currentColor" class="bi bi-caret-down">
-                    <path
-                        d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z" />
-                </svg>
-            </span>
-        </div> -->
     </div>
     <div class="button-group">
         <button mat-button (click)="monthly()"
