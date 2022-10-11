@@ -50,6 +50,10 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EvolutionOfVariableComponent } from './containers/evolution-of-variable/evolution-of-variable.component';
+
+import {NgApexchartsModule} from 'ng-apexcharts'
+
 import { CompareReportsComponent } from './containers/compare-reports/compare-reports.component';
 import { CreateComparativeReportsComponent } from './containers/create-comparative-reports/create-comparative-reports.component';
 import { ComparativeTableComponent } from './containers/comparative-table/comparative-table.component';
@@ -76,6 +80,7 @@ import { ModalAlertComponent } from './components/modal-alert/modal-alert.compon
     MatCheckboxModule,
     MatRadioModule,
     MatProgressSpinnerModule,
+    NgApexchartsModule,
     // AppCommonModule,
     // NavigationModule,
   ],
@@ -114,6 +119,7 @@ import { ModalAlertComponent } from './components/modal-alert/modal-alert.compon
     ComparativeTableComponent,
     CompareVariableComponent,
     VariablesShowComponent,
+    EvolutionOfVariableComponent,
     ModalAlertComponent,
   ],
   exports: [
