@@ -72,11 +72,7 @@
               >
             </mat-select>
             <p
-              class="
-                select-item__label
-                select-item__label--variables
-                select-item__label--noVariables
-              "
+              class="select-item__label select-item__label--variables select-item__label--noVariables"
               *ngIf="flagNoVariables"
             >
               Estos reportes no tienen variables en común
@@ -118,4 +114,10 @@
       Siguiente
     </button>
   </div>
+  <app-modal-alert
+    [flag]="flagNoReports"
+    type="alert"
+    [modalText]="modalText"
+    (closeModal)="closeModal($event)"
+  ></app-modal-alert>
 </section>
