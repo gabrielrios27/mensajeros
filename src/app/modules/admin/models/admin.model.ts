@@ -28,6 +28,8 @@ export interface variable {
   valor_inicial?: string;
   etiqueta_final?: string;
   etiqueta_inicial?: string;
+  report1?: ResponseReport;
+  report2?: ResponseReport;
 }
 
 export interface AxeWithquantity {
@@ -64,4 +66,47 @@ export interface VariableInCommon {
   descripcion: string;
   id: number;
   nombre: string;
+}
+export interface BodyComparativeReport {
+  descripcion?: string;
+  idCentro: number;
+  idReporte1: number;
+  idReporte2: number;
+  variables: number[];
+}
+export interface ComparativeReports {
+  carga1: Charge;
+  carga2: Charge;
+  descripcion: string;
+  id: number;
+}
+
+export interface Charge {
+  ejeActual: number;
+  fechaCompletado: Date;
+  idCentro: number;
+  idReporte: number;
+  nombre: string;
+  observacion: string;
+  periodoDesde: Date;
+  periodoHasta: Date;
+  respuestas: ResponseReport[];
+  totalEjes: number;
+  variables: variable[];
+}
+
+export interface ResponseReport {
+  escala: number;
+  femenino: number;
+  idVariable: number;
+  masculino: number;
+  noBinario: number;
+  numerico: number;
+  observaciones: string;
+  textual: string;
+}
+export interface AxeWithVariables {
+  id: number;
+  nombre: string;
+  variablesList: variable[];
 }
