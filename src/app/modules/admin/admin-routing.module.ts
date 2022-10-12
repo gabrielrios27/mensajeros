@@ -76,6 +76,13 @@ export const ROUTES: Routes = [
   },
 
   {
+    path: 'centros/crear-informe-comparativo/:id-centro/tabla-comparativa/:id-informe',
+    canActivate: [AdminGuard],
+    component: ComparativeTableComponent,
+    pathMatch: 'full',
+  },
+
+  {
     path: 'ejes',
     canActivate: [AdminGuard],
     component: adminContainers.AxesComponent,
