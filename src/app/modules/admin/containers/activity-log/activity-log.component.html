@@ -12,13 +12,25 @@
             Fecha y Hora
           </p>
         </div>
-
+        <div *ngIf="listOfActivity.length === 0" class="list-activity__row">
+          <p class="list-activity__cell">
+            Aún no se reporta actividad de este usuario.
+          </p>
+        </div>
         <div
           class="list-activity__row"
           *ngFor="let element of listOfActivity_toShow | async"
         >
+          <p class="list-activity__cell" *ngIf="listOfActivity.length === 0">
+            Aún no se reporta actividad de este usuario.
+          </p>
           <p class="list-activity__cell">
             {{ element.actividad }}
+            <span class="list-activity__span" *ngIf="element.nombreReporte">
+              "{{ element.nombreReporte }}" de centro "{{
+                element.nombreCentro
+              }}"</span
+            >
           </p>
 
           <div class="list-activity__cell--date">
