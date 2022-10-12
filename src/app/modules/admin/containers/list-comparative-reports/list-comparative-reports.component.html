@@ -21,7 +21,12 @@
           class="list-reports__row list-reports__row--click"
           *ngFor="let element of listOfReports_toShow | async"
           (click)="setNameAxeLocalStorage(element.idInforme)"
-          [routerLink]="['variables-agrupadas/', element.idInforme.toString()]"
+          [routerLink]="[
+            '../../crear-informe-comparativo/' +
+              element.idCentro +
+              '/tabla-comparativa/' +
+              element.idInforme
+          ]"
         >
           <p class="list-reports__cell list-reports__cell--axe">
             Informe
