@@ -47,9 +47,11 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
   ];
   biAlphabet: string[] = [];
   idCentro: number;
+  idReport: number | undefined;
   bodyComparativeReport: BodyComparativeReport;
   comparativeReports: ComparativeReports;
   comment: string;
+  flagIdReport: boolean;
   //suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(
@@ -62,17 +64,26 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
     this.comparativeReports = {} as ComparativeReports;
     this.axesList = [];
     this.comment = '';
+    this.idReport = undefined;
+    this.flagIdReport = false;
   }
 
   ngOnInit(): void {
-    this.idCentro = this.getIdFromRute();
-    this.getBodySessionStg();
+    this.idCentro = this.getIdFromRute('id-centro');
+    this.idReport = this.getIdFromRute('id-informe');
+    if (this.idReport === 0) {
+      this.getBodySessionStg();
+      this.flagIdReport = false;
+    } else {
+      this.getReport(this.idReport);
+      this.flagIdReport = true;
+    }
     this.createBiAlphabet();
   }
-  getIdFromRute(): number {
+  getIdFromRute(id: string): number {
     let idToShow;
     this.activeRoute.paramMap.subscribe((params: ParamMap) => {
-      idToShow = params.get('id-centro');
+      idToShow = params.get(id);
     });
     return Number(idToShow);
   }
@@ -82,6 +93,17 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
       this.bodyComparativeReport = JSON.parse(bodyStr);
       this.getComparativeReport();
     }
+  }
+  getReport(id: number) {
+    this._adminSvc
+      .getComparativeReportByIdReport(id)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: ComparativeReports) => {
+          this.comparativeReports = data;
+          this.setResponseReports(this.comparativeReports);
+        },
+      });
   }
   getComparativeReport() {
     this._adminSvc
@@ -102,6 +124,8 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
         next: (data: ComparativeReports) => {
           this.setFlagSessionStg(true);
           sessionStorage.removeItem('bodyComparativeReport');
+        },
+        complete: () => {
           this.router.navigate(['admin/dashboard/centros']);
         },
       });
@@ -156,6 +180,11 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
   onGoBack() {
     this.router.navigate([
       'admin/dashboard/centros/crear-informe-comparativo/' + this.idCentro,
+    ]);
+  }
+  onGoBackList() {
+    this.router.navigate([
+      'admin/dashboard/centros/ver-informes-comparativo/' + this.idCentro,
     ]);
   }
   onCreateReport() {

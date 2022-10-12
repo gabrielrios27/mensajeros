@@ -23,6 +23,7 @@ import {
 import { comment } from '../models/comment';
 import { report } from 'process';
 import { text } from '@fortawesome/fontawesome-svg-core';
+import { evolutionVariable } from '../models/evolutionVariable';
 
 @Injectable({
   providedIn: 'root',
@@ -101,6 +102,11 @@ export class AdminService {
     );
   }
   //ver informes comparativos
+  getComparativeReportByIdReport(id: number): Observable<ComparativeReports> {
+    return this._http.get<ComparativeReports>(
+      this.baseUrlTami + '/informes/' + id
+    );
+  }
   getComparativeReportsByIdCenter(
     id: number
   ): Observable<CreatedComparativeReport[]> {
@@ -166,9 +172,9 @@ export class AdminService {
     );
   }
 
-  getCenterPerVariables(idVariable: number): Observable<Centro[]> {
+  getCenterPerVariables(idVariable:number):Observable<Centro[]>{
     return this._http.get<Centro[]>(
-      this.baseUrlTami + '/centros/segunVariable/' + idVariable
+      this.baseUrlTami + '/centros/segunVariable/'+ idVariable
     );
   }
 
@@ -198,6 +204,12 @@ export class AdminService {
   deleteVariableWithId(id: string): Observable<any> {
     return this._http.delete<variable>(
       this.baseUrlTami + this.EPVariables + '/' + id
+    );
+  }
+
+  getEvolutionOfVariable(idCenter: number, idVariable: number): Observable<evolutionVariable[]> {
+    return this._http.get<evolutionVariable[]>(
+      this.baseUrlTami + '/variables/evolucionVariable/' + idCenter + '/' + idVariable
     );
   }
   // enpoints reports
@@ -245,9 +257,11 @@ export class AdminService {
       this.baseUrlTami + '/carga/reporteCreado/' + idReport + '/' + idCenter
     );
   }
-  addComment(comment: comment): Observable<any> {
-    return this._http.post(this.baseUrlTami + '/comentarios', comment, {
+  addComment(comment:comment): Observable<any> {
+    return this._http.post(this.baseUrlTami + '/comentarios',comment, {
       responseType: 'text',
     });
   }
+  
+
 }

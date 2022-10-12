@@ -28,7 +28,20 @@
     </div>
   </div>
   <footer class="footer">
-    <button class="footer__btn-back" (click)="onGoBack()" mat-raised-button>
+    <button
+      class="footer__btn-back"
+      (click)="onGoBack()"
+      *ngIf="!flagIdReport"
+      mat-raised-button
+    >
+      Atrás
+    </button>
+    <button
+      class="footer__btn-back"
+      (click)="onGoBackList()"
+      *ngIf="flagIdReport"
+      mat-raised-button
+    >
       Atrás
     </button>
     <div class="comment">
@@ -37,12 +50,17 @@
         class="comment__textarea"
         name="comment"
         id="comment"
+        *ngIf="!flagIdReport"
         [(ngModel)]="comment"
       ></textarea>
+      <p class="comment__textarea" *ngIf="flagIdReport">
+        {{ comparativeReports.descripcion }}
+      </p>
     </div>
     <button
       class="footer__btn-create"
       (click)="onCreateReport()"
+      [ngClass]="flagIdReport ? 'footer__btn-create--hiden' : ''"
       mat-raised-button
     >
       Crear informe

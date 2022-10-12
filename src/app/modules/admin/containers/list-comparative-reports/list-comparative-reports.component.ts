@@ -131,14 +131,14 @@ export class ListComparativeReportsComponent implements OnInit {
     }
   }
   setPageLocalStorage(page: number) {
-    localStorage.setItem('axeWithVariablesPage', JSON.stringify(page));
+    localStorage.setItem('pageComparativeReports', JSON.stringify(page));
   }
   setNameAxeLocalStorage(idInforme: number) {
     localStorage.setItem('idComparativeReport', JSON.stringify(idInforme));
   }
   getPageLocalStorage(): number {
     let pageLocalStorage: number = 1;
-    let pageLocalStorageJSON = localStorage.getItem('idComparativeReport');
+    let pageLocalStorageJSON = localStorage.getItem('pageComparativeReports');
     if (pageLocalStorageJSON) {
       pageLocalStorage = JSON.parse(pageLocalStorageJSON);
     }
