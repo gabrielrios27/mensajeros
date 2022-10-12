@@ -21,6 +21,8 @@ export class VariablesGroupComponent implements OnInit {
   idToDelete: number = 0;
   centers: Array<Centro> = []
   center: any
+  idVariable = 0
+  nameVariable: any
 
   listOfVariables: variable[] = [];
   listOfVariables_toSearch: variable[] = [];
@@ -46,7 +48,7 @@ export class VariablesGroupComponent implements OnInit {
     private _adminSvc: AdminService,
     private _cdr: ChangeDetectorRef,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.idAxeGroup = this.getIdFromRute();
@@ -261,7 +263,9 @@ export class VariablesGroupComponent implements OnInit {
     }
   }
 
-  selectCenter(element:variable){
+  selectCenter(element: variable) {
+    this.idVariable = element.id
+    this.nameVariable = element.nombre
     this.flagSelectCenter = true
     this._adminSvc.getCenterPerVariables(element.id).subscribe({
       next: (data: Centro[]) => {
@@ -277,6 +281,12 @@ export class VariablesGroupComponent implements OnInit {
       },
     });
   }
+  
+  goTocharts() {
+    this.flagSelectCenter = false
+    this.router.navigate(['/admin/dashboard/variables/evolucion-de-variable/'+ this.nameVariable + '/' + this.center.id + '/' + this.idVariable]);
+  }
+
 
   close() {
     this.flagNew = false;
