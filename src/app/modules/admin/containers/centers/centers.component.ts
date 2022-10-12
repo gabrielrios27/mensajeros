@@ -46,6 +46,7 @@ export class CentersComponent implements OnInit {
     this.flagCreatedReport = false;
   }
   ngOnInit() {
+    sessionStorage.removeItem('bodyComparativeReport');
     this.getFlagCreatedComparativeReport();
     this.getCenters();
     this.getCenterLocalStorage();

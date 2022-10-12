@@ -110,3 +110,14 @@ export interface AxeWithVariables {
   nombre: string;
   variablesList: variable[];
 }
+
+export interface CreatedComparativeReport {
+  fechaCreacion: string;
+  idCentro: number;
+  idInforme: number;
+  idReporte1: number;
+  idReporte2: number;
+  nombreCentro: string;
+  nombreReporte1: string;
+  nombreReporte2: string;
+}
