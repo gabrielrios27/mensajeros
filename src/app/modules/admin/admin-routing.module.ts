@@ -69,11 +69,25 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'centros/crear-informe-comparativo/:id-centro/tabla-comparativa/:id-informe',
+    canActivate: [AdminGuard],
+    component: ComparativeTableComponent,
+    pathMatch: 'full',
+  },
+  {
     path: 'centros/ver-informes-comparativo/:id-centro',
     canActivate: [AdminGuard],
     component: ListComparativeReportsComponent,
     pathMatch: 'full',
   },
+
+  {
+    path: 'centros/crear-informe-comparativo/:id-centro/tabla-comparativa/:id-informe',
+    canActivate: [AdminGuard],
+    component: ComparativeTableComponent,
+    pathMatch: 'full',
+  },
+
   {
     path: 'ejes',
     canActivate: [AdminGuard],

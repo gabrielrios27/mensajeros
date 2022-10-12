@@ -146,6 +146,9 @@
     margin-bottom: 1.5em;
     flex-shrink: 0;
   }
+  .footer__btn-create--hiden {
+    visibility: hidden;
+  }
 }
 @media (max-width: 1400px) {
   .footer {
