@@ -15,14 +15,14 @@ export class UsersComponent implements OnInit {
   user: Array<Users> = new Array();
   centros: Array<Centro> = new Array();
   usershow: Array<Users> = new Array();
-  centroAsig: Array<string> = []
+  centroAsig: Array<string> = [];
   flagEdited: boolean = false;
   flagNew: boolean = false;
   flagDelete: boolean = false;
   idToDelete: number = 0;
   newOrEditedUser: Users = {} as Users;
   userAsig?: Users = {} as Users;
-  centroAsignados: Array<number> = []
+  centroAsignados: Array<number> = [];
   // pagination
   userListComplete: Array<Users> = new Array();
   listLenght: number = 0;
@@ -39,7 +39,7 @@ export class UsersComponent implements OnInit {
     public data: DataService,
     private admin: AdminService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.getUsers();
@@ -58,8 +58,6 @@ export class UsersComponent implements OnInit {
           .toLocaleLowerCase()
           .match(this.usuario.toLocaleLowerCase());
       });
-      // console.log(this.usuario);
-      // console.log(this.user);
     }
   }
 
@@ -75,24 +73,23 @@ export class UsersComponent implements OnInit {
   }
 
   centroAsignado(user: Users): any {
-    let i = 0
-    this.centroAsig = []
+    let i = 0;
+    this.centroAsig = [];
     for (let c of this.centros) {
       if (user.nombre == c.usuario?.nombre) {
         this.centroAsig[i] = c.nombre;
-        i += 1
+        i += 1;
       }
     }
-    return this.centroAsig
+    return this.centroAsig;
   }
 
   tipoRol(rol: any): any {
     if (rol) {
-      if (rol === "ROLE_USER") {
-        return 'Director de Centro'
-      }
-      else {
-        return 'Director de ONG(Admin)'
+      if (rol === 'ROLE_USER') {
+        return 'Director de Centro';
+      } else {
+        return 'Director de ONG(Admin)';
       }
     }
   }
@@ -107,15 +104,14 @@ export class UsersComponent implements OnInit {
     this.currentPage = this.getPageLocalStorage();
     this.admin.getUsers().subscribe({
       next: (res: Users[]) => {
-        this.userListComplete = res
-        // console.log('userlistcomplete', this.userListComplete);
-
+        this.userListComplete = res;
         this.pageToShow(this.currentPage, this.userListComplete); //para paginación
         setTimeout(() => this.cdr.detectChanges());
-        // console.log(this.user);
       },
       error: (err) => {
-        // console.log(err);
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
       },
     });
   }
@@ -201,7 +197,9 @@ export class UsersComponent implements OnInit {
         this.getUsers();
       },
       error: (err) => {
-        // console.log(err);
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        }
       },
     });
   }
@@ -230,45 +228,45 @@ export class UsersComponent implements OnInit {
   }
   // para agregar un usuario a mas de un centro
   getCentrosLocalStorage() {
-    var centosAsig = localStorage.getItem("centroA")
+    var centosAsig = localStorage.getItem('centroA');
     if (centosAsig) {
-      this.centroAsignados = JSON.parse(centosAsig)
-      this.getUser(this.centroAsignados[0])
+      this.centroAsignados = JSON.parse(centosAsig);
+      this.getUser(this.centroAsignados[0]);
     }
-    localStorage.removeItem("centroA")
+    localStorage.removeItem('centroA');
   }
 
   getUser(idCentro: number): any {
     if (idCentro) {
-      this.admin.getCenter(idCentro).subscribe(data => {
+      this.admin.getCenter(idCentro).subscribe((data) => {
         setTimeout(() => this.cdr.detectChanges());
-        this.userAsig = data.usuario
+        this.userAsig = data.usuario;
         for (let i of this.centroAsignados) {
-          for(let c of this.centros)
-            if(i === c.id){
-              this.editCentros(c)
+          for (let c of this.centros)
+            if (i === c.id) {
+              this.editCentros(c);
             }
         }
-      })
+      });
     }
   }
 
   editCentros(centro: Centro) {
     if (this.userAsig) {
-      centro.usuario = this.userAsig
-      // console.log(centro.usuario)
+      centro.usuario = this.userAsig;
       this.admin.editCenter(centro, centro.id).subscribe({
         next: (data: any) => {
-          setTimeout(() => this.cdr.detectChanges())
+          setTimeout(() => this.cdr.detectChanges());
         },
         error: (err) => {
-          setTimeout(() => this.cdr.detectChanges())
-          // console.log(err)
-        }
-      })
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
     }
   }
-  // 
+  //
 
   close() {
     this.flagNew = false;

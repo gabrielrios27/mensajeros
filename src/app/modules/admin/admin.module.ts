@@ -59,6 +59,7 @@ import { ComparativeTableComponent } from './containers/comparative-table/compar
 import { CompareVariableComponent } from './components/compare-variable/compare-variable.component';
 import { ModalAlertComponent } from './components/modal-alert/modal-alert.component';
 import { ListComparativeReportsComponent } from './containers/list-comparative-reports/list-comparative-reports.component';
+import { ActivityLogComponent } from './containers/activity-log/activity-log.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -121,6 +122,7 @@ import { ListComparativeReportsComponent } from './containers/list-comparative-r
     EvolutionOfVariableComponent,
     ModalAlertComponent,
     ListComparativeReportsComponent,
+    ActivityLogComponent,
   ],
   exports: [
     ...adminContainers.containers,
