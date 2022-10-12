@@ -94,7 +94,7 @@
 
         .list-user__row {
           box-shadow: 0 2px 2px #00000040;
-          height: 48px;
+          min-height: 48px;
           margin-bottom: 8px;
           padding-left: 1.5em;
           display: flex;
@@ -135,6 +135,9 @@
           }
           .list-user__cell--user {
             min-width: 297px;
+            p {
+              margin-bottom: 0;
+            }
           }
           .list-user__cell--usermiddle {
             padding-right: 60px;
