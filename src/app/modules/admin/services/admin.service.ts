@@ -100,7 +100,19 @@ export class AdminService {
       body
     );
   }
-
+  //ver informes comparativos
+  getComparativeReportByIdReport(id: number): Observable<ComparativeReports> {
+    return this._http.get<ComparativeReports>(
+      this.baseUrlTami + '/informes/' + id
+    );
+  }
+  getComparativeReportsByIdCenter(
+    id: number
+  ): Observable<CreatedComparativeReport[]> {
+    return this._http.get<CreatedComparativeReport[]>(
+      this.baseUrlTami + '/informes/centro/' + id
+    );
+  }
   // endpoints user
 
   getUsers(): Observable<Users[]> {

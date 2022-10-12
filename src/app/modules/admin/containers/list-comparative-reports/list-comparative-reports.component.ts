@@ -83,8 +83,27 @@ export class ListComparativeReportsComponent implements OnInit {
   }
   getReportsList() {
     this.currentPage = this.getPageLocalStorage();
-    this.listOfReports = this.mockReports;
-    this.pageToShow(this.currentPage, this.listOfReports); //para paginación
+    this._adminSvc
+      .getComparativeReportsByIdCenter(this.idCenter)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: CreatedComparativeReport[]) => {
+          this.listOfReports = data;
+          this.orderReportsLastCreatedGoFirst(this.listOfReports);
+          this.pageToShow(this.currentPage, this.listOfReports); //para paginación
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
+  }
+  orderReportsLastCreatedGoFirst(list: CreatedComparativeReport[]) {
+    list.sort(
+      (a: CreatedComparativeReport, b: CreatedComparativeReport) =>
+        Date.parse(b.fechaCreacion) - Date.parse(a.fechaCreacion)
+    );
   }
   //para paginación----
   pageToShow(page: number, list: CreatedComparativeReport[]) {
@@ -144,14 +163,14 @@ export class ListComparativeReportsComponent implements OnInit {
     }
   }
   setPageLocalStorage(page: number) {
-    localStorage.setItem('axeWithVariablesPage', JSON.stringify(page));
+    localStorage.setItem('pageComparativeReports', JSON.stringify(page));
   }
   setNameAxeLocalStorage(idInforme: number) {
     localStorage.setItem('idComparativeReport', JSON.stringify(idInforme));
   }
   getPageLocalStorage(): number {
     let pageLocalStorage: number = 1;
-    let pageLocalStorageJSON = localStorage.getItem('idComparativeReport');
+    let pageLocalStorageJSON = localStorage.getItem('pageComparativeReports');
     if (pageLocalStorageJSON) {
       pageLocalStorage = JSON.parse(pageLocalStorageJSON);
     }
