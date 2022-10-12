@@ -92,11 +92,11 @@ export class UsersComponent implements OnInit {
         userSelected.rolNombre === 'ROLE_USER' &&
         userSelected.rolMDP
       ) {
-        return `Director de Centro(${userSelected.rolMDP})`;
+        return `Director de Centro (${userSelected.rolMDP})`;
       } else if (userSelected.rolMDP) {
-        return `Director de ONG(Admin - ${userSelected.rolMDP})`;
+        return `Director de ONG (Admin - ${userSelected.rolMDP})`;
       } else {
-        return 'Director de ONG(Admin)';
+        return 'Director de ONG (Admin)';
       }
     }
   }
