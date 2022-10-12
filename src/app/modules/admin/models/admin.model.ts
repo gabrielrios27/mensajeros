@@ -121,3 +121,12 @@ export interface CreatedComparativeReport {
   nombreReporte1: string;
   nombreReporte2: string;
 }
+export interface Activity {
+  actividad: string;
+  fechaHora: string;
+  idCentro: number;
+  idLog: number;
+  idReporte: number;
+  nombreCentro: string;
+  nombreReporte: string;
+}
