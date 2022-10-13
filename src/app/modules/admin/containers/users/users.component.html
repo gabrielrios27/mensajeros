@@ -50,7 +50,7 @@
           </div>
         </div>
 
-        <div class="list-user__row" *ngFor="let element of user">
+        <div class="list-user__row" *ngFor="let element of listOfUsers_toShow | async">
           <div class="list-user__cell list-user__cell--user">
             {{ element.nombre }}
           </div>

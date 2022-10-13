@@ -4,6 +4,7 @@ import { DataService } from '../../services/data.service';
 import { Users } from '../../models/users';
 import { Centro } from '../../models/centro';
 import { AdminService } from '../../services';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -24,6 +25,7 @@ export class UsersComponent implements OnInit {
   userAsig?: Users = {} as Users;
   centroAsignados: Array<number> = [];
   // pagination
+  listOfUsers_toShow = new BehaviorSubject<Users[]>([]);
   userListComplete: Array<Users> = new Array();
   listLenght: number = 0;
   itemsPerPage: number = 10;
@@ -53,11 +55,12 @@ export class UsersComponent implements OnInit {
       this.ngOnInit();
       this.getUsers();
     } else {
-      this.user = this.user.filter((res) => {
+      this.userListComplete = this.userListComplete.filter((res) => {
         return res.nombre
           .toLocaleLowerCase()
           .match(this.usuario.toLocaleLowerCase());
       });
+      this.pageToShow(this.currentPage, this.userListComplete)
     }
   }
 
@@ -130,7 +133,7 @@ export class UsersComponent implements OnInit {
     this.listCurrentPage = [];
     if (page <= 1) {
       this.listCurrentPage = list.slice(0, 10);
-      this.user = this.listCurrentPage;
+      this.listOfUsers_toShow.next(this.listCurrentPage);
       this.initialItem = 1;
       if (this.listLenght < this.itemsPerPage) {
         this.finalItem = this.listLenght;
@@ -142,7 +145,7 @@ export class UsersComponent implements OnInit {
         page * this.itemsPerPage - this.itemsPerPage,
         page * this.itemsPerPage
       );
-      this.user = this.listCurrentPage;
+      this.listOfUsers_toShow.next(this.listCurrentPage);
       this.initialItem = page * this.itemsPerPage - this.itemsPerPage + 1;
       this.finalItem =
         page * this.itemsPerPage -
@@ -152,7 +155,7 @@ export class UsersComponent implements OnInit {
       this.listCurrentPage = list.slice(
         this.quantityOfPages * this.itemsPerPage - this.itemsPerPage
       );
-      this.user = this.listCurrentPage;
+      this.listOfUsers_toShow.next(this.listCurrentPage);
       this.initialItem =
         this.quantityOfPages * this.itemsPerPage - this.itemsPerPage + 1;
       this.finalItem =
