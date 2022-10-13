@@ -1,0 +1,93 @@
+<section class="container-report">
+  <div class="report">
+    <h1 class="report__title">Reportes Recibidos</h1>
+    <div class="report__container-search">
+      <label for="searchReport" class="lbl-search-report">
+        <input
+          class="lbl-search-report__input"
+          id="searchReport"
+          type="text"
+          [(ngModel)]="itemSearch"
+          (ngModelChange)="Search(itemSearch)"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <img
+          class="lbl-search-report__ico"
+          src="../../../../../assets/icons/Search.svg"
+          alt="Icono de lupa para busqueda"
+        />
+      </label>
+    </div>
+    <section class="list-report">
+      <div class="list-report__table">
+        <!-- Position Column -->
+        <div class="list-report__row">
+          <p class="list-report__header">Nombre/Número</p>
+
+          <p class="list-report__header">Fecha de emisión</p>
+          <p class="list-report__header list-report__cell--center">
+            Centro Emisor
+          </p>
+        </div>
+
+        <div
+          class="list-report__row"
+          *ngFor="let element of listOfReceivedReport_toShow | async"
+        >
+          <p class="list-report__cell">
+            {{ element.nombreReporte }}
+          </p>
+
+          <p class="list-report__cell">
+            {{ element.fecha_completado.substring(8, 10) }}/{{
+              element.fecha_completado.substring(5, 7)
+            }}/{{ element.fecha_completado.substring(0, 4) }}
+          </p>
+          <p class="list-report__cell list-report__cell--center">
+            {{ element.nom_centro }}
+          </p>
+        </div>
+      </div>
+      <div class="pagination">
+        <p class="pagination-text">
+          {{ initialItem }} - {{ finalItem }} de {{ listLenght }}
+        </p>
+        <svg
+          (click)="onClickBefore()"
+          class="pagination-arrow"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M14 7L9 12L14 17V7Z"
+            fill="black"
+            fill-opacity="0.87"
+          />
+        </svg>
+        <svg
+          (click)="onClickAfter()"
+          class="pagination-arrow"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M10 7L15 12L10 17V7Z"
+            fill="black"
+            fill-opacity="0.87"
+          />
+        </svg>
+      </div>
+    </section>
+  </div>
+</section>
