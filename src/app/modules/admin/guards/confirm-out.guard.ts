@@ -24,7 +24,6 @@ export class ConfirmOutGuard implements CanDeactivate<AddVariablesComponent> {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log('deactivate');
     this.getVariableLocalStorage();
     if (this.flagAddEdit === true) {
       return true;

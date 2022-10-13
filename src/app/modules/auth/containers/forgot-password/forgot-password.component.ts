@@ -50,15 +50,12 @@ export class ForgotPasswordComponent implements OnInit {
   submit(email: any) {
     const img = document.getElementById('img');
     this.flag = true;
-    console.log(this.emailFormControl.value.mailTo);
     img?.style.setProperty('margin-top', '267px');
     this.auth.sendEmail(email).subscribe({
       next: (res) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(res);
       },
       error: (err) => {
-        console.log(err);
       },
     });
   }

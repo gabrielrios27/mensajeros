@@ -65,17 +65,14 @@ export class AxesComponent implements OnInit, OnDestroy {
         next: (data: axes[]) => {
           this.listOfAxes = data;
           setTimeout(() => this._cdr.detectChanges());
-          console.log(this.listOfAxes);
           this.pageToShow(this.currentPage, this.listOfAxes); //para paginación
         },
         error: (err) => {
-          console.log(err);
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
         },
         complete: () => {
-          console.log('Request get axes complete');
         },
       });
   }
@@ -169,16 +166,13 @@ export class AxesComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe({
         next: (data: axes[]) => {
-          console.log(data);
         },
         error: (err) => {
-          console.log(err);
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
         },
         complete: () => {
-          console.log('Request delete complete');
           this.getAxesList();
         },
       });

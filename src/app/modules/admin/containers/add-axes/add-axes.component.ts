@@ -50,7 +50,6 @@ export class AddAxesComponent implements OnInit {
 
   ngOnInit(): void {
     this.idAxe = this.getIdFromRute();
-    console.log('id ruta:' + this.idAxe);
     this.completeInputWithAxe(this.idAxe);
     this.getAxesList();
   }
@@ -93,16 +92,13 @@ export class AddAxesComponent implements OnInit {
       this._adminSvc.createAxe(axeToCreate).subscribe({
         next: (data: axes) => {
           this.router.navigate(['admin/dashboard/ejes']);
-          console.log(data);
         },
         error: (err) => {
-          console.log(err);
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
         },
         complete: () => {
-          console.log('Request new axe complete');
         },
       });
     } else {
@@ -114,16 +110,13 @@ export class AddAxesComponent implements OnInit {
       this._adminSvc.editAxeWithId(this.idAxe.toString(), axeToEdit).subscribe({
         next: (data: axes) => {
           this.router.navigate(['admin/dashboard/ejes']);
-          console.log(data);
         },
         error: (err) => {
-          console.log(err);
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
         },
         complete: () => {
-          console.log('Request edit axe complete');
         },
       });
     }
@@ -148,17 +141,14 @@ export class AddAxesComponent implements OnInit {
     this._adminSvc.getAxeWithId(id.toString()).subscribe({
       next: (data: axes) => {
         this.axeById = data;
-        console.log(this.axeById);
         this.axeInput = data.nombre;
       },
       error: (err) => {
-        console.log(err);
         if (err.status === 401) {
           this.router.navigate(['/auth']);
         }
       },
       complete: () => {
-        console.log('Request trending complete');
       },
     });
   }
@@ -173,13 +163,11 @@ export class AddAxesComponent implements OnInit {
         this.listOfAxes = data;
       },
       error: (err) => {
-        console.log(err);
         if (err.status === 401) {
           this.router.navigate(['/auth']);
         }
       },
       complete: () => {
-        console.log('Request trending complete');
       },
     });
   }

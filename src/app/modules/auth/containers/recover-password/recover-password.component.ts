@@ -42,21 +42,17 @@ export class RecoverPasswordComponent implements OnInit {
     this.routeActive.paramMap.subscribe((params: ParamMap) => {
       token = params.get('token');
     });
-    console.log(token)
     this.token =  token;
   }
 
   confirm(form: changePassword) {
     form.tokenPassword = this.token
-    console.log(form.tokenPassword)
     this.auth.changePassword(form).subscribe({
       next: (res) => {
         setTimeout(() => this.cdr.detectChanges());
         this.router.navigate(['auth/login']);
-        console.log(res);
       },
       error: (err) => {
-        console.log(err);
       },
     });
     

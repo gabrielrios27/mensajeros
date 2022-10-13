@@ -162,7 +162,6 @@ export class PreviewReportComponent implements OnInit {
       id: '',
     };
     this.setReportLocStg(this.name, false);
-    console.log(report);
     this.admin.editReport(this.data.report?.id, report).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
