@@ -144,7 +144,25 @@ export class ListComparativeReportsComponent implements OnInit {
     }
     return pageLocalStorage;
   }
+  deleteReport($event: any, element: CreatedComparativeReport) {
+    $event.stopPropagation();
+    console.log('Elimina reporte');
 
+    // this._adminSvc
+    //   .deleteComparativeReport(element.idInforme)
+    //   .pipe(takeUntil(this.onDestroy$))
+    //   .subscribe({
+    //     next: (data) => {
+    // if(data){
+    // }
+    //     },
+    //     error: (err) => {
+    //       if (err.status === 401) {
+    //         this.router.navigate(['/auth']);
+    //       }
+    //     },
+    //   });
+  }
   //para cerrar modales------------------
   close() {}
 

@@ -1,25 +1,49 @@
-<section class="modal" *ngIf="flag" (click)="close()">
+<section class="modal" *ngIf="flag" (click)="close(type)">
   <div
+    class="modal-success"
     [ngClass]="{
-      'modal-success': type === 'success' || type === 'alert',
-      'modal-alert': type === 'alert'
+      'modal-alert': type === 'alert',
+      'modal-warning': type === 'warning',
+      'modal-error': type === 'error'
     }"
   >
     <img
-      *ngIf="type === 'success' || type === 'alert'"
+      *ngIf="type !== 'warning'"
       class="modal__btnClose"
-      (click)="close()"
-      src="../../../../../assets/icons/X.svg"
+      (click)="closeX(type)"
+      src="{{ icoCloseX }}"
+      alt="icono de cerrar"
+    />
+    <img
+      *ngIf="type === 'error'"
+      class="modal__btnClose"
+      src="../../../../../assets/icons/X  red.svg"
       alt="icono de cerrar"
     />
     <div class="modal__conteiner">
       <img
-        *ngIf="type === 'success'"
+        *ngIf="type === 'success' || type === 'error' || type === 'warning'"
         class="modal__ico"
-        src="../../../../../assets/icons/Check.svg"
+        src="{{ imgUrl }}"
         alt="icon check"
       />
-      <p class="modal__text" [innerHtml]="modalText"></p>
+
+      <p
+        class="modal__text"
+        [ngClass]="{
+          'modal-text--warning': type === 'warning',
+          'modal-text--error': type === 'error'
+        }"
+        [innerHtml]="modalText"
+      ></p>
+    </div>
+    <div class="modal__options" *ngIf="type === 'warning'">
+      <button class="btn-modal__cancel" (click)="selected('Cancel')">
+        Cancelar
+      </button>
+      <button class="btn-modal__accept" (click)="selected('ok')">
+        Confirmar
+      </button>
     </div>
   </div>
 </section>

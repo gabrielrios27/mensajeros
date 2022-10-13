@@ -114,6 +114,9 @@ export class AdminService {
       this.baseUrlTami + '/informes/centro/' + id
     );
   }
+  deleteComparativeReport(id: number): Observable<boolean> {
+    return this._http.delete<boolean>(this.baseUrlTami + '/informes/' + id);
+  }
   // endpoints user
 
   getUsers(): Observable<Users[]> {
@@ -172,9 +175,9 @@ export class AdminService {
     );
   }
 
-  getCenterPerVariables(idVariable:number):Observable<Centro[]>{
+  getCenterPerVariables(idVariable: number): Observable<Centro[]> {
     return this._http.get<Centro[]>(
-      this.baseUrlTami + '/centros/segunVariable/'+ idVariable
+      this.baseUrlTami + '/centros/segunVariable/' + idVariable
     );
   }
 
@@ -207,9 +210,16 @@ export class AdminService {
     );
   }
 
-  getEvolutionOfVariable(idCenter: number, idVariable: number): Observable<evolutionVariable[]> {
+  getEvolutionOfVariable(
+    idCenter: number,
+    idVariable: number
+  ): Observable<evolutionVariable[]> {
     return this._http.get<evolutionVariable[]>(
-      this.baseUrlTami + '/variables/evolucionVariable/' + idCenter + '/' + idVariable
+      this.baseUrlTami +
+        '/variables/evolucionVariable/' +
+        idCenter +
+        '/' +
+        idVariable
     );
   }
   // enpoints reports
@@ -257,11 +267,9 @@ export class AdminService {
       this.baseUrlTami + '/carga/reporteCreado/' + idReport + '/' + idCenter
     );
   }
-  addComment(comment:comment): Observable<any> {
-    return this._http.post(this.baseUrlTami + '/comentarios',comment, {
+  addComment(comment: comment): Observable<any> {
+    return this._http.post(this.baseUrlTami + '/comentarios', comment, {
       responseType: 'text',
     });
   }
-  
-
 }
