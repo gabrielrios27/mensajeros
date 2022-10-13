@@ -9,4 +9,7 @@ export interface evolutionVariable{
     fecha_completado: Date,
     nombreVariable: string,
     fecha_creacion: Date,
+    femenino: number,
+    masculino: number,
+    no_Binario: number,
 }
