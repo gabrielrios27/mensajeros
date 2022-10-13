@@ -146,22 +146,21 @@ export class ListComparativeReportsComponent implements OnInit {
   }
   deleteReport($event: any, element: CreatedComparativeReport) {
     $event.stopPropagation();
-    console.log('Elimina reporte');
-
-    // this._adminSvc
-    //   .deleteComparativeReport(element.idInforme)
-    //   .pipe(takeUntil(this.onDestroy$))
-    //   .subscribe({
-    //     next: (data) => {
-    // if(data){
-    // }
-    //     },
-    //     error: (err) => {
-    //       if (err.status === 401) {
-    //         this.router.navigate(['/auth']);
-    //       }
-    //     },
-    //   });
+    this.listOfReports = this.listOfReports.filter(
+      (report) => report.idInforme !== element.idInforme
+    );
+    this.pageToShow(this.currentPage, this.listOfReports); //para paginación
+    this._adminSvc
+      .deleteComparativeReport(element.idInforme)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data) => {},
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+      });
   }
   //para cerrar modales------------------
   close() {}
