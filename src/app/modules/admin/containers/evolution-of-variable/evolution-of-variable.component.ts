@@ -181,6 +181,11 @@ export class EvolutionOfVariableComponent implements OnInit {
     let since
     let until
     this.variable.map((v) => {
+      // si es null numerico suma los valores 
+      if(v.numerico == null){
+        v.numerico = v.femenino + v.masculino + v.no_Binario
+      }
+      // 
       since = new Date(v.periodo_desde)
       until = new Date(v.periodo_hasta)
       if (this.date.getFullYear() == until.getFullYear() && this.date.getFullYear() == since.getFullYear()) {
@@ -192,7 +197,7 @@ export class EvolutionOfVariableComponent implements OnInit {
         }
       }
       if (this.date.getFullYear() <= until.getFullYear() && this.date.getFullYear() > since.getFullYear()) {
-        mont = (until.getMonth())
+        mont = (until.getMonth()+1)
         let monts = 0
         while (monts < mont) {
           this.data[monts] += v.numerico
