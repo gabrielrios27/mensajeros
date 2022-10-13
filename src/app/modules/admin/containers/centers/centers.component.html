@@ -50,7 +50,7 @@
           </div>
         </div>
 
-        <div class="list-center__row" *ngFor="let element of centros">
+        <div class="list-center__row" *ngFor="let element of listOfCenters_toShow | async">
           <div class="list-center__cell list-center__cell--center">
             {{ element.nombre }}
           </div>

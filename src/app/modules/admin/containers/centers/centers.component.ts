@@ -8,6 +8,7 @@ import { Centro } from '../../models/centro';
 import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { AdminService } from '../../services/admin.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-centers',
@@ -25,12 +26,13 @@ export class CentersComponent implements OnInit {
   idToDelete: number = 0;
   newOrEditedCenter: Centro = {} as Centro;
   // pagination
+  listOfCenters_toShow = new BehaviorSubject<Centro[]>([]);
   centrosListComplete: Array<Centro> = new Array();
   listLenght: number = 0;
   itemsPerPage: number = 10;
   quantityOfPages: number = 1;
   currentPage: number = 1;
-  listCurrentPage: Array<Centro> = new Array();
+  listCurrentPage: Centro[] = {} as Centro[]
   initialItem: number = 1;
   finalItem: number = 10;
   flagCreatedReport: boolean;
@@ -65,9 +67,10 @@ export class CentersComponent implements OnInit {
     if (e.toLocaleLowerCase() == '') {
       this.ngOnInit();
     } else {
-      this.centros = this.centros.filter((res) => {
+      this.centrosListComplete = this.centrosListComplete.filter((res) => {
         return res.nombre.toLowerCase().match(this.Centro.toLowerCase());
       });
+      this.pageToShow(this.currentPage, this.centrosListComplete)
     }
   }
 
@@ -105,7 +108,7 @@ export class CentersComponent implements OnInit {
     this.listCurrentPage = [];
     if (page <= 1) {
       this.listCurrentPage = list.slice(0, 10);
-      this.centros = this.listCurrentPage;
+      this.listOfCenters_toShow.next(this.listCurrentPage);
       this.initialItem = 1;
       if (this.listLenght < this.itemsPerPage) {
         this.finalItem = this.listLenght;
@@ -117,7 +120,7 @@ export class CentersComponent implements OnInit {
         page * this.itemsPerPage - this.itemsPerPage,
         page * this.itemsPerPage
       );
-      this.centros = this.listCurrentPage;
+      this.listOfCenters_toShow.next(this.listCurrentPage);
       this.initialItem = page * this.itemsPerPage - this.itemsPerPage + 1;
       this.finalItem =
         page * this.itemsPerPage -
@@ -127,7 +130,7 @@ export class CentersComponent implements OnInit {
       this.listCurrentPage = list.slice(
         this.quantityOfPages * this.itemsPerPage - this.itemsPerPage
       );
-      this.centros = this.listCurrentPage;
+      this.listOfCenters_toShow.next(this.listCurrentPage);
       this.initialItem =
         this.quantityOfPages * this.itemsPerPage - this.itemsPerPage + 1;
       this.finalItem =
@@ -155,11 +158,11 @@ export class CentersComponent implements OnInit {
     }
   }
   setPageLocalStorage(page: number) {
-    localStorage.setItem('centerPage', JSON.stringify(page));
+    localStorage.setItem('axePage', JSON.stringify(page));
   }
   getPageLocalStorage(): number {
     let pageLocalStorage: number = 1;
-    let pageLocalStorageJSON = localStorage.getItem('centerPage');
+    let pageLocalStorageJSON = localStorage.getItem('axePage');
     if (pageLocalStorageJSON) {
       pageLocalStorage = JSON.parse(pageLocalStorageJSON);
     }
@@ -190,6 +193,7 @@ export class CentersComponent implements OnInit {
       next: (data: any) => {
         setTimeout(() => this.cdr.detectChanges());
         this.getCenters();
+        this.pageToShow(this.currentPage, this.centrosListComplete)
         this.close();
       },
       error: (err) => {
