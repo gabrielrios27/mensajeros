@@ -74,3 +74,11 @@ export interface AnswersUpload {
   fechaCompletado: Date;
   respuestas: ReportResponse[];
 }
+export interface ReportComplete {
+  fecha_completado: string;
+  fecha_creacion: string;
+  idCentro: number;
+  idReporte: number;
+  nom_centro: string;
+  nombreReporte: string;
+}

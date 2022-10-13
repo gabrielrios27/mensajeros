@@ -16,6 +16,7 @@ import { UploadReportsComponent } from './containers/upload-reports/upload-repor
 import * as userGuards from './guards';
 import { HomeComponent } from '../admin/containers';
 import { UserGuard } from './guards/user.guard';
+import { SendingReportComponent } from './containers/sending-report/sending-report.component';
 
 /* Routes */
 export const ROUTES: Routes = [
@@ -34,6 +35,12 @@ export const ROUTES: Routes = [
     path: 'mis-reportes/pendientes',
     canActivate: [UserGuard],
     component: PendingReportsComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'mis-reportes/enviados',
+    canActivate: [UserGuard],
+    component: SendingReportComponent,
     pathMatch: 'full',
   },
   {

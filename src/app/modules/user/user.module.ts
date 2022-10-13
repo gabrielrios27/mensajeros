@@ -35,7 +35,8 @@ import {MatInputModule} from '@angular/material/input';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import {CdkStepperModule} from '@angular/cdk/stepper';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatIconModule} from '@angular/material/icon'
+import {MatIconModule} from '@angular/material/icon';
+import { SendingReportComponent } from './containers/sending-report/sending-report.component'
 @NgModule({
   imports: [
     CommonModule,
@@ -67,6 +68,7 @@ import {MatIconModule} from '@angular/material/icon'
     PopUpSuccessComponent,
     PopUpErrorComponent,
     ProgressBarComponent,
+    SendingReportComponent,
   ],
   exports: [...userContainers.containers, ...userComponents.components],
 })
