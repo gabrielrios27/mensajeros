@@ -39,7 +39,7 @@ export class AmUserComponent implements OnInit {
   userListComplete: Array<Users> = new Array();
   centrosAsignado: any;
   centro?: Centro;
-
+  rolMDP: any = '';
   constructor(
     private router: Router,
     public data: DataService,
@@ -52,6 +52,7 @@ export class AmUserComponent implements OnInit {
       email: ['', Validators.compose([Validators.required, Validators.email])],
       contrasena: [''],
       selectOp: [this.centroAsig()],
+      rolMDP: [''],
     });
   }
 
@@ -79,6 +80,7 @@ export class AmUserComponent implements OnInit {
       this.flagEdit = true;
       this.nombre = this.data.user?.nombre;
       this.email = this.data.user?.email;
+      this.rolMDP = this.data.user?.rolMDP;
       if (this.data.user?.rolNombre === 'ROLE_ADMIN') {
         this.flagTipoRol = false;
       }
@@ -172,6 +174,7 @@ export class AmUserComponent implements OnInit {
         contrasena: '',
         email: '',
         rolNombre: '',
+        rolMDP: '',
       };
       this.admin.editCenter(centro, centro.id).subscribe({
         next: (data: any) => {

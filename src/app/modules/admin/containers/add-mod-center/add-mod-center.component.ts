@@ -62,7 +62,7 @@ export class AddModCenterComponent implements OnInit {
     localStorage.setItem('centerPage', JSON.stringify(this.quantityOfPages));
   }
   addCenter(center: Centro) {
-    console.log(center)
+    console.log(center);
     this.setPageLocalStorage(); //para paginación
     this.admin.addCenter(center).subscribe({
       next: (data) => {
@@ -115,7 +115,8 @@ export class AddModCenterComponent implements OnInit {
         nombre: '',
         contrasena: '',
         email: '',
-        rolNombre: ''
+        rolNombre: '',
+        rolMDP: '',
       };
     }
 

@@ -84,12 +84,19 @@ export class UsersComponent implements OnInit {
     return this.centroAsig;
   }
 
-  tipoRol(rol: any): any {
-    if (rol) {
-      if (rol === 'ROLE_USER') {
+  tipoRol(userSelected: any): any {
+    if (userSelected) {
+      if (userSelected.rolNombre === 'ROLE_USER' && !userSelected.rolMDP) {
         return 'Director de Centro';
+      } else if (
+        userSelected.rolNombre === 'ROLE_USER' &&
+        userSelected.rolMDP
+      ) {
+        return `Director de Centro (${userSelected.rolMDP})`;
+      } else if (userSelected.rolMDP) {
+        return `Director de ONG (Admin - ${userSelected.rolMDP})`;
       } else {
-        return 'Director de ONG(Admin)';
+        return 'Director de ONG (Admin)';
       }
     }
   }
