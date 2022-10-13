@@ -78,6 +78,7 @@ export class EvolutionOfVariableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getIdFromRute()
+    this.getVariableName()
     this.getVariable()
     this.getDataMon()
   }
@@ -150,10 +151,27 @@ export class EvolutionOfVariableComponent implements OnInit {
 
   getIdFromRute() {
     this.routeActive.paramMap.subscribe((params: ParamMap) => {
-      this.name = params.get('name');
       this.idCenter = params.get('idCenter');
       this.idVariable = params.get('idVariable');
     });
+  }
+  
+  getVariableName(){
+    this._adminSvc
+      .getVariableWithId(this.idVariable)
+      .subscribe({
+        next: (data: variable) => {
+          this.name = data.nombre;
+          setTimeout(() => this._cdr.detectChanges());
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['/auth']);
+          }
+        },
+        complete: () => {
+        },
+      });
   }
 
   getVariable() {
