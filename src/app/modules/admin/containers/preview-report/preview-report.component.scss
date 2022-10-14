@@ -83,7 +83,6 @@
       flex-direction: column;
       align-items: flex-start;
       border-bottom: 2px solid #d9d9d9;
-      
 
       .centros-Alcanzados {
         width: 819px;
@@ -223,10 +222,10 @@
     padding: 24px 21px;
     gap: 24px;
     z-index: 1001;
-    position: absolute;
+    position: fixed;
     width: 406px;
     height: auto;
-    top: 20%;
+    top: 185px;
     background: #ffffff;
     border: 1px solid #79747e;
 
@@ -321,4 +320,11 @@
   height: 9999px;
   opacity: 0.2;
   background-color: black;
+}
+@media (max-width: 1400px) {
+  .container-preview {
+    .modal-2 {
+      top: 145px;
+    }
+  }
 }
