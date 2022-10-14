@@ -119,10 +119,10 @@
     margin-bottom: 0;
   }
 }
-.select-item__mat-option {
-  height: 100% !important;
-  min-height: 3em;
-  max-height: 6em;
+.select-item__mat-option ::ng-deep .mat-option-text {
+  flex-grow: 0;
+  width: 280px;
+  padding-right: 10px;
 }
 .select-item__option {
   flex-direction: row-reverse;
@@ -132,8 +132,9 @@
   }
 }
 .select-item__checkbox {
-  position: relative;
-  float: right;
+  position: absolute;
+  top: 0;
+  right: 10px;
   .select-item__input-checkbox {
     position: relative;
     z-index: 2;
@@ -148,10 +149,6 @@
   }
 }
 
-::ng-deep .mat-option-text {
-  width: 87%;
-  position: relative;
-}
 ::ng-deep .mat-select-panel .mat-option.mat-selected {
   background: white;
 }
