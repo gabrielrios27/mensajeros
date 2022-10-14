@@ -10,6 +10,7 @@ import {
   ReportByCenter,
   VariableInCommon,
 } from '../../models';
+import { Centro } from '../../models/centro';
 
 @Component({
   selector: 'app-create-comparative-reports',
@@ -33,7 +34,7 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
   bodyComparativeReport: BodyComparativeReport;
   modalText: string =
     'Este centro aún no tiene suficientes reportes para comparar.<br><br>Cerrá para regresar a Centros';
-
+  center: Centro = {} as Centro;
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
   constructor(
@@ -57,6 +58,17 @@ export class CreateComparativeReportsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getReportsList();
+    this.getCenter(this.idCentro);
+  }
+  getCenter(id: number) {
+    this._adminSvc
+      .getCenter(id)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: Centro) => {
+          this.center = data;
+        },
+      });
   }
   getReportsList() {
     this._adminSvc

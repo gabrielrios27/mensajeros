@@ -2,7 +2,7 @@
   <div class="createReport__container">
     <h1 class="createReport__title">Crear informe comparativo</h1>
     <div class="selects">
-      <h3 class="selects__title">Centro La Balsa</h3>
+      <h3 class="selects__title">{{ center.nombre }}</h3>
       <div class="selects__container">
         <div class="selects__container-reports">
           <div class="select-item">
@@ -18,6 +18,7 @@
               (selectionChange)="getReport1($event.value)"
             >
               <mat-option
+                class="select-item__mat-option"
                 *ngFor="let item of reportsList; let i = index"
                 [value]="item"
                 (click)="onChange1(i)"
@@ -95,6 +96,7 @@
               (selectionChange)="getReport2($event.value)"
             >
               <mat-option
+                class="select-item__mat-option"
                 *ngFor="let item of reportsList; let i = index"
                 [value]="item"
                 (click)="onChange2(i)"

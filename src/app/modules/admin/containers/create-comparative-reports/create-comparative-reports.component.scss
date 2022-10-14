@@ -119,6 +119,11 @@
     margin-bottom: 0;
   }
 }
+.select-item__mat-option {
+  height: 100% !important;
+  min-height: 3em;
+  max-height: 6em;
+}
 .select-item__option {
   flex-direction: row-reverse;
   overflow-x: hidden;

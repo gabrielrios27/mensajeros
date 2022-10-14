@@ -115,7 +115,6 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data: Centro) => {
           this.center = data;
-          console.log('centro: ', this.center);
         },
       });
   }
