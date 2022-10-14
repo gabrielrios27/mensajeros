@@ -50,6 +50,8 @@ export interface ReportToUpload {
   ejeActual: number;
   totalEjes: number;
   ejesConVariables: AxeAndVariables[];
+  periodoDesde: string;
+  periodoHasta: string;
 }
 export interface ReportInfo {
   fecha_entrega: string;

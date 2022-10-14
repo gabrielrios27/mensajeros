@@ -115,6 +115,8 @@ export class PendingReportsComponent implements OnInit, OnDestroy {
         ejeActual: 0,
         totalEjes: 0,
         ejesConVariables: [],
+        periodoDesde: '',
+        periodoHasta: '',
       };
       this.userSvc
         .getReportToUpload(report.idReporte, report.idCentro)
