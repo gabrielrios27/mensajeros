@@ -50,7 +50,10 @@
           </div>
         </div>
 
-        <div class="list-user__row" *ngFor="let element of listOfUsers_toShow | async">
+        <div
+          class="list-user__row"
+          *ngFor="let element of listOfUsers_toShow | async"
+        >
           <div class="list-user__cell list-user__cell--user">
             {{ element.nombre }}
           </div>
@@ -79,7 +82,9 @@
               (click)="onClickDelete(element.id)"
             />
             <a
-              *ngIf="element.rolNombre === 'ROLE_USER'"
+              [ngClass]="
+                element.rolNombre === 'ROLE_USER' ? '' : 'list-user__ico-hidden'
+              "
               routerLink="historial-de-actividades/{{ element.id }}"
             >
               <img
