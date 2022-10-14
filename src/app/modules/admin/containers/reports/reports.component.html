@@ -43,8 +43,12 @@
         <!-- Position Column -->
         <div class="list-reports__row">
           <div class="list-reports__header">Número</div>
-          <div class="list-reports__header">Fecha de creación</div>
-          <div class="list-reports__header list-reports__header--action">
+          <div class="list-reports__header list-reports__cell--middle">
+            Fecha de creación
+          </div>
+          <div
+            class="list-reports__header list-reports__header--action list-reports__cell--acction"
+          >
             Acciones
           </div>
         </div>
@@ -53,10 +57,10 @@
           class="list-reports__row"
           *ngFor="let element of this.listOfReport_toShow | async"
         >
-          <div class="list-reports__cell list-reports__cell--reports">
+          <div class="list-reports__cell">
             {{ element.nombre }}
           </div>
-          <div class="list-reports__cell list-reports__cell--reports">
+          <div class="list-reports__cell list-reports__cell--middle">
             {{ element.fechaCreacion | date: "dd/MM/yyyy" }}
           </div>
           <div class="list-reports__cell list-reports__cell--acction">

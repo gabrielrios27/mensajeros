@@ -102,11 +102,13 @@
 
         .list-reports__row {
           box-shadow: 0 2px 2px #00000040;
-          height: 48px;
+          min-height: 48px;
           margin-bottom: 8px;
           padding-left: 1.5em;
-          display: flex;
-          justify-content: space-between;
+          padding-right: 1.5em;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+
           align-items: center;
 
           .list-reports__header {
@@ -120,17 +122,25 @@
               padding-left: 1.5em;
             }
           }
-
           .list-reports__header--action {
-            width: 153px;
+            padding-right: 46px;
           }
-
+          .list-reports__cell {
+            font-family: "Inter" !important;
+            font-size: 1em;
+            line-height: 1.1875em;
+            color: #000000;
+            &:first-of-type {
+              padding-left: 1.5em;
+            }
+          }
+          .list-reports__cell--middle {
+            justify-self: center;
+          }
           .list-reports__cell--acction {
-            width: 153px;
-            height: 50px;
             display: flex;
             align-items: center;
-
+            justify-self: flex-end;
             .list-reports__ico-action {
               padding: 0.625em 0.625em 0.625em 0;
               margin-right: 5px;
@@ -139,26 +149,6 @@
 
             .list-reports__ico-action--edit {
               margin-top: 4px;
-            }
-          }
-          .list-reports_cell--reports {
-            min-width: 297px;
-          }
-
-          .list-reports__cell--reportsmiddle {
-            padding-right: 60px;
-            min-width: 339px;
-          }
-
-          .list-reports__cell {
-            font-family: "Inter" !important;
-            font-size: 1em;
-            line-height: 1.1875em;
-            color: #000000;
-            width: 170px;
-
-            &:first-of-type {
-              padding-left: 1.5em;
             }
           }
         }
