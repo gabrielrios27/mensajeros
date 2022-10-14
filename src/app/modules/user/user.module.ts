@@ -29,14 +29,16 @@ import { PopUpSuccessComponent } from './components/pop-up-success/pop-up-succes
 import { PopUpErrorComponent } from './components/pop-up-error/pop-up-error.component';
 
 // angular material
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
-import {CdkStepperModule} from '@angular/cdk/stepper';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatIconModule} from '@angular/material/icon';
-import { SendingReportComponent } from './containers/sending-report/sending-report.component'
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { SendingReportComponent } from './containers/sending-report/sending-report.component';
+import { ModalAlertComponent } from '../admin/components/modal-alert/modal-alert.component';
+import { AdminModule } from '../admin/admin.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -51,8 +53,8 @@ import { SendingReportComponent } from './containers/sending-report/sending-repo
     MatInputModule,
     CdkStepperModule,
     MatProgressBarModule,
-    MatIconModule
-    
+    MatIconModule,
+    AdminModule,
   ],
   providers: [...userServices.services, ...userGuards.guards],
   declarations: [

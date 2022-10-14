@@ -574,8 +574,9 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
               .pipe(takeUntil(this.onDestroy$))
               .subscribe({
                 next: (data: string) => {
+                  this.setFlagSessionStg(true);
                   this.router.navigate([
-                    '/user/dashboard/mis-reportes/pendientes',
+                    '/user/dashboard/mis-reportes/enviados',
                   ]); //cambiar ruta a reportes enviados cuando se cree ese componente
                 },
                 error: (err) => {
@@ -595,6 +596,9 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       this.flagEndReport = false;
       this.flagEndReportEmit.next(false);
     }
+  }
+  setFlagSessionStg(flag: boolean) {
+    sessionStorage.setItem('createdReportUser', JSON.stringify(flag));
   }
   ngOnDestroy(): void {
     this.onDestroy$.next(true);

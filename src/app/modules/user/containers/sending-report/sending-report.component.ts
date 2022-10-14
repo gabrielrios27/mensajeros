@@ -37,12 +37,16 @@ export class SendingReportComponent implements OnInit {
   commentsToShow: Comments[] = [];
   //para spinner de icono descarga de excel
   idsDownload: string[] = [];
+  //flag reporte enviado
+  flagCreatedReport: boolean = true;
+  modalText: string = '¡Reporte enviado con éxito a ONG!';
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
 
   constructor(private router: Router, private _userSvc: UserService) {}
 
   ngOnInit(): void {
+    this.getFlagCreatedReportUser();
     this.getReportList();
   }
   getReportList() {
@@ -182,7 +186,16 @@ export class SendingReportComponent implements OnInit {
     }
   }
 
-  //para activar modal de comentarios y reseñas
+  getFlagCreatedReportUser() {
+    let flagStr = sessionStorage.getItem('createdReportUser');
+    if (flagStr) {
+      this.flagCreatedReport = JSON.parse(flagStr);
+      setTimeout(() => {
+        this.flagCreatedReport = false;
+      }, 3000);
+    }
+    sessionStorage.removeItem('createdReportUser');
+  }
 
   ngOnDestroy() {
     this.onDestroy$.next(true);
