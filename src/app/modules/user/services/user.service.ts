@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import {
   AnswersUpload,
+  ReportComplete,
   ReportInfo,
   ReportToUpload,
   UserData,
@@ -18,6 +19,7 @@ export class UserService {
   baseUrlTami: string = 'https://mensajeros-back-martin.herokuapp.com';
   ePUserData: string = '/usuarios/datosUsuario';
   ePPendingReports: string = '/reportes/reportesPendientes';
+  ePCompleteReports: string = '/reportes/reportesCompletos';
   ePReportToUpload: string = '/carga/';
   ePCommentToUpload: string = '/carga/add/';
   constructor(private _http: HttpClient) {}
@@ -56,6 +58,11 @@ export class UserService {
   getPendingReports(): Observable<ReportInfo[]> {
     return this._http.get<ReportInfo[]>(
       this.baseUrlTami + this.ePPendingReports
+    );
+  }
+  getCompleteReports(): Observable<ReportComplete[]> {
+    return this._http.get<ReportComplete[]>(
+      this.baseUrlTami + this.ePCompleteReports
     );
   }
   getReportToUpload(
