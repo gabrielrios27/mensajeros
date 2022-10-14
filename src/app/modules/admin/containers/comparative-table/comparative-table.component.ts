@@ -8,6 +8,7 @@ import {
   ComparativeReports,
   variable,
 } from '../../models';
+import { Centro } from '../../models/centro';
 import { AdminService } from '../../services';
 
 @Component({
@@ -50,6 +51,7 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
   idReport: number | undefined;
   bodyComparativeReport: BodyComparativeReport;
   comparativeReports: ComparativeReports;
+  center: Centro = {} as Centro;
   comment: string;
   flagIdReport: boolean;
   //suscripciones
@@ -70,6 +72,7 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.idCentro = this.getIdFromRute('id-centro');
+    this.getCenter(this.idCentro);
     this.idReport = this.getIdFromRute('id-informe');
     if (this.idReport === 0) {
       this.getBodySessionStg();
@@ -102,6 +105,17 @@ export class ComparativeTableComponent implements OnInit, OnDestroy {
         next: (data: ComparativeReports) => {
           this.comparativeReports = data;
           this.setResponseReports(this.comparativeReports);
+        },
+      });
+  }
+  getCenter(id: number) {
+    this._adminSvc
+      .getCenter(id)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (data: Centro) => {
+          this.center = data;
+          console.log('centro: ', this.center);
         },
       });
   }
