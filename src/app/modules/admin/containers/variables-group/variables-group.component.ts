@@ -17,12 +17,12 @@ export class VariablesGroupComponent implements OnInit {
   flagEdited: boolean = false;
   flagNew: boolean = false;
   flagDelete: boolean = false;
-  flagSelectCenter: boolean = false
+  flagSelectCenter: boolean = false;
   idToDelete: number = 0;
-  centers: Array<Centro> = []
-  center: any
-  idVariable = 0
-  nameVariable: any
+  centers: Array<Centro> = [];
+  center: any;
+  idVariable = 0;
+  nameVariable: any;
 
   listOfVariables: variable[] = [];
   listOfVariables_toSearch: variable[] = [];
@@ -48,7 +48,7 @@ export class VariablesGroupComponent implements OnInit {
     private _adminSvc: AdminService,
     private _cdr: ChangeDetectorRef,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.idAxeGroup = this.getIdFromRute();
@@ -80,8 +80,7 @@ export class VariablesGroupComponent implements OnInit {
             this.router.navigate(['/auth']);
           }
         },
-        complete: () => {
-        },
+        complete: () => {},
       });
   }
 
@@ -180,8 +179,7 @@ export class VariablesGroupComponent implements OnInit {
       .deleteVariableWithId(id.toString())
       .pipe(takeUntil(this.onDestroy$))
       .subscribe({
-        next: (data: variable[]) => {
-        },
+        next: (data: variable[]) => {},
         error: (err) => {
           if (err.status === 401) {
             this.router.navigate(['/auth']);
@@ -264,12 +262,12 @@ export class VariablesGroupComponent implements OnInit {
   }
 
   selectCenter(element: variable) {
-    this.idVariable = element.id
-    this.nameVariable = element.nombre
-    this.flagSelectCenter = true
+    this.idVariable = element.id;
+    this.nameVariable = element.nombre;
+    this.flagSelectCenter = true;
     this._adminSvc.getCenterPerVariables(element.id).subscribe({
       next: (data: Centro[]) => {
-        this.centers = data
+        this.centers = data;
       },
       error: (err) => {
         if (err.status === 401) {
@@ -281,18 +279,33 @@ export class VariablesGroupComponent implements OnInit {
       },
     });
   }
-  
-  goTocharts() {
-    this.flagSelectCenter = false
-    this.router.navigate(['/admin/dashboard/variables/evolucion-de-variable/'+ this.nameVariable + '/' + this.center.id + '/' + this.idVariable]);
-  }
 
+  goTocharts() {
+    this.flagSelectCenter = false;
+    console.log(
+      '/admin/dashboard/variables/evolucion-de-variable/' +
+        this.nameVariable +
+        '/' +
+        this.center.id +
+        '/' +
+        this.idVariable
+    );
+
+    this.router.navigate([
+      '/admin/dashboard/variables/evolucion-de-variable/' +
+        this.nameVariable +
+        '/' +
+        this.center.id +
+        '/' +
+        this.idVariable,
+    ]);
+  }
 
   close() {
     this.flagNew = false;
     this.flagEdited = false;
     this.flagDelete = false;
-    this.flagSelectCenter = false
+    this.flagSelectCenter = false;
   }
   ngOnDestroy() {
     this.onDestroy$.next(true);
