@@ -87,6 +87,8 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   goBackIndex: number = 0;
   flagResponseGoBack: boolean = false;
   flagStartUpload: boolean = true;
+  flagRequireDate: boolean = false;
+  modalText: string = 'Aún no se completa el periodo a reportar';
   //guarda Todos los reportes pendientes
   allPendingReports: ReportInfo[];
   //para scroll to top en cada cambio de eje
@@ -179,6 +181,12 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data: ReportToUpload) => {
           this.reportToUploadComplete = data;
+          console.log(this.reportToUploadComplete);
+
+          //{{ element.fechaHora.substring(8, 10) }}/{{
+          //   element.fechaHora.substring(5, 7)
+          // }}/{{ element.fechaHora.substring(0, 4) }} a las
+          // {{ element.fechaHora.substring(11, 16) }}
           this.getPendingReports(data);
           this.nameReport = this.reportToUploadComplete.idReporte;
           this.listAxesOfReport(this.reportToUploadComplete);
@@ -555,43 +563,62 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
   }
   onConfirmEnd(value: boolean) {
     if (value) {
-      this.reportToUploadComplete.fechaCompletado = this.today;
-      this.userSvc
-        .putReportToUpload(
-          this.idReport,
-          this.idCenter,
-          this.reportToUploadComplete
-        )
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe({
-          next: (data: ReportToUpload) => {
-            this.userSvc
-              .putCommentToUpload(
-                this.idReport,
-                this.idCenter,
-                this.commentToUpload
-              )
-              .pipe(takeUntil(this.onDestroy$))
-              .subscribe({
-                next: (data: string) => {
-                  this.setFlagSessionStg(true);
-                  this.router.navigate([
-                    '/user/dashboard/mis-reportes/enviados',
-                  ]); //cambiar ruta a reportes enviados cuando se cree ese componente
-                },
-                error: (err) => {
-                  if (err.status === 401) {
-                    this.router.navigate(['/auth']);
-                  }
-                },
-              });
-          },
-          error: (err) => {
-            if (err.status === 401) {
-              this.router.navigate(['/auth']);
-            }
-          },
-        });
+      if (
+        Date.parse(this.today) >=
+        Date.parse(this.reportToUploadComplete.periodoHasta)
+      ) {
+        this.reportToUploadComplete.fechaCompletado = this.today;
+        this.userSvc
+          .putReportToUpload(
+            this.idReport,
+            this.idCenter,
+            this.reportToUploadComplete
+          )
+          .pipe(takeUntil(this.onDestroy$))
+          .subscribe({
+            next: (data: ReportToUpload) => {
+              this.userSvc
+                .putCommentToUpload(
+                  this.idReport,
+                  this.idCenter,
+                  this.commentToUpload
+                )
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe({
+                  next: (data: string) => {
+                    this.setFlagSessionStg(true);
+                    this.router.navigate([
+                      '/user/dashboard/mis-reportes/enviados',
+                    ]); //cambiar ruta a reportes enviados cuando se cree ese componente
+                  },
+                  error: (err) => {
+                    if (err.status === 401) {
+                      this.router.navigate(['/auth']);
+                    }
+                  },
+                });
+            },
+            error: (err) => {
+              if (err.status === 401) {
+                this.router.navigate(['/auth']);
+              }
+            },
+          });
+      } else {
+        this.modalText =
+          'Aún no termina el periodo a reportar.<br> Enviar el reporte luego del ' +
+          this.reportToUploadComplete.periodoHasta.substring(8, 10) +
+          '/' +
+          this.reportToUploadComplete.periodoHasta.substring(5, 7) +
+          '/' +
+          this.reportToUploadComplete.periodoHasta.substring(0, 4);
+        this.flagEndReport = false;
+        this.flagEndReportEmit.next(false);
+        this.flagRequireDate = true;
+        setTimeout(() => {
+          this.flagRequireDate = false;
+        }, 5000);
+      }
     } else {
       this.flagEndReport = false;
       this.flagEndReportEmit.next(false);

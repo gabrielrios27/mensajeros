@@ -38,7 +38,7 @@ export class SendingReportComponent implements OnInit {
   //para spinner de icono descarga de excel
   idsDownload: string[] = [];
   //flag reporte enviado
-  flagCreatedReport: boolean = true;
+  flagCreatedReport: boolean = false;
   modalText: string = '¡Reporte enviado con éxito a ONG!';
   // suscripciones
   onDestroy$: Subject<boolean> = new Subject();
@@ -190,11 +190,11 @@ export class SendingReportComponent implements OnInit {
     let flagStr = sessionStorage.getItem('createdReportUser');
     if (flagStr) {
       this.flagCreatedReport = JSON.parse(flagStr);
+      sessionStorage.removeItem('createdReportUser');
       setTimeout(() => {
         this.flagCreatedReport = false;
       }, 3000);
     }
-    sessionStorage.removeItem('createdReportUser');
   }
 
   ngOnDestroy() {
