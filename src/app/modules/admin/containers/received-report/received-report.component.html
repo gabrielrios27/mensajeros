@@ -37,14 +37,12 @@
             </div>
         </section>
         <section>
-            <div class="container-observ">
-                <p class="span-observ" style="font-weight: 600; margin-top: 52px;">Observaciones, comentarios sobre el
-                    reporte recibido {{report.nombre}}</p>
+            <div class="container-observ" *ngIf="report.observacion != ''" >
+                <p class="span-observ"  style="font-weight: 600; margin-top: 52px;">Comentario sobre el reporte {{report.nombre}}</p>
                 <span class="span-text"> {{report.observacion}} </span>
             </div>
             <div class="container-observ">
-                <p class="span-observ" style="font-weight: 600; margin-top: 52px;">Observaciones, comentarios sobre el
-                    reporte recibido {{report.nombre}}</p>
+                <p class="span-observ" style="font-weight: 600; margin-top: 52px;">Observación sobre el reporte recibido {{report.nombre}}</p>
                 <textarea class="text-observ" placeholder="Ingrese texto" type="text" [(ngModel)]="observ">{{observ}}</textarea>
             </div>
         </section>
