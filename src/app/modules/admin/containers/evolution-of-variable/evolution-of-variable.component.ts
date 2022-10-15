@@ -155,8 +155,8 @@ export class EvolutionOfVariableComponent implements OnInit {
       this.idVariable = params.get('idVariable');
     });
   }
-  
-  getVariableName(){
+
+  getVariableName() {
     this._adminSvc
       .getVariableWithId(this.idVariable)
       .subscribe({
@@ -200,22 +200,21 @@ export class EvolutionOfVariableComponent implements OnInit {
     let until
     this.variable.map((v) => {
       // si es null numerico suma los valores 
-      if(v.numerico == null){
+      if (v.numerico == null) {
         v.numerico = v.femenino + v.masculino + v.no_Binario
       }
       // 
       since = new Date(v.periodo_desde)
       until = new Date(v.periodo_hasta)
       if (this.date.getFullYear() == until.getFullYear() && this.date.getFullYear() == since.getFullYear()) {
-        mont = (until.getMonth() - since.getMonth()) + 1
         let monts = since.getMonth()
-        while (monts < until.getMonth()) {
-          this.data[monts - 1] += v.numerico
+        while (monts <= until.getMonth()) {
+          this.data[monts] += v.numerico
           monts += 1
         }
       }
-      if (this.date.getFullYear() <= until.getFullYear() && this.date.getFullYear() > since.getFullYear()) {
-        mont = (until.getMonth()+1)
+      if (this.date.getFullYear() == until.getFullYear() && this.date.getFullYear() > since.getFullYear()) {
+        mont = (until.getMonth())
         let monts = 0
         while (monts < mont) {
           this.data[monts] += v.numerico
@@ -239,10 +238,10 @@ export class EvolutionOfVariableComponent implements OnInit {
   lastYear(element: evolutionVariable) {
     let since = new Date(element.periodo_desde)
     let until = new Date(element.periodo_hasta)
-    if (since.getMonth() <= 6 || until.getMonth() <= 6) {
+    if (since.getMonth() <= 5 || until.getMonth() <= 5) {
       this.data[0] += element.numerico
     }
-    if (since.getMonth() > 6 || until.getMonth() > 6) {
+    if (since.getMonth() > 5 || until.getMonth() > 5) {
       this.data[1] += element.numerico
     }
   }
@@ -251,10 +250,10 @@ export class EvolutionOfVariableComponent implements OnInit {
   currentYear(element: evolutionVariable) {
     let since = new Date(element.periodo_desde)
     let until = new Date(element.periodo_hasta)
-    if (since.getMonth() <= 6 || until.getMonth() <= 6) {
+    if (since.getMonth() <= 5 || until.getMonth() <= 5) {
       this.data[2] += element.numerico
     }
-    if (since.getMonth() > 6 || until.getMonth() > 6) {
+    if (since.getMonth() > 5 || until.getMonth() > 5) {
       this.data[3] += element.numerico
     }
   }
@@ -264,21 +263,21 @@ export class EvolutionOfVariableComponent implements OnInit {
     let since = new Date(element.periodo_desde)
     let until = new Date(element.periodo_hasta)
     if (since.getFullYear() < this.date.getFullYear() - 1 && until.getFullYear() == this.date.getFullYear() - 1) {
-      if (until.getMonth() <= 6) {
+      if (until.getMonth() <= 5) {
         this.data[0] += element.numerico
         this.data[1] += element.numerico
       }
-      if (until.getMonth() > 6) {
+      if (until.getMonth() > 5) {
         this.data[1] += element.numerico
       }
     }
     if (since.getFullYear() < this.date.getFullYear() - 1 && until.getFullYear() == this.date.getFullYear()) {
-      if (until.getMonth() <= 6) {
+      if (until.getMonth() <= 5) {
         this.data[0] += element.numerico
         this.data[1] += element.numerico
         this.data[2] += element.numerico
       }
-      if (until.getMonth() > 6) {
+      if (until.getMonth() > 5) {
         this.data[0] += element.numerico
         this.data[1] += element.numerico
         this.data[2] += element.numerico
@@ -287,27 +286,27 @@ export class EvolutionOfVariableComponent implements OnInit {
     }
 
     if (since.getFullYear() == this.date.getFullYear() - 1 && until.getFullYear() == this.date.getFullYear()) {
-      if (since.getMonth() <= 6) {
+      if (since.getMonth() <= 5) {
         this.data[0] += element.numerico
         this.data[1] += element.numerico
       }
-      if (since.getMonth() > 6) {
+      if (since.getMonth() > 5) {
         this.data[1] += element.numerico
       }
-      if (until.getMonth() <= 6) {
+      if (until.getMonth() <= 5) {
         this.data[2] += element.numerico
       }
-      if (until.getMonth() > 6) {
+      if (until.getMonth() > 5) {
         this.data[2] += element.numerico
         this.data[3] += element.numerico
       }
     }
     if (since.getFullYear() == this.date.getFullYear() && until.getFullYear() > this.date.getFullYear()) {
-      if (since.getMonth() <= 6) {
+      if (since.getMonth() <= 5) {
         this.data[2] += element.numerico
         this.data[3] += element.numerico
       }
-      if (since.getMonth() > 6) {
+      if (since.getMonth() > 5) {
         this.data[3] += element.numerico
       }
     }
@@ -374,9 +373,16 @@ export class EvolutionOfVariableComponent implements OnInit {
         this.data[3] += element.numerico
       }
 
+      //anio anterior
+      if (since.getFullYear() == this.date.getFullYear() - 1 && until.getFullYear() == this.date.getFullYear() - 1) {
+        this.data[2] += element.numerico
+      }
+
+      // anio corriente
       if (since.getFullYear() == this.date.getFullYear() && until.getFullYear() == this.date.getFullYear()) {
         this.data[3] += element.numerico
       }
+
       if (since.getFullYear() == this.date.getFullYear() && until.getFullYear() > this.date.getFullYear()) {
         this.data[3] += element.numerico
       }
