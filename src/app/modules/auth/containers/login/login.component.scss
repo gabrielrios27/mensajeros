@@ -46,7 +46,7 @@
   border-radius: 3.75rem;
   border: none;
   padding: 0 1.875rem;
-  margin: 1.5625rem 0 3rem 0;
+
   outline-color: $color-primary-border;
   text-align: center;
   ::-webkit-input-placeholder {
@@ -68,7 +68,23 @@
 .login__input:focus {
   background-color: $color-bg-light-grey;
 }
-
+.login__input-container {
+  display: flex;
+  align-items: center;
+  margin: 1.5625rem 0 3rem 0;
+  padding-left: 60px;
+}
+.login__input-ico-eye {
+  width: 60px;
+  padding: 0 15px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    path {
+      fill: #1967d2;
+    }
+  }
+}
 .login__recordar-usuario {
   margin-top: 0.375rem;
   font-weight: 400;
@@ -104,7 +120,8 @@
     margin-bottom: 2.4rem;
     margin-top: 0.9rem;
   }
-  .login__input {
+
+  .login__input-container {
     margin: 1.2rem 0 2.4rem 0;
   }
 }
