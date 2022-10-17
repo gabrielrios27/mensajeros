@@ -11,7 +11,7 @@ import { Response } from '../models/response';
 @Injectable()
 export class AuthService {
   url: string = 'https://mensajeros-back-martin.herokuapp.com/';
-  baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com/';
+  baseUrl: string = 'https://mensajeros-demo-back.herokuapp.com/';
   baseUrlTami: string = 'https://mensajeros-back-martin.herokuapp.com/';
 
   EPAuthority: string = 'usuarios/role';
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   loginByEmail(form: Login): Observable<Response | void> {
-    let direccion = this.baseUrlTami + 'auth/login';
+    let direccion = this.baseUrl + 'auth/login';
     return this._http.post<Response>(direccion, form).pipe(
       map((res: Response) => {
         this.loggedIn.next(true);
@@ -48,7 +48,7 @@ export class AuthService {
   }
 
   getRole() {
-    return this._http.get<role>(this.baseUrlTami + this.EPAuthority).pipe(
+    return this._http.get<role>(this.baseUrl + this.EPAuthority).pipe(
       map((data) => {
         return data;
       }),
@@ -67,7 +67,7 @@ export class AuthService {
 
   changePassword(form: changePassword): Observable<Response> {
     return this._http.post<Response>(
-      this.baseUrlTami + 'email-password/change-password',
+      this.baseUrl + 'email-password/change-password',
       form
     );
   }

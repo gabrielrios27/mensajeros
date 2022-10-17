@@ -15,7 +15,7 @@ export class UserService {
   private subjectSaveExit = new Subject<any>();
   private subjectGoBack = new Subject<any>();
   private subjectGoBackLastAxe = new Subject<any>();
-  baseUrl: string = 'https://mensajeros-back-martin.herokuapp.com';
+  baseUrl: string = 'https://mensajeros-demo-back.herokuapp.com';
   baseUrlTami: string = 'https://mensajeros-back-martin.herokuapp.com';
   ePUserData: string = '/usuarios/datosUsuario';
   ePPendingReports: string = '/reportes/reportesPendientes';
@@ -52,17 +52,15 @@ export class UserService {
   }
   //obtener datos del usuario logeado
   getUserData(): Observable<UserData> {
-    return this._http.get<UserData>(this.baseUrlTami + this.ePUserData);
+    return this._http.get<UserData>(this.baseUrl + this.ePUserData);
   }
   //Para carga de reportes
   getPendingReports(): Observable<ReportInfo[]> {
-    return this._http.get<ReportInfo[]>(
-      this.baseUrlTami + this.ePPendingReports
-    );
+    return this._http.get<ReportInfo[]>(this.baseUrl + this.ePPendingReports);
   }
   getCompleteReports(): Observable<ReportComplete[]> {
     return this._http.get<ReportComplete[]>(
-      this.baseUrlTami + this.ePCompleteReports
+      this.baseUrl + this.ePCompleteReports
     );
   }
   getReportToUpload(
@@ -70,7 +68,7 @@ export class UserService {
     idCenter: number
   ): Observable<ReportToUpload> {
     return this._http.get<ReportToUpload>(
-      this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter
+      this.baseUrl + this.ePReportToUpload + idReport + '/' + idCenter
     );
   }
   putReportToUpload(
@@ -83,7 +81,7 @@ export class UserService {
     body.fechaCompletado = report.fechaCompletado;
     body.respuestas = report.respuestas;
     return this._http.put<ReportToUpload>(
-      this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter,
+      this.baseUrl + this.ePReportToUpload + idReport + '/' + idCenter,
       body
     );
   }
@@ -92,7 +90,7 @@ export class UserService {
     idCenter: number
   ): Observable<ReportToUpload> {
     return this._http.post<ReportToUpload>(
-      this.baseUrlTami + this.ePReportToUpload + idReport + '/' + idCenter,
+      this.baseUrl + this.ePReportToUpload + idReport + '/' + idCenter,
       {}
     );
   }
@@ -102,7 +100,7 @@ export class UserService {
     idAxe: number
   ): Observable<ReportToUpload> {
     return this._http.get<ReportToUpload>(
-      this.baseUrlTami +
+      this.baseUrl +
         this.ePReportToUpload +
         idReport +
         '/' +
@@ -118,7 +116,7 @@ export class UserService {
     comment: string
   ): Observable<string> {
     return this._http.put(
-      this.baseUrlTami + this.ePCommentToUpload + idReport + '/' + idCenter,
+      this.baseUrl + this.ePCommentToUpload + idReport + '/' + idCenter,
       { obser: comment },
       {
         responseType: 'text',
