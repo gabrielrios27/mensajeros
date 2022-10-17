@@ -50,6 +50,8 @@ export interface ReportToUpload {
   ejeActual: number;
   totalEjes: number;
   ejesConVariables: AxeAndVariables[];
+  periodoDesde: string;
+  periodoHasta: string;
 }
 export interface ReportInfo {
   fecha_entrega: string;
@@ -73,4 +75,12 @@ export interface AnswersUpload {
   ejeActual: number;
   fechaCompletado: Date;
   respuestas: ReportResponse[];
+}
+export interface ReportComplete {
+  fecha_completado: string;
+  fecha_creacion: string;
+  idCentro: number;
+  idReporte: number;
+  nom_centro: string;
+  nombreReporte: string;
 }

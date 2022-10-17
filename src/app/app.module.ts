@@ -9,6 +9,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorInterceptor } from './modules/admin/services/jwt-interceptor.interceptor';
 import { ReportsComponent } from './app/modules/admin/containers/reports/reports.component';
+import { AdminModule } from './modules/admin/admin.module';
 
 @NgModule({
   declarations: [AppComponent, ReportsComponent],
@@ -18,6 +19,7 @@ import { ReportsComponent } from './app/modules/admin/containers/reports/reports
     LayoutsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    AdminModule,
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

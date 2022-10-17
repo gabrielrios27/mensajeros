@@ -128,6 +128,7 @@ import { ActivityLogComponent } from './containers/activity-log/activity-log.com
     ...adminContainers.containers,
     ...adminComponents.components,
     SelecsAxesVariablesComponent,
+    ModalAlertComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
