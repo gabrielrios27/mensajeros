@@ -107,7 +107,6 @@ export class AddVariablesComponent implements OnInit {
     this.setFlagAddEdit(false); //Para colocar modal de advertencia de cambio de pantalla si se da click a item en navbar
     this.idVariable = this.getIdFromRute();
 
-    console.log('id ruta:' + this.idVariable);
     this.completeInputWithVariable(this.idVariable);
     // this.getVariableList();
     this.finalsValuesList = this.finalsValuesListFromOne;
@@ -124,13 +123,9 @@ export class AddVariablesComponent implements OnInit {
         this.getIdAxeFromRute(); //obtiene el id de eje de la ruta y renderiza el eje elegido en el select de eje
       },
       error: (err) => {
-        console.log(err);
         if (err.status === 401) {
           this.router.navigate(['/auth']);
         }
-      },
-      complete: () => {
-        console.log('Request trending complete');
       },
     });
   }
@@ -140,7 +135,6 @@ export class AddVariablesComponent implements OnInit {
     localStorage.setItem('flagAddEdit', JSON.stringify(this.flagAddEdit));
   }
   onSelection($event: any) {
-    console.log('on selection en add variable', $event);
     this.showDialog = false;
     if ($event === 'ok') {
       this.subject.next(true);
@@ -150,7 +144,6 @@ export class AddVariablesComponent implements OnInit {
     }
   }
   openDialog() {
-    console.log('opn dialog');
     this.showDialog = true;
   }
   //Para preview de variable--------------------
@@ -158,12 +151,10 @@ export class AddVariablesComponent implements OnInit {
     this.flagPreview = value;
   }
   onGoOutPreview($event: boolean) {
-    console.log('evento desde hijo: ', $event);
     this.toggleFlagPreview(!$event);
   }
   //click al botón de confirmar------------------
   onConfirm() {
-    console.log('form: ', this.newVariable);
     if (this.newVariable.invalid) {
       this.flagError = true;
       this.invalidForm = true;
@@ -194,12 +185,10 @@ export class AddVariablesComponent implements OnInit {
     this.quantityOfPages = Math.ceil(
       (this.listOfVariable.length + 1) / this.itemsPerPage
     );
-    console.log('variablePage en loc stg: ', this.quantityOfPages);
     localStorage.setItem('variablePage', JSON.stringify(this.quantityOfPages));
   }
   putOrAddVariable() {
     this.setFlagAddEdit(true); //Para quitar modal de advertencia de cambio de pantalla de navbar del btn confirm
-    console.log('idvariable en put or add: ', this.idVariable);
     if (this.idVariable === 0) {
       let variableToCreate: variable = this.newVariable.value;
       if (!variableToCreate.escala_valor) {
@@ -208,7 +197,6 @@ export class AddVariablesComponent implements OnInit {
         variableToCreate.etiqueta_inicial = 'null';
         variableToCreate.etiqueta_final = 'null';
       }
-      console.log('variable a subir: ', variableToCreate);
 
       this.setVariableLocStg(variableToCreate, true); //sube a localStorage la variable creada y un flag que indica que es nueva variable para desplegar modal en página siguiente.
       this.setPageLocalStorage(); //para paginación
@@ -218,16 +206,11 @@ export class AddVariablesComponent implements OnInit {
             'admin/dashboard/variables/variables-agrupadas/' +
               variableToCreate.eje.id,
           ]); //navega hacia la ultima pagina de las variables agrupadas de el eje elegido
-          console.log(data);
         },
         error: (err) => {
-          console.log(err);
           if (err.status === 401) {
             this.router.navigate(['/auth']);
           }
-        },
-        complete: () => {
-          console.log('Request new Variable complete');
         },
       });
     } else {
@@ -238,7 +221,6 @@ export class AddVariablesComponent implements OnInit {
         variableToEdit.etiqueta_inicial = 'null';
         variableToEdit.etiqueta_final = 'null';
       }
-      console.log('variable a subir: ', variableToEdit);
       this.setVariableLocStg(variableToEdit, false); //sube a localStorage la variable editada y un flag que indica que es NO es nueva variable para desplegar modal adecuado en página siguiente.
       this._adminSvc
         .editVariableWithId(this.idVariable.toString(), variableToEdit)
@@ -248,16 +230,11 @@ export class AddVariablesComponent implements OnInit {
               'admin/dashboard/variables/variables-agrupadas/' +
                 variableToEdit.eje.id,
             ]); //navega hacia la ultima pagina de las variables agrupadas de el eje elegido
-            console.log(data);
           },
           error: (err) => {
-            console.log(err);
             if (err.status === 401) {
               this.router.navigate(['/auth']);
             }
-          },
-          complete: () => {
-            console.log('Request edit Variable complete');
           },
         });
     }
@@ -305,7 +282,6 @@ export class AddVariablesComponent implements OnInit {
     this._adminSvc.getVariableWithId(id.toString()).subscribe({
       next: (data: variable) => {
         this.variableById = data;
-        console.log(this.variableById);
         this.variableInput = data.nombre;
         this.descriptionInput = data.descripcion;
         this.typeAnswer = data.tipo;
@@ -340,13 +316,9 @@ export class AddVariablesComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.log(err);
         if (err.status === 401) {
           this.router.navigate(['/auth']);
         }
-      },
-      complete: () => {
-        console.log('Request trending complete');
       },
     });
   }
@@ -358,24 +330,14 @@ export class AddVariablesComponent implements OnInit {
         this.listOfVariable = data;
       },
       error: (err) => {
-        console.log(err);
         if (err.status === 401) {
           this.router.navigate(['/auth']);
         }
-      },
-      complete: () => {
-        console.log('Request trending complete');
       },
     });
   }
   //CHEKEA SI LA VARIABLE YA EXISTE EN EL EJE-----------
   checkInVariableList(variable: string): boolean {
-    console.log('nombre de variable a guardar: ', variable);
-    console.log(
-      'nombre de variable en variableById: ',
-      this.variableById.nombre
-    );
-
     for (let item of this.listOfVariable) {
       if (
         item.nombre.toUpperCase() === variable.toUpperCase() &&
@@ -398,7 +360,6 @@ export class AddVariablesComponent implements OnInit {
     } else {
       this.finalsValuesList = this.finalsValuesListFromOne;
     }
-    console.log('firstValue: ', this.firstValue);
   }
   captureLastValue(e: number) {
     this.lastValue = e;

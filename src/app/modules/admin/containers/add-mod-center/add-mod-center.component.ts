@@ -50,7 +50,6 @@ export class AddModCenterComponent implements OnInit {
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(err);
       },
     });
   }
@@ -62,12 +61,10 @@ export class AddModCenterComponent implements OnInit {
     localStorage.setItem('centerPage', JSON.stringify(this.quantityOfPages));
   }
   addCenter(center: Centro) {
-    console.log(center);
     this.setPageLocalStorage(); //para paginación
     this.admin.addCenter(center).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(data);
         this.data.flag = false;
         this.data.editar = false;
         this.data.nombreCentro = this.formUpEdit.value.nombre;
@@ -77,7 +74,6 @@ export class AddModCenterComponent implements OnInit {
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(err);
       },
     });
   }
@@ -85,12 +81,9 @@ export class AddModCenterComponent implements OnInit {
   buscaUser(id: any) {
     this.admin.getCenter(id).subscribe({
       next: (data) => {
-        console.log(data);
         this.centro = data;
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => {},
     });
 
     if (this.centro.usuario?.id) {
@@ -106,7 +99,6 @@ export class AddModCenterComponent implements OnInit {
     }
   }
   editar(centro: Centro) {
-    console.log(this.data.center?.id);
     if (this.idUser) {
       centro.usuario = this.centro.usuario;
     } else {
@@ -125,11 +117,9 @@ export class AddModCenterComponent implements OnInit {
   }
 
   editCenter(center: Centro, id: any) {
-    console.log(center);
     this.admin.editCenter(center, id).subscribe({
       next: (data) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(data);
         this.data.flag = false;
         this.data.editar = false;
         this.data.center = data;
@@ -140,7 +130,6 @@ export class AddModCenterComponent implements OnInit {
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        console.log(err);
       },
     });
   }

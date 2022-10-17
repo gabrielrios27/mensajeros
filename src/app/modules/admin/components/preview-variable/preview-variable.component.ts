@@ -36,7 +36,6 @@ export class PreviewVariableComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkAxeNull();
-    console.log(this.variableValue);
     this.createValueScale();
     this.finalValue = Number(this.variableValue.valor_final);
   }

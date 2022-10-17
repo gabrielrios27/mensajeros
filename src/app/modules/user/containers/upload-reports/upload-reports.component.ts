@@ -94,11 +94,15 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
       for (let i = 0; i < this.reportToUpload.totalEjes; i++) {
         this.axes.push(i + 1);
       }
-      if (this.reportToUpload.ejeActual-1 >= 1) {
+      if (this.reportToUpload.ejeActual - 1 >= 1) {
         let progress = document.getElementById('progress') || undefined;
-        this.currentActive = this.reportToUpload.ejeActual ;
+        this.currentActive = this.reportToUpload.ejeActual;
         if (progress?.style.width != undefined) {
-          progress.style.width = ((this.reportToUpload.ejeActual-1) / this.reportToUpload.totalEjes) *100 +'%';
+          progress.style.width =
+            ((this.reportToUpload.ejeActual - 1) /
+              this.reportToUpload.totalEjes) *
+              100 +
+            '%';
           if (progress.style.width == 100 + '%') {
             this.flag3 = true;
           }
@@ -132,24 +136,21 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     if (this.currentActive > this.circles.length) {
       this.currentActive = this.circles.length;
     }
-    console.log("curren",this.currentActive)
     this.update();
   }
 
   prevButton() {
     this.circles = document.querySelectorAll('.circle');
     this.currentActive -= 1;
-    
+
     this.flag3 = false;
-    console.log("curren",this.currentActive)
     this.update();
   }
 
   update() {
     let progress = document.getElementById('progress') || undefined;
     this.circles.forEach((circle: any, idx: any) => {
-      console.log(idx)
-      if (idx-1 < this.currentActive-1) {
+      if (idx - 1 < this.currentActive - 1) {
         circle.classList.add('active');
       } else {
         circle.classList.remove('active');
@@ -157,12 +158,12 @@ export class UploadReportsComponent implements OnInit, OnDestroy {
     });
     const actives = document.querySelectorAll('.active');
     if (progress?.style.width != undefined) {
-      progress.style.width = ((actives.length - 1) / (this.circles.length - 1)) * 100 + '%';
+      progress.style.width =
+        ((actives.length - 1) / (this.circles.length - 1)) * 100 + '%';
       if (progress.style.width == 100 + '%') {
         this.flag3 = true;
       }
-      if(this.currentActive == 0 )
-      progress.style.width = 0 + '%';
+      if (this.currentActive == 0) progress.style.width = 0 + '%';
     }
   }
   //

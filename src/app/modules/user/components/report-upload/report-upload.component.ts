@@ -181,7 +181,6 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data: ReportToUpload) => {
           this.reportToUploadComplete = data;
-          console.log(this.reportToUploadComplete);
 
           //{{ element.fechaHora.substring(8, 10) }}/{{
           //   element.fechaHora.substring(5, 7)
