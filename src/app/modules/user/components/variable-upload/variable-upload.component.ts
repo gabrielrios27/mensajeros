@@ -79,6 +79,15 @@ export class VariableUploadComponent implements OnInit {
     this.noBinary = this.variableValue.respuesta.noBinario;
     this.inputNumber = this.variableValue.respuesta.numerico;
     this.inputTextual = this.variableValue.respuesta.textual;
+    if (this.male === 0) {
+      this.male = null;
+    }
+    if (this.female === 0) {
+      this.female = null;
+    }
+    if (this.noBinary === 0) {
+      this.noBinary = null;
+    }
     if (this.variableValue.respuesta.escala) {
       this.valueScaleSelected = this.variableValue.respuesta.escala.toString();
     } else {
@@ -169,6 +178,15 @@ export class VariableUploadComponent implements OnInit {
           total: this.total,
           observations: this.inputObservations,
         };
+        if (this.female === null) {
+          this.variableComplete.female = 0;
+        }
+        if (this.male === null) {
+          this.variableComplete.male = 0;
+        }
+        if (this.noBinary === null) {
+          this.variableComplete.noBinary = 0;
+        }
       }
     }
     if (
@@ -186,6 +204,9 @@ export class VariableUploadComponent implements OnInit {
           inputNumber: this.inputNumber,
           observations: this.inputObservations,
         };
+        this.variableComplete.female = null;
+        this.variableComplete.male = null;
+        this.variableComplete.noBinary = null;
       }
     }
     if (this.variableValue.tipo === 'Textual') {
@@ -200,6 +221,9 @@ export class VariableUploadComponent implements OnInit {
           inputTextual: this.inputTextual,
           observations: this.inputObservations,
         };
+        this.variableComplete.female = null;
+        this.variableComplete.male = null;
+        this.variableComplete.noBinary = null;
       }
 
       if (this.variableValue.escala_valor === 'true') {
@@ -218,6 +242,9 @@ export class VariableUploadComponent implements OnInit {
               valueScaleSelected: Number(this.valueScaleSelected),
               observations: this.inputObservations,
             };
+            this.variableComplete.female = null;
+            this.variableComplete.male = null;
+            this.variableComplete.noBinary = null;
           }
         }
       }
@@ -257,10 +284,10 @@ export class VariableUploadComponent implements OnInit {
       let response: ReportResponse = {} as ReportResponse;
       response = {
         escala: this.variableComplete.valueScaleSelected || null,
-        femenino: this.variableComplete.female || null,
+        femenino: this.variableComplete.female,
         idVariable: this.variableComplete.id || null,
-        masculino: this.variableComplete.male || null,
-        noBinario: this.variableComplete.noBinary || null,
+        masculino: this.variableComplete.male,
+        noBinario: this.variableComplete.noBinary,
         numerico: this.variableComplete.inputNumber || null,
         observaciones: this.variableComplete.observations || null,
         textual: this.variableComplete.inputTextual || null,

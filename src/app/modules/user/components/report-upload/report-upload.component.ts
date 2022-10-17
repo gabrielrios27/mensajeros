@@ -471,6 +471,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
       this.reportToUploadComplete.ejesConVariables[
         this.reportToUploadComplete.ejeActual - 1
       ].complete = false;
+
       this.reportToUpload.emit(this.reportToUploadComplete);
       if (this.flagResponseGoBack) {
         //si hay respuesta se guarda en el reporte y se sube al servidor
@@ -567,6 +568,7 @@ export class ReportUploadComponent implements OnInit, OnDestroy {
         Date.parse(this.reportToUploadComplete.periodoHasta)
       ) {
         this.reportToUploadComplete.fechaCompletado = this.today;
+
         this.userSvc
           .putReportToUpload(
             this.idReport,
