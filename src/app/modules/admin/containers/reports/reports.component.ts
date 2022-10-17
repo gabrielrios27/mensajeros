@@ -36,6 +36,9 @@ export class ReportsComponent implements OnInit {
   initialItem: number = 1;
   finalItem: number = 10;
   //
+  flagNoDelete: boolean = false;
+  modalText: string =
+    '¡No puedes eliminar este reporte!<br>Ya fue completado o está siendo cargado en este momento por el director de Centro.';
 
   // variables para visualizar reporte
   name = 'old name';
@@ -66,7 +69,6 @@ export class ReportsComponent implements OnInit {
     this.getCenters();
     this.getAxes();
     this.getVariables();
-    
   }
 
   busca(e: string) {
@@ -197,7 +199,15 @@ export class ReportsComponent implements OnInit {
         this.close();
       },
       error: (err) => {
-        setTimeout(() => this.cdr.detectChanges());
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        } else if (err.status === 500) {
+          this.close();
+          this.flagNoDelete = true;
+          setTimeout(() => {
+            this.close();
+          }, 1111000);
+        }
       },
     });
   }
@@ -338,5 +348,6 @@ export class ReportsComponent implements OnInit {
     this.flagNew = false;
     this.flagEdited = false;
     this.flagDelete = false;
+    this.flagNoDelete = false;
   }
 }

@@ -47,7 +47,11 @@
             Fecha de creación
           </div>
           <div
-            class="list-reports__header list-reports__header--action list-reports__cell--acction"
+            class="
+              list-reports__header
+              list-reports__header--action
+              list-reports__cell--acction
+            "
           >
             Acciones
           </div>
@@ -261,6 +265,12 @@
       </div>
     </section>
   </div>
+
   <div *ngIf="flag" class="overlay"></div>
 </div>
 <div *ngIf="showIt" class="overlay"></div>
+<app-modal-alert
+  [flag]="flagNoDelete"
+  type="alert"
+  [modalText]="modalText"
+></app-modal-alert>
