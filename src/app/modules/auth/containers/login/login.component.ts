@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   flag: boolean = false;
   flag2: boolean = false;
   errorMessage: any;
-
+  flagSeePassword: boolean = false;
   constructor(
     public serviceLogin: AuthService,
     private fb: FormBuilder,
@@ -40,28 +40,34 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     localStorage.removeItem('isAdmin');
   }
-
+  changeType() {
+    let element: any = document.getElementById('password');
+    if (element.type === 'text') {
+      this.flagSeePassword = false;
+      element.type = 'password';
+    } else {
+      this.flagSeePassword = true;
+      element.type = 'text';
+    }
+  }
   setLocalStorage(data: any) {
     if (data) {
       localStorage.setItem('Usuario', JSON.stringify(data));
     }
   }
 
-  getRole(){
+  getRole() {
     this.serviceLogin.getRole().subscribe({
       next: (data: any) => {
         setTimeout(() => this.cdr.detectChanges());
-        if(data.authority === 'ROLE_ADMIN'){
+        if (data.authority === 'ROLE_ADMIN') {
           this.router.navigate(['admin/dashboard/home']);
-        }
-        else{
+        } else {
           this.router.navigate(['user/dashboard/home']);
         }
-        
       },
       error: (err) => {
         setTimeout(() => this.cdr.detectChanges());
-        
       },
     });
   }
@@ -72,9 +78,9 @@ export class LoginComponent implements OnInit {
       (data) => {
         if (data) {
           setTimeout(() => this.cdr.detectChanges());
-          
+
           this.setLocalStorage(data.token);
-          this.getRole()
+          this.getRole();
         }
       },
       (error) => {
@@ -88,7 +94,6 @@ export class LoginComponent implements OnInit {
           this.flag2 = true;
         }
       }
-      
     );
   }
 }
