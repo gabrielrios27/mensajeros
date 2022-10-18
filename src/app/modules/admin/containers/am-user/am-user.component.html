@@ -22,7 +22,7 @@
     <section class="container-user">
       <label>Usuario (direccion de email)*</label>
       <input
-        type="text"
+        type="email"
         formControlName="email"
         [(ngModel)]="email"
         placeholder="jimenajimenez@mdp.com"
@@ -38,7 +38,11 @@
         <span *ngIf="formUpEdit.controls['email'].hasError('required')"
           >Requerido</span
         >
-        <span *ngIf="formUpEdit.controls['email'].hasError('email')"
+        <span
+          *ngIf="
+            formUpEdit.controls['email'].hasError('email') ||
+            formUpEdit.controls.email.errors?.pattern
+          "
           >Email invalido</span
         >
       </mat-error>

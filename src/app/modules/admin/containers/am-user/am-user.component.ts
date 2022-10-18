@@ -49,7 +49,14 @@ export class AmUserComponent implements OnInit {
   ) {
     this.formUpEdit = fb.group({
       nombre: ['', Validators.required],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.email,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        ],
+      ],
       contrasena: [''],
       selectOp: [this.centroAsig()],
       rolMDP: [''],
