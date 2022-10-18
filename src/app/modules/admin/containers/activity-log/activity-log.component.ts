@@ -96,7 +96,7 @@ export class ActivityLogComponent implements OnInit {
       });
   }
   getReportsList() {
-    this.currentPage = this.getPageLocalStorage();
+    this.currentPage = 0;
     this._adminSvc
       .getActivityLogByIdUser(this.idUser)
       .pipe(takeUntil(this.onDestroy$))
@@ -121,7 +121,6 @@ export class ActivityLogComponent implements OnInit {
   }
   //para paginación----
   pageToShow(page: number, list: Activity[]) {
-    this.setPageLocalStorage(page);
     this.listLenght = list.length;
     this.quantityOfPages = Math.ceil(this.listLenght / this.itemsPerPage);
     this.listCurrentPage = [];
@@ -175,20 +174,6 @@ export class ActivityLogComponent implements OnInit {
       this.currentPage = this.quantityOfPages;
       this.pageToShow(this.currentPage, this.listOfActivity);
     }
-  }
-  setPageLocalStorage(page: number) {
-    localStorage.setItem('axeWithVariablesPage', JSON.stringify(page));
-  }
-  setNameAxeLocalStorage(idInforme: number) {
-    localStorage.setItem('idComparativeReport', JSON.stringify(idInforme));
-  }
-  getPageLocalStorage(): number {
-    let pageLocalStorage: number = 1;
-    let pageLocalStorageJSON = localStorage.getItem('idComparativeReport');
-    if (pageLocalStorageJSON) {
-      pageLocalStorage = JSON.parse(pageLocalStorageJSON);
-    }
-    return pageLocalStorage;
   }
 
   //para cerrar modales------------------

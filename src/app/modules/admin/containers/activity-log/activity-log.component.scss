@@ -73,6 +73,9 @@ p {
             &:first-of-type {
               padding-left: 1.5em;
             }
+            &::first-letter {
+              text-transform: uppercase;
+            }
             .list-activity__span {
               font-family: "Inter" !important;
               font-size: 1em;
