@@ -26,7 +26,8 @@
       </section>
       <section>
         <label>Centros alcanzados</label>
-        <mat-select
+        <div style="margin-bottom: 12px;">
+          <mat-select
           placeholder="Selecciona al menos un Centro"
           checkboxPosition="after"
           formControlName="centros"
@@ -34,7 +35,7 @@
           multiple=""
           [(value)]="center"
           (selectionChange)="catchCenter($event.value)"
-        >
+          >
           <mat-option
             class="mat-option"
             [value]="item.id"
@@ -50,6 +51,7 @@
         >
           <span>Campo requerido</span>
         </mat-error>
+      </div>
         <div class="container-button-expand">
           <a
             style="cursor: pointer"
@@ -68,7 +70,7 @@
         <label>Periodo a reportar</label>
         <br />
         <br />
-        <label style="margin-right: 102px">Desde</label>
+        <label style="margin-right: 119px">Desde</label>
         <label>Hasta</label>
         <div class="container-input-date">
           <br />
