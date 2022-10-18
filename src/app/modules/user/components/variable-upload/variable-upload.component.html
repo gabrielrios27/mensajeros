@@ -15,6 +15,7 @@
       type="number"
       placeholder="Cantidad femenimo"
       (ngModelChange)="onChangeInput()"
+      onkeypress="return (event.keyCode  >= 48 && event.keyCode <= 57)"
     />
     <input
       class="number-genre__input"
@@ -23,6 +24,7 @@
       type="number"
       placeholder="Cantidad masculino"
       (ngModelChange)="onChangeInput()"
+      onkeypress="return (event.keyCode  >= 48 && event.keyCode <= 57)"
     />
     <input
       class="number-genre__input"
@@ -31,6 +33,7 @@
       type="number"
       placeholder="Cantidad No binario"
       (ngModelChange)="onChangeInput()"
+      onkeypress="return (event.keyCode  >= 48 && event.keyCode <= 57)"
     />
     <p class="number-genre__total-text">Total</p>
     <p class="number-genre__total-result">{{ total }}</p>
@@ -49,6 +52,7 @@
       type="number"
       placeholder="Inserte número"
       (ngModelChange)="checkValue()"
+      onkeypress="return (event.keyCode  >= 48 && event.keyCode <= 57)"
     />
   </div>
   <!-- tipo textual -->

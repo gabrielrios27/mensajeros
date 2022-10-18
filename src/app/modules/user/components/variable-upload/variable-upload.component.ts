@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { AnyAaaaRecord } from 'dns';
 import { Subscription } from 'rxjs';
 import { ReportResponse, VariableRep } from '../../models';
 import { UserService } from '../../services';
@@ -294,5 +295,15 @@ export class VariableUploadComponent implements OnInit {
       };
       this.variableComplete = response;
     }
+  }
+  pressKey($event: any): boolean {
+    // let element: any = document.getElementById('male');
+    // element.keypress((event: any) => {
+    if ($event.which < 48 || $event.which > 57) {
+      return false;
+    } else {
+      return true;
+    }
+    // });
   }
 }
