@@ -75,11 +75,11 @@
           position: relative;
           width: 131px;
           height: 40px;
-          margin-right: 15px;
+          margin-right: 31px;
           margin-top: 13px;
 
           .input-fecha {
-            width: 131px;
+            width: 146px;
             height: 40px;
             box-sizing: border-box;
             border: 1px solid #79747e;
@@ -122,8 +122,8 @@
 
           .input-icon {
             position: absolute;
-            left: 90px;
-            top: 50%;
+            left: 109px;
+            top: 49%;
             transform: translateY(-50%);
           }
         }
@@ -246,7 +246,7 @@
   letter-spacing: 0.5px;
   color: #1c1b1f;
   outline-color: $color-primary-border;
-  margin: 13px 0px 12px 0px;
+  margin: 13px 0px 0px 0px;
 }
 
 ::ng-deep .mat-select:focus {
