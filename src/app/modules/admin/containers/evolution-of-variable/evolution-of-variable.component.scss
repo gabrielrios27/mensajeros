@@ -64,8 +64,8 @@
         position: absolute;
         flex-direction: column;
         align-items: flex-start;
-        margin-right: 1000px;
-        margin-top: 600px;
+        margin-left: 1132px;
+        margin-bottom: 395px;
 
         button {
             margin-top: 13px;
@@ -94,15 +94,15 @@
     }
 }
 
-@media (max-width: 1170px) {
+@media (max-width: 1280px) {
     .container{
-        width: 80%;
-        float: right;
+        width: 90%;
+        float: left;
     }
 }
-@media (max-width: 1000px) {
+@media (max-width: 1177px) {
     .container{
-        width: 65%;
-        float: right;
+        width: 80%;
+        float: left;
     }
 }
