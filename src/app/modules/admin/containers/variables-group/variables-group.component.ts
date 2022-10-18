@@ -282,18 +282,8 @@ export class VariablesGroupComponent implements OnInit {
 
   goTocharts() {
     this.flagSelectCenter = false;
-    console.log(
-      '/admin/dashboard/variables/evolucion-de-variable/' +
-        this.nameVariable +
-        '/' +
-        this.center.id +
-        '/' +
-        this.idVariable
-    );
-
     this.router.navigate([
       '/admin/dashboard/variables/evolucion-de-variable/' +
-        this.nameVariable +
         '/' +
         this.center.id +
         '/' +
