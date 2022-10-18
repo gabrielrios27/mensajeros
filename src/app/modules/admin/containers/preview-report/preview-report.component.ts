@@ -38,7 +38,9 @@ export class PreviewReportComponent implements OnInit {
   centers: Array<any> = [];
   centers2: any;
   centerSelects: Array<any> = [];
-
+  flagReportStarted: boolean = false;
+  modalText: string =
+    '¡No puedes editar este reporte!<br>Ya fue completado o está siendo cargado en este momento por el director de Centro.';
   constructor(
     private router: Router,
     private admin: AdminService,
@@ -170,7 +172,17 @@ export class PreviewReportComponent implements OnInit {
         this.data.report = undefined;
         this.router.navigate(['admin/dashboard/reportes/creación-de-reportes']);
       },
-      error: (err) => {},
+      error: (err) => {
+        if (err.status === 401) {
+          this.router.navigate(['/auth']);
+        } else if (err.status === 500) {
+          this.closeMod();
+          this.flagReportStarted = true;
+          setTimeout(() => {
+            this.closeMod();
+          }, 4000);
+        }
+      },
     });
   }
 
@@ -213,5 +225,8 @@ export class PreviewReportComponent implements OnInit {
   setReportLocStg(data: string, isNewReport: boolean) {
     localStorage.setItem('newOrEditedReport', data);
     localStorage.setItem('isNewReport', JSON.stringify(isNewReport));
+  }
+  closeMod() {
+    this.flagReportStarted = false;
   }
 }

@@ -206,7 +206,7 @@ export class ReportsComponent implements OnInit {
           this.flagNoDelete = true;
           setTimeout(() => {
             this.close();
-          }, 1111000);
+          }, 4000);
         }
       },
     });

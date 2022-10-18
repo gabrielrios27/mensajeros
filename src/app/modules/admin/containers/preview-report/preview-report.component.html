@@ -1,119 +1,193 @@
-<div class="container-preview " [ngClass]="{'modal' : newname}" *ngIf="report != null">
-    <div *ngIf="!newname">
-        <h1>Previsualización de Reporte Creado</h1>
-    </div>
-    <div class="container-preview-reporte">
-        <section class="container-header-preview">
-            <div class="logo-mdp">
-                <img src="/assets/images/logo-MDP.png" alt="logo-MDP" style="width: 113px;
-                height: 49px;">
-            </div>
-            <label class="label-repor-name">Reporte {{report.nombre}} </label>
-            <div class="periodo">
-                <p>Periodo</p>
-                <label>{{report.desde | date: 'dd/MM/yyyy'}} A {{report.hasta|date: 'dd/MM/yyyy'}}</label>
-            </div>
-        </section>
-        <section class="container-centros-preview ">
-            <div class="centros-Alcanzados">
-                <p>Centros Alcanzados:</p>
-                <p class="label-centros" *ngFor="let item of centerSelects">{{item.nombre}}</p>
-            </div>
-            <div class="fecha-entrega">
-                <label style="display: flex; margin-top: 4px;">Fecha de Entrega (Alerta) <mat-icon
-                        style="color:#FFBD12 ; font-size: 16px ;">notification_important</mat-icon></label>
-                <p>{{report.deliverdate | date: 'dd/MM/yyyy'}}</p>
-            </div>
-        </section>
-        <section class="section-ejes-variables">
-            <div class="container-ejes-variables" *ngFor="let item of report.axe">
-                <label class="ejes-preview">{{item.nombre}}</label>
-                <div class="variables-preview" >
-                    <p class="p-variables" *ngFor="let variable of report.variable[report.axe.indexOf(item)]" >{{variable.nombre}}</p>
-                </div>
-            </div>
-        </section>
-        <section style="border-top: 2px solid  #D9D9D9; margin-top: 20px ;">
-            <div class="buttons">
-                <button class="button" mat-button (click)="confirm()">Enviar</button> 
-                <button *ngIf="newname" (click)="cancel()" class="button"mat-button>Cerrar</button>
-                <button *ngIf="!newname" (click)="backAddReport()" class="button"mat-button>Cerrar</button>
-            </div>
-        </section>
-    </div>
-    <div *ngIf="flag" class="modal-2">
-        <label>Confirmar envio</label>
-        <div *ngFor="let item of centerSelects">
-            <p>{{item.nombre}}</p>
-            <label class="label" type="text" disabled>{{item.usuario?.email}}</label>
+<div
+  class="container-preview"
+  [ngClass]="{ modal: newname }"
+  *ngIf="report != null"
+>
+  <div *ngIf="!newname">
+    <h1>Previsualización de Reporte Creado</h1>
+  </div>
+  <div class="container-preview-reporte">
+    <section class="container-header-preview">
+      <div class="logo-mdp">
+        <img
+          src="/assets/images/logo-MDP.png"
+          alt="logo-MDP"
+          style="width: 113px; height: 49px"
+        />
+      </div>
+      <label class="label-repor-name">Reporte {{ report.nombre }} </label>
+      <div class="periodo">
+        <p>Periodo</p>
+        <label
+          >{{ report.desde | date: "dd/MM/yyyy" }} A
+          {{ report.hasta | date: "dd/MM/yyyy" }}</label
+        >
+      </div>
+    </section>
+    <section class="container-centros-preview">
+      <div class="centros-Alcanzados">
+        <p>Centros Alcanzados:</p>
+        <p class="label-centros" *ngFor="let item of centerSelects">
+          {{ item.nombre }}
+        </p>
+      </div>
+      <div class="fecha-entrega">
+        <label style="display: flex; margin-top: 4px"
+          >Fecha de Entrega (Alerta)
+          <mat-icon style="color: #ffbd12; font-size: 16px"
+            >notification_important</mat-icon
+          ></label
+        >
+        <p>{{ report.deliverdate | date: "dd/MM/yyyy" }}</p>
+      </div>
+    </section>
+    <section class="section-ejes-variables">
+      <div class="container-ejes-variables" *ngFor="let item of report.axe">
+        <label class="ejes-preview">{{ item.nombre }}</label>
+        <div class="variables-preview">
+          <p
+            class="p-variables"
+            *ngFor="let variable of report.variable[report.axe.indexOf(item)]"
+          >
+            {{ variable.nombre }}
+          </p>
         </div>
-        <button mat-button (click)="enviar()">Confirmar</button>
+      </div>
+    </section>
+    <section style="border-top: 2px solid #d9d9d9; margin-top: 20px">
+      <div class="buttons">
+        <button class="button" mat-button (click)="confirm()">Enviar</button>
+        <button *ngIf="newname" (click)="cancel()" class="button" mat-button>
+          Cerrar
+        </button>
+        <button
+          *ngIf="!newname"
+          (click)="backAddReport()"
+          class="button"
+          mat-button
+        >
+          Cerrar
+        </button>
+      </div>
+    </section>
+  </div>
+  <div *ngIf="flag" class="modal-2">
+    <label>Confirmar envio</label>
+    <div *ngFor="let item of centerSelects">
+      <p>{{ item.nombre }}</p>
+      <label class="label" type="text" disabled>{{
+        item.usuario?.email
+      }}</label>
     </div>
-    <div *ngIf="flag" class="overlay"></div>
-
+    <button mat-button (click)="enviar()">Confirmar</button>
+  </div>
+  <div *ngIf="flag" class="overlay"></div>
 </div>
 
 <ng-contatiner *ngIf="report == null">
-    <div class="container-preview " [ngClass]="{'modal' : newname}">
-        <div *ngIf="!newname">
-            <h1>Previsualización de Reporte Creado</h1>
-        </div>
-        <div class="container-preview-reporte">
-            <section class="container-header-preview">
-                <div class="logo-mdp">
-                    <img src="/assets/images/logo-MDP.png" alt="logo-MDP" style="width: 113px;
-                    height: 49px;">
-                </div>
-                <label class="label-repor-name">Reporte {{name}} </label>
-                <div class="periodo">
-                    <p>Periodo</p>
-                    <label>{{since | date: 'dd/MM/yyyy'}} A {{until|date: 'dd/MM/yyyy'}}</label>
-                </div>
-            </section>
-            <section class="container-centros-preview ">
-                <div class="centros-Alcanzados">
-                    <p>Centros Alcanzados:</p>
-                    <p class="label-centros" *ngFor="let item of centerSelects">{{item.nombre}}</p>
-                </div>
-                <div class="fecha-entrega">
-                    <label style="display: flex; margin-top: 4px;">Fecha de Entrega (Alerta) <mat-icon
-                            style="color:#FFBD12 ; font-size: 16px ;">notification_important</mat-icon></label>
-                    <p>{{deliverdate | date: 'dd/MM/yyyy'}}</p>
-                </div>
-            </section>
-            <section class="section-ejes-variables">
-                <div class="container-ejes-variables" *ngFor="let item of data.arrayAxes">
-                    <label class="ejes-preview">{{item.nombre}}</label>
-                    <div class="variables-preview" >
-                        <p class="p-variables" *ngFor="let variable of data.arrayVariables[data.arrayAxes.indexOf(item)]" >{{variable.nombre}}</p>
-                    </div>
-                </div>
-            </section>
-            <section style="border-top: 2px solid  #D9D9D9; margin-top: 20px ;">
-                <div class="buttons">
-                    <button class="button" mat-button (click)="confirm()">Enviar</button> 
-                    <button *ngIf="newname" (click)="cancel()" class="button"mat-button>Cerrar</button>
-                    <button *ngIf="!newname" (click)="backAddReport()" class="button"mat-button>Cerrar</button>
-                </div>
-            </section>
-        </div>
-        <div *ngIf="flag" class="modal-2">
-            <div class="close" (click)="closeModal()"><span style="margin-bottom: 5px;">x</span></div>
-            <label>Confirmar envio</label>
-            <div *ngFor="let item of centerSelects">
-                <p>{{item.nombre}}</p>
-                <label class="label" type="text" disabled>{{item.usuario?.email}}</label>
-            </div>
-            <button *ngIf="data.editar" mat-button (click)="editar()">Editar</button>
-            <button *ngIf="!data.editar" mat-button (click)="enviar()">Confirmar</button>
-        </div>
-        <div *ngIf="flag" class="overlay"></div>
-    
+  <div class="container-preview" [ngClass]="{ modal: newname }">
+    <div *ngIf="!newname">
+      <h1>Previsualización de Reporte Creado</h1>
     </div>
-    
-    
-    <div *ngIf="newname" class="overlay"></div>
-</ng-contatiner>
+    <div class="container-preview-reporte">
+      <section class="container-header-preview">
+        <div class="logo-mdp">
+          <img
+            src="/assets/images/logo-MDP.png"
+            alt="logo-MDP"
+            style="width: 113px; height: 49px"
+          />
+        </div>
+        <label class="label-repor-name">Reporte {{ name }} </label>
+        <div class="periodo">
+          <p>Periodo</p>
+          <label
+            >{{ since | date: "dd/MM/yyyy" }} A
+            {{ until | date: "dd/MM/yyyy" }}</label
+          >
+        </div>
+      </section>
+      <section class="container-centros-preview">
+        <div class="centros-Alcanzados">
+          <p>Centros Alcanzados:</p>
+          <p class="label-centros" *ngFor="let item of centerSelects">
+            {{ item.nombre }}
+          </p>
+        </div>
+        <div class="fecha-entrega">
+          <label style="display: flex; margin-top: 4px"
+            >Fecha de Entrega (Alerta)
+            <mat-icon style="color: #ffbd12; font-size: 16px"
+              >notification_important</mat-icon
+            ></label
+          >
+          <p>{{ deliverdate | date: "dd/MM/yyyy" }}</p>
+        </div>
+      </section>
+      <section class="section-ejes-variables">
+        <div
+          class="container-ejes-variables"
+          *ngFor="let item of data.arrayAxes"
+        >
+          <label class="ejes-preview">{{ item.nombre }}</label>
+          <div class="variables-preview">
+            <p
+              class="p-variables"
+              *ngFor="
+                let variable of data.arrayVariables[
+                  data.arrayAxes.indexOf(item)
+                ]
+              "
+            >
+              {{ variable.nombre }}
+            </p>
+          </div>
+        </div>
+      </section>
+      <section style="border-top: 2px solid #d9d9d9; margin-top: 20px">
+        <div class="buttons">
+          <button class="button" mat-button (click)="confirm()">Enviar</button>
+          <button *ngIf="newname" (click)="cancel()" class="button" mat-button>
+            Cerrar
+          </button>
+          <button
+            *ngIf="!newname"
+            (click)="backAddReport()"
+            class="button"
+            mat-button
+          >
+            Cerrar
+          </button>
+        </div>
+      </section>
+    </div>
+    <div *ngIf="flag" class="modal-2">
+      <div class="close" (click)="closeModal()">
+        <span style="margin-bottom: 5px">x</span>
+      </div>
+      <label>Confirmar envio</label>
+      <div *ngFor="let item of centerSelects">
+        <p>{{ item.nombre }}</p>
+        <label class="label" type="text" disabled>{{
+          item.usuario?.email
+        }}</label>
+      </div>
+      <button *ngIf="data.editar" mat-button (click)="editar()">
+        Confirmar
+      </button>
+      <button *ngIf="!data.editar" mat-button (click)="enviar()">
+        Confirmar
+      </button>
+    </div>
+    <div *ngIf="flag" class="overlay"></div>
+  </div>
 
+  <div *ngIf="newname" class="overlay"></div>
+</ng-contatiner>
+<app-modal-alert
+  [flag]="flagReportStarted"
+  type="alert"
+  [modalText]="modalText"
+></app-modal-alert>
 
 <div *ngIf="newname" class="overlay"></div>
