@@ -86,6 +86,8 @@
 
       .centros-Alcanzados {
         width: 819px;
+        height: -webkit-fit-content;
+        height: -moz-fit-content;
         height: fit-content;
         margin-left: 11.5px;
         top: 0px;
@@ -148,6 +150,8 @@
         align-items: flex-start;
         padding: 0px 12px;
         width: 794px;
+        height: -webkit-fit-content;
+        height: -moz-fit-content;
         height: fit-content;
         margin-top: 12px;
 
@@ -165,6 +169,8 @@
 
         .variables-preview {
           width: 782px;
+          height: -webkit-fit-content;
+          height: -moz-fit-content;
           height: fit-content;
           padding-left: 29px;
           padding-top: 14px;
@@ -222,13 +228,13 @@
     padding: 24px 21px;
     gap: 24px;
     z-index: 1001;
-    position: fixed;
+    position: absolute;
     width: 406px;
     height: auto;
     top: 185px;
     background: #ffffff;
     border: 1px solid #79747e;
-
+    margin-bottom: 30px;
     .close {
       height: 22px;
       width: 26px;

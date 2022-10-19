@@ -26,32 +26,32 @@
       </section>
       <section>
         <label>Centros alcanzados</label>
-        <div style="margin-bottom: 12px;">
+        <div style="margin-bottom: 12px">
           <mat-select
-          placeholder="Selecciona al menos un Centro"
-          checkboxPosition="after"
-          formControlName="centros"
-          panelClass="example-panel-red"
-          multiple=""
-          [(value)]="center"
-          (selectionChange)="catchCenter($event.value)"
+            placeholder="Selecciona al menos un Centro"
+            checkboxPosition="after"
+            formControlName="centros"
+            panelClass="example-panel-red"
+            multiple=""
+            [(value)]="center"
+            (selectionChange)="catchCenter($event.value)"
           >
-          <mat-option
-            class="mat-option"
-            [value]="item.id"
-            *ngFor="let item of listCenters"
-            >{{ item.nombre }}
-          </mat-option>
-        </mat-select>
-        <mat-error
-          *ngIf="
-            formAdd.controls['centros'].invalid &&
-            formAdd.controls['centros'].dirty
-          "
-        >
-          <span>Campo requerido</span>
-        </mat-error>
-      </div>
+            <mat-option
+              class="mat-option"
+              [value]="item.id"
+              *ngFor="let item of listCenters"
+              >{{ item.nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              formAdd.controls['centros'].invalid &&
+              formAdd.controls['centros'].dirty
+            "
+          >
+            <span>Campo requerido</span>
+          </mat-error>
+        </div>
         <div class="container-button-expand">
           <a
             style="cursor: pointer"
@@ -67,7 +67,7 @@
         </div>
       </section>
       <section>
-        <label>Periodo a reportar</label>
+        <label>Período a reportar</label>
         <br />
         <br />
         <label style="margin-right: 119px">Desde</label>
